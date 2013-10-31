@@ -48,7 +48,7 @@ public class XMLDescriptorReader
     /**
      * Read and parse an XML descriptor file
      */
-    public AbstractDescriptor read( File descriptorFile , Class handlerClass ) throws JMSException
+    public AbstractDescriptor read( File descriptorFile , Class<? extends AbstractXMLDescriptorHandler> handlerClass ) throws JMSException
     {
         if (!descriptorFile.canRead())
             throw new FFMQException("Can't read descriptor file : "+descriptorFile.getAbsolutePath(),"FS_ERROR");
@@ -59,7 +59,7 @@ public class XMLDescriptorReader
         try
         {
             // Create an handler instance
-            handler = (AbstractXMLDescriptorHandler)handlerClass.newInstance();
+            handler = handlerClass.newInstance();
             
             // Parse the descriptor file
             SAXParserFactory factory = SAXParserFactory.newInstance();

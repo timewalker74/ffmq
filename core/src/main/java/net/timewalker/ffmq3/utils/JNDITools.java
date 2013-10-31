@@ -28,7 +28,7 @@ import javax.naming.NamingException;
  */
 public class JNDITools
 {
-    private static Context createJndiContext(Hashtable env) throws NamingException
+    private static Context createJndiContext(Hashtable<String,Object> env) throws NamingException
     {
         if (env == null)
         {
@@ -49,9 +49,9 @@ public class JNDITools
      * @return a JNDI context
      * @throws NamingException
      */
-    public static Context getContext( String jdniInitialContextFactoryName , String providerURL , Hashtable extraEnv ) throws NamingException
+    public static Context getContext( String jdniInitialContextFactoryName , String providerURL , Hashtable<String,Object> extraEnv ) throws NamingException
     {
-        Hashtable env = new Hashtable();
+    	Hashtable<String,Object> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, jdniInitialContextFactoryName);
         env.put(Context.PROVIDER_URL, providerURL);
         if (extraEnv != null)

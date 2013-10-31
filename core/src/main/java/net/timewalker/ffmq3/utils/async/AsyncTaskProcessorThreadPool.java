@@ -25,7 +25,7 @@ import net.timewalker.ffmq3.utils.pool.ObjectPool;
 /**
  * MessageListenerDispatcherThreadPool
  */
-public class AsyncTaskProcessorThreadPool extends ObjectPool
+public final class AsyncTaskProcessorThreadPool extends ObjectPool<AsyncTaskProcessorThread>
 {
 	private String name;
 	private AsyncTaskProcessorThreadListener listener;
@@ -49,7 +49,8 @@ public class AsyncTaskProcessorThreadPool extends ObjectPool
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.pool.ObjectPool#createPoolObject()
 	 */
-	protected Object createPoolObject() throws Exception
+	@Override
+	protected AsyncTaskProcessorThread createPoolObject() throws Exception
 	{
 		AsyncTaskProcessorThread thread = new AsyncTaskProcessorThread(listener);
 		thread.setName(name);
@@ -60,9 +61,9 @@ public class AsyncTaskProcessorThreadPool extends ObjectPool
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.pool.ObjectPool#destroyPoolObject(java.lang.Object)
 	 */
-	protected void destroyPoolObject(Object poolObject) throws Exception
+	@Override
+	protected void destroyPoolObject(AsyncTaskProcessorThread thread) throws Exception
 	{
-		AsyncTaskProcessorThread thread = (AsyncTaskProcessorThread)poolObject;
 		thread.pleaseStop();
 	}
 }

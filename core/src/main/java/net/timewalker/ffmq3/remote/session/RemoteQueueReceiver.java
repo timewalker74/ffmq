@@ -40,7 +40,8 @@ public final class RemoteQueueReceiver extends RemoteMessageConsumer implements 
      * (non-Javadoc)
      * @see javax.jms.QueueReceiver#getQueue()
      */
-    public Queue getQueue()
+    @Override
+	public Queue getQueue()
     {
         return (Queue)destination;
     }

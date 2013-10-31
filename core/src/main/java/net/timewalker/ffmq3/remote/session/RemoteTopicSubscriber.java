@@ -39,7 +39,8 @@ public class RemoteTopicSubscriber extends RemoteMessageConsumer implements Topi
     /* (non-Javadoc)
      * @see javax.jms.TopicSubscriber#getNoLocal()
      */
-    public final boolean getNoLocal()
+    @Override
+	public final boolean getNoLocal()
     {
         return noLocal;
     }
@@ -47,7 +48,8 @@ public class RemoteTopicSubscriber extends RemoteMessageConsumer implements Topi
     /* (non-Javadoc)
      * @see javax.jms.TopicSubscriber#getTopic()
      */
-    public final Topic getTopic()
+    @Override
+	public final Topic getTopic()
     {
         return (Topic)destination;
     }

@@ -40,7 +40,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#initFilesystem()
      */
-    protected void initFilesystem() throws DataStoreException
+    @Override
+	protected void initFilesystem() throws DataStoreException
     {
         super.initFilesystem();
         
@@ -52,7 +53,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#writeFirstBlock()
 	 */
-    protected void writeFirstBlock() throws DataStoreException
+    @Override
+	protected void writeFirstBlock() throws DataStoreException
     {
     	try
     	{
@@ -69,7 +71,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#writeAllocationBlock(int)
      */
-    protected void writeAllocationBlock( int blockIndex ) throws DataStoreException
+    @Override
+	protected void writeAllocationBlock( int blockIndex ) throws DataStoreException
     {
     	byte[] allocationBlock = serializeAllocationBlock(blockIndex);
         try
@@ -87,7 +90,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#writeDataBlock(byte[], int, int, int)
      */
-    protected void writeDataBlock(byte[] data, int offset, int len, int blockHandle) throws DataStoreException
+    @Override
+	protected void writeDataBlock(byte[] data, int offset, int len, int blockHandle) throws DataStoreException
     {
     	try
         {
@@ -104,7 +108,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#readDataBlock(byte[], int, int, int)
      */
-    protected void readDataBlock(byte[] data, int offset, int len, int blockHandle) throws DataStoreException
+    @Override
+	protected void readDataBlock(byte[] data, int offset, int len, int blockHandle) throws DataStoreException
     {
 		try
 		{
@@ -125,7 +130,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#extendStoreFiles(int, int)
      */
-    protected void extendStoreFiles(int oldBlockCount, int newBlockCount) throws DataStoreException
+    @Override
+	protected void extendStoreFiles(int oldBlockCount, int newBlockCount) throws DataStoreException
     {
         try
         {
@@ -148,7 +154,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.DataStore#commitChanges()
      */
-    public void commitChanges() throws DataStoreException
+    @Override
+	public void commitChanges() throws DataStoreException
     {
     	// Ignore
     }
@@ -156,7 +163,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.DataStore#commitChanges(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
      */
-    public void commitChanges(SynchronizationBarrier barrier) throws DataStoreException
+    @Override
+	public void commitChanges(SynchronizationBarrier barrier) throws DataStoreException
     {
     	// Ignore
     }
@@ -164,7 +172,8 @@ public final class BlockBasedDataStore extends AbstractBlockBasedDataStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#flush()
      */
-    protected void flush() throws DataStoreException
+    @Override
+	protected void flush() throws DataStoreException
     {
     	// Nothing to do
     }

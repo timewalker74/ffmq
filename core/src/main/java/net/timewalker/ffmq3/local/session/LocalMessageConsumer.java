@@ -114,7 +114,8 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#shouldLogListenersFailures()
      */
-    protected final boolean shouldLogListenersFailures()
+    @Override
+	protected final boolean shouldLogListenersFailures()
     {
         return logListenersFailures;
     }
@@ -243,7 +244,8 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     /* (non-Javadoc)
      * @see javax.jms.MessageConsumer#setMessageListener(javax.jms.MessageListener)
      */
-    public final void setMessageListener(MessageListener messageListener) throws JMSException
+    @Override
+	public final void setMessageListener(MessageListener messageListener) throws JMSException
     {
         super.setMessageListener(messageListener);
         
@@ -283,7 +285,8 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#onConsumerClose()
      */
-    protected final void onConsumerClose()
+    @Override
+	protected final void onConsumerClose()
     {
     	super.onConsumerClose();
     	
@@ -303,7 +306,8 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#onConsumerClosed()
      */
-    protected final void onConsumerClosed()
+    @Override
+	protected final void onConsumerClosed()
     {
     	// Wake up blocked listeners
     	synchronized (receiveLock) 
@@ -315,7 +319,8 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#receiveFromDestination(long, boolean)
      */
-    public final AbstractMessage receiveFromDestination(long timeout, boolean duplicateRequired) throws JMSException
+    @Override
+	public final AbstractMessage receiveFromDestination(long timeout, boolean duplicateRequired) throws JMSException
     {
     	synchronized (receiveLock)
 		{
@@ -410,7 +415,8 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#wakeUp()
      */
-    public final void wakeUp() throws JMSException
+    @Override
+	public final void wakeUp() throws JMSException
     {
     	// Check that consumer is not closed
 		if (closed)
@@ -535,7 +541,8 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
 		/* (non-Javadoc)
 	     * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
 	     */
-	    public final boolean isMergeable()
+	    @Override
+		public final boolean isMergeable()
 	    {
 	    	return true;
 	    }
@@ -543,6 +550,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
 		/* (non-Javadoc)
 		 * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
 		 */
+		@Override
 		public final void execute()
 		{
 			wakeUpMessageListener();

@@ -36,6 +36,7 @@ public class SessionDestinationResolver implements DestinationResolver
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.resolver.DestinationResolver#getDestination(net.timewalker.ffmq3.management.peer.PeerDescriptor, net.timewalker.ffmq3.management.destination.DestinationReferenceDescriptor, javax.jms.Session)
 	 */
+	@Override
 	public Destination getDestination(PeerDescriptor peer, DestinationReferenceDescriptor destinationReference,Session session) throws JMSException
 	{
 		String destinationType = destinationReference.getDestinationType();

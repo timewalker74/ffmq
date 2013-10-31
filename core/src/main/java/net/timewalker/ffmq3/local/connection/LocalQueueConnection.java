@@ -48,7 +48,8 @@ public final class LocalQueueConnection extends LocalConnection implements Queue
      * (non-Javadoc)
      * @see javax.jms.QueueConnection#createConnectionConsumer(javax.jms.Queue, java.lang.String, javax.jms.ServerSessionPool, int)
      */
-    public synchronized ConnectionConsumer createConnectionConsumer(Queue queue, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
+    @Override
+	public synchronized ConnectionConsumer createConnectionConsumer(Queue queue, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
     {
         checkNotClosed();
         throw new FFMQException("Unsupported feature","UNSUPPORTED_FEATURE");
@@ -58,7 +59,8 @@ public final class LocalQueueConnection extends LocalConnection implements Queue
      * (non-Javadoc)
      * @see javax.jms.QueueConnection#createQueueSession(boolean, int)
      */
-    public synchronized QueueSession createQueueSession(boolean transacted, int acknowledgeMode) throws JMSException
+    @Override
+	public synchronized QueueSession createQueueSession(boolean transacted, int acknowledgeMode) throws JMSException
     {
         checkNotClosed();
         LocalQueueSession session =  new LocalQueueSession(idProvider.createID(),this,engine,transacted,acknowledgeMode);
@@ -69,7 +71,8 @@ public final class LocalQueueConnection extends LocalConnection implements Queue
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#createDurableConnectionConsumer(javax.jms.Topic, java.lang.String, java.lang.String, javax.jms.ServerSessionPool, int)
      */
-    public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
+    @Override
+	public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }

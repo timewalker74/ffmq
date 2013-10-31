@@ -44,7 +44,8 @@ public final class FFMQInitialContextFactory implements InitialContextFactory
     /* (non-Javadoc)
      * @see javax.naming.spi.InitialContextFactory#getInitialContext(java.util.Hashtable)
      */
-    public Context getInitialContext(Hashtable environment) throws NamingException
+    @Override
+	public Context getInitialContext(Hashtable<?,?> environment) throws NamingException
     {
         FFMQJNDIContext context = new FFMQJNDIContext(environment);
         preLoad(context);
@@ -56,8 +57,8 @@ public final class FFMQInitialContextFactory implements InitialContextFactory
      */
     protected void preLoad(FFMQJNDIContext context) throws NamingException
     {
-        context.bind(FFMQConstants.JNDI_CONNECTION_FACTORY_NAME, new FFMQConnectionFactory(context.getEnvironment()));
-        context.bind(FFMQConstants.JNDI_QUEUE_CONNECTION_FACTORY_NAME, new FFMQQueueConnectionFactory(context.getEnvironment()));
-        context.bind(FFMQConstants.JNDI_TOPIC_CONNECTION_FACTORY_NAME, new FFMQTopicConnectionFactory(context.getEnvironment()));
+        context.bind(FFMQConstants.JNDI_CONNECTION_FACTORY_NAME, new FFMQConnectionFactory((Hashtable<String, Object>) context.getEnvironment()));
+        context.bind(FFMQConstants.JNDI_QUEUE_CONNECTION_FACTORY_NAME, new FFMQQueueConnectionFactory((Hashtable<String, Object>) context.getEnvironment()));
+        context.bind(FFMQConstants.JNDI_TOPIC_CONNECTION_FACTORY_NAME, new FFMQTopicConnectionFactory((Hashtable<String, Object>) context.getEnvironment()));
     }
 }

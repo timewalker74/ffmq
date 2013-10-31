@@ -32,11 +32,13 @@ import net.timewalker.ffmq3.test.TestUtils;
 /**
  * RemoteToLocalTest
  */
+@SuppressWarnings("all")
 public class RemoteToLocalTest extends AbstractCommTest
 {
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isRemote()
 	 */
+	@Override
 	protected boolean isRemote()
 	{
 		return true;
@@ -45,6 +47,7 @@ public class RemoteToLocalTest extends AbstractCommTest
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isListenerTest()
 	 */
+	@Override
 	protected boolean isListenerTest()
 	{
 		return false;
@@ -53,6 +56,7 @@ public class RemoteToLocalTest extends AbstractCommTest
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isTopicTest()
 	 */
+	@Override
 	protected boolean isTopicTest()
 	{
 		return false;
@@ -61,6 +65,7 @@ public class RemoteToLocalTest extends AbstractCommTest
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#useMultipleConnections()
 	 */
+	@Override
 	protected boolean useMultipleConnections()
 	{
 		return false;

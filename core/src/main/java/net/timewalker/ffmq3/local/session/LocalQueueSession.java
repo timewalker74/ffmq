@@ -50,7 +50,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
      * (non-Javadoc)
      * @see javax.jms.QueueSession#createReceiver(javax.jms.Queue)
      */
-    public QueueReceiver createReceiver(Queue queue) throws JMSException
+    @Override
+	public QueueReceiver createReceiver(Queue queue) throws JMSException
     {
         return createReceiver(queue,null);
     }
@@ -59,7 +60,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
      * (non-Javadoc)
      * @see javax.jms.QueueSession#createReceiver(javax.jms.Queue, java.lang.String)
      */
-    public QueueReceiver createReceiver(Queue queue, String messageSelector) throws JMSException
+    @Override
+	public QueueReceiver createReceiver(Queue queue, String messageSelector) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -80,7 +82,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
      * (non-Javadoc)
      * @see javax.jms.QueueSession#createSender(javax.jms.Queue)
      */
-    public QueueSender createSender(Queue queue) throws JMSException
+    @Override
+	public QueueSender createSender(Queue queue) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -99,7 +102,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#createDurableSubscriber(javax.jms.Topic, java.lang.String)
      */
-    public TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException
+    @Override
+	public TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }
@@ -107,7 +111,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalSession#createDurableSubscriber(javax.jms.Topic, java.lang.String, java.lang.String, boolean)
      */
-    public TopicSubscriber createDurableSubscriber(Topic topic, String subscriptionName, String messageSelector, boolean noLocal) throws JMSException
+    @Override
+	public TopicSubscriber createDurableSubscriber(Topic topic, String subscriptionName, String messageSelector, boolean noLocal) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }
@@ -115,7 +120,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalSession#createTemporaryTopic()
      */
-    public TemporaryTopic createTemporaryTopic() throws JMSException
+    @Override
+	public TemporaryTopic createTemporaryTopic() throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }
@@ -123,7 +129,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#createTopic(java.lang.String)
      */
-    public Topic createTopic(String topicName) throws JMSException
+    @Override
+	public Topic createTopic(String topicName) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }
@@ -131,7 +138,8 @@ public final class LocalQueueSession extends LocalSession implements QueueSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalSession#unsubscribe(java.lang.String)
      */
-    public void unsubscribe(String subscriptionName) throws JMSException
+    @Override
+	public void unsubscribe(String subscriptionName) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }

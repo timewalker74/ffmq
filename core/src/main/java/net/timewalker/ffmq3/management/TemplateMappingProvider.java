@@ -44,8 +44,8 @@ public final class TemplateMappingProvider
     
     private FFMQEngineSetup setup;
     
-    private List queueMappings = new Vector();
-    private List topicMappings = new Vector();
+    private List<TemplateMapping> queueMappings = new Vector<>();
+    private List<TemplateMapping> topicMappings = new Vector<>();
     
     /**
      * Constructor
@@ -118,7 +118,7 @@ public final class TemplateMappingProvider
     {
         for (int i = 0 ; i < queueMappings.size() ; i++)
         {
-            TemplateMapping mapping = (TemplateMapping)queueMappings.get(i);
+            TemplateMapping mapping = queueMappings.get(i);
             if (StringTools.matches(queueName,mapping.getPattern()))
             {
                 log.debug("Matching template for queue "+queueName+" : "+mapping.getTemplateName());
@@ -133,7 +133,7 @@ public final class TemplateMappingProvider
     {
         for (int i = 0 ; i < topicMappings.size() ; i++)
         {
-            TemplateMapping mapping = (TemplateMapping)topicMappings.get(i);
+            TemplateMapping mapping = topicMappings.get(i);
             if (StringTools.matches(topicName,mapping.getPattern()))
             {
                 log.debug("Matching template for topic "+topicName+" : "+mapping.getTemplateName());

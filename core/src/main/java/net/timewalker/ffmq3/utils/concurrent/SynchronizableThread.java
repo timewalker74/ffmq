@@ -84,7 +84,8 @@ public class SynchronizableThread extends Thread
     /* (non-Javadoc)
      * @see java.lang.Thread#run()
      */
-    public void run()
+    @Override
+	public void run()
     {
         notifyStartup();
         super.run();

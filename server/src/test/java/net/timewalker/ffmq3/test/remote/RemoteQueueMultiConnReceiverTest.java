@@ -7,5 +7,6 @@ import net.timewalker.ffmq3.test.local.LocalQueueMultiConnReceiverTest;
  */
 public class RemoteQueueMultiConnReceiverTest extends LocalQueueMultiConnReceiverTest
 {        
-    protected boolean isRemote() { return true; }
+    @Override
+	protected boolean isRemote() { return true; }
 }

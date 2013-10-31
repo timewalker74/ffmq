@@ -64,7 +64,7 @@ public class ActivityWatchdog extends Thread
 	private static long WAKE_UP_INTERVAL = 2000;
 	
 	// Runtime
-	private List watchList = new ArrayList();
+	private List<WeakReference<ActiveObject>> watchList = new ArrayList<>();
 	private boolean stop;
 	
 	/**
@@ -80,9 +80,10 @@ public class ActivityWatchdog extends Thread
 	/* (non-Javadoc)
 	 * @see java.lang.Thread#run()
 	 */
+	@Override
 	public synchronized void run()
 	{
-		List inactiveList = new ArrayList();
+		List<ActiveObject> inactiveList = new ArrayList<>();
 		try
 		{
 			log.debug("Starting activity watchdog (wakeUpInterval="+WAKE_UP_INTERVAL+"ms)");
@@ -98,8 +99,8 @@ public class ActivityWatchdog extends Thread
 				{
 					for (int i = 0; i < watchList.size(); i++)
 					{
-						WeakReference weakRef = (WeakReference)watchList.get(i);
-						ActiveObject obj = (ActiveObject)weakRef.get();
+						WeakReference<ActiveObject> weakRef = watchList.get(i);
+						ActiveObject obj = weakRef.get();
 						if (obj == null)
 						{
 							// Object was garbage collected, remove and continue
@@ -119,7 +120,7 @@ public class ActivityWatchdog extends Thread
 				// Process inactive objects
 				for (int n = 0; n < inactiveList.size(); n++)
 				{
-					ActiveObject obj = (ActiveObject)inactiveList.get(n);
+					ActiveObject obj = inactiveList.get(n);
 					try
 					{
 						if (!obj.onActivityTimeout())
@@ -136,7 +137,7 @@ public class ActivityWatchdog extends Thread
 				{
 					for(int n=0;n<inactiveList.size();n++)
 					{
-						ActiveObject obj = (ActiveObject)inactiveList.get(n);
+						ActiveObject obj = inactiveList.get(n);
 						
 						log.trace("Removing inactive object from watch list : "+obj);
 						watchList.remove(obj);
@@ -171,7 +172,7 @@ public class ActivityWatchdog extends Thread
 	{
 		synchronized (watchList)
 		{
-			watchList.add(new WeakReference(object));
+			watchList.add(new WeakReference<>(object));
 		}
 	}
 	
@@ -185,8 +186,8 @@ public class ActivityWatchdog extends Thread
 		{
 			for (int i = 0; i < watchList.size(); i++)
 			{
-				WeakReference weakRef = (WeakReference)watchList.get(i);
-				ActiveObject obj = (ActiveObject)weakRef.get();
+				WeakReference<ActiveObject> weakRef = watchList.get(i);
+				ActiveObject obj = weakRef.get();
 				if (obj == null)
 				{
 					// Object was garbage collected, remove and continue

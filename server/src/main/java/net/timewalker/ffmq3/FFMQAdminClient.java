@@ -81,7 +81,8 @@ public final class FFMQAdminClient implements Runnable
     /* (non-Javadoc)
      * @see java.lang.Runnable#run()
      */
-    public void run()
+    @Override
+	public void run()
     {
         String command = globalSettings.getStringProperty(FFMQAdminClientSettings.ADM_COMMAND, null);
         if (StringTools.isEmpty(command))
@@ -146,7 +147,7 @@ public final class FFMQAdminClient implements Runnable
     
     private Context getJNDIContext( String serverHost , int serverPort ) throws NamingException
     {
-        Hashtable env = new Hashtable();
+    	Hashtable<String,Object> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
         env.put(Context.PROVIDER_URL, PacketTransportType.TCP+"://"+serverHost+":"+serverPort);
         return new InitialContext(env);
@@ -218,7 +219,7 @@ public final class FFMQAdminClient implements Runnable
     {
         Message msg = session.createMessage();
         msg.setStringProperty(FFMQAdminConstants.ADM_HEADER_COMMAND, commandName);
-        Iterator keys = paramSettings.keySet().iterator();
+        Iterator<Object> keys = paramSettings.keySet().iterator();
         while (keys.hasNext())
         {
             String paramName = (String)keys.next();

@@ -46,6 +46,7 @@ import org.apache.log4j.PropertyConfigurator;
 /**
  * AbstractCommTest
  */
+@SuppressWarnings("all")
 public abstract class AbstractCommTest extends TestCase implements ExceptionListener
 {
     private static boolean log4jConfigured;
@@ -81,7 +82,8 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
      * (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
-    protected void setUp() throws Exception
+    @Override
+	protected void setUp() throws Exception
     {
         super.setUp();
         
@@ -210,7 +212,8 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
         }
     }
 
-    public void onException(JMSException exception)
+    @Override
+	public void onException(JMSException exception)
     {
         this.lastConnectionFailure = exception;
     }
@@ -218,7 +221,8 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
     /* (non-Javadoc)
      * @see junit.framework.TestCase#tearDown()
      */
-    protected void tearDown() throws Exception
+    @Override
+	protected void tearDown() throws Exception
     {
     	if (TestUtils.USE_EXTERNAL_SERVER)
         {

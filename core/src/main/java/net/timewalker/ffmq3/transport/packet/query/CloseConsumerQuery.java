@@ -28,12 +28,12 @@ import net.timewalker.ffmq3.utils.RawDataBuffer;
  */
 public final class CloseConsumerQuery extends AbstractConsumerQuery
 {
-	private List undeliveredMessageIDs;
+	private List<String> undeliveredMessageIDs;
 	
 	/**
 	 * @return the undeliveredMessageIDs
 	 */
-	public List getUndeliveredMessageIDs()
+	public List<String> getUndeliveredMessageIDs()
 	{
 		return undeliveredMessageIDs;
 	}
@@ -41,14 +41,15 @@ public final class CloseConsumerQuery extends AbstractConsumerQuery
 	public void addUndeliveredMessageID( String msgID )
 	{
 		if (undeliveredMessageIDs == null)
-			undeliveredMessageIDs = new ArrayList();
+			undeliveredMessageIDs = new ArrayList<>();
 		undeliveredMessageIDs.add(msgID);
 	}
 	
 	/* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.Q_CLOSE_CONSUMER;
     }
@@ -56,7 +57,8 @@ public final class CloseConsumerQuery extends AbstractConsumerQuery
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
     	super.serializeTo(out);
     	if (undeliveredMessageIDs != null)
@@ -64,7 +66,7 @@ public final class CloseConsumerQuery extends AbstractConsumerQuery
     		int len = undeliveredMessageIDs.size(); 
             out.writeInt(len);
             for (int i = 0; i < len; i++)
-            	out.writeUTF((String)undeliveredMessageIDs.get(i));
+            	out.writeUTF(undeliveredMessageIDs.get(i));
         }
         else
             out.writeInt(0);
@@ -73,7 +75,8 @@ public final class CloseConsumerQuery extends AbstractConsumerQuery
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
     	super.unserializeFrom(in);
     	int idCount = in.readInt();

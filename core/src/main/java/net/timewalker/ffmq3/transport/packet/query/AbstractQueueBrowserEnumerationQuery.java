@@ -29,7 +29,8 @@ public abstract class AbstractQueueBrowserEnumerationQuery extends AbstractQueue
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
     	super.serializeTo(out);
         out.writeUTF(enumId);
@@ -38,7 +39,8 @@ public abstract class AbstractQueueBrowserEnumerationQuery extends AbstractQueue
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
     	super.unserializeFrom(in);
     	enumId = in.readUTF();   
@@ -64,7 +66,8 @@ public abstract class AbstractQueueBrowserEnumerationQuery extends AbstractQueue
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         

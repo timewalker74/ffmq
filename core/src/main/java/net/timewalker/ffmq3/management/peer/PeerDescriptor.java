@@ -87,6 +87,7 @@ public final class PeerDescriptor implements Checkable
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.Checkable#check()
 	 */
+	@Override
 	public void check() throws JMSException
 	{
 		if (jdniInitialContextFactoryName == null)
@@ -100,6 +101,7 @@ public final class PeerDescriptor implements Checkable
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

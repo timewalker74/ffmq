@@ -67,17 +67,17 @@ public final class BlockBasedDataStoreJournal
     private boolean preAllocateFiles;
     
     // Journal files management
-    private LinkedList journalFiles = new LinkedList();
+    private LinkedList<JournalFile> journalFiles = new LinkedList<>();
     private JournalFile currentJournalFile;
     private int nextJournalFileIndex = 1;
     private long currentTransactionId = 1;
-    private LinkedList recycledJournalFiles = new LinkedList();
+    private LinkedList<File> recycledJournalFiles = new LinkedList<>();
     
     // Journal write queues
     private JournalQueue journalWriteQueue = new JournalQueue();
     private JournalQueue journalProcessingQueue = new JournalQueue();
     private JournalQueue uncommittedJournalQueue = new JournalQueue();
-    private List pendingBarriers = new ArrayList();
+    private List<SynchronizationBarrier> pendingBarriers = new ArrayList<>();
     private int unflushedJournalSize;
     private int writtenJournalOperations;
     private boolean flushingJournal;
@@ -140,7 +140,7 @@ public final class BlockBasedDataStoreJournal
     	synchronized (recycledJournalFiles)
 		{
     		if (recycledJournalFiles.size() > 0)
-    			recycledFile = (File)recycledJournalFiles.removeFirst();
+    			recycledFile = recycledJournalFiles.removeFirst();
 		}
     	
     	JournalFile journalFile;
@@ -468,7 +468,7 @@ public final class BlockBasedDataStoreJournal
                 {
                     for (int i = 0 ; i < pendingBarriers.size() ; i++)
                     {
-                        SynchronizationBarrier barrier = (SynchronizationBarrier)pendingBarriers.get(i);
+                        SynchronizationBarrier barrier = pendingBarriers.get(i);
                         barrier.reach();
                     }
                     pendingBarriers.clear();
@@ -694,18 +694,18 @@ public final class BlockBasedDataStoreJournal
     
     private void recycleUnusedJournalFiles() throws JournalException
     {
-    	LinkedList unusedJournalFiles = null;
+    	LinkedList<JournalFile> unusedJournalFiles = null;
     	
     	// Look for unused journal files
     	synchronized (journalFiles)
 		{
 	    	while (journalFiles.size() > 0)
 	    	{
-	    		JournalFile journalFile = (JournalFile)journalFiles.getFirst();
+	    		JournalFile journalFile = journalFiles.getFirst();
 	    		if (journalFile.isComplete() && journalFile.getLastTransactionId() < lastStoreTransactionId)
 	    		{
 	    			if (unusedJournalFiles == null)
-	    				unusedJournalFiles = new LinkedList();
+	    				unusedJournalFiles = new LinkedList<>();
 	    			unusedJournalFiles.addLast(journalFile);
 	    			
 	    			journalFiles.removeFirst(); // Remove from list
@@ -720,7 +720,7 @@ public final class BlockBasedDataStoreJournal
     	{
     		while (!unusedJournalFiles.isEmpty())
 	    	{
-    			JournalFile journalFile = (JournalFile)unusedJournalFiles.removeFirst();
+    			JournalFile journalFile = unusedJournalFiles.removeFirst();
     			
     			if (keepJournalFiles)
     				journalFile.close();
@@ -785,14 +785,14 @@ public final class BlockBasedDataStoreJournal
     	log.debug("["+baseName+"] Destroying recycled journal files ...");
     	while (recycledJournalFiles.size() > 0)
     	{
-    		File recycledFile = (File)recycledJournalFiles.removeFirst();
+    		File recycledFile = recycledJournalFiles.removeFirst();
     		recycledFile.delete();
     	}
     	
     	log.debug("["+baseName+"] Destroying remaining journal files ...");
     	while (journalFiles.size() > 0)
     	{
-    		JournalFile journalFile = (JournalFile)journalFiles.removeFirst();
+    		JournalFile journalFile = journalFiles.removeFirst();
     		
     		if (keepJournalFiles)
     			journalFile.close();
@@ -818,7 +818,8 @@ public final class BlockBasedDataStoreJournal
         /* (non-Javadoc)
          * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
          */
-        public void execute()
+        @Override
+		public void execute()
         {
         	flushJournal();
         }
@@ -826,7 +827,8 @@ public final class BlockBasedDataStoreJournal
         /* (non-Javadoc)
          * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
          */
-        public boolean isMergeable()
+        @Override
+		public boolean isMergeable()
         {
             return false;
         }
@@ -845,7 +847,8 @@ public final class BlockBasedDataStoreJournal
         /* (non-Javadoc)
          * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
          */
-        public void execute()
+        @Override
+		public void execute()
         {
         	flushStore();
         }
@@ -853,7 +856,8 @@ public final class BlockBasedDataStoreJournal
         /* (non-Javadoc)
          * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
          */
-        public boolean isMergeable()
+        @Override
+		public boolean isMergeable()
         {
             return false;
         }

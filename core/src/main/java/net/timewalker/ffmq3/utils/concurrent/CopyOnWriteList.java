@@ -26,10 +26,10 @@ import java.util.Vector;
 /**
  * CopyOnWriteList
  */
-public class CopyOnWriteList implements List
+public class CopyOnWriteList<T> implements List<T>
 {
 	// Attributes
-	private ReferenceAwareVector internalList;
+	private ReferenceAwareVector<T> internalList;
 	
 	/**
 	 * Constructor
@@ -44,14 +44,14 @@ public class CopyOnWriteList implements List
 	 */
 	public CopyOnWriteList( int initialCapacity )
 	{
-		this.internalList = new ReferenceAwareVector(initialCapacity);
+		this.internalList = new ReferenceAwareVector<>(initialCapacity);
 		this.internalList.incRefCount();
 	}
 	
 	/**
 	 * Constructor (private)
 	 */
-	private CopyOnWriteList( ReferenceAwareVector internalList )
+	private CopyOnWriteList( ReferenceAwareVector<T> internalList )
 	{
 		this.internalList = internalList;
 		this.internalList.incRefCount();
@@ -61,7 +61,8 @@ public class CopyOnWriteList implements List
 	 * 	(non-Javadoc)
 	 * @see java.util.List#add(int, java.lang.Object)
 	 */
-	public synchronized void add(int index, Object element)
+	@Override
+	public synchronized void add(int index, T element)
 	{
 		copyOnWrite();
 		internalList.add(index, element);
@@ -71,7 +72,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#add(java.lang.Object)
 	 */
-	public synchronized boolean add(Object o)
+	@Override
+	public synchronized boolean add(T o)
 	{
 		copyOnWrite();
 		return internalList.add(o);
@@ -81,7 +83,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#addAll(java.util.Collection)
 	 */
-	public synchronized boolean addAll(Collection c)
+	@Override
+	public synchronized boolean addAll(Collection<? extends T> c)
 	{
 		copyOnWrite();
 		return internalList.addAll(c);
@@ -91,7 +94,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#addAll(int, java.util.Collection)
 	 */
-	public synchronized boolean addAll(int index, Collection c)
+	@Override
+	public synchronized boolean addAll(int index, Collection<? extends T> c)
 	{
 		copyOnWrite();
 		return internalList.addAll(index, c);
@@ -101,6 +105,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#clear()
 	 */
+	@Override
 	public synchronized void clear()
 	{
 		copyOnWrite();
@@ -111,6 +116,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#contains(java.lang.Object)
 	 */
+	@Override
 	public boolean contains(Object o)
 	{
 		return internalList.contains(o);
@@ -120,7 +126,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#containsAll(java.util.Collection)
 	 */
-	public boolean containsAll(Collection c)
+	@Override
+	public boolean containsAll(Collection<?> c)
 	{
 		return internalList.containsAll(c);
 	}
@@ -129,6 +136,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object o)
 	{
 		return internalList.equals(o);
@@ -138,7 +146,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#get(int)
 	 */
-	public Object get(int index)
+	@Override
+	public T get(int index)
 	{
 		return internalList.get(index);
 	}
@@ -147,6 +156,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		return internalList.hashCode();
@@ -156,6 +166,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#indexOf(java.lang.Object)
 	 */
+	@Override
 	public int indexOf(Object o)
 	{
 		return internalList.indexOf(o);
@@ -165,6 +176,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#isEmpty()
 	 */
+	@Override
 	public boolean isEmpty()
 	{
 		return internalList.isEmpty();
@@ -174,7 +186,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#iterator()
 	 */
-	public Iterator iterator()
+	@Override
+	public Iterator<T> iterator()
 	{
 		throw new IllegalStateException("Unsupported operation");
 	}
@@ -183,6 +196,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#lastIndexOf(java.lang.Object)
 	 */
+	@Override
 	public int lastIndexOf(Object o)
 	{
 		return internalList.lastIndexOf(o);
@@ -192,7 +206,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#listIterator()
 	 */
-	public ListIterator listIterator()
+	@Override
+	public ListIterator<T> listIterator()
 	{
 		throw new IllegalStateException("Unsupported operation");
 	}
@@ -201,7 +216,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#listIterator(int)
 	 */
-	public ListIterator listIterator(int index)
+	@Override
+	public ListIterator<T> listIterator(int index)
 	{
 		return internalList.listIterator(index);
 	}
@@ -210,7 +226,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#remove(int)
 	 */
-	public synchronized Object remove(int index)
+	@Override
+	public synchronized T remove(int index)
 	{	
 		copyOnWrite();
 		return internalList.remove(index);
@@ -220,6 +237,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#remove(java.lang.Object)
 	 */
+	@Override
 	public synchronized boolean remove(Object o)
 	{
 		copyOnWrite();
@@ -230,7 +248,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#removeAll(java.util.Collection)
 	 */
-	public synchronized boolean removeAll(Collection c)
+	@Override
+	public synchronized boolean removeAll(Collection<?> c)
 	{
 		copyOnWrite();
 		return internalList.removeAll(c);
@@ -240,7 +259,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#retainAll(java.util.Collection)
 	 */
-	public synchronized boolean retainAll(Collection c)
+	@Override
+	public synchronized boolean retainAll(Collection<?> c)
 	{
 		copyOnWrite();
 		return internalList.retainAll(c);
@@ -250,7 +270,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#set(int, java.lang.Object)
 	 */
-	public synchronized Object set(int index, Object element)
+	@Override
+	public synchronized T set(int index, T element)
 	{
 		copyOnWrite();
 		return internalList.set(index, element);
@@ -260,6 +281,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#size()
 	 */
+	@Override
 	public int size()
 	{
 		return internalList.size();
@@ -269,7 +291,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#subList(int, int)
 	 */
-	public List subList(int fromIndex, int toIndex)
+	@Override
+	public List<T> subList(int fromIndex, int toIndex)
 	{
 		throw new IllegalStateException("Unsupported operation");
 	}
@@ -278,6 +301,7 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#toArray()
 	 */
+	@Override
 	public Object[] toArray()
 	{
 		return internalList.toArray();
@@ -287,7 +311,8 @@ public class CopyOnWriteList implements List
 	 * (non-Javadoc)
 	 * @see java.util.List#toArray(java.lang.Object[])
 	 */
-	public Object[] toArray(Object[] a)
+	@Override
+	public <O> O[] toArray(O[] a)
 	{
 		return internalList.toArray(a);
 	}
@@ -296,11 +321,11 @@ public class CopyOnWriteList implements List
 	 * Create a copy-on-write copy of this list
 	 * @return a copy-on-write copy of this list
 	 */
-	public synchronized CopyOnWriteList fastCopy()
+	public synchronized CopyOnWriteList<T> fastCopy()
 	{
 		synchronized(internalList)
 		{
-			return new CopyOnWriteList(internalList);
+			return new CopyOnWriteList<>(internalList);
 		}
 	}
 	
@@ -314,7 +339,8 @@ public class CopyOnWriteList implements List
 			{
 				this.internalList.decRefCount();
 				
-				ReferenceAwareVector newList = (ReferenceAwareVector)internalList.clone();
+				@SuppressWarnings("unchecked")
+				ReferenceAwareVector<T> newList = (ReferenceAwareVector<T>)internalList.clone();
 				newList.incRefCount();
 				
 				this.internalList = newList;
@@ -325,6 +351,7 @@ public class CopyOnWriteList implements List
 	/* (non-Javadoc)
 	 * @see java.lang.Object#finalize()
 	 */
+	@Override
 	protected void finalize() throws Throwable
 	{
 		synchronized (internalList)
@@ -347,7 +374,7 @@ public class CopyOnWriteList implements List
 	/**
 	 * ReferenceAwareVector
 	 */
-	private static class ReferenceAwareVector extends Vector
+	private static class ReferenceAwareVector<T> extends Vector<T>
 	{
 		private static final long serialVersionUID = 1L;
 		
@@ -382,11 +409,13 @@ public class CopyOnWriteList implements List
 		 * (non-Javadoc)
 		 * @see java.util.Vector#clone()
 		 */
+		@SuppressWarnings("unchecked")
+		@Override
 		public synchronized Object clone()
 		{
 		    Object copy = super.clone();
 		    
-		    ((ReferenceAwareVector)copy).refCount = 0;
+		    ((ReferenceAwareVector<T>)copy).refCount = 0;
 		    
 		    return copy;
 		}
@@ -394,6 +423,7 @@ public class CopyOnWriteList implements List
 		/* (non-Javadoc)
 		 * @see java.util.Vector#equals(java.lang.Object)
 		 */
+		@Override
 		public synchronized boolean equals(Object o)
 		{
 			// Same as parent
@@ -403,6 +433,7 @@ public class CopyOnWriteList implements List
 		/* (non-Javadoc)
 		 * @see java.util.Vector#hashCode()
 		 */
+		@Override
 		public synchronized int hashCode()
 		{
 			// Same as parent

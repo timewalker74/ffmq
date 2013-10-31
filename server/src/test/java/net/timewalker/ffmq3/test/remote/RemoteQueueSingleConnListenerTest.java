@@ -7,5 +7,6 @@ import net.timewalker.ffmq3.test.local.LocalQueueSingleConnListenerTest;
  */
 public class RemoteQueueSingleConnListenerTest extends LocalQueueSingleConnListenerTest
 {    
-    protected boolean isRemote() { return true; }
+    @Override
+	protected boolean isRemote() { return true; }
 }

@@ -7,8 +7,12 @@ import net.timewalker.ffmq3.test.BaseCommTest;
  */
 public class LocalQueueMultiConnListenerTest extends BaseCommTest
 {
-    protected boolean isRemote()               { return false; }
-    protected boolean useMultipleConnections() { return true;  }
-    protected boolean isTopicTest()            { return false; }
-    protected boolean isListenerTest()         { return true;  }
+    @Override
+	protected boolean isRemote()               { return false; }
+    @Override
+	protected boolean useMultipleConnections() { return true;  }
+    @Override
+	protected boolean isTopicTest()            { return false; }
+    @Override
+	protected boolean isListenerTest()         { return true;  }
 }

@@ -28,7 +28,7 @@ import net.timewalker.ffmq3.utils.StringTools;
 public class Privilege 
 {
 	private String resourcePattern;
-	private Set actions = new HashSet();
+	private Set<String> actions = new HashSet<>();
 	
 	/**
 	 * Constructor
@@ -70,7 +70,8 @@ public class Privilege
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-    public String toString()
+    @Override
+	public String toString()
     {
         return StringTools.join(actions,",")+" on "+resourcePattern;
     }

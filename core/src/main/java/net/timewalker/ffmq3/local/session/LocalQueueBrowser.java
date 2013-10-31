@@ -55,6 +55,7 @@ public final class LocalQueueBrowser extends AbstractQueueBrowser
 	 * (non-Javadoc)
 	 * @see javax.jms.QueueBrowser#getEnumeration()
 	 */
+	@Override
 	public Enumeration getEnumeration() throws JMSException 
 	{
 		checkNotClosed();

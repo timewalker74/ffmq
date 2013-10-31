@@ -74,7 +74,8 @@ public final class RemoteAdministrationThread extends SynchronizableThread
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.concurrent.SynchronizableThread#run()
      */
-    public void run()
+    @Override
+	public void run()
     {
         log.info("Starting remote administration thread ...");
 
@@ -202,7 +203,7 @@ public final class RemoteAdministrationThread extends SynchronizableThread
                 return processPurgeQueue(msg);
             
             if (command.equals(FFMQAdminConstants.ADM_COMMAND_SHUTDOWN))
-                return processShutdown(msg);
+                return processShutdown();
 
             log.error("Invalid administration command : "+command);
             return "Invalid administration command : "+command;
@@ -223,7 +224,7 @@ public final class RemoteAdministrationThread extends SynchronizableThread
     {
         // Fill settings from message headers
         Settings queueSettings = new Settings();
-        Enumeration headers = msg.getPropertyNames();
+        Enumeration<?> headers = msg.getPropertyNames();
         while (headers.hasMoreElements())
         {
             String propName = (String)headers.nextElement();
@@ -303,7 +304,7 @@ public final class RemoteAdministrationThread extends SynchronizableThread
         return null;
     }
     
-    private String processShutdown( Message msg )
+    private String processShutdown()
     {
     	// Shutdown the server
     	if (server.isInRunnableMode())
@@ -312,7 +313,8 @@ public final class RemoteAdministrationThread extends SynchronizableThread
     	{
     		// Run the shutdown sequence in a parallel thread to avoid deadlocks
     		new Thread() {
-	    		public void run() {
+	    		@Override
+				public void run() {
 	    			server.shutdown();
 	    		}
 	    	}.start();

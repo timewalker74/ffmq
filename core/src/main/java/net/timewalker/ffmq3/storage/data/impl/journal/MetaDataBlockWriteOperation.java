@@ -48,7 +48,8 @@ public final class MetaDataBlockWriteOperation extends AbstractMetaDataWriteOper
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.journal.AbstractJournalOperation#size()
      */
-    public int size()
+    @Override
+	public int size()
     {
     	return super.size() + 4 + metaData.length;
     }
@@ -56,7 +57,8 @@ public final class MetaDataBlockWriteOperation extends AbstractMetaDataWriteOper
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.journal.AbstractJournalOperation#writeTo(net.timewalker.ffmq3.storage.data.impl.journal.JournalFile)
      */
-    protected void writeTo(JournalFile journalFile) throws JournalException
+    @Override
+	protected void writeTo(JournalFile journalFile) throws JournalException
     {
         super.writeTo(journalFile);
         journalFile.writeInt(metaData.length);
@@ -81,7 +83,8 @@ public final class MetaDataBlockWriteOperation extends AbstractMetaDataWriteOper
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
     	return super.toString()+" [METADATA_BLOCK] metaDataSize="+metaData.length;
     }

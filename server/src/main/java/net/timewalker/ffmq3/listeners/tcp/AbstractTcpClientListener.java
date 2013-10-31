@@ -57,6 +57,7 @@ public abstract class AbstractTcpClientListener extends AbstractClientListener
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientListener#getCapacity()
 	 */
+	@Override
 	public int getCapacity()
 	{
 		return listenerCapacity;

@@ -46,7 +46,8 @@ public class DataStoreException extends FFMQException
      * (non-Javadoc)
      * @see javax.jms.JMSException#getErrorCode()
      */
-    public String getErrorCode()
+    @Override
+	public String getErrorCode()
     {
     	return "DATA_STORE_ERROR";
     }

@@ -74,7 +74,7 @@ public class TestQueueFull
 		
 		try
 		{
-	        Hashtable env = new Hashtable();
+	        Hashtable<String,Object> env = new Hashtable<>();
 	        env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
 	        env.put(Context.PROVIDER_URL, providerURL);
 	        Context context1 = new InitialContext(env);

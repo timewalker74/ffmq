@@ -47,7 +47,8 @@ public final class RemoteDurableTopicSubscriber extends RemoteTopicSubscriber
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.session.RemoteMessageConsumer#remoteInit()
      */
-    protected final void remoteInit() throws JMSException
+    @Override
+	protected final void remoteInit() throws JMSException
     {
         CreateDurableSubscriberQuery query = new CreateDurableSubscriberQuery();
         query.setSessionId(session.getId());

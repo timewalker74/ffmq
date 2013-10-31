@@ -17,6 +17,7 @@
  */
 package net.timewalker.ffmq3.jmx.rmi;
 
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.rmi.NotBoundException;
@@ -29,7 +30,6 @@ import java.util.Map;
 
 import javax.jms.JMSException;
 import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnectorServer;
 import javax.management.remote.JMXConnectorServerFactory;
@@ -87,9 +87,9 @@ public final class JMXOverRMIAgent implements JMXAgent
         	//-------------------------
         	// Execute the following code using introspection :
         	//   mx4j.log.Log.redirectTo(new Log4JLogger());
-        	Class logClass = Class.forName("mx4j.log.Log");
-        	Class loggerClass = Class.forName("mx4j.log.Logger");
-        	Class log4JLoggerClass = Class.forName("mx4j.log.Log4JLogger");
+        	Class<?> logClass = Class.forName("mx4j.log.Log");
+        	Class<?> loggerClass = Class.forName("mx4j.log.Logger");
+        	Class<?> log4JLoggerClass = Class.forName("mx4j.log.Log4JLogger");
         	Object logger = log4JLoggerClass.newInstance();
         	Method redirectToMethod = logClass.getMethod("redirectTo", new Class[] { loggerClass });
         	redirectToMethod.invoke(null, new Object[] { logger });
@@ -140,15 +140,15 @@ public final class JMXOverRMIAgent implements JMXAgent
                 registry = LocateRegistry.createRegistry(jndiRmiPort,null,ssf);
             }
             
-            // Create the MBean server
-            mBeanServer = createMBeanServer();
+            // Get the JVM MBean server
+            mBeanServer = ManagementFactory.getPlatformMBeanServer();
             
             // Service URL
             JMXServiceURL url = new JMXServiceURL("service:jmx:rmi://"+rmiListenAddr+"/jndi/rmi://"+rmiListenAddr+":" + jndiRmiPort + "/"+ jndiName);
             log.info("JMX Service URL : "+url);
             
             // Create and start the RMIConnectorServer
-            Map env = new HashMap();
+            Map<String,Object> env = new HashMap<>();
             mBeanServerSocketFactory = new JMXOverRMIServerSocketFactory(10,rmiListenAddr,true);
             env.put(RMIConnectorServer.JNDI_REBIND_ATTRIBUTE, "true");
             //env.put(RMIConnectorServer.RMI_CLIENT_SOCKET_FACTORY_ATTRIBUTE, new JMXRMIClientSocketFactory(rmiListenAddr));
@@ -162,34 +162,12 @@ public final class JMXOverRMIAgent implements JMXAgent
         }
     }
     
-    private MBeanServer createMBeanServer()
-    {
-    	try
-        {
-        	// Soft dependency on plateform MBeanServer (java 1.5+)
-        	//-------------------------
-        	// Execute the following code using introspection :
-        	//   java.lang.management.ManagementFactory.getPlatformMBeanServer();
-        	Class managementFactoryClass = Class.forName("java.lang.management.ManagementFactory");
-        	
-        	Method getPlatformMBeanServerMethod = managementFactoryClass.getMethod("getPlatformMBeanServer", null);
-        	MBeanServer plateformServer = (MBeanServer)getPlatformMBeanServerMethod.invoke(null, null);
-        	log.info("Successfully obtained plateform JMX MBeanServer.");
-        	return plateformServer;
-        }
-        catch (Exception e)
-        {
-        	// Cannot obtain platform server, create a new one
-        	log.info("No plateform MBeans available, creating a new JMX MBeanServer.");
-        	return MBeanServerFactory.createMBeanServer(JMX_DOMAIN);
-        }
-    }
-    
     /*
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.jmx.JMXAgent#stop()
      */
-    public void stop()
+    @Override
+	public void stop()
     {
         log.info("Stopping JMX agent");
         if (connectorServer != null)
@@ -245,6 +223,7 @@ public final class JMXOverRMIAgent implements JMXAgent
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.jmx.JMXAgent#register(javax.management.ObjectName, java.lang.Object)
      */
+	@Override
 	public void register( ObjectName name , Object mBean ) throws JMSException
 	{
 		log.debug("Registering object " + name);
@@ -262,6 +241,7 @@ public final class JMXOverRMIAgent implements JMXAgent
   	 * (non-Javadoc)
   	 * @see net.timewalker.ffmq3.jmx.JMXAgent#unregister(javax.management.ObjectName)
   	 */
+	@Override
 	public void unregister( ObjectName name ) throws JMSException
 	{
 	    log.debug("Unregistering object "+name);

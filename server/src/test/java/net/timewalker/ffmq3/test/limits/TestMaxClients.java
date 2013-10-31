@@ -37,14 +37,14 @@ public class TestMaxClients
 {
 	public static void main(String[] args) throws Exception
 	{
-		Hashtable env = new Hashtable();
+		Hashtable<String,Object> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
         env.put(Context.PROVIDER_URL, TestUtils.TCP_TRANSPORT_URI);
         Context context = new InitialContext(env);
         
         ConnectionFactory connFactory = (ConnectionFactory)context.lookup(FFMQConstants.JNDI_CONNECTION_FACTORY_NAME);
         
-        List conns = new ArrayList();
+        List<Connection> conns = new ArrayList<>();
         for(int n=0;n<1000;n++)
         {
 	        Connection conn = connFactory.createConnection("test","test");

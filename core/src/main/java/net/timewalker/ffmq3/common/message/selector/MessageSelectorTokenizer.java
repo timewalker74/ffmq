@@ -36,7 +36,7 @@ public final class MessageSelectorTokenizer
     };
     
     // Attributes
-    private List tokens = new ArrayList();
+    private List<String> tokens = new ArrayList<>();
     private int tokenizerOffset;
     
     /**
@@ -134,7 +134,7 @@ public final class MessageSelectorTokenizer
         }
     }
     
-    private void addAndCompress( String token , List tokensList ) throws InvalidSelectorException
+    private void addAndCompress( String token , List<String> tokensList ) throws InvalidSelectorException
     {
         if (tokensList.isEmpty())
         {
@@ -153,7 +153,7 @@ public final class MessageSelectorTokenizer
         //   not between
         //   not like
                 
-        String previous = (String)tokensList.get(tokensList.size()-1);
+        String previous = tokensList.get(tokensList.size()-1);
         if (previous.equalsIgnoreCase("is"))
         {
         	if (token.equalsIgnoreCase("true") || 
@@ -211,7 +211,7 @@ public final class MessageSelectorTokenizer
     public String nextToken()
     {
         if (hasMoreTokens())
-            return (String)tokens.get(tokenizerOffset++);
+            return tokens.get(tokenizerOffset++);
         return null;
     }
 }

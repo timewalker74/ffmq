@@ -36,7 +36,8 @@ public final class CloseBrowserEnumerationResponse extends AbstractResponsePacke
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.R_CLOSE_BROWSER_ENUM;
     }

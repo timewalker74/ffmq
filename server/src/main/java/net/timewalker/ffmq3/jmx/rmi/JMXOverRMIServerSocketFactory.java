@@ -48,7 +48,7 @@ public final class JMXOverRMIServerSocketFactory implements RMIServerSocketFacto
     private ServerSocketFactory socketFactory;
     
     // Runtime
-    private List createdSockets = new Vector();
+    private List<ServerSocket> createdSockets = new Vector<>();
     
     /**
      * Constructor
@@ -82,7 +82,8 @@ public final class JMXOverRMIServerSocketFactory implements RMIServerSocketFacto
      * (non-Javadoc)
      * @see java.rmi.server.RMIServerSocketFactory#createServerSocket(int)
      */
-    public ServerSocket createServerSocket(int port) throws IOException
+    @Override
+	public ServerSocket createServerSocket(int port) throws IOException
     {
     	ServerSocket socket = getSocketFactory().createServerSocket(port,backLog,getListenAddress());
     	if (manageSockets)
@@ -100,10 +101,10 @@ public final class JMXOverRMIServerSocketFactory implements RMIServerSocketFacto
     	
     	synchronized (createdSockets)
 		{
-	    	Iterator sockets = createdSockets.iterator();
+	    	Iterator<ServerSocket> sockets = createdSockets.iterator();
 	    	while (sockets.hasNext())
 	    	{
-	    		ServerSocket socket = (ServerSocket)sockets.next();
+	    		ServerSocket socket = sockets.next();
 	    		try
 	    		{
 	    			socket.close();

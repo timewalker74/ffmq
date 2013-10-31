@@ -41,7 +41,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#createDataStore()
      */
-    protected LinkedDataStore createDataStore()
+    @Override
+	protected LinkedDataStore createDataStore()
     {
         int maxSize = queueDef.getMaxNonPersistentMessages();
         return new InMemoryLinkedDataStore(queueDef.getName()+" Volatile Store",
@@ -52,7 +53,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#getDeliveryMode()
      */
-    public int getDeliveryMode()
+    @Override
+	public int getDeliveryMode()
     {
     	return DeliveryMode.NON_PERSISTENT;
     }
@@ -60,7 +62,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#retrieveMessage(int)
      */
-    protected AbstractMessage retrieveMessage(int handle) throws JMSException
+    @Override
+	protected AbstractMessage retrieveMessage(int handle) throws JMSException
     {
     	return (AbstractMessage)((InMemoryLinkedDataStore)dataStore).retrieve(handle);
     }
@@ -68,7 +71,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#retrieveMessagePriority(int)
      */
-    protected int retrieveMessagePriority(int handle) throws JMSException
+    @Override
+	protected int retrieveMessagePriority(int handle) throws JMSException
     {
     	return retrieveMessage(handle).getJMSPriority();
     }
@@ -77,7 +81,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.impl.AbstractMessageStore#storeMessage(net.timewalker.ffmq3.common.message.AbstractMessage, int)
      */
-    protected int storeMessage(AbstractMessage message, int previousHandle) throws JMSException
+    @Override
+	protected int storeMessage(AbstractMessage message, int previousHandle) throws JMSException
     {
     	return ((InMemoryLinkedDataStore)dataStore).store(message, previousHandle);
 	}
@@ -85,7 +90,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#replaceMessage(int, net.timewalker.ffmq3.common.message.AbstractMessage)
      */
-    protected int replaceMessage(int handle, AbstractMessage message) throws JMSException
+    @Override
+	protected int replaceMessage(int handle, AbstractMessage message) throws JMSException
     {
     	return ((InMemoryLinkedDataStore)dataStore).replace(handle,message);
     }
@@ -94,7 +100,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#delete()
      */
-    public void delete() throws JMSException
+    @Override
+	public void delete() throws JMSException
     {
         // Nothing to do (volatile)
     }
@@ -102,7 +109,8 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#isFailSafe()
      */
-    public boolean isFailSafe()
+    @Override
+	public boolean isFailSafe()
     {
     	return false;
     }

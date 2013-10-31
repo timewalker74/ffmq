@@ -80,9 +80,9 @@ public abstract class AbstractSession implements Session
     public Object deliveryLock = new Object();
     
     // Children
-    protected Map consumersMap = new Hashtable();
-    private Map producersMap = new Hashtable();
-    private Map browsersMap = new Hashtable();
+    protected Map<IntegerID,AbstractMessageConsumer> consumersMap = new Hashtable<>();
+    private Map<IntegerID,AbstractMessageProducer> producersMap = new Hashtable<>();
+    private Map<IntegerID,AbstractQueueBrowser> browsersMap = new Hashtable<>();
     
     // Runtime
     protected IntegerIDProvider idProvider = new IntegerIDProvider();
@@ -129,7 +129,8 @@ public abstract class AbstractSession implements Session
      * (non-Javadoc)
      * @see javax.jms.Session#close()
      */
-    public final void close() throws JMSException
+    @Override
+	public final void close() throws JMSException
     {
     	externalAccessLock.writeLock().lock();
     	try
@@ -192,10 +193,10 @@ public abstract class AbstractSession implements Session
     {
         synchronized (consumersMap)
         {
-            Iterator allConsumers = consumersMap.values().iterator();
+            Iterator<AbstractMessageConsumer> allConsumers = consumersMap.values().iterator();
             while (allConsumers.hasNext())
             {
-                AbstractMessageConsumer consumer = (AbstractMessageConsumer)allConsumers.next();
+                AbstractMessageConsumer consumer = allConsumers.next();
                 consumer.wakeUp();
             }
         }
@@ -206,7 +207,7 @@ public abstract class AbstractSession implements Session
      */
     public final AbstractMessageConsumer lookupRegisteredConsumer( IntegerID consumerId )
     {
-        return (AbstractMessageConsumer)consumersMap.get(consumerId);
+        return consumersMap.get(consumerId);
     }
     
     /**
@@ -214,7 +215,7 @@ public abstract class AbstractSession implements Session
      */
     public final AbstractQueueBrowser lookupRegisteredBrowser( IntegerID browserId )
     {
-        return (AbstractQueueBrowser)browsersMap.get(browserId);
+        return browsersMap.get(browserId);
     }
     
     /**
@@ -276,14 +277,14 @@ public abstract class AbstractSession implements Session
      */
     private void closeRemainingConsumers()
     {
-        List consumersToClose = new ArrayList(consumersMap.size());
+        List<AbstractMessageConsumer> consumersToClose = new ArrayList<>(consumersMap.size());
         synchronized (consumersMap)
         {
             consumersToClose.addAll(consumersMap.values());
         }
         for (int n = 0 ; n < consumersToClose.size() ; n++)
         {
-            MessageConsumer consumer = (MessageConsumer)consumersToClose.get(n);
+            MessageConsumer consumer = consumersToClose.get(n);
             log.debug("Auto-closing unclosed consumer : "+consumer);
             try
             {
@@ -301,14 +302,14 @@ public abstract class AbstractSession implements Session
      */
     private void closeRemainingProducers()
     {
-        List producersToClose = new ArrayList(producersMap.size());
+        List<AbstractMessageProducer> producersToClose = new ArrayList<>(producersMap.size());
         synchronized (producersMap)
         {
             producersToClose.addAll(producersMap.values());
         }
         for (int n = 0 ; n < producersToClose.size() ; n++)
         {
-            MessageProducer producer = (MessageProducer)producersToClose.get(n);
+            MessageProducer producer = producersToClose.get(n);
             log.debug("Auto-closing unclosed producer : "+producer);
             try
             {
@@ -326,14 +327,14 @@ public abstract class AbstractSession implements Session
      */
     private void closeRemainingBrowsers()
     {
-        List browsersToClose = new ArrayList(browsersMap.size());
+        List<AbstractQueueBrowser> browsersToClose = new ArrayList<>(browsersMap.size());
         synchronized (browsersMap)
         {
         	browsersToClose.addAll(browsersMap.values());
         }
         for (int n = 0 ; n < browsersToClose.size() ; n++)
         {
-        	QueueBrowser browser = (QueueBrowser)browsersToClose.get(n);
+        	QueueBrowser browser = browsersToClose.get(n);
             log.debug("Auto-closing unclosed browser : "+browser);
             try
             {
@@ -355,7 +356,8 @@ public abstract class AbstractSession implements Session
      * (non-Javadoc)
      * @see javax.jms.Session#createMessage()
      */
-    public final Message createMessage() throws JMSException
+    @Override
+	public final Message createMessage() throws JMSException
     {
         return new EmptyMessageImpl();
     }
@@ -363,7 +365,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createBytesMessage()
      */
-    public final BytesMessage createBytesMessage() throws JMSException
+    @Override
+	public final BytesMessage createBytesMessage() throws JMSException
     {
         return new BytesMessageImpl();
     }
@@ -371,7 +374,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createMapMessage()
      */
-    public final MapMessage createMapMessage() throws JMSException
+    @Override
+	public final MapMessage createMapMessage() throws JMSException
     {
         return new MapMessageImpl();
     }
@@ -379,7 +383,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createObjectMessage()
      */
-    public final ObjectMessage createObjectMessage() throws JMSException
+    @Override
+	public final ObjectMessage createObjectMessage() throws JMSException
     {
         return new ObjectMessageImpl();
     }
@@ -387,7 +392,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createStreamMessage()
      */
-    public final StreamMessage createStreamMessage() throws JMSException
+    @Override
+	public final StreamMessage createStreamMessage() throws JMSException
     {
         return new StreamMessageImpl();
     }
@@ -395,7 +401,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createTextMessage()
      */
-    public final TextMessage createTextMessage() throws JMSException
+    @Override
+	public final TextMessage createTextMessage() throws JMSException
     {
         return new TextMessageImpl();
     }
@@ -404,7 +411,8 @@ public abstract class AbstractSession implements Session
      * (non-Javadoc)
      * @see javax.jms.Session#createQueue(java.lang.String)
      */
-    public Queue createQueue(String queueName) throws JMSException
+    @Override
+	public Queue createQueue(String queueName) throws JMSException
     {
         return new QueueRef(queueName);
     }
@@ -412,7 +420,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#getAcknowledgeMode()
      */
-    public final int getAcknowledgeMode() throws JMSException
+    @Override
+	public final int getAcknowledgeMode() throws JMSException
     {
         if (transacted)
             return Session.SESSION_TRANSACTED; // [JMS Spec]
@@ -422,7 +431,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#getTransacted()
      */
-    public final boolean getTransacted() throws JMSException
+    @Override
+	public final boolean getTransacted() throws JMSException
     {
         return transacted;
     }
@@ -430,7 +440,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createObjectMessage(java.io.Serializable)
      */
-    public final ObjectMessage createObjectMessage(Serializable object) throws JMSException
+    @Override
+	public final ObjectMessage createObjectMessage(Serializable object) throws JMSException
     {
         return new ObjectMessageImpl(object);
     }
@@ -438,7 +449,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createTextMessage(java.lang.String)
      */
-    public final TextMessage createTextMessage(String text) throws JMSException
+    @Override
+	public final TextMessage createTextMessage(String text) throws JMSException
     {
         return new TextMessageImpl(text);
     }
@@ -446,7 +458,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#getMessageListener()
      */
-    public final MessageListener getMessageListener() throws JMSException
+    @Override
+	public final MessageListener getMessageListener() throws JMSException
     {
         throw new FFMQException("Unsupported feature","UNSUPPORTED_FEATURE");
     }
@@ -454,7 +467,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#setMessageListener(javax.jms.MessageListener)
      */
-    public final void setMessageListener(MessageListener listener) throws JMSException
+    @Override
+	public final void setMessageListener(MessageListener listener) throws JMSException
     {
         throw new FFMQException("Unsupported feature","UNSUPPORTED_FEATURE");
     }
@@ -462,7 +476,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createTopic(java.lang.String)
      */
-    public Topic createTopic(String topicName) throws JMSException
+    @Override
+	public Topic createTopic(String topicName) throws JMSException
     {
         return new TopicRef(topicName);
     }
@@ -470,7 +485,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createConsumer(javax.jms.Destination, java.lang.String)
      */
-    public final MessageConsumer createConsumer(Destination destination, String messageSelector) throws JMSException
+    @Override
+	public final MessageConsumer createConsumer(Destination destination, String messageSelector) throws JMSException
     {
         return createConsumer(destination,messageSelector,false);
     }
@@ -478,7 +494,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createConsumer(javax.jms.Destination)
      */
-    public final MessageConsumer createConsumer(Destination destination) throws JMSException
+    @Override
+	public final MessageConsumer createConsumer(Destination destination) throws JMSException
     {
         return createConsumer(destination,null,false);
     }
@@ -486,7 +503,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createDurableSubscriber(javax.jms.Topic, java.lang.String)
      */
-    public TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException
+    @Override
+	public TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException
     {
         return createDurableSubscriber(topic,name,null,false);
     }
@@ -494,7 +512,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#createBrowser(javax.jms.Queue)
      */
-    public QueueBrowser createBrowser(Queue queue) throws JMSException
+    @Override
+	public QueueBrowser createBrowser(Queue queue) throws JMSException
     {
         return createBrowser(queue,null);
     }
@@ -502,7 +521,8 @@ public abstract class AbstractSession implements Session
     /* (non-Javadoc)
      * @see javax.jms.Session#run()
      */
-    public final void run()
+    @Override
+	public final void run()
     {
         // Not implemented
     }
@@ -537,7 +557,8 @@ public abstract class AbstractSession implements Session
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         
@@ -568,10 +589,10 @@ public abstract class AbstractSession implements Session
 			if (!consumersMap.isEmpty())
 			{
 				int pos = 0;
-				Iterator consumers = consumersMap.values().iterator();
+				Iterator<AbstractMessageConsumer> consumers = consumersMap.values().iterator();
 				while (consumers.hasNext())
 				{
-					AbstractMessageHandler handler = (AbstractMessageHandler)consumers.next();
+					AbstractMessageHandler handler = consumers.next();
 					if (pos++ > 0)
 						sb.append(",");					
 					handler.getEntitiesDescription(sb);
@@ -583,10 +604,10 @@ public abstract class AbstractSession implements Session
 			if (!producersMap.isEmpty())
 			{
 				int pos = 0;
-				Iterator producers = producersMap.values().iterator();
+				Iterator<AbstractMessageProducer> producers = producersMap.values().iterator();
 				while (producers.hasNext())
 				{
-					AbstractMessageHandler handler = (AbstractMessageHandler)producers.next();
+					AbstractMessageHandler handler = producers.next();
 					if (pos++ > 0)
 						sb.append(",");					
 					handler.getEntitiesDescription(sb);

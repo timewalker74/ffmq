@@ -37,7 +37,7 @@ import net.timewalker.ffmq3.utils.RawDataBuffer;
  */
 public final class StreamMessageImpl extends AbstractMessage implements StreamMessage
 {
-    private Vector body = new Vector();
+    private Vector<Object> body = new Vector<>();
     private transient int readPos;
     private transient ByteArrayInputStream currentByteInputStream;
     
@@ -56,7 +56,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#getType()
      */
-    protected byte getType()
+    @Override
+	protected byte getType()
     {
         return MessageType.STREAM;
     }
@@ -64,7 +65,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#unserializeBodyFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeBodyFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeBodyFrom(RawDataBuffer in)
     {
         int size = in.readInt();
         body.ensureCapacity(size);
@@ -78,7 +80,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#serializeBodyTo(net.timewalker.ffmq3.utils.RawDataBuffer)
      */
-    protected final void serializeBodyTo(RawDataBuffer out)
+    @Override
+	protected final void serializeBodyTo(RawDataBuffer out)
     {
     	out.writeInt(body.size());
         for (int n = 0 ; n < body.size() ; n++)
@@ -108,7 +111,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readBoolean()
      */
-    public boolean readBoolean() throws JMSException
+    @Override
+	public boolean readBoolean() throws JMSException
     {
     	backupState();
     	try
@@ -131,7 +135,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readByte()
      */
-    public byte readByte() throws JMSException
+    @Override
+	public byte readByte() throws JMSException
     {
     	backupState();
     	try
@@ -154,7 +159,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readBytes(byte[])
      */
-    public int readBytes(byte[] value) throws JMSException
+    @Override
+	public int readBytes(byte[] value) throws JMSException
     {
     	backupState();
     	try
@@ -198,7 +204,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readChar()
      */
-    public char readChar() throws JMSException
+    @Override
+	public char readChar() throws JMSException
     {
     	backupState();
     	try
@@ -221,7 +228,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readDouble()
      */
-    public double readDouble() throws JMSException
+    @Override
+	public double readDouble() throws JMSException
     {
     	backupState();
     	try
@@ -244,7 +252,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readFloat()
      */
-    public float readFloat() throws JMSException
+    @Override
+	public float readFloat() throws JMSException
     {
     	backupState();
 		try
@@ -267,7 +276,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readInt()
      */
-    public int readInt() throws JMSException
+    @Override
+	public int readInt() throws JMSException
     {
     	backupState();
 		try
@@ -290,7 +300,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readLong()
      */
-    public long readLong() throws JMSException
+    @Override
+	public long readLong() throws JMSException
     {
     	backupState();
 		try
@@ -312,7 +323,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     /* (non-Javadoc)
      * @see javax.jms.StreamMessage#readObject()
      */
-    public Object readObject() throws JMSException
+    @Override
+	public Object readObject() throws JMSException
     {
     	return internalReadObject();
     }
@@ -339,7 +351,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readShort()
      */
-    public short readShort() throws JMSException
+    @Override
+	public short readShort() throws JMSException
     {
     	backupState();
 		try
@@ -362,7 +375,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#readString()
      */
-    public String readString() throws JMSException
+    @Override
+	public String readString() throws JMSException
     {
     	backupState();
 		try
@@ -385,7 +399,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#reset()
      */
-    public void reset()
+    @Override
+	public void reset()
     {
         bodyIsReadOnly = true;
         readPos = 0;
@@ -404,7 +419,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeBoolean(boolean)
      */
-    public void writeBoolean(boolean value) throws JMSException
+    @Override
+	public void writeBoolean(boolean value) throws JMSException
     {
         write(Boolean.valueOf(value));
     }
@@ -413,7 +429,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeByte(byte)
      */
-    public void writeByte(byte value) throws JMSException
+    @Override
+	public void writeByte(byte value) throws JMSException
     {
         write(new Byte(value));
     }
@@ -422,7 +439,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeBytes(byte[])
      */
-    public void writeBytes(byte[] value) throws JMSException
+    @Override
+	public void writeBytes(byte[] value) throws JMSException
     {
         write(value.clone());
     }
@@ -431,7 +449,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeBytes(byte[], int, int)
      */
-    public void writeBytes(byte[] value, int offset, int length) throws JMSException
+    @Override
+	public void writeBytes(byte[] value, int offset, int length) throws JMSException
     {
         byte[] reducedValue = new byte[length];
         System.arraycopy(value, offset, reducedValue, 0, length);
@@ -442,7 +461,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeChar(char)
      */
-    public void writeChar(char value) throws JMSException
+    @Override
+	public void writeChar(char value) throws JMSException
     {
         write(new Character(value));
     }
@@ -451,7 +471,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeDouble(double)
      */
-    public void writeDouble(double value) throws JMSException
+    @Override
+	public void writeDouble(double value) throws JMSException
     {
         write(new Double(value));
     }
@@ -460,7 +481,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeFloat(float)
      */
-    public void writeFloat(float value) throws JMSException
+    @Override
+	public void writeFloat(float value) throws JMSException
     {
         write(new Float(value));
     }
@@ -469,7 +491,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeInt(int)
      */
-    public void writeInt(int value) throws JMSException
+    @Override
+	public void writeInt(int value) throws JMSException
     {
         write(new Integer(value));
     }
@@ -478,7 +501,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeLong(long)
      */
-    public void writeLong(long value) throws JMSException
+    @Override
+	public void writeLong(long value) throws JMSException
     {
         write(new Long(value));
     }
@@ -487,7 +511,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeObject(java.lang.Object)
      */
-    public void writeObject(Object value) throws JMSException
+    @Override
+	public void writeObject(Object value) throws JMSException
     {
         if (value != null)
         {
@@ -512,7 +537,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeShort(short)
      */
-    public void writeShort(short value) throws JMSException
+    @Override
+	public void writeShort(short value) throws JMSException
     {
         write(new Short(value));
     }
@@ -521,7 +547,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.StreamMessage#writeString(java.lang.String)
      */
-    public void writeString(String value) throws JMSException
+    @Override
+	public void writeString(String value) throws JMSException
     {
         write(value);
     }
@@ -530,7 +557,8 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
      * (non-Javadoc)
      * @see javax.jms.Message#clearBody()
      */
-    public void clearBody()
+    @Override
+	public void clearBody()
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         bodyIsReadOnly = false;
@@ -542,11 +570,12 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#copy()
      */
-    public AbstractMessage copy()
+    @Override
+	public AbstractMessage copy()
     {
         StreamMessageImpl clone = new StreamMessageImpl();
         copyCommonFields(clone);
-        clone.body = (Vector)this.body.clone();
+        clone.body = (Vector<Object>)this.body.clone();
         
         return clone;
     }

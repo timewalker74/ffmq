@@ -73,13 +73,13 @@ public class TestDurableSubscription
     
     private static void testDurableSubscriber( String providerURL ) throws Exception
     {
-        Hashtable env = new Hashtable();
+        Hashtable<String,Object> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
         env.put(Context.PROVIDER_URL, providerURL);
         env.put(FFMQConstants.JNDI_ENV_CLIENT_ID, "testclient");
         Context context1 = new InitialContext(env);
         
-        Hashtable env2 = new Hashtable();
+        Hashtable<String,Object> env2 = new Hashtable<>();
         env2.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
         //env2.put(Context.PROVIDER_URL, "vm://testengine");
         env.put(Context.PROVIDER_URL, providerURL);

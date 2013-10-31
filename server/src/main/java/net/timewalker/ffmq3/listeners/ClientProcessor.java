@@ -68,7 +68,6 @@ import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryQueueQuery;
 import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryTopicQuery;
 import net.timewalker.ffmq3.transport.packet.query.GetQuery;
 import net.timewalker.ffmq3.transport.packet.query.OpenConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.query.PingQuery;
 import net.timewalker.ffmq3.transport.packet.query.PrefetchQuery;
 import net.timewalker.ffmq3.transport.packet.query.PutQuery;
 import net.timewalker.ffmq3.transport.packet.query.QueueBrowserFetchElementQuery;
@@ -77,8 +76,6 @@ import net.timewalker.ffmq3.transport.packet.query.RecoverQuery;
 import net.timewalker.ffmq3.transport.packet.query.RollbackMessageQuery;
 import net.timewalker.ffmq3.transport.packet.query.RollbackQuery;
 import net.timewalker.ffmq3.transport.packet.query.SetClientIDQuery;
-import net.timewalker.ffmq3.transport.packet.query.StartConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.query.StopConnectionQuery;
 import net.timewalker.ffmq3.transport.packet.query.UnsubscribeQuery;
 import net.timewalker.ffmq3.transport.packet.response.AcknowledgeResponse;
 import net.timewalker.ffmq3.transport.packet.response.CloseBrowserEnumerationResponse;
@@ -153,6 +150,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getClientID()
 	 */
+	@Override
 	public String getClientID()
 	{
 		return id;
@@ -161,6 +159,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getPeerDescription()
 	 */
+	@Override
 	public String getPeerDescription()
 	{
 		return transport.getRemotePeerID();
@@ -169,6 +168,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#isAuthenticated()
 	 */
+	@Override
 	public boolean isAuthenticated()
 	{
 		return localConnection != null;
@@ -177,6 +177,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getSessionsCount()
 	 */
+	@Override
 	public int getSessionsCount()
 	{
 		return localConnection != null ? localConnection.getSessionsCount() : 0;
@@ -185,6 +186,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getProducersCount()
 	 */
+	@Override
 	public int getProducersCount()
 	{
 		return localConnection != null ? localConnection.getProducersCount() : 0;
@@ -193,6 +195,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getConsumersCount()
 	 */
+	@Override
 	public int getConsumersCount()
 	{
 		return localConnection != null ? localConnection.getConsumersCount() : 0;
@@ -201,6 +204,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getEntitiesDescription()
 	 */
+	@Override
 	public String getEntitiesDescription()
 	{
 		if (localConnection == null)
@@ -232,7 +236,8 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getLastActivity()
      */
-    public long getLastActivity()
+    @Override
+	public long getLastActivity()
     {
     	return lastActivity;
     }
@@ -240,7 +245,8 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getConnectionDate()
      */
-    public Date getConnectionDate()
+    @Override
+	public Date getConnectionDate()
     {
     	return new Date(lastActivity);
     }
@@ -248,7 +254,8 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
      */
-    public long getTimeoutDelay()
+    @Override
+	public long getTimeoutDelay()
     {
     	return (long)authTimeout*1000;
     }
@@ -256,7 +263,8 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
      */
-    public boolean onActivityTimeout() throws Exception
+    @Override
+	public boolean onActivityTimeout() throws Exception
     {
     	if (!transport.isClosed())
     	{
@@ -270,7 +278,8 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetReceived(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
      */
-    public boolean packetReceived(AbstractPacket packet)
+    @Override
+	public boolean packetReceived(AbstractPacket packet)
     {
         AbstractQueryPacket query = (AbstractQueryPacket)packet;
     	AbstractResponsePacket response = null;
@@ -319,7 +328,8 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetSent(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
      */
-    public void packetSent(AbstractPacket packet)
+    @Override
+	public void packetSent(AbstractPacket packet)
     {
         if (traceEnabled)
             log.trace("#"+id+" Sent "+packet);
@@ -328,7 +338,8 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	/* (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#transportClosed(boolean)
      */
-    public void transportClosed(boolean closedByRemotePeer)
+    @Override
+	public void transportClosed(boolean closedByRemotePeer)
     {
     	parentListener.unregisterClient(this);
         try
@@ -374,12 +385,12 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     		case PacketType.Q_DELETE_TEMP_QUEUE :   return processDeleteTemporaryQueue((DeleteTemporaryQueueQuery)query);
     		case PacketType.Q_DELETE_TEMP_TOPIC :   return processDeleteTemporaryTopic((DeleteTemporaryTopicQuery)query);
     		case PacketType.Q_OPEN_CONNECTION :     return processOpenConnection((OpenConnectionQuery)query);
-    		case PacketType.Q_START_CONNECTION :    return processStartConnection((StartConnectionQuery)query);
-    		case PacketType.Q_STOP_CONNECTION :     return processStopConnection((StopConnectionQuery)query);
+    		case PacketType.Q_START_CONNECTION :    return processStartConnection();
+    		case PacketType.Q_STOP_CONNECTION :     return processStopConnection();
     		case PacketType.Q_SET_CLIENT_ID :       return processSetClientID((SetClientIDQuery)query);
     		case PacketType.Q_UNSUBSCRIBE :         return processUnsubscribe((UnsubscribeQuery)query);
     		case PacketType.Q_PREFETCH :            return processPrefetch((PrefetchQuery)query);
-    		case PacketType.Q_PING :                return processPing((PingQuery)query);
+    		case PacketType.Q_PING :                return processPing();
     		case PacketType.Q_ROLLBACK_MESSAGE :    return processRollbackMessage((RollbackMessageQuery)query);
     		
     		default:
@@ -465,7 +476,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         LocalSession localSession = lookupSession(query);
                 
         // Commit session
-        List deliveredMessageIDs = query.getDeliveredMessageIDs();
+        List<String> deliveredMessageIDs = query.getDeliveredMessageIDs();
         localSession.commit(deliveredMessageIDs != null && !deliveredMessageIDs.isEmpty(),
         		            deliveredMessageIDs);
         
@@ -475,7 +486,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     private RollbackResponse processRollback( RollbackQuery query ) throws JMSException
     {
     	LocalSession localSession = lookupSession(query);
-    	List deliveredMessageIDs = query.getDeliveredMessageIDs();
+    	List<String> deliveredMessageIDs = query.getDeliveredMessageIDs();
         localSession.rollback(deliveredMessageIDs != null && !deliveredMessageIDs.isEmpty(), deliveredMessageIDs);
         
         return new RollbackResponse();
@@ -554,7 +565,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         
         QueueBrowserFetchElementResponse response = new QueueBrowserFetchElementResponse();
         if (browserEnum.hasMoreElements())
-        	response.setMessage((AbstractMessage)browserEnum.nextElement());
+        	response.setMessage(browserEnum.nextElement());
         else
         	response.setMessage(null);
 
@@ -567,7 +578,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         consumer.close();
         
         // Rollback undelivered prefetched messages
-        List undeliveredMessageIDs = query.getUndeliveredMessageIDs();
+        List<String> undeliveredMessageIDs = query.getUndeliveredMessageIDs();
         if (undeliveredMessageIDs != null && !undeliveredMessageIDs.isEmpty())
         	((LocalSession)consumer.getSession()).rollbackUndelivered(undeliveredMessageIDs);
 
@@ -582,7 +593,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         if (localSession != null)
         {
             // Rollback undelivered prefetched messages
-            List undeliveredMessageIDs = new ArrayList();
+            List<String> undeliveredMessageIDs = new ArrayList<>();
             undeliveredMessageIDs.add(query.getMessageId());
             localSession.rollbackUndelivered(undeliveredMessageIDs);
             
@@ -677,13 +688,13 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         return response;
     }
     
-    private StartConnectionResponse processStartConnection( StartConnectionQuery query ) throws JMSException
+    private StartConnectionResponse processStartConnection() throws JMSException
     {
         getLocalConnection().start();
         return new StartConnectionResponse();
     }
     
-    private StopConnectionResponse processStopConnection( StopConnectionQuery query ) throws JMSException
+    private StopConnectionResponse processStopConnection() throws JMSException
     {
         getLocalConnection().stop();
         return new StopConnectionResponse();
@@ -721,7 +732,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         return new UnsubscribeResponse();
     }
     
-    private PingResponse processPing( PingQuery query ) throws JMSException
+    private PingResponse processPing() throws JMSException
     {
     	getLocalConnection(); // Make sure a connection was established
     	return new PingResponse();

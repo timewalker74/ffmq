@@ -76,6 +76,7 @@ public final class JMXRMIClientSocketFactory implements RMIClientSocketFactory, 
 	/* (non-Javadoc)
 	 * @see java.rmi.server.RMIClientSocketFactory#createSocket(java.lang.String, int)
 	 */
+	@Override
 	public Socket createSocket(String host, int port) throws IOException
 	{
 		return new Socket(getTargetHost(host),port);

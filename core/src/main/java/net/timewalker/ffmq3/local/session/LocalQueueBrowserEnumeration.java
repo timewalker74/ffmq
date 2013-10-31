@@ -74,6 +74,7 @@ public final class LocalQueueBrowserEnumeration extends AbstractQueueBrowserEnum
 	 * (non-Javadoc)
 	 * @see java.util.Enumeration#hasMoreElements()
 	 */
+	@Override
 	public boolean hasMoreElements()
 	{
 		if (cursor.endOfQueueReached())
@@ -95,7 +96,8 @@ public final class LocalQueueBrowserEnumeration extends AbstractQueueBrowserEnum
 	 * (non-Javadoc)
 	 * @see java.util.Enumeration#nextElement()
 	 */
-	public Object nextElement()
+	@Override
+	public AbstractMessage nextElement()
 	{
 		if (cursor.endOfQueueReached())
 			throw new NoSuchElementException();

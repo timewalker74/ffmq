@@ -244,7 +244,7 @@ public final class Settings
      * Return a set of the settings keys
      * @return a set of the settings keys
      */
-    public Set keySet()
+    public Set<Object> keySet()
     {
         return settings.keySet();
     }

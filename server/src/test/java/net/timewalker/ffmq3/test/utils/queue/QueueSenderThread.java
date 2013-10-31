@@ -58,7 +58,8 @@ public class QueueSenderThread extends AbstractQueueHandlerThread
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.concurrent.SynchronizableThread#run()
      */
-    public void run()
+    @Override
+	public void run()
     {
         super.run();
         

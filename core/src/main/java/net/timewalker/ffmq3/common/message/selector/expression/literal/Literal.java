@@ -51,7 +51,8 @@ public abstract class Literal extends SelectorNode implements AtomicOperand
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
      */
-    public final Object evaluate( Message message )
+    @Override
+	public final Object evaluate( Message message )
     {
         return value;
     }
@@ -59,7 +60,8 @@ public abstract class Literal extends SelectorNode implements AtomicOperand
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return String.valueOf(value);
     }

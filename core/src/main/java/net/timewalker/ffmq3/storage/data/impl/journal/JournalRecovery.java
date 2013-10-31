@@ -91,7 +91,7 @@ public final class JournalRecovery
 		int replayedTransactions = 0;
 		long currentTransactionId = -1;
 		int newBlockCount = -1;
-		LinkedList transactionQueue = new LinkedList();
+		LinkedList<AbstractJournalOperation> transactionQueue = new LinkedList<>();
 		try
 		{
 			AbstractJournalOperation op;
@@ -128,7 +128,7 @@ public final class JournalRecovery
 			
 			if (transactionQueue.size() > 0)
 			{
-				op = (AbstractJournalOperation)transactionQueue.removeFirst();
+				op = transactionQueue.removeFirst();
 				log.warn("["+baseName+"] Dropping incomplete transaction : #"+op.getTransactionId());
 			}
 			
@@ -151,12 +151,12 @@ public final class JournalRecovery
 		return newBlockCount;
 	}
 	
-	private int applyOperations( LinkedList transactionQueue ) throws JournalException
+	private int applyOperations( LinkedList<AbstractJournalOperation> transactionQueue ) throws JournalException
 	{
 	    int newBlockCount = -1;
 		while (transactionQueue.size() > 0)
 		{
-			AbstractJournalOperation op = (AbstractJournalOperation)transactionQueue.removeFirst();
+			AbstractJournalOperation op = transactionQueue.removeFirst();
 			
 			if (op instanceof MetaDataWriteOperation)
 			{

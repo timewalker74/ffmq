@@ -64,7 +64,8 @@ public class TcpPacketReceiver extends AbstractTcpPacketHandler implements Runna
     /* (non-Javadoc)
      * @see java.lang.Thread#run()
      */
-    public void run()
+    @Override
+	public void run()
     {
         try
         {
@@ -116,7 +117,8 @@ public class TcpPacketReceiver extends AbstractTcpPacketHandler implements Runna
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
      */
-    public long getTimeoutDelay()
+    @Override
+	public long getTimeoutDelay()
     {
     	return pingInterval*1000L*2;
     }
@@ -124,7 +126,8 @@ public class TcpPacketReceiver extends AbstractTcpPacketHandler implements Runna
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
      */
-    public boolean onActivityTimeout() throws Exception
+    @Override
+	public boolean onActivityTimeout() throws Exception
     {
     	log.warn("#"+id+" ping timeout on client socket, closing connection.");
     	transport.closeTransport(true);

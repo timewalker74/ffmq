@@ -71,14 +71,14 @@ public final class FFMQEngine implements FFMQEngineMBean
 {
     private static final Log log = LogFactory.getLog(FFMQEngine.class);
     
-    private static Map deployedEngines = new Hashtable();
+    private static Map<String,FFMQEngine> deployedEngines = new Hashtable<>();
     
     /**
      * Get a deployed engine instance by name
      */
     public static FFMQEngine getDeployedInstance( String name ) throws JMSException
     {
-        FFMQEngine engine = (FFMQEngine)deployedEngines.get(name);
+        FFMQEngine engine = deployedEngines.get(name);
         if (engine == null)
             throw new FFMQException("No deployed engine named "+name,"UNKNOWN_ENGINE");
         return engine;
@@ -88,8 +88,8 @@ public final class FFMQEngine implements FFMQEngineMBean
     
     private String name;
     private FFMQEngineListener listener;
-    private Map queueMap = new Hashtable();
-    private Map topicMap = new Hashtable();
+    private Map<String,LocalQueue> queueMap = new Hashtable<>();
+    private Map<String,LocalTopic> topicMap = new Hashtable<>();
     private boolean deployed = false;
     private boolean securityEnabled;
     private FFMQEngineSetup setup;
@@ -128,7 +128,8 @@ public final class FFMQEngine implements FFMQEngineMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineMBean#getName()
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
@@ -146,7 +147,8 @@ public final class FFMQEngine implements FFMQEngineMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineMBean#isDeployed()
      */
-    public boolean isDeployed()
+    @Override
+	public boolean isDeployed()
     {
         return deployed;
     }
@@ -155,7 +157,8 @@ public final class FFMQEngine implements FFMQEngineMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.FFMQEngineMBean#isSecurityEnabled()
      */
-    public boolean isSecurityEnabled()
+    @Override
+	public boolean isSecurityEnabled()
     {
         return securityEnabled;
     }
@@ -349,11 +352,11 @@ public final class FFMQEngine implements FFMQEngineMBean
             // Undeploy queues
             synchronized (queueMap)
             {
-            	List queues = new ArrayList();
+            	List<LocalQueue> queues = new ArrayList<>();
             	queues.addAll(queueMap.values());
             	for (int i = 0; i < queues.size(); i++)
 				{
-                    LocalQueue localQueue = (LocalQueue)queues.get(i);
+                    LocalQueue localQueue = queues.get(i);
                     try
                     {
                     	undeployQueue(localQueue);
@@ -368,11 +371,11 @@ public final class FFMQEngine implements FFMQEngineMBean
             // Close topics
             synchronized (topicMap)
             {
-            	List topics = new ArrayList();
+            	List<LocalTopic> topics = new ArrayList<>();
             	topics.addAll(topicMap.values());
             	for (int i = 0; i < topics.size(); i++)
                 {
-                    LocalTopic localTopic = (LocalTopic)topics.get(i);
+                    LocalTopic localTopic = topics.get(i);
                     try
                     {
                     	undeployTopic(localTopic);
@@ -561,7 +564,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     {
         synchronized (queueMap)
         {
-            LocalQueue queue = (LocalQueue)queueMap.get(queueName);
+            LocalQueue queue = queueMap.get(queueName);
             if (queue != null)
             {
                 undeployQueue(queue);
@@ -588,7 +591,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     {
         synchronized (topicMap)
         {
-            LocalTopic topic = (LocalTopic)topicMap.remove(topicName);
+            LocalTopic topic = topicMap.remove(topicName);
             if (topic != null)
             {
                 undeployTopic(topic);
@@ -608,7 +611,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     {
         synchronized (queueMap)
         {
-            LocalQueue queue = (LocalQueue)queueMap.get(queueName);
+            LocalQueue queue = queueMap.get(queueName);
             if (queue == null)
                 return loadOrAutoCreateQueue(queueName);
             
@@ -623,7 +626,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     {
         synchronized (queueMap)
         {
-            LocalQueue queue = (LocalQueue)queueMap.get(queueName);
+            LocalQueue queue = queueMap.get(queueName);
             if (queue != null)
                 return true;
                 
@@ -704,7 +707,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     {
         synchronized (topicMap)
         {
-            LocalTopic topic = (LocalTopic)topicMap.get(topicName);
+            LocalTopic topic = topicMap.get(topicName);
             if (topic == null)
                 return loadOrAutoCreateTopic(topicName);
             
@@ -719,7 +722,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     {
         synchronized (topicMap)
         {
-            LocalTopic topic = (LocalTopic)topicMap.get(topicName);
+            LocalTopic topic = topicMap.get(topicName);
             if (topic != null)
                 return true;
             
@@ -782,10 +785,10 @@ public final class FFMQEngine implements FFMQEngineMBean
     	// Try to remove all remanent subscriptions first
         synchronized (topicMap)
         {
-            Iterator topics = topicMap.values().iterator();
+            Iterator<LocalTopic> topics = topicMap.values().iterator();
             while (topics.hasNext())
             {
-                LocalTopic topic = (LocalTopic)topics.next();
+                LocalTopic topic = topics.next();
                 topic.unsubscribe(clientID,subscriptionName);
             }
         }
@@ -794,18 +797,18 @@ public final class FFMQEngine implements FFMQEngineMBean
         String subscriberID = clientID+"-"+subscriptionName;
     	synchronized (queueMap)
 		{
-    		List queuesToDelete = new ArrayList();
-    		Iterator queueNames = queueMap.keySet().iterator();
+    		List<String> queuesToDelete = new ArrayList<>();
+    		Iterator<String> queueNames = queueMap.keySet().iterator();
     		while (queueNames.hasNext())
     		{
-    			String queueName = (String)queueNames.next();
+    			String queueName = queueNames.next();
     			if (queueName.endsWith(subscriberID))
     				queuesToDelete.add(queueName);
     		}
     		
     		// Delete matching queues
     		for (int i = 0; i < queuesToDelete.size(); i++)
-    			deleteQueue((String)queuesToDelete.get(i));
+    			deleteQueue(queuesToDelete.get(i));
 		}
     	
     	// Clean-up the subscription itself
@@ -857,23 +860,24 @@ public final class FFMQEngine implements FFMQEngineMBean
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.local.FFMQEngineMBean#clearAllStatistics()
 	 */
+	@Override
 	public void resetAllStatistics()
 	{
 		synchronized (queueMap)
 		{
-			Iterator queues = queueMap.values().iterator();
+			Iterator<LocalQueue> queues = queueMap.values().iterator();
 			while (queues.hasNext())
 			{
-				LocalQueue queue = (LocalQueue)queues.next();
+				LocalQueue queue = queues.next();
 				queue.resetStats();
 			}
 		}
 		synchronized (topicMap)
 		{
-			Iterator topics = topicMap.values().iterator();
+			Iterator<LocalTopic> topics = topicMap.values().iterator();
 			while (topics.hasNext())
 			{
-				LocalTopic topic = (LocalTopic)topics.next();
+				LocalTopic topic = topics.next();
 				topic.resetStats();
 			}
 		}

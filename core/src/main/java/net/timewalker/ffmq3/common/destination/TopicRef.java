@@ -49,7 +49,8 @@ public class TopicRef extends DestinationRef implements Topic
      * (non-Javadoc)
      * @see javax.jms.Topic#getTopicName()
      */
-    public final String getTopicName()
+    @Override
+	public final String getTopicName()
     {
         return name;
     }
@@ -58,7 +59,8 @@ public class TopicRef extends DestinationRef implements Topic
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.destination.DestinationRef#getResourceName()
      */
-    public final String getResourceName() 
+    @Override
+	public final String getResourceName() 
     {
 		return Resource.TOPIC_PREFIX+name;
 	}
@@ -66,7 +68,8 @@ public class TopicRef extends DestinationRef implements Topic
     /* (non-Javadoc)
      * @see javax.naming.Referenceable#getReference()
      */
-    public final Reference getReference() throws NamingException
+    @Override
+	public final Reference getReference() throws NamingException
     {
     	Reference ref = new Reference(getClass().getName(),JNDIObjectFactory.class.getName(),null);
     	ref.add(new StringRefAddr("topicName",name));
@@ -77,7 +80,8 @@ public class TopicRef extends DestinationRef implements Topic
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return "Topic("+name+")";
     }

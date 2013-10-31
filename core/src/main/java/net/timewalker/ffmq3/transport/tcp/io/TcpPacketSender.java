@@ -19,6 +19,7 @@ package net.timewalker.ffmq3.transport.tcp.io;
 
 import java.io.OutputStream;
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
 
 import net.timewalker.ffmq3.transport.PacketTransportListener;
 import net.timewalker.ffmq3.transport.packet.AbstractPacket;
@@ -26,7 +27,6 @@ import net.timewalker.ffmq3.transport.packet.PacketSerializer;
 import net.timewalker.ffmq3.transport.packet.query.PingQuery;
 import net.timewalker.ffmq3.utils.RawDataBuffer;
 import net.timewalker.ffmq3.utils.SerializationTools;
-import net.timewalker.ffmq3.utils.concurrent.Semaphore;
 import net.timewalker.ffmq3.utils.watchdog.ActivityWatchdog;
 
 import org.apache.commons.logging.Log;
@@ -48,9 +48,9 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     private int sendQueueMaxSize;
     
     // Runtime
-    private LinkedList sendQueue = new LinkedList();
-    private LinkedList pipeline = new LinkedList();
-    private Semaphore waitLock = new Semaphore();
+    private LinkedList<AbstractPacket> sendQueue = new LinkedList<>();
+    private LinkedList<AbstractPacket> pipeline = new LinkedList<>();
+    private Semaphore waitLock = new Semaphore(0);
     private volatile boolean stopRequired;
     
     /**
@@ -90,7 +90,8 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     /* (non-Javadoc)
      * @see java.lang.Runnable#run()
      */
-    public void run()
+    @Override
+	public void run()
     {
     	try
     	{
@@ -113,7 +114,7 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
                 {
                     while (!sendQueue.isEmpty() && pipeline.size() < 16)
                     {
-                        AbstractPacket packet = (AbstractPacket)sendQueue.removeFirst();
+                        AbstractPacket packet = sendQueue.removeFirst();
                         pipeline.add(packet);
                     }
                 }
@@ -123,7 +124,7 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     	    		// Write all pipelined packets to the socket buffered output stream
     	    		while (pipeline.size() > 0)
     	    		{
-    	    		    AbstractPacket packet = (AbstractPacket)pipeline.removeFirst();
+    	    		    AbstractPacket packet = pipeline.removeFirst();
     	    		    
     	    		    // We need to serialize the packet in a side buffer in order to 
     	    		    // know its final size before writing it to the actual output stream
@@ -164,7 +165,8 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
      */
-    public long getTimeoutDelay()
+    @Override
+	public long getTimeoutDelay()
     {
     	return pingInterval*1000L;
     }
@@ -172,7 +174,8 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
      */
-    public boolean onActivityTimeout() throws Exception
+    @Override
+	public boolean onActivityTimeout() throws Exception
     {
     	try
     	{

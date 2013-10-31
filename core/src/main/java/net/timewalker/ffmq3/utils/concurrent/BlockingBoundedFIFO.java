@@ -19,15 +19,17 @@
 package net.timewalker.ffmq3.utils.concurrent;
 
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * BlockingBoundedFIFO
  * Thread-safe blocking FIFO with a bounded size.
  */
-public final class BlockingBoundedFIFO
+public final class BlockingBoundedFIFO<T>
 {
 	// Runtime
-	private LinkedList buffer = new LinkedList();
+	private LinkedList<T> buffer = new LinkedList<>();
 	private Semaphore slots;
 	private long timeout;
 	
@@ -40,21 +42,32 @@ public final class BlockingBoundedFIFO
 		this.timeout = timeout;
 	}
 	
-	public void addLast( Object value ) throws WaitTimeoutException
+	public void addLast( T value ) throws WaitTimeoutException
 	{
-		if (timeout > 0)
-			slots.acquire(timeout);
-		else
-			slots.acquire();
+		try
+		{
+			if (timeout >= 0)
+			{
+				if (!slots.tryAcquire(timeout,TimeUnit.MILLISECONDS))
+					throw new WaitTimeoutException();
+			}
+			else
+				slots.acquire();
+		}
+		catch (InterruptedException e)
+		{
+			throw new WaitTimeoutException();
+		}
+		
 		synchronized (buffer)
 		{
 			buffer.addLast(value);
 		}
 	}
 	
-	public Object removeFirst()
+	public T removeFirst()
 	{
-		Object value;
+		T value;
 		synchronized (buffer)
 		{
 			if (buffer.isEmpty())

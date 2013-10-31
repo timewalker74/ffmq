@@ -48,7 +48,7 @@ public final class ClientIDRegistry
     
     //-------------------------------------------------------------------------
     
-    private Set clientIDs = new HashSet();
+    private Set<String> clientIDs = new HashSet<>();
     
     /**
      * Constructor (Private)

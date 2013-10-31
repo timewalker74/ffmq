@@ -35,7 +35,8 @@ public final class StringLiteral extends Literal
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return "'"+StringUtils.replaceSingleQuotes((String)value)+"'";
     }

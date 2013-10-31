@@ -42,7 +42,8 @@ public class LocalTopicSubscriber extends LocalMessageConsumer implements TopicS
      * (non-Javadoc)
      * @see javax.jms.TopicSubscriber#getTopic()
      */
-    public final Topic getTopic()
+    @Override
+	public final Topic getTopic()
     {
         return (Topic)destination;
     }

@@ -43,7 +43,8 @@ public final class Identifier extends SelectorNode implements AtomicOperand, Con
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
      */
-    public Object evaluate( Message message ) throws JMSException
+    @Override
+	public Object evaluate( Message message ) throws JMSException
     {
         // Standard headers
         if (name.equals("JMSCorrelationID"))
@@ -65,7 +66,8 @@ public final class Identifier extends SelectorNode implements AtomicOperand, Con
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return name;
     }

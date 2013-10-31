@@ -48,7 +48,7 @@ public final class FFMQTopicConnectionFactory extends FFMQConnectionFactory impl
     /**
      * Constructor
      */
-    public FFMQTopicConnectionFactory(Hashtable environment)
+    public FFMQTopicConnectionFactory(Hashtable<String,Object> environment)
     {
         super(environment);
     }
@@ -56,7 +56,8 @@ public final class FFMQTopicConnectionFactory extends FFMQConnectionFactory impl
     /* (non-Javadoc)
      * @see javax.jms.TopicConnectionFactory#createTopicConnection()
      */
-    public TopicConnection createTopicConnection() throws JMSException
+    @Override
+	public TopicConnection createTopicConnection() throws JMSException
     {
     	String username = getStringProperty(Context.SECURITY_PRINCIPAL,null); 
     	String password = getStringProperty(Context.SECURITY_CREDENTIALS,null);
@@ -67,7 +68,8 @@ public final class FFMQTopicConnectionFactory extends FFMQConnectionFactory impl
     /* (non-Javadoc)
      * @see javax.jms.TopicConnectionFactory#createTopicConnection(java.lang.String, java.lang.String)
      */
-    public TopicConnection createTopicConnection(String userName, String password) throws JMSException
+    @Override
+	public TopicConnection createTopicConnection(String userName, String password) throws JMSException
     {
         URI providerURL = getProviderURI();     
         

@@ -13,6 +13,7 @@ public class InMemoryMessageStoreTest extends AbstractMessageStoreTest
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.test.local.destination.store.impl.AbstractMessageStoreTest#createMessageStore(boolean)
 	 */
+	@Override
 	protected MessageStore createMessageStore(boolean createStoreFiles) throws Exception
 	{
 	    Settings settings = new Settings();

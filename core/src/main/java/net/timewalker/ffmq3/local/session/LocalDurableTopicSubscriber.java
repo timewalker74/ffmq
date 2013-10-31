@@ -40,7 +40,8 @@ public final class LocalDurableTopicSubscriber extends LocalTopicSubscriber
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalMessageConsumer#isDurable()
      */
-    public boolean isDurable()
+    @Override
+	public boolean isDurable()
     {
         return true;
     }

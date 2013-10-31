@@ -42,6 +42,7 @@ public class JournalingBlockBasedDataStoreTest extends BlockBasedDataStoreTest
 	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp() throws Exception
 	{
 		super.setUp();
@@ -54,6 +55,7 @@ public class JournalingBlockBasedDataStoreTest extends BlockBasedDataStoreTest
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown() throws Exception
 	{
 		asyncTaskManager.close();
@@ -63,6 +65,7 @@ public class JournalingBlockBasedDataStoreTest extends BlockBasedDataStoreTest
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.test.storage.data.impl.BlockBasedDataStoreTest#createStore(java.lang.String, java.io.File)
 	 */
+	@Override
 	protected LinkedDataStore createStore(String baseName, File dataFolder) throws DataStoreException
 	{
 	    Settings settings = new Settings();

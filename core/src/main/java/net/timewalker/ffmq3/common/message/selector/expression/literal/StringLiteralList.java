@@ -47,7 +47,8 @@ public final class StringLiteralList extends SelectorNode implements AtomicOpera
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
      */
-    public Object evaluate(Message message) throws JMSException
+    @Override
+	public Object evaluate(Message message) throws JMSException
     {
         String[] values = new String[items.length];
         for (int n = 0 ; n < items.length ; n++)
@@ -59,7 +60,8 @@ public final class StringLiteralList extends SelectorNode implements AtomicOpera
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         sb.append("(");

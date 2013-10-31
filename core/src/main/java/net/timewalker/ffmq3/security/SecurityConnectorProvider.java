@@ -42,7 +42,7 @@ public final class SecurityConnectorProvider
             String connectorType = setup.getSecurityConnectorType();
             try
             {
-                Class connectorClass = Class.forName(connectorType);
+                Class<?> connectorClass = Class.forName(connectorType);
                 connector = (SecurityConnector)connectorClass
                     .getConstructor(new Class[] { Settings.class })
                     .newInstance(new Object[] { setup.getSettings() });

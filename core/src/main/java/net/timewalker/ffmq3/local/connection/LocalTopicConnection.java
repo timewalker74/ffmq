@@ -46,7 +46,8 @@ public final class LocalTopicConnection extends LocalConnection implements Topic
      * (non-Javadoc)
      * @see javax.jms.TopicConnection#createConnectionConsumer(javax.jms.Topic, java.lang.String, javax.jms.ServerSessionPool, int)
      */
-    public synchronized ConnectionConsumer createConnectionConsumer(Topic topic, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
+    @Override
+	public synchronized ConnectionConsumer createConnectionConsumer(Topic topic, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
     {
         checkNotClosed();
         throw new FFMQException("Unsupported feature","UNSUPPORTED_FEATURE");
@@ -56,7 +57,8 @@ public final class LocalTopicConnection extends LocalConnection implements Topic
      * (non-Javadoc)
      * @see javax.jms.TopicConnection#createTopicSession(boolean, int)
      */
-    public synchronized TopicSession createTopicSession(boolean transacted, int acknowledgeMode) throws JMSException
+    @Override
+	public synchronized TopicSession createTopicSession(boolean transacted, int acknowledgeMode) throws JMSException
     {
         checkNotClosed();
         LocalTopicSession session =  new LocalTopicSession(idProvider.createID(),this,engine,transacted,acknowledgeMode);

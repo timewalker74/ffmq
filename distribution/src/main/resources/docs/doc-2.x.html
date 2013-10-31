@@ -378,7 +378,7 @@
 		</p>
 		<p class="src">
 			// Create and initialize a JNDI context<br/>
-			Hashtable env = new Hashtable();<br/>
+			Hashtable<String,Object> env = new Hashtable<>();<br/>
 	        env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);<br/>
 	        env.put(Context.PROVIDER_URL, "tcp://localhost:10001");<br/>
 	        Context context = new InitialContext(env);<br/>

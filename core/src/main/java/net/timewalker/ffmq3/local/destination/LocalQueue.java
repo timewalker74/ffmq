@@ -90,7 +90,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     private boolean pendingChanges;
     private long lastActivity;
     private volatile int consumerOffset = 0; // Used for a round-robin-like consumer wake-up
-    private BlockingBoundedFIFO notificationQueue;
+    private BlockingBoundedFIFO<AbstractMessage> notificationQueue;
     
     /**
      * Constructor
@@ -105,7 +105,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
         int notificationQueueMaxSize =
         	Math.max(engine.getSetup().getNotificationAsyncTaskManagerThreadPoolMaxSize()+1,
         			 engine.getSetup().getInternalNotificationQueueMaxSize());
-        this.notificationQueue = new BlockingBoundedFIFO(notificationQueueMaxSize,5*1000); /* 5s timeout */
+        this.notificationQueue = new BlockingBoundedFIFO<>(notificationQueueMaxSize,5*1000); /* 5s timeout */
         
         // Init volatile store
         if (queueDef.getMaxNonPersistentMessages() > 0)
@@ -139,7 +139,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see javax.jms.Queue#getQueueName()
      */
-    public String getQueueName()
+    @Override
+	public String getQueueName()
     {
         return getName();
     }
@@ -147,6 +148,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#putLocked(net.timewalker.ffmq3.common.message.AbstractMessage, net.timewalker.ffmq3.local.session.LocalSession, net.timewalker.ffmq3.local.MessageLockSet)
      */
+    @Override
     public boolean putLocked(AbstractMessage message, LocalSession session, MessageLockSet locks) throws JMSException
     {
     	checkNotClosed();
@@ -303,7 +305,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * Consumers are notified of rollbacked messages availability
      * @return true if a commit is required to ensure data safety
      */
-    public boolean redeliverLocked( LocalSession localSession , TransactionItem[] items , MessageLockSet locks ) throws JMSException
+    public boolean redeliverLocked( TransactionItem[] items , MessageLockSet locks ) throws JMSException
     {
     	checkNotClosed();
     	checkTransactionLock();
@@ -364,7 +366,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.Committable#commitChanges(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
      */
-    public void commitChanges( SynchronizationBarrier barrier ) throws JMSException
+    @Override
+	public void commitChanges( SynchronizationBarrier barrier ) throws JMSException
     {
     	checkNotClosed();
     	checkTransactionLock();
@@ -481,7 +484,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     private AbstractMessage browseStore( MessageStore store , LocalQueueBrowserCursor cursor , MessageSelector selector ) throws JMSException
     {
     	AbstractMessage result = null;
-    	List expiredHandles = null;
+    	List<Integer> expiredHandles = null;
     	
     	long now = System.currentTimeMillis();
     	synchronized (storeLock)
@@ -507,7 +510,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
                     if (msg.getJMSExpiration() > 0 && msg.getJMSExpiration() < now)
                     {
                     	if (expiredHandles == null)
-                    		expiredHandles = new ArrayList();
+                    		expiredHandles = new ArrayList<>();
                     	store.lock(current);
                     	expiredHandles.add(new Integer(current));
                     	current = store.next(current);
@@ -544,7 +547,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
         	{
         		for (int i = 0; i < expiredHandles.size(); i++)
 				{
-					int expiredHandle = ((Integer)expiredHandles.get(i)).intValue();
+					int expiredHandle = expiredHandles.get(i).intValue();
 					synchronized (storeLock)
 			        {
 						store.delete(expiredHandle);
@@ -568,7 +571,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
                                           MessageSelector selector ) throws JMSException
     {
     	AbstractMessage result = null;
-    	List expiredHandles = null;
+    	List<Integer> expiredHandles = null;
     	
         synchronized (storeLock)
         {
@@ -585,7 +588,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
                     if (msg.getJMSExpiration() > 0 && msg.getJMSExpiration() < lastActivity)
                     {
                     	if (expiredHandles == null)
-                    		expiredHandles = new ArrayList();
+                    		expiredHandles = new ArrayList<>();
                     	store.lock(current);
                     	expiredHandles.add(new Integer(current));
                     	current = store.next(current);
@@ -631,7 +634,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
         	{
         		for (int i = 0; i < expiredHandles.size(); i++)
 				{
-					int expiredHandle = ((Integer)expiredHandles.get(i)).intValue();
+					int expiredHandle = expiredHandles.get(i).intValue();
 					synchronized (storeLock)
 			        {
 						store.delete(expiredHandle);
@@ -705,13 +708,13 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     private void notifyConsumer( AbstractMessage message )
     {
     	LocalMessageConsumer singleConsumer = null;
-    	CopyOnWriteList consumersSnapshot = null;
+    	CopyOnWriteList<LocalMessageConsumer> consumersSnapshot = null;
     	synchronized (localConsumers)
 		{
     		switch (localConsumers.size())
     		{
     			case 0 : return; // Nobody's listening
-    			case 1 : singleConsumer = (LocalMessageConsumer)localConsumers.get(0); break; // Single consumer
+    			case 1 : singleConsumer = localConsumers.get(0); break; // Single consumer
     			default : // Multiple consumers
     				consumersSnapshot = localConsumers.fastCopy();		
     		}
@@ -748,7 +751,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	}
     }
     
-    private void notifyNextConsumer( CopyOnWriteList consumersSnapshot , AbstractMessage message )
+    private void notifyNextConsumer( CopyOnWriteList<LocalMessageConsumer> consumersSnapshot , AbstractMessage message )
     {
     	// Find a consumer to notify
     	int localConsumersCount = consumersSnapshot.size();
@@ -756,7 +759,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	for (int n = 0 ; n < localConsumersCount ; n++)
 	    {
             int offset = ((n+currentOffset) % localConsumersCount);
-            LocalMessageConsumer consumer = (LocalMessageConsumer)consumersSnapshot.get(offset);
+            LocalMessageConsumer consumer = consumersSnapshot.get(offset);
             
             // Check that the consumer connection is started
             if (!consumer.getSession().getConnection().isStarted())
@@ -801,7 +804,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getSize()
      */
-    public int getSize()
+    @Override
+	public int getSize()
     {
         int size = 0;
         synchronized (storeLock)
@@ -817,6 +821,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getMemoryStoreUsage()
      */
+    @Override
     public int getMemoryStoreUsage()
     {
     	return volatileStore != null ? volatileStore.getStoreUsage() : -1;
@@ -825,6 +830,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getPersistentStoreUsage()
      */
+    @Override
     public int getPersistentStoreUsage()
     {
     	return persistentStore != null ? persistentStore.getStoreUsage() : -1;
@@ -834,7 +840,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#resetStats()
      */
-    public void resetStats()
+    @Override
+	public void resetStats()
     {
     	super.resetStats();
     	sentToQueueCount = 0;
@@ -848,7 +855,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
        StringBuffer sb = new StringBuffer();
        
@@ -877,7 +885,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#close()
      */
-    public final void close() throws JMSException
+    @Override
+	public final void close() throws JMSException
     {
     	synchronized (closeLock)
 		{
@@ -909,10 +918,10 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
 		}
     	
     	if (!localConsumers.isEmpty()){
-    	    CopyOnWriteList consumers = localConsumers.fastCopy();
+    	    CopyOnWriteList<LocalMessageConsumer> consumers = localConsumers.fastCopy();
     	    for (int n=0;n<consumers.size();n++)
             {
-    	        LocalMessageConsumer consumer = (LocalMessageConsumer)consumers.get(n);
+    	        LocalMessageConsumer consumer = consumers.get(n);
     	        try
     	        {
     	            consumer.close();
@@ -929,7 +938,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getSentToQueueCount()
      */
-    public long getSentToQueueCount()
+    @Override
+	public long getSentToQueueCount()
     {
         return sentToQueueCount;
     }
@@ -938,7 +948,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getReceivedFromQueueCount()
      */
-    public long getReceivedFromQueueCount()
+    @Override
+	public long getReceivedFromQueueCount()
     {
         return receivedFromQueueCount;
     }
@@ -947,7 +958,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getAcknowledgedGetCount()
      */
-    public long getAcknowledgedGetCount()
+    @Override
+	public long getAcknowledgedGetCount()
     {
         return acknowledgedGetCount;
     }
@@ -956,7 +968,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getRollbackedGetCount()
      */
-    public long getRollbackedGetCount()
+    @Override
+	public long getRollbackedGetCount()
     {
         return rollbackedGetCount;
     }
@@ -965,6 +978,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getExpiredCount()
      */
+    @Override
 	public long getExpiredCount()
 	{
 		return expiredCount;
@@ -973,7 +987,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getLastActivity()
      */
-    public long getLastActivity()
+    @Override
+	public long getLastActivity()
     {
     	return lastActivity;
     }
@@ -981,7 +996,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
      */
-    public long getTimeoutDelay()
+    @Override
+	public long getTimeoutDelay()
     {
     	return inactivityTimeout;
     }
@@ -989,7 +1005,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
      */
-    public boolean onActivityTimeout() throws Exception
+    @Override
+	public boolean onActivityTimeout() throws Exception
     {
     	// Called by watchdog if queue is inactive
     	if (closed)
@@ -1008,7 +1025,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     {
     	while (!closed)
     	{
-    		AbstractMessage message = (AbstractMessage)notificationQueue.removeFirst();
+    		AbstractMessage message = notificationQueue.removeFirst();
     		if (message == null)
     			return;
     			
@@ -1057,7 +1074,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	/* (non-Javadoc)
     	 * @see java.util.TimerTask#run()
     	 */
-    	public void run()
+    	@Override
+		public void run()
     	{
     		redeliverMessage(msg,store,handle);
     	}
@@ -1066,6 +1084,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#hasPendingChanges()
      */
+    @Override
     protected boolean hasPendingChanges()
     {
     	return pendingChanges;
@@ -1074,6 +1093,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#hasTransactionSupport()
      */
+    @Override
     protected boolean requiresTransactionalUpdate()
     {
     	return persistentStore != null && persistentStore.isFailSafe();
@@ -1096,7 +1116,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	/* (non-Javadoc)
     	 * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
     	 */
-    	public boolean isMergeable()
+    	@Override
+		public boolean isMergeable()
     	{
     		return true;
     	}
@@ -1104,7 +1125,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	/* (non-Javadoc)
     	 * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
     	 */
-    	public void execute()
+    	@Override
+		public void execute()
     	{
     		processAvailabilityNotificationQueue();
     	}

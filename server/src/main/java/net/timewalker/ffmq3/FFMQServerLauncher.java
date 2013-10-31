@@ -151,7 +151,8 @@ public final class FFMQServerLauncher
     	/* (non-Javadoc)
     	 * @see java.lang.Thread#run()
     	 */
-    	public void run()
+    	@Override
+		public void run()
     	{
     		try
     		{

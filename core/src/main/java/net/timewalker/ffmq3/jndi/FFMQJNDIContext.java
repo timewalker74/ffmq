@@ -44,28 +44,28 @@ import net.timewalker.ffmq3.common.destination.TopicRef;
  */
 public final class FFMQJNDIContext implements Context
 {
-    private Hashtable               env;
-    protected Hashtable             bindings   = new Hashtable();
+    private Hashtable<String,Object>   env;
+    protected Hashtable<String,Object> bindings   = new Hashtable<>();
     private static final NameParser flatParser = new FlatNameParser();
 
     /**
      * Constructor
      */
-    public FFMQJNDIContext(Hashtable environment)
+    public FFMQJNDIContext(Hashtable<?,?> environment)
     {
         // Copy environment
         if (environment != null)
-            env = (Hashtable)environment.clone();
+            env = (Hashtable<String,Object>)environment.clone();
         else
-            env = new Hashtable();
+            env = new Hashtable<>();
     }
 
     /**
      * Constructor
      */
-    protected FFMQJNDIContext(Hashtable environment,Hashtable bindings)
+    protected FFMQJNDIContext(Hashtable<String,Object> environment,Hashtable<String,Object> bindings)
     {
-        this.env = (Hashtable)environment.clone();
+        this.env = (Hashtable<String,Object>)environment.clone();
         this.bindings = bindings;
     }
 
@@ -73,7 +73,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#lookup(java.lang.String)
      */
-    public Object lookup(String name) throws NamingException
+    @Override
+	public Object lookup(String name) throws NamingException
     {
         return lookup(new CompositeName(name));
     }
@@ -82,7 +83,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#lookup(javax.naming.Name)
      */
-    public Object lookup(Name name) throws NamingException
+    @Override
+	public Object lookup(Name name) throws NamingException
     {
         if (name.isEmpty())
             return new FFMQJNDIContext(env, bindings);
@@ -110,7 +112,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#bind(java.lang.String, java.lang.Object)
      */
-    public void bind(String name, Object obj) throws NamingException
+    @Override
+	public void bind(String name, Object obj) throws NamingException
     {
         bind(new CompositeName(name), obj);
     }
@@ -119,7 +122,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#bind(javax.naming.Name, java.lang.Object)
      */
-    public void bind(Name name, Object obj) throws NamingException
+    @Override
+	public void bind(Name name, Object obj) throws NamingException
     {
         if (name.isEmpty())
             throw new InvalidNameException("Cannot bind empty name");
@@ -141,7 +145,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#rebind(java.lang.String, java.lang.Object)
      */
-    public void rebind(String name, Object obj) throws NamingException
+    @Override
+	public void rebind(String name, Object obj) throws NamingException
     {
         rebind(new CompositeName(name), obj);
     }
@@ -150,7 +155,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#rebind(javax.naming.Name, java.lang.Object)
      */
-    public void rebind(Name name, Object obj) throws NamingException
+    @Override
+	public void rebind(Name name, Object obj) throws NamingException
     {
         if (name.isEmpty())
             throw new InvalidNameException("Cannot bind empty name");
@@ -166,7 +172,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#unbind(java.lang.String)
      */
-    public void unbind(String name) throws NamingException
+    @Override
+	public void unbind(String name) throws NamingException
     {
         unbind(new CompositeName(name));
     }
@@ -175,7 +182,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#unbind(javax.naming.Name)
      */
-    public void unbind(Name name) throws NamingException
+    @Override
+	public void unbind(Name name) throws NamingException
     {
         if (name.isEmpty())
             throw new InvalidNameException("Cannot unbind empty name");
@@ -191,7 +199,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#rename(java.lang.String, java.lang.String)
      */
-    public void rename(String oldname, String newname) throws NamingException
+    @Override
+	public void rename(String oldname, String newname) throws NamingException
     {
         rename(new CompositeName(oldname), new CompositeName(newname));
     }
@@ -200,7 +209,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#rename(javax.naming.Name, javax.naming.Name)
      */
-    public void rename(Name oldname, Name newname) throws NamingException
+    @Override
+	public void rename(Name oldname, Name newname) throws NamingException
     {
         if (oldname.isEmpty() || newname.isEmpty())
             throw new InvalidNameException("Cannot rename empty name");
@@ -225,7 +235,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#list(java.lang.String)
      */
-    public NamingEnumeration list(String name) throws NamingException
+    @Override
+	public NamingEnumeration<NameClassPair> list(String name) throws NamingException
     {
         return list(new CompositeName(name));
     }
@@ -234,7 +245,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#list(javax.naming.Name)
      */
-    public NamingEnumeration list(Name name) throws NamingException
+    @Override
+	public NamingEnumeration<NameClassPair> list(Name name) throws NamingException
     {
         if (name.isEmpty())
             return new ListOfNames(bindings.keys());
@@ -258,7 +270,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#listBindings(java.lang.String)
      */
-    public NamingEnumeration listBindings(String name) throws NamingException
+    @Override
+	public NamingEnumeration<Binding> listBindings(String name) throws NamingException
     {
         return listBindings(new CompositeName(name));
     }
@@ -267,7 +280,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#listBindings(javax.naming.Name)
      */
-    public NamingEnumeration listBindings(Name name) throws NamingException
+    @Override
+	public NamingEnumeration<Binding> listBindings(Name name) throws NamingException
     {
         if (name.isEmpty())
             return new ListOfBindings(bindings.keys());
@@ -291,7 +305,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#destroySubcontext(java.lang.String)
      */
-    public void destroySubcontext(String name) throws NamingException
+    @Override
+	public void destroySubcontext(String name) throws NamingException
     {
         destroySubcontext(new CompositeName(name));
     }
@@ -300,7 +315,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#destroySubcontext(javax.naming.Name)
      */
-    public void destroySubcontext(Name name) throws NamingException
+    @Override
+	public void destroySubcontext(Name name) throws NamingException
     {
         throw new OperationNotSupportedException("This context does not support subcontexts");
     }
@@ -309,7 +325,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#createSubcontext(java.lang.String)
      */
-    public Context createSubcontext(String name) throws NamingException
+    @Override
+	public Context createSubcontext(String name) throws NamingException
     {
         return createSubcontext(new CompositeName(name));
     }
@@ -318,7 +335,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#createSubcontext(javax.naming.Name)
      */
-    public Context createSubcontext(Name name) throws NamingException
+    @Override
+	public Context createSubcontext(Name name) throws NamingException
     {
         throw new OperationNotSupportedException("This context does not support subcontexts");
     }
@@ -327,7 +345,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#lookupLink(java.lang.String)
      */
-    public Object lookupLink(String name) throws NamingException
+    @Override
+	public Object lookupLink(String name) throws NamingException
     {
         return lookupLink(new CompositeName(name));
     }
@@ -336,7 +355,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#lookupLink(javax.naming.Name)
      */
-    public Object lookupLink(Name name) throws NamingException
+    @Override
+	public Object lookupLink(Name name) throws NamingException
     {
         return lookup(name);
     }
@@ -345,7 +365,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#getNameParser(java.lang.String)
      */
-    public NameParser getNameParser(String name) throws NamingException
+    @Override
+	public NameParser getNameParser(String name) throws NamingException
     {
         return getNameParser(new CompositeName(name));
     }
@@ -354,7 +375,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#getNameParser(javax.naming.Name)
      */
-    public NameParser getNameParser(Name name) throws NamingException
+    @Override
+	public NameParser getNameParser(Name name) throws NamingException
     {
         // Do lookup to verify name exists
         Object obj = lookup(name);
@@ -369,7 +391,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#composeName(java.lang.String, java.lang.String)
      */
-    public String composeName(String name, String prefix) throws NamingException
+    @Override
+	public String composeName(String name, String prefix) throws NamingException
     {
         Name result = composeName(new CompositeName(name), new CompositeName(prefix));
         return result.toString();
@@ -379,7 +402,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#composeName(javax.naming.Name, javax.naming.Name)
      */
-    public Name composeName(Name name, Name prefix) throws NamingException
+    @Override
+	public Name composeName(Name name, Name prefix) throws NamingException
     {
         Name result = (Name)(prefix.clone());
         result.addAll(name);
@@ -390,7 +414,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#addToEnvironment(java.lang.String, java.lang.Object)
      */
-    public Object addToEnvironment(String propName, Object propVal)
+    @Override
+	public Object addToEnvironment(String propName, Object propVal)
     {
         return env.put(propName, propVal);
     }
@@ -399,7 +424,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#removeFromEnvironment(java.lang.String)
      */
-    public Object removeFromEnvironment(String propName)
+    @Override
+	public Object removeFromEnvironment(String propName)
     {
         return env.remove(propName);
     }
@@ -408,16 +434,18 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#getEnvironment()
      */
-    public Hashtable getEnvironment()
+    @Override
+	public Hashtable<?,?> getEnvironment()
     {
-        return (Hashtable)env.clone();
+        return (Hashtable<?,?>)env.clone();
     }
 
     /*
      * (non-Javadoc)
      * @see javax.naming.Context#getNameInNamespace()
      */
-    public String getNameInNamespace()
+    @Override
+	public String getNameInNamespace()
     {
         return "";
     }
@@ -426,7 +454,8 @@ public final class FFMQJNDIContext implements Context
      * (non-Javadoc)
      * @see javax.naming.Context#close()
      */
-    public void close()
+    @Override
+	public void close()
     {
         // Nothing to do
     }
@@ -434,14 +463,14 @@ public final class FFMQJNDIContext implements Context
     //--------------------------------------------------------------------------------------
     
     // Class for enumerating name/class pairs
-    private class ListOfNames implements NamingEnumeration
+    private class ListOfNames implements NamingEnumeration<NameClassPair>
     {
-        protected Enumeration names;
+        protected Enumeration<String> names;
 
         /**
          * Constructor
          */
-        public ListOfNames(Enumeration names)
+        public ListOfNames(Enumeration<String> names)
         {
             this.names = names;
         }
@@ -450,7 +479,8 @@ public final class FFMQJNDIContext implements Context
          * (non-Javadoc)
          * @see java.util.Enumeration#hasMoreElements()
          */
-        public boolean hasMoreElements()
+        @Override
+		public boolean hasMoreElements()
         {
             return hasMore();
         }
@@ -459,7 +489,8 @@ public final class FFMQJNDIContext implements Context
          * (non-Javadoc)
          * @see javax.naming.NamingEnumeration#hasMore()
          */
-        public boolean hasMore()
+        @Override
+		public boolean hasMore()
         {
             return names.hasMoreElements();
         }
@@ -468,9 +499,10 @@ public final class FFMQJNDIContext implements Context
          * (non-Javadoc)
          * @see javax.naming.NamingEnumeration#next()
          */
-        public Object next()
+        @Override
+		public NameClassPair next()
         {
-            String name = (String)names.nextElement();
+            String name = names.nextElement();
             String className = bindings.get(name).getClass().getName();
             return new NameClassPair(name, className);
         }
@@ -479,7 +511,8 @@ public final class FFMQJNDIContext implements Context
          * (non-Javadoc)
          * @see java.util.Enumeration#nextElement()
          */
-        public Object nextElement()
+        @Override
+		public NameClassPair nextElement()
         {
             return next();
         }
@@ -488,31 +521,75 @@ public final class FFMQJNDIContext implements Context
          * (non-Javadoc)
          * @see javax.naming.NamingEnumeration#close()
          */
-        public void close()
+        @Override
+		public void close()
         {
             // Nothing
         }
     }
 
     // Class for enumerating bindings
-    private class ListOfBindings extends ListOfNames
+    private class ListOfBindings implements NamingEnumeration<Binding>
     {
+    	protected Enumeration<String> names;
+    	
         /**
          * Constructor
          */
-        public ListOfBindings(Enumeration names)
+        public ListOfBindings(Enumeration<String> names)
         {
-            super(names);
+        	this.names = names;
         }
 
         /*
          * (non-Javadoc)
+         * @see java.util.Enumeration#hasMoreElements()
+         */
+        @Override
+		public boolean hasMoreElements()
+        {
+            return hasMore();
+        }
+
+        /*
+         * (non-Javadoc)
+         * @see javax.naming.NamingEnumeration#hasMore()
+         */
+        @Override
+		public boolean hasMore()
+        {
+            return names.hasMoreElements();
+        }
+        
+        /*
+         * (non-Javadoc)
          * @see net.timewalker.ffmq3.common.jndi.FFMQJNDIContext.ListOfNames#next()
          */
-        public Object next()
+        @Override
+		public Binding next()
         {
-            String name = (String)names.nextElement();
+            String name = names.nextElement();
             return new Binding(name, bindings.get(name));
+        }
+        
+        /*
+         * (non-Javadoc)
+         * @see java.util.Enumeration#nextElement()
+         */
+        @Override
+		public Binding nextElement()
+        {
+            return next();
+        }
+        
+        /*
+         * (non-Javadoc)
+         * @see javax.naming.NamingEnumeration#close()
+         */
+        @Override
+		public void close()
+        {
+            // Nothing
         }
     }
 
@@ -537,7 +614,8 @@ public final class FFMQJNDIContext implements Context
          * (non-Javadoc)
          * @see javax.naming.NameParser#parse(java.lang.String)
          */
-        public Name parse(String name) throws NamingException
+        @Override
+		public Name parse(String name) throws NamingException
         {
             return new CompoundName(name, syntax);
         }

@@ -44,7 +44,8 @@ public final class LocalQueueSender extends LocalMessageProducer implements Queu
      * (non-Javadoc)
      * @see javax.jms.QueueSender#getQueue()
      */
-    public Queue getQueue()
+    @Override
+	public Queue getQueue()
     {
         return (Queue)destination;
     }
@@ -52,7 +53,8 @@ public final class LocalQueueSender extends LocalMessageProducer implements Queu
     /* (non-Javadoc)
      * @see javax.jms.QueueSender#send(javax.jms.Queue, javax.jms.Message, int, int, long)
      */
-    public void send(Queue queue, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	public void send(Queue queue, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
         send((Destination)queue, message, deliveryMode, priority, timeToLive);
     }
@@ -60,7 +62,8 @@ public final class LocalQueueSender extends LocalMessageProducer implements Queu
     /* (non-Javadoc)
      * @see javax.jms.QueueSender#send(javax.jms.Queue, javax.jms.Message)
      */
-    public void send(Queue queue, Message message) throws JMSException
+    @Override
+	public void send(Queue queue, Message message) throws JMSException
     {
         send((Destination)queue,message,defaultDeliveryMode,defaultPriority,defaultTimeToLive);
     }

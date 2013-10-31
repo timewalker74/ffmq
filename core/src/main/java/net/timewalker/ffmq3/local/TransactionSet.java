@@ -38,7 +38,7 @@ import net.timewalker.ffmq3.local.destination.LocalQueue;
  */
 public final class TransactionSet
 {
-	private LinkedList items = new LinkedList();
+	private LinkedList<TransactionItem> items = new LinkedList<>();
     
     /**
      * Constructor
@@ -77,10 +77,10 @@ public final class TransactionSet
      */
     public synchronized void removeUpdatesForQueue( String queueName )
     {
-    	Iterator entries = items.iterator();
+    	Iterator<TransactionItem> entries = items.iterator();
     	while (entries.hasNext())
 		{
-    		TransactionItem item = (TransactionItem)entries.next();
+    		TransactionItem item = entries.next();
     		if (item.getDestination().getName().equals(queueName))
     		    entries.remove();
 		}
@@ -98,19 +98,19 @@ public final class TransactionSet
     /**
      * Clear items by IDs from the transaction set and return a snapshot of the items
      */
-    public synchronized TransactionItem[] clear( List deliveredMessageIDs ) throws FFMQException
+    public synchronized TransactionItem[] clear( List<String> deliveredMessageIDs ) throws FFMQException
     {
     	int len = deliveredMessageIDs.size();
     	TransactionItem[] itemsSnapshot = new TransactionItem[len];
     	for(int n=0;n<len;n++)
     	{
-    		String deliveredMessageID = (String)deliveredMessageIDs.get(len-n-1);
+    		String deliveredMessageID = deliveredMessageIDs.get(len-n-1);
     		
     		boolean found = false;
-    		Iterator entries = items.iterator();
+    		Iterator<TransactionItem> entries = items.iterator();
         	while (entries.hasNext())
     		{
-        		TransactionItem item = (TransactionItem)entries.next();
+        		TransactionItem item = entries.next();
         		if (item.getMessageId().equals(deliveredMessageID))
         		{
         			found = true;
@@ -132,7 +132,7 @@ public final class TransactionSet
     public synchronized TransactionItem[] clear()
     {
     	// Create snapshot
-    	TransactionItem[] itemsSnapshot = (TransactionItem[]) items.toArray(new TransactionItem[items.size()]);
+    	TransactionItem[] itemsSnapshot = items.toArray(new TransactionItem[items.size()]);
    	
     	// Clear
     	items.clear();
@@ -143,12 +143,12 @@ public final class TransactionSet
     /**
      * Compute a list of queues that were updated in this transaction set
      */
-    public synchronized List updatedQueues()
+    public synchronized List<LocalQueue> updatedQueues()
     {
-    	List updatedQueues = new ArrayList(items.size());
+    	List<LocalQueue> updatedQueues = new ArrayList<>(items.size());
     	for (int i = 0 ; i < items.size() ; i++)
         {
-    		TransactionItem item = (TransactionItem)items.get(i);
+    		TransactionItem item = items.get(i);
             LocalQueue localQueue = item.getDestination();
             if (!updatedQueues.contains(localQueue))
                 updatedQueues.add(localQueue);
@@ -160,19 +160,19 @@ public final class TransactionSet
     /**
      * Compute a list of queues that were updated in this transaction set
      */
-    public synchronized List updatedQueues( List deliveredMessageIDs ) throws FFMQException
+    public synchronized List<LocalQueue> updatedQueues( List<String> deliveredMessageIDs ) throws FFMQException
     {
     	int len = deliveredMessageIDs.size();
-    	List updatedQueues = new ArrayList(len);
+    	List<LocalQueue> updatedQueues = new ArrayList<>(len);
     	for(int n=0;n<len;n++)
     	{
-    		String deliveredMessageID = (String)deliveredMessageIDs.get(len-n-1);
+    		String deliveredMessageID = deliveredMessageIDs.get(len-n-1);
     		
     		boolean found = false;
-    		Iterator entries = items.iterator();
+    		Iterator<TransactionItem> entries = items.iterator();
         	while (entries.hasNext())
     		{
-        		TransactionItem item = (TransactionItem)entries.next();
+        		TransactionItem item = entries.next();
         		if (item.getMessageId().equals(deliveredMessageID))
         		{
         			found = true;

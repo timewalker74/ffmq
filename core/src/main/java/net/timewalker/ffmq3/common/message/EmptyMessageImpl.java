@@ -37,7 +37,8 @@ public final class EmptyMessageImpl extends AbstractMessage
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#getType()
      */
-    protected byte getType()
+    @Override
+	protected byte getType()
     {
         return MessageType.EMPTY;
     }
@@ -46,7 +47,8 @@ public final class EmptyMessageImpl extends AbstractMessage
      * (non-Javadoc)
      * @see javax.jms.Message#clearBody()
      */
-    public void clearBody()
+    @Override
+	public void clearBody()
     {
         // Nothing to do
     }
@@ -54,7 +56,8 @@ public final class EmptyMessageImpl extends AbstractMessage
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#serializeBodyTo(net.timewalker.ffmq3.utils.RawDataBuffer)
      */
-    protected void serializeBodyTo(RawDataBuffer out)
+    @Override
+	protected void serializeBodyTo(RawDataBuffer out)
     {
     	// No body
     }
@@ -62,7 +65,8 @@ public final class EmptyMessageImpl extends AbstractMessage
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#unserializeBodyFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeBodyFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeBodyFrom(RawDataBuffer in)
     {
     	// No body
     }
@@ -71,7 +75,8 @@ public final class EmptyMessageImpl extends AbstractMessage
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#copy()
      */
-    public AbstractMessage copy()
+    @Override
+	public AbstractMessage copy()
     {
         EmptyMessageImpl clone = new EmptyMessageImpl();
         copyCommonFields(clone);

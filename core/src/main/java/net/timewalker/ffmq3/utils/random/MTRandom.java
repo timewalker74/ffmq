@@ -196,7 +196,8 @@ public class MTRandom extends Random {
      * @param seed The 64 bit value used to initialise the random
      * number generator state. 
      */
-    public final synchronized void setSeed(long seed) {
+    @Override
+	public final synchronized void setSeed(long seed) {
         // Annoying runtime check for initialisation of internal data
         // caused by java.util.Random invoking setSeed() during init.
         // This is unavoidable because no fields in our instance will
@@ -281,7 +282,8 @@ public class MTRandom extends Random {
      * @return The next value in the pseudo random sequence with the
      * specified number of bits in the lower part of the integer.
      */
-    protected final synchronized int next(int bits) {
+    @Override
+	protected final synchronized int next(int bits) {
         // ---- Begin Mersenne Twister Algorithm ----
         int y, kk;
         if (mti >= N) {             // generate N words at one time

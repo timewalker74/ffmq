@@ -31,7 +31,8 @@ public final class SetClientIDQuery extends AbstractQueryPacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.Q_SET_CLIENT_ID;
     }
@@ -39,7 +40,8 @@ public final class SetClientIDQuery extends AbstractQueryPacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
         super.serializeTo(out);
         out.writeUTF(clientID);
@@ -48,7 +50,8 @@ public final class SetClientIDQuery extends AbstractQueryPacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
         super.unserializeFrom(in);
         clientID = in.readUTF();

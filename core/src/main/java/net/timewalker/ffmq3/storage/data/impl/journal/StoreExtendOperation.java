@@ -78,7 +78,8 @@ public final class StoreExtendOperation extends AbstractJournalOperation
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.journal.AbstractJournalOperation#size()
      */
-    public int size()
+    @Override
+	public int size()
     {
     	return super.size() + 4 + 4 + 4;
     }
@@ -86,7 +87,8 @@ public final class StoreExtendOperation extends AbstractJournalOperation
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.data.impl.journal.AbstractJournalOperation#writeTo(net.timewalker.ffmq3.storage.data.impl.journal.JournalFile)
      */
-    protected void writeTo(JournalFile journalFile) throws JournalException
+    @Override
+	protected void writeTo(JournalFile journalFile) throws JournalException
     {
     	super.writeTo(journalFile);
     	journalFile.writeInt(blockSize);
@@ -123,7 +125,8 @@ public final class StoreExtendOperation extends AbstractJournalOperation
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
     	return super.toString()+" [STORE_EXTEND] blockSize="+blockSize+" oldBlockCount="+oldBlockCount+" newBlockCount="+newBlockCount;
     }

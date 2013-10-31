@@ -18,7 +18,7 @@ public final class PacketTransportHub
     private PacketTransport transport;
     
     // Runtime
-    private Map registeredEndpoints = new Hashtable();
+    private Map<Integer,PacketTransportEndpoint> registeredEndpoints = new Hashtable<>();
     private boolean closed;
     private int nextEndpointId;
     
@@ -60,7 +60,7 @@ public final class PacketTransportHub
         if (endpointId == -1)
         	return; // Response to an async call
         
-        PacketTransportEndpoint endpoint = (PacketTransportEndpoint)registeredEndpoints.get(new Integer(endpointId));
+        PacketTransportEndpoint endpoint = registeredEndpoints.get(new Integer(endpointId));
         if (endpoint == null)
             return; // Endpoint is gone
         
@@ -76,10 +76,10 @@ public final class PacketTransportHub
         
         synchronized (registeredEndpoints)
         {
-            Iterator endpoints = registeredEndpoints.values().iterator();
+            Iterator<PacketTransportEndpoint> endpoints = registeredEndpoints.values().iterator();
             while (endpoints.hasNext())
             {
-                PacketTransportEndpoint endpoint = (PacketTransportEndpoint)endpoints.next();
+                PacketTransportEndpoint endpoint = endpoints.next();
                 endpoint.getResponseSemaphore().release();
             }
             registeredEndpoints.clear();

@@ -52,7 +52,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#getType()
      */
-    protected byte getType()
+    @Override
+	protected byte getType()
     {
         return MessageType.TEXT;
     }
@@ -60,7 +61,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#unserializeBodyFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeBodyFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeBodyFrom(RawDataBuffer in)
     {
         body = in.readNullableUTF();
     }
@@ -68,7 +70,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#serializeBodyTo(net.timewalker.ffmq3.utils.RawDataBuffer)
      */
-    protected final void serializeBodyTo(RawDataBuffer out)
+    @Override
+	protected final void serializeBodyTo(RawDataBuffer out)
     {
     	out.writeNullableUTF(body);
     }
@@ -77,7 +80,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.AbstractMessage#clearBody()
      */
-    public void clearBody()
+    @Override
+	public void clearBody()
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         body = null;
@@ -88,7 +92,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
      * (non-Javadoc)
      * @see javax.jms.TextMessage#getText()
      */
-    public String getText() throws JMSException
+    @Override
+	public String getText() throws JMSException
     {
         return body;
     }
@@ -97,7 +102,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
      * (non-Javadoc)
      * @see javax.jms.TextMessage#setText(java.lang.String)
      */
-    public void setText(String body) throws JMSException
+    @Override
+	public void setText(String body) throws JMSException
     {
     	if (bodyIsReadOnly)
             throw new MessageNotWriteableException("Message body is read-only");
@@ -110,7 +116,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#copy()
      */
-    public AbstractMessage copy()
+    @Override
+	public AbstractMessage copy()
     {
         TextMessageImpl clone = new TextMessageImpl();
         copyCommonFields(clone);
@@ -123,7 +130,8 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer(super.toString());
         sb.append(" body=");

@@ -54,7 +54,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#close()
      */
-    public final void close() throws JMSException
+    @Override
+	public final void close() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -81,7 +82,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#getDeliveryMode()
      */
-    public final int getDeliveryMode()
+    @Override
+	public final int getDeliveryMode()
     {
         return defaultDeliveryMode;
     }
@@ -89,7 +91,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#getDestination()
      */
-    public final Destination getDestination()
+    @Override
+	public final Destination getDestination()
     {
         return destination;
     }
@@ -97,7 +100,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#getDisableMessageID()
      */
-    public final boolean getDisableMessageID()
+    @Override
+	public final boolean getDisableMessageID()
     {
         return disableMessageID;
     }
@@ -105,7 +109,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#getDisableMessageTimestamp()
      */
-    public final boolean getDisableMessageTimestamp()
+    @Override
+	public final boolean getDisableMessageTimestamp()
     {
         return disableMessageTimestamp;
     }
@@ -113,7 +118,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#getPriority()
      */
-    public final int getPriority()
+    @Override
+	public final int getPriority()
     {
         return defaultPriority;
     }
@@ -121,7 +127,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#getTimeToLive()
      */
-    public final long getTimeToLive()
+    @Override
+	public final long getTimeToLive()
     {
         return defaultTimeToLive;
     }
@@ -129,7 +136,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#setDeliveryMode(int)
      */
-    public final void setDeliveryMode(int deliveryMode) throws JMSException
+    @Override
+	public final void setDeliveryMode(int deliveryMode) throws JMSException
     {
         if (deliveryMode != DeliveryMode.PERSISTENT &&
             deliveryMode != DeliveryMode.NON_PERSISTENT)
@@ -141,7 +149,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#setDisableMessageID(boolean)
      */
-    public final void setDisableMessageID(boolean disableMessageID)
+    @Override
+	public final void setDisableMessageID(boolean disableMessageID)
     {
         this.disableMessageID = disableMessageID;
     }
@@ -149,7 +158,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#setDisableMessageTimestamp(boolean)
      */
-    public final void setDisableMessageTimestamp(boolean disableMessageTimestamp)
+    @Override
+	public final void setDisableMessageTimestamp(boolean disableMessageTimestamp)
     {
         this.disableMessageTimestamp = disableMessageTimestamp;
     }
@@ -157,7 +167,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#setPriority(int)
      */
-    public final void setPriority(int priority) throws JMSException
+    @Override
+	public final void setPriority(int priority) throws JMSException
     {
         if (priority < 0 || priority > 9)
             throw new FFMQException("Invalid priority value : "+priority,"INVALID_PRIORITY");
@@ -168,7 +179,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#setTimeToLive(long)
      */
-    public final void setTimeToLive(long timeToLive)
+    @Override
+	public final void setTimeToLive(long timeToLive)
     {
         this.defaultTimeToLive = timeToLive;
     }
@@ -177,7 +189,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
      * (non-Javadoc)
      * @see javax.jms.MessageProducer#send(javax.jms.Message)
      */
-    public final void send(Message message) throws JMSException
+    @Override
+	public final void send(Message message) throws JMSException
     {
     	if (this.destination == null)
     		throw new UnsupportedOperationException("Destination was not set at creation time");
@@ -195,7 +208,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
      * (non-Javadoc)
      * @see javax.jms.MessageProducer#send(javax.jms.Destination, javax.jms.Message)
      */
-    public final void send(Destination destination, Message message) throws JMSException
+    @Override
+	public final void send(Destination destination, Message message) throws JMSException
     {
     	if (this.destination != null)
     		throw new UnsupportedOperationException("Destination was set at creation time");
@@ -213,7 +227,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
      * (non-Javadoc)
      * @see javax.jms.MessageProducer#send(javax.jms.Message, int, int, long)
      */
-    public final void send(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	public final void send(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
     	if (this.destination == null)
     		throw new UnsupportedOperationException("Destination was not set at creation time");
@@ -231,7 +246,8 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
      * (non-Javadoc)
      * @see javax.jms.MessageProducer#send(javax.jms.Destination, javax.jms.Message, int, int, long)
      */
-    public final void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	public final void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
     	if (this.destination != null)
     		throw new UnsupportedOperationException("Destination was set at creation time");

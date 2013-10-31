@@ -46,7 +46,8 @@ public final class LocalQueueReceiver extends LocalMessageConsumer implements Qu
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.QueueReceiver#getQueue()
      */
-    public Queue getQueue()
+    @Override
+	public Queue getQueue()
     {
         return (Queue)destination;
     }

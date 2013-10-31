@@ -34,7 +34,8 @@ public final class ErrorResponse extends AbstractResponsePacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.R_ERROR;
     }
@@ -42,7 +43,8 @@ public final class ErrorResponse extends AbstractResponsePacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractResponsePacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
         super.serializeTo(out);
     	out.writeByteArray(SerializationTools.toByteArray(error));
@@ -51,7 +53,8 @@ public final class ErrorResponse extends AbstractResponsePacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractResponsePacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
         super.unserializeFrom(in);
     	byte[] data = in.readByteArray();
@@ -87,7 +90,8 @@ public final class ErrorResponse extends AbstractResponsePacket
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         

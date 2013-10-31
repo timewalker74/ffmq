@@ -45,7 +45,7 @@ public class FFMQConnectionFactory implements ConnectionFactory, Serializable, R
 	private static final long serialVersionUID = 1L;
 	
 	// Attributes
-	protected Hashtable environment;
+	protected Hashtable<String,Object> environment;
 	protected String clientID;
     
 	/**
@@ -53,13 +53,13 @@ public class FFMQConnectionFactory implements ConnectionFactory, Serializable, R
 	 */
 	public FFMQConnectionFactory()
 	{
-		this(new Hashtable());
+		this(new Hashtable<String,Object>());
 	}
 	
     /**
      * Constructor
      */
-    public FFMQConnectionFactory( Hashtable environment )
+    public FFMQConnectionFactory( Hashtable<String, Object>  environment )
     {
         this.environment = environment;
         this.clientID = getStringProperty(FFMQConstants.JNDI_ENV_CLIENT_ID,null);
@@ -133,7 +133,8 @@ public class FFMQConnectionFactory implements ConnectionFactory, Serializable, R
      * (non-Javadoc)
      * @see javax.jms.ConnectionFactory#createConnection()
      */
-    public final Connection createConnection() throws JMSException
+    @Override
+	public final Connection createConnection() throws JMSException
     {
     	String username = getStringProperty(Context.SECURITY_PRINCIPAL,null);
     	String password = getStringProperty(Context.SECURITY_CREDENTIALS,null);
@@ -145,7 +146,8 @@ public class FFMQConnectionFactory implements ConnectionFactory, Serializable, R
      * (non-Javadoc)
      * @see javax.jms.ConnectionFactory#createConnection(java.lang.String, java.lang.String)
      */
-    public final Connection createConnection(String userName, String password) throws JMSException
+    @Override
+	public final Connection createConnection(String userName, String password) throws JMSException
     {
         URI providerURL = getProviderURI();
         
@@ -190,7 +192,8 @@ public class FFMQConnectionFactory implements ConnectionFactory, Serializable, R
     /* (non-Javadoc)
      * @see javax.naming.Referenceable#getReference()
      */
-    public final Reference getReference() throws NamingException
+    @Override
+	public final Reference getReference() throws NamingException
     {
     	Reference ref = new Reference(getClass().getName(),JNDIObjectFactory.class.getName(),null);
     	ref.add(new StringRefAddr("providerURL",getProviderURL()));

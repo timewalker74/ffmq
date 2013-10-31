@@ -3,6 +3,8 @@ package net.timewalker.ffmq3.test.local.session;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import javax.jms.BytesMessage;
 import javax.jms.Connection;
@@ -31,17 +33,17 @@ import javax.jms.TextMessage;
 import net.timewalker.ffmq3.FFMQException;
 import net.timewalker.ffmq3.test.AbstractCommTest;
 import net.timewalker.ffmq3.test.TestUtils;
-import net.timewalker.ffmq3.utils.concurrent.Semaphore;
 import net.timewalker.ffmq3.utils.id.UUIDProvider;
 
 /**
  * LocalSessionTest
  */
+@SuppressWarnings("all")
 public class LocalSessionTest extends AbstractCommTest
 {
 	protected Connection connection;
 	protected int counter;
-	protected Semaphore listenerLock = new Semaphore();
+	protected Semaphore listenerLock = new Semaphore(0);
 	protected volatile boolean state;
 	
 	private static final long RECV_TIMEOUT = 150;
@@ -64,6 +66,7 @@ public class LocalSessionTest extends AbstractCommTest
 	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp() throws Exception
 	{
 		super.setUp();
@@ -77,6 +80,7 @@ public class LocalSessionTest extends AbstractCommTest
 	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown() throws Exception
 	{
 		if (lastConnectionFailure != null)
@@ -102,6 +106,7 @@ public class LocalSessionTest extends AbstractCommTest
 			 * 
 			 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 			 */
+			@Override
 			public void onMessage(Message message)
 			{
 				try
@@ -398,6 +403,7 @@ public class LocalSessionTest extends AbstractCommTest
 			 * (non-Javadoc)
 			 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 			 */
+			@Override
 			public void onMessage(Message msg)
 			{
 				try
@@ -414,7 +420,7 @@ public class LocalSessionTest extends AbstractCommTest
 		});
     	connection.start();
     	assertFalse(state);
-    	listenerLock.acquire(1000);
+    	assertTrue(listenerLock.tryAcquire(1000,TimeUnit.MILLISECONDS));
     	assertTrue(state);
     	
     	session.close();
@@ -435,6 +441,7 @@ public class LocalSessionTest extends AbstractCommTest
 			 * (non-Javadoc)
 			 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 			 */
+			@Override
 			public void onMessage(Message msg)
 			{
 				try
@@ -453,7 +460,7 @@ public class LocalSessionTest extends AbstractCommTest
 			}
 		});
     	connection.start();
-    	listenerLock.acquire(2000);
+    	assertTrue(listenerLock.tryAcquire(2000,TimeUnit.MILLISECONDS));
     	
     	connection.stop();
     	System.out.println("Leaving stop");
@@ -827,7 +834,7 @@ public class LocalSessionTest extends AbstractCommTest
 		QueueBrowser browser = session.createBrowser(queue1);
 
 		int count = 0;
-		Enumeration messages = browser.getEnumeration();
+		Enumeration<?> messages = browser.getEnumeration();
 		while (messages.hasMoreElements())
 		{
 			Message browsedMsg = (Message) messages.nextElement();
@@ -1020,6 +1027,7 @@ public class LocalSessionTest extends AbstractCommTest
 			 * 
 			 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 			 */
+			@Override
 			public void onMessage(Message message)
 			{
 				try
@@ -1038,7 +1046,7 @@ public class LocalSessionTest extends AbstractCommTest
 			}
 		});
 		connection.start();
-		listenerLock.acquire(1000);
+		assertTrue(listenerLock.tryAcquire(1000,TimeUnit.MILLISECONDS));
 		Thread.sleep(200);
 		assertEquals(2, counter);
 		consumer.close();
@@ -1054,6 +1062,7 @@ public class LocalSessionTest extends AbstractCommTest
 			 * 
 			 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 			 */
+			@Override
 			public void onMessage(Message message)
 			{
 				try
@@ -1069,7 +1078,7 @@ public class LocalSessionTest extends AbstractCommTest
 				}
 			}
 		});
-		listenerLock.acquire(1000);
+		assertTrue(listenerLock.tryAcquire(1000,TimeUnit.MILLISECONDS));
 		Thread.sleep(200);
 		assertEquals(1, counter);
 		consumer.close();
@@ -1227,6 +1236,7 @@ public class LocalSessionTest extends AbstractCommTest
 	 * 
 	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isListenerTest()
 	 */
+	@Override
 	protected boolean isListenerTest()
 	{
 		return false;
@@ -1237,6 +1247,7 @@ public class LocalSessionTest extends AbstractCommTest
 	 * 
 	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isRemote()
 	 */
+	@Override
 	protected boolean isRemote()
 	{
 		return false;
@@ -1247,6 +1258,7 @@ public class LocalSessionTest extends AbstractCommTest
 	 * 
 	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isTopicTest()
 	 */
+	@Override
 	protected boolean isTopicTest()
 	{
 		return false;
@@ -1258,6 +1270,7 @@ public class LocalSessionTest extends AbstractCommTest
 	 * @see
 	 * net.timewalker.ffmq3.additional.AbstractCommTest#useMultipleConnections()
 	 */
+	@Override
 	protected boolean useMultipleConnections()
 	{
 		return false;
@@ -1280,7 +1293,7 @@ public class LocalSessionTest extends AbstractCommTest
 		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
 
 		QueueBrowser browser = session.createBrowser(queue1);
-		Enumeration messages = browser.getEnumeration();
+		Enumeration<?> messages = browser.getEnumeration();
 		int count = 0;
 		while (messages.hasMoreElements())
 		{

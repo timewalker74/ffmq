@@ -44,7 +44,8 @@ public abstract class AbstractDataStore implements LinkedDataStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.store.LinkedDataStore#isLocked(int)
      */
-    public final boolean isLocked(int handle) throws DataStoreException 
+    @Override
+	public final boolean isLocked(int handle) throws DataStoreException 
     {
         if (SAFE_MODE) checkHandle(handle);
 		return locks.get(handle);
@@ -54,7 +55,8 @@ public abstract class AbstractDataStore implements LinkedDataStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.store.LinkedDataStore#lock(int)
      */
-    public final void lock(int handle) throws DataStoreException 
+    @Override
+	public final void lock(int handle) throws DataStoreException 
     {
         if (SAFE_MODE) checkHandle(handle);
         if (!locks.flip(handle))
@@ -68,7 +70,8 @@ public abstract class AbstractDataStore implements LinkedDataStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.store.LinkedDataStore#unlock(int)
      */
-    public final void unlock(int handle) throws DataStoreException 
+    @Override
+	public final void unlock(int handle) throws DataStoreException 
     {
         if (SAFE_MODE) checkHandle(handle);
         if (locks.flip(handle))

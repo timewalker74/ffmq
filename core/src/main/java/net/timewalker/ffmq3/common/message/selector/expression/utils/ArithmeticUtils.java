@@ -27,7 +27,7 @@ public final class ArithmeticUtils
      */
     public static Number sum( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -42,7 +42,7 @@ public final class ArithmeticUtils
      */
     public static Number substract( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -57,7 +57,7 @@ public final class ArithmeticUtils
      */
     public static Number multiply( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -72,7 +72,7 @@ public final class ArithmeticUtils
      */
     public static Number divide( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -94,7 +94,7 @@ public final class ArithmeticUtils
     public static Number minus( Number n )
     {
         Number value = normalize(n);
-        Class type = value.getClass();
+        Class<?> type = value.getClass();
         
         if (type == Long.class)
             return new Long(-n.longValue());
@@ -107,7 +107,7 @@ public final class ArithmeticUtils
      */
     public static Boolean greaterThan( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -121,7 +121,7 @@ public final class ArithmeticUtils
      */
     public static Boolean greaterThanOrEquals( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -135,7 +135,7 @@ public final class ArithmeticUtils
      */
     public static Boolean lessThan( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -149,7 +149,7 @@ public final class ArithmeticUtils
      */
     public static Boolean lessThanOrEquals( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -163,7 +163,7 @@ public final class ArithmeticUtils
      */
     public static Boolean equals( Number n1 , Number n2 )
     {
-        Class type = getComputationType(n1,n2);
+        Class<?> type = getComputationType(n1,n2);
         Number val1 = convertTo(n1,type);
         Number val2 = convertTo(n2,type);
 
@@ -172,9 +172,9 @@ public final class ArithmeticUtils
         return val1.doubleValue() == val2.doubleValue() ? Boolean.TRUE : Boolean.FALSE;
     }
     
-    private static Number convertTo( Number n , Class type )
+    private static Number convertTo( Number n , Class<?> type )
     {
-        Class baseType = n.getClass();
+        Class<?> baseType = n.getClass();
         if (baseType == type)
             return n;
 
@@ -185,7 +185,7 @@ public final class ArithmeticUtils
     
     public static Number normalize( Number value )
     {
-        Class type = value.getClass();
+        Class<?> type = value.getClass();
         if (type == Long.class || type == Double.class)
             return value;
         
@@ -195,7 +195,7 @@ public final class ArithmeticUtils
             return new Double(value.doubleValue());
     }
     
-    private static boolean isIntegerType( Class type )
+    private static boolean isIntegerType( Class<?> type )
     {
         return type == Byte.class ||
                type == Short.class ||
@@ -203,10 +203,10 @@ public final class ArithmeticUtils
                type == Long.class;
     }
     
-    private static Class getComputationType( Number n1 , Number n2 )
+    private static Class<?> getComputationType( Number n1 , Number n2 )
     {
-        Class type1 = n1.getClass();
-        Class type2 = n2.getClass();
+        Class<?> type1 = n1.getClass();
+        Class<?> type2 = n2.getClass();
         if (isIntegerType(type1) && isIntegerType(type2))
             return Long.class;
         else

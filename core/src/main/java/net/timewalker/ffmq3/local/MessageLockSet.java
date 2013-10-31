@@ -29,7 +29,7 @@ import net.timewalker.ffmq3.local.destination.LocalQueue;
  */
 public final class MessageLockSet
 {
-	private List items;
+	private List<MessageLock> items;
     
     /**
      * Constructor
@@ -37,7 +37,7 @@ public final class MessageLockSet
     public MessageLockSet( int initialSize )
     {
         super();
-        items = new ArrayList(initialSize);
+        items = new ArrayList<>(initialSize);
     }
     
     /**
@@ -63,6 +63,6 @@ public final class MessageLockSet
      */
     public MessageLock get( int n )
     {
-    	return (MessageLock)items.get(n);
+    	return items.get(n);
     }
 }

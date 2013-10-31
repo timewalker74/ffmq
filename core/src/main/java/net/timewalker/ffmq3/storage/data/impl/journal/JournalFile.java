@@ -359,7 +359,8 @@ public final class JournalFile
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return file != null ? file.getAbsolutePath() : "?";
     }

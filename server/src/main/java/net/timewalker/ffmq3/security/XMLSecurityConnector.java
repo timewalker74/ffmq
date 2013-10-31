@@ -54,6 +54,7 @@ public final class XMLSecurityConnector implements SecurityConnector
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.security.SecurityConnector#getContext(java.lang.String, java.lang.String)
      */
+	@Override
 	public SecurityContext getContext(String userName, String password) throws FFMQSecurityException 
 	{
 		if (userName == null)

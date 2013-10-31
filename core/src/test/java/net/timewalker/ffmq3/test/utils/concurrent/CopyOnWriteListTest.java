@@ -12,7 +12,7 @@ public class CopyOnWriteListTest extends TestCase
     
     public void testFirstGen()
     {
-        CopyOnWriteList cowList = new CopyOnWriteList();
+        CopyOnWriteList<String> cowList = new CopyOnWriteList<>();
         
         assertEquals(0, cowList.getShareLevel());
         cowList.add("v1");
@@ -21,9 +21,9 @@ public class CopyOnWriteListTest extends TestCase
         assertEquals(0, cowList.getShareLevel());
         assertEquals(3, cowList.size());
         
-        CopyOnWriteList child1 = cowList.fastCopy();
-        CopyOnWriteList child2 = cowList.fastCopy();
-        CopyOnWriteList child3 = cowList.fastCopy();
+        CopyOnWriteList<String> child1 = cowList.fastCopy();
+        CopyOnWriteList<String> child2 = cowList.fastCopy();
+        CopyOnWriteList<String> child3 = cowList.fastCopy();
         assertEquals(3, cowList.getShareLevel());
         
         child1.add("v4");
@@ -39,7 +39,7 @@ public class CopyOnWriteListTest extends TestCase
     
     public void testMultipleGen()
     {
-        CopyOnWriteList cowList = new CopyOnWriteList();
+        CopyOnWriteList<String> cowList = new CopyOnWriteList<>();
         
         assertEquals(0, cowList.getShareLevel());
         cowList.add("v1");
@@ -48,9 +48,9 @@ public class CopyOnWriteListTest extends TestCase
         assertEquals(0, cowList.getShareLevel());
         assertEquals(3, cowList.size());
         
-        CopyOnWriteList child1 = cowList.fastCopy();
-        CopyOnWriteList child2 = child1.fastCopy();
-        CopyOnWriteList child3 = child2.fastCopy();
+        CopyOnWriteList<String> child1 = cowList.fastCopy();
+        CopyOnWriteList<String> child2 = child1.fastCopy();
+        CopyOnWriteList<String> child3 = child2.fastCopy();
         assertEquals(3, cowList.getShareLevel());
         
         child3.add("v4");
@@ -66,7 +66,7 @@ public class CopyOnWriteListTest extends TestCase
     
     public void testConcurrency() throws Exception
     {
-        final CopyOnWriteList cowList = new CopyOnWriteList();
+        final CopyOnWriteList<String> cowList = new CopyOnWriteList<>();
         cowList.add("v1");
         cowList.add("v2");
         cowList.add("v3");
@@ -80,12 +80,13 @@ public class CopyOnWriteListTest extends TestCase
              * (non-Javadoc)
              * @see java.lang.Thread#run()
              */
-            public void run() {
+            @Override
+			public void run() {
                 try
                 {
                     for (int i = 0 ; i < 100000 ; i++)
                     {
-                        CopyOnWriteList copy = cowList.fastCopy();
+                        CopyOnWriteList<String> copy = cowList.fastCopy();
                         int size = copy.size();
                         for (int j = 0 ; j < size ; j++)
                             copy.get(j);

@@ -41,7 +41,7 @@ public final class RemoteNotificationProxy implements NotificationProxy
     private IntegerID sessionId;
     
     // Runtime
-    private List notificationBuffer = new ArrayList();
+    private List<NotificationPacket> notificationBuffer = new ArrayList<>();
     
     /**
      * Constructor
@@ -55,7 +55,8 @@ public final class RemoteNotificationProxy implements NotificationProxy
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.notification.NotificationProxy#sendNotification(net.timewalker.ffmq3.utils.id.IntegerID, net.timewalker.ffmq3.common.message.AbstractMessage)
      */
-    public synchronized void addNotification(IntegerID consumerId, AbstractMessage prefetchedMessage)
+    @Override
+	public synchronized void addNotification(IntegerID consumerId, AbstractMessage prefetchedMessage)
     {
 		NotificationPacket notifPacket = new NotificationPacket();
     	notifPacket.setSessionId(sessionId);
@@ -69,7 +70,8 @@ public final class RemoteNotificationProxy implements NotificationProxy
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.notification.NotificationProxy#flush()
      */
-    public synchronized void flush()
+    @Override
+	public synchronized void flush()
     {
         if (!transport.isClosed())
         {
@@ -78,7 +80,7 @@ public final class RemoteNotificationProxy implements NotificationProxy
                 int len = notificationBuffer.size();
                 for (int i = 0 ; i < len ; i++)
                 {
-                	NotificationPacket notifPacket = (NotificationPacket)notificationBuffer.get(i);
+                	NotificationPacket notifPacket = notificationBuffer.get(i);
                 	notifPacket.setDonePrefetching(i == len-1);
                     transport.send(notifPacket);
                 }

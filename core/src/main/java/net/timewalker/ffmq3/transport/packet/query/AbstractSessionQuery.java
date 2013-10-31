@@ -31,7 +31,8 @@ public abstract class AbstractSessionQuery extends AbstractQueryPacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
         super.serializeTo(out);
         out.writeInt(sessionId.asInt());
@@ -40,7 +41,8 @@ public abstract class AbstractSessionQuery extends AbstractQueryPacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
         super.unserializeFrom(in);
         sessionId = new IntegerID(in.readInt());   
@@ -66,7 +68,8 @@ public abstract class AbstractSessionQuery extends AbstractQueryPacket
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         

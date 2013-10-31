@@ -7,7 +7,8 @@ import net.timewalker.ffmq3.test.local.session.LocalSessionTest;
  */
 public class RemoteSessionTest extends LocalSessionTest
 {
-    protected boolean isRemote()
+    @Override
+	protected boolean isRemote()
     {
         return true;
     }

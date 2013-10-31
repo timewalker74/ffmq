@@ -96,6 +96,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#getRetryInterval()
 	 */
+	@Override
 	public int getRetryInterval()
 	{
 		return retryInterval != null ? retryInterval.intValue() : 0;
@@ -110,6 +111,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#isCommitSourceFirst()
 	 */
+	@Override
 	public boolean isCommitSourceFirst()
 	{
 		return commitSourceFirst != null ? commitSourceFirst.booleanValue() : false;
@@ -164,6 +166,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#isProducerTransacted()
 	 */
+	@Override
 	public boolean isProducerTransacted()
 	{
 		return producerTransacted != null ? producerTransacted.booleanValue() : false;
@@ -181,6 +184,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#isConsumerTransacted()
 	 */
+	@Override
 	public boolean isConsumerTransacted()
 	{
 		return consumerTransacted != null ? consumerTransacted.booleanValue() : false;
@@ -206,6 +210,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#getConsumerAcknowledgeMode()
 	 */
+	@Override
 	public int getConsumerAcknowledgeMode()
 	{
 		return consumerAcknowledgeMode;
@@ -215,6 +220,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#getProducerDeliveryMode()
 	 */
+	@Override
 	public int getProducerDeliveryMode()
 	{
 		return producerDeliveryMode;
@@ -239,6 +245,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.xml.Descriptor#check()
 	 */
+	@Override
 	public void check() throws JMSException
 	{
 		if (name == null)
@@ -272,6 +279,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();

@@ -66,14 +66,14 @@ public abstract class AbstractConnection implements Connection
     protected boolean started;
     protected boolean closed;
     private ExceptionListener exceptionListener;
-    private Set temporaryQueues = new HashSet();
-    private Set temporaryTopics = new HashSet();
+    private Set<String> temporaryQueues = new HashSet<>();
+    private Set<String> temporaryTopics = new HashSet<>();
     protected IntegerIDProvider idProvider = new IntegerIDProvider();
     protected ReadWriteLock externalAccessLock = new ReentrantReadWriteLock();
     private Object exceptionListenerLock = new Object();
     
     // Children
-    private Map sessions = new Hashtable();
+    private Map<IntegerID,AbstractSession> sessions = new Hashtable<>();
     
     /**
      * Constructor
@@ -95,7 +95,8 @@ public abstract class AbstractConnection implements Connection
     /* (non-Javadoc)
      * @see javax.jms.Connection#getClientID()
      */
-    public String getClientID() throws JMSException
+    @Override
+	public String getClientID() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -113,7 +114,8 @@ public abstract class AbstractConnection implements Connection
     /* (non-Javadoc)
      * @see javax.jms.Connection#getMetaData()
      */
-    public ConnectionMetaData getMetaData()
+    @Override
+	public ConnectionMetaData getMetaData()
     {
         return metaData;
     }
@@ -121,7 +123,8 @@ public abstract class AbstractConnection implements Connection
     /* (non-Javadoc)
      * @see javax.jms.Connection#setClientID(java.lang.String)
      */
-    public void setClientID(String clientID) throws JMSException
+    @Override
+	public void setClientID(String clientID) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -142,7 +145,8 @@ public abstract class AbstractConnection implements Connection
     /* (non-Javadoc)
      * @see javax.jms.Connection#getExceptionListener()
      */
-    public ExceptionListener getExceptionListener()
+    @Override
+	public ExceptionListener getExceptionListener()
     {
     	synchronized (exceptionListenerLock)
     	{
@@ -153,7 +157,8 @@ public abstract class AbstractConnection implements Connection
     /* (non-Javadoc)
      * @see javax.jms.Connection#setExceptionListener(javax.jms.ExceptionListener)
      */
-    public void setExceptionListener(ExceptionListener listener) throws JMSException
+    @Override
+	public void setExceptionListener(ExceptionListener listener) throws JMSException
     {
     	synchronized (exceptionListenerLock)
     	{
@@ -254,10 +259,10 @@ public abstract class AbstractConnection implements Connection
     {
         synchronized (temporaryQueues)
 		{
-	        Iterator remainingQueues = temporaryQueues.iterator();
+	        Iterator<String> remainingQueues = temporaryQueues.iterator();
 	        while (remainingQueues.hasNext())
 	        {
-	            String queueName = (String)remainingQueues.next();
+	            String queueName = remainingQueues.next();
 	            try
 	            {
 	                deleteTemporaryQueue(queueName);
@@ -283,7 +288,8 @@ public abstract class AbstractConnection implements Connection
     /* (non-Javadoc)
      * @see javax.jms.Connection#close()
      */
-    public final void close()
+    @Override
+	public final void close()
     {
     	externalAccessLock.writeLock().lock();
     	try
@@ -322,14 +328,14 @@ public abstract class AbstractConnection implements Connection
         if (sessions == null)
             return;
         
-        List sessionsToClose = new ArrayList(sessions.size());
+        List<AbstractSession> sessionsToClose = new ArrayList<>(sessions.size());
         synchronized (sessions)
         {
             sessionsToClose.addAll(sessions.values());
         }
         for (int n = 0 ; n < sessionsToClose.size() ; n++)
         {
-            Session session = (Session)sessionsToClose.get(n);
+            Session session = sessionsToClose.get(n);
             log.debug("Auto-closing unclosed session : "+session);
             try
             {
@@ -349,14 +355,14 @@ public abstract class AbstractConnection implements Connection
     {
         try
         {
-        	List sessionsSnapshot = new ArrayList(sessions.size());
+        	List<AbstractSession> sessionsSnapshot = new ArrayList<>(sessions.size());
             synchronized (sessions)
             {
             	sessionsSnapshot.addAll(sessions.values());
             }
             for(int n=0;n<sessionsSnapshot.size();n++)
             {
-                AbstractSession session = (AbstractSession)sessionsSnapshot.get(n);
+                AbstractSession session = sessionsSnapshot.get(n);
                 session.wakeUpConsumers();
             }
         }
@@ -372,14 +378,14 @@ public abstract class AbstractConnection implements Connection
      */
     protected final void waitForDeliverySync()
     {
-    	List sessionsSnapshot = new ArrayList(sessions.size());
+    	List<AbstractSession> sessionsSnapshot = new ArrayList<>(sessions.size());
         synchronized (sessions)
         {
         	sessionsSnapshot.addAll(sessions.values());
         }
         for(int n=0;n<sessionsSnapshot.size();n++)
         {
-            AbstractSession session = (AbstractSession)sessionsSnapshot.get(n);
+            AbstractSession session = sessionsSnapshot.get(n);
             session.waitForDeliverySync();
         }
     }
@@ -389,7 +395,7 @@ public abstract class AbstractConnection implements Connection
      */
     public final AbstractSession lookupRegisteredSession( IntegerID sessionId )
     {
-        return (AbstractSession)sessions.get(sessionId);
+        return sessions.get(sessionId);
     }
     
     /**
@@ -423,7 +429,8 @@ public abstract class AbstractConnection implements Connection
      * (non-Javadoc)
      * @see javax.jms.Connection#createConnectionConsumer(javax.jms.Destination, java.lang.String, javax.jms.ServerSessionPool, int)
      */
-    public ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
+    @Override
+	public ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
     {
         throw new FFMQException("Unsupported feature","UNSUPPORTED_FEATURE");
     }
@@ -432,7 +439,8 @@ public abstract class AbstractConnection implements Connection
      * (non-Javadoc)
      * @see javax.jms.Connection#createDurableConnectionConsumer(javax.jms.Topic, java.lang.String, java.lang.String, javax.jms.ServerSessionPool, int)
      */
-    public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
+    @Override
+	public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
     {
         throw new FFMQException("Unsupported feature","UNSUPPORTED_FEATURE");
     }
@@ -440,7 +448,8 @@ public abstract class AbstractConnection implements Connection
     /* (non-Javadoc)
      * @see java.lang.Object#finalize()
      */
-    protected void finalize() throws Throwable
+    @Override
+	protected void finalize() throws Throwable
     {
         if (externalAccessLock != null && !closed)
         {
@@ -486,10 +495,10 @@ public abstract class AbstractConnection implements Connection
     			return 0;
     
     		int total = 0;
-    		Iterator sessionsIterator = sessions.values().iterator();
+    		Iterator<AbstractSession>sessionsIterator = sessions.values().iterator();
 			while (sessionsIterator.hasNext())
 			{
-				AbstractSession session = (AbstractSession)sessionsIterator.next();
+				AbstractSession session = sessionsIterator.next();
 				total += session.getConsumersCount();
 			}
 			return total;
@@ -508,10 +517,10 @@ public abstract class AbstractConnection implements Connection
     			return 0;
     
     		int total = 0;
-    		Iterator sessionsIterator = sessions.values().iterator();
+    		Iterator<AbstractSession> sessionsIterator = sessions.values().iterator();
 			while (sessionsIterator.hasNext())
 			{
-				AbstractSession session = (AbstractSession)sessionsIterator.next();
+				AbstractSession session = sessionsIterator.next();
 				total += session.getProducersCount();
 			}
 			return total;
@@ -522,7 +531,8 @@ public abstract class AbstractConnection implements Connection
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         
@@ -547,10 +557,10 @@ public abstract class AbstractConnection implements Connection
 			if (!sessions.isEmpty())
 			{
 				int pos = 0;
-				Iterator sessionsIterator = sessions.values().iterator();
+				Iterator<AbstractSession> sessionsIterator = sessions.values().iterator();
 				while (sessionsIterator.hasNext())
 				{
-					AbstractSession session = (AbstractSession)sessionsIterator.next();
+					AbstractSession session = sessionsIterator.next();
 					if (pos++ > 0)
 						sb.append(",");
 					session.getEntitiesDescription(sb);

@@ -11,7 +11,8 @@ public class RemoteQueueSessionTest extends LocalQueueSessionTest
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalSessionTest#isRemote()
      */
-    protected boolean isRemote()
+    @Override
+	protected boolean isRemote()
     {
         return true;
     }

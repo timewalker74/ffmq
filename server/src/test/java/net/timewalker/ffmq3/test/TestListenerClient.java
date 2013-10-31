@@ -50,6 +50,7 @@ public class TestListenerClient implements Runnable, ExceptionListener, MessageL
     /* (non-Javadoc)
 	 * @see javax.jms.ExceptionListener#onException(javax.jms.JMSException)
 	 */
+	@Override
 	public void onException(JMSException e)
 	{
 		e.printStackTrace();
@@ -71,6 +72,7 @@ public class TestListenerClient implements Runnable, ExceptionListener, MessageL
 	/* (non-Javadoc)
 	 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 	 */
+	@Override
 	public void onMessage(Message msg)
 	{
 		try
@@ -96,11 +98,12 @@ public class TestListenerClient implements Runnable, ExceptionListener, MessageL
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
+	@Override
 	public synchronized void run()
 	{
 		try
 		{
-			Hashtable env = new Hashtable();
+			Hashtable<String,Object> env = new Hashtable<>();
 	        env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
 	        env.put(Context.PROVIDER_URL, TestUtils.TCP_TRANSPORT_URI);
 	        Context context = new InitialContext(env);

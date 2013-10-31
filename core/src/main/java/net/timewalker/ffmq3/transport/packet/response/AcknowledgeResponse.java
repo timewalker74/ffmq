@@ -36,7 +36,8 @@ public final class AcknowledgeResponse extends AbstractResponsePacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.R_ACKNOWLEDGE;
     }

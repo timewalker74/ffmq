@@ -271,7 +271,7 @@ public final class MessageSelectorParser
             throw new InvalidSelectorException("Expected an open parenthesis after IN operator");
         readNextToken(); // Skip (
         
-        List items = new ArrayList();
+        List<SelectorNode> items = new ArrayList<>();
         while (!isEndOfExpression() && !currentToken.equals(")"))
         {
             SelectorNode item = parseBaseExpression();
@@ -294,7 +294,7 @@ public final class MessageSelectorParser
                 throw new InvalidSelectorException("Unexpected token in list : "+currentToken);
         }
         
-        SelectorNode[] itemList = (SelectorNode[])items.toArray(new SelectorNode[items.size()]);
+        SelectorNode[] itemList = items.toArray(new SelectorNode[items.size()]);
         return new StringLiteralList(itemList);
     }
     

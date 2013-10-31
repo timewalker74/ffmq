@@ -37,7 +37,8 @@ public final class TcpBufferedInputStream extends FilterInputStream
      * (non-Javadoc)
      * @see java.io.FilterInputStream#read()
      */
-    public int read() throws IOException
+    @Override
+	public int read() throws IOException
     {
         if (pos >= size)
         {
@@ -53,7 +54,8 @@ public final class TcpBufferedInputStream extends FilterInputStream
      * (non-Javadoc)
      * @see java.io.FilterInputStream#read(byte[], int, int)
      */
-    public int read(byte[] b, int off, int len) throws IOException
+    @Override
+	public int read(byte[] b, int off, int len) throws IOException
     {
         if (len == 0)
             return 0;
@@ -101,7 +103,8 @@ public final class TcpBufferedInputStream extends FilterInputStream
      * (non-Javadoc)
      * @see java.io.FilterInputStream#skip(long)
      */
-    public long skip(long n) throws IOException
+    @Override
+	public long skip(long n) throws IOException
     {
         if (n<=0)
             return 0;
@@ -120,7 +123,8 @@ public final class TcpBufferedInputStream extends FilterInputStream
      * (non-Javadoc)
      * @see java.io.FilterInputStream#available()
      */
-    public int available() throws IOException
+    @Override
+	public int available() throws IOException
     {
         return super.available()+(size-pos);
     }
@@ -129,7 +133,8 @@ public final class TcpBufferedInputStream extends FilterInputStream
      * (non-Javadoc)
      * @see java.io.FilterInputStream#markSupported()
      */
-    public boolean markSupported()
+    @Override
+	public boolean markSupported()
     {
         return false;
     }

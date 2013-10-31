@@ -38,8 +38,8 @@ public final class DestinationTemplateProvider extends AbstractDefinitionProvide
 {
     private static final Log log = LogFactory.getLog(DestinationTemplateProvider.class);
     
-    private Map queueTemplates = new Hashtable();
-    private Map topicTemplates = new Hashtable();
+    private Map<String,QueueTemplate> queueTemplates = new Hashtable<>();
+    private Map<String,TopicTemplate> topicTemplates = new Hashtable<>();
     
     /**
      * Constructor
@@ -114,7 +114,7 @@ public final class DestinationTemplateProvider extends AbstractDefinitionProvide
     
     public QueueTemplate getQueueTemplate( String queueName ) throws JMSException
     {
-        QueueTemplate queueDef = (QueueTemplate)queueTemplates.get(queueName);
+        QueueTemplate queueDef = queueTemplates.get(queueName);
         if (queueDef == null)
         {
             queueDef = loadQueueTemplate(queueName);
@@ -150,7 +150,7 @@ public final class DestinationTemplateProvider extends AbstractDefinitionProvide
 
     public TopicTemplate getTopicTemplate( String topicName ) throws JMSException
     {
-        TopicTemplate topicDef = (TopicTemplate)topicTemplates.get(topicName);
+        TopicTemplate topicDef = topicTemplates.get(topicName);
         if (topicDef == null)  
         {
             topicDef = loadTopicTemplate(topicName);

@@ -7,5 +7,6 @@ import net.timewalker.ffmq3.test.local.LocalTopicSingleConnReceiverTest;
  */
 public class RemoteTopicSingleConnReceiverTest extends LocalTopicSingleConnReceiverTest
 {
-    protected boolean isRemote() { return true; }
+    @Override
+	protected boolean isRemote() { return true; }
 }

@@ -56,7 +56,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#init()
      */
-    public void init() throws JMSException
+    @Override
+	public void init() throws JMSException
     {
     	// Initialize the data store
         this.dataStore = createDataStore();
@@ -122,7 +123,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#getStoreUsage()
      */
-    public int getStoreUsage()
+    @Override
+	public int getStoreUsage()
     {
     	return dataStore.getStoreUsage();
     }
@@ -131,7 +133,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#previous(int)
      */
-    public final int previous(int handle) throws JMSException
+    @Override
+	public final int previous(int handle) throws JMSException
     {
 		return dataStore.previous(handle);
     }
@@ -140,7 +143,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#delete(int)
      */
-    public final void delete(int handle) throws JMSException
+    @Override
+	public final void delete(int handle) throws JMSException
     {
     	// Update the datastore
     	int previousHandle = dataStore.delete(handle);
@@ -167,7 +171,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#first()
      */
-    public final int first() throws JMSException
+    @Override
+	public final int first() throws JMSException
     {
     	return dataStore.first();
     }
@@ -176,7 +181,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#next(int)
      */
-    public final int next(int handle) throws JMSException
+    @Override
+	public final int next(int handle) throws JMSException
     {
         return dataStore.next(handle);
     }
@@ -185,7 +191,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#size()
      */
-    public final int size()
+    @Override
+	public final int size()
     {
         return dataStore.size();
     }
@@ -193,7 +200,8 @@ public abstract class AbstractMessageStore implements MessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#commit(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
      */
-    public final void commitChanges(SynchronizationBarrier barrier) throws JMSException
+    @Override
+	public final void commitChanges(SynchronizationBarrier barrier) throws JMSException
     {
     	dataStore.commitChanges(barrier);
     }
@@ -201,7 +209,8 @@ public abstract class AbstractMessageStore implements MessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#commitChanges()
      */
-    public final void commitChanges() throws JMSException
+    @Override
+	public final void commitChanges() throws JMSException
     {
     	dataStore.commitChanges();
     }
@@ -210,7 +219,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#close()
      */
-    public final void close()
+    @Override
+	public final void close()
     {
         dataStore.close();
     }
@@ -233,7 +243,8 @@ public abstract class AbstractMessageStore implements MessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#retrieve(int)
      */
-    public final AbstractMessage retrieve(int handle) throws JMSException
+    @Override
+	public final AbstractMessage retrieve(int handle) throws JMSException
     {
     	return retrieveMessage(handle);
     }
@@ -241,7 +252,8 @@ public abstract class AbstractMessageStore implements MessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#replace(int, net.timewalker.ffmq3.common.message.AbstractMessage)
      */
-    public final int replace(int handle, AbstractMessage message) throws JMSException
+    @Override
+	public final int replace(int handle, AbstractMessage message) throws JMSException
     {
     	int newHandle = replaceMessage(handle, message);
     	if (newHandle == -1)
@@ -267,7 +279,8 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#store(net.timewalker.ffmq3.common.message.AbstractMessage)
      */
-    public final int store(AbstractMessage message) throws JMSException
+    @Override
+	public final int store(AbstractMessage message) throws JMSException
     {
     	int priority = message.getJMSPriority();
         int previousHandle = getLastHandleForPriority(priority);	        
@@ -285,6 +298,7 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#isLocked(int)
      */
+	@Override
 	public final boolean isLocked(int handle) throws JMSException 
 	{
 		return dataStore.isLocked(handle);
@@ -294,6 +308,7 @@ public abstract class AbstractMessageStore implements MessageStore
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.local.destination.store.MessageStore#lock(int)
 	 */
+	@Override
 	public final void lock(int handle) throws JMSException 
 	{
 		dataStore.lock(handle);
@@ -303,6 +318,7 @@ public abstract class AbstractMessageStore implements MessageStore
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.local.destination.store.MessageStore#unlock(int)
 	 */
+	@Override
 	public final void unlock(int handle) throws JMSException 
 	{
 		dataStore.unlock(handle);
@@ -312,6 +328,7 @@ public abstract class AbstractMessageStore implements MessageStore
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+	@Override
 	public String toString() 
 	{
 		StringBuffer sb = new StringBuffer();

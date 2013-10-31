@@ -40,7 +40,8 @@ public final class RemoteTopicPublisher extends RemoteMessageProducer implements
     /* (non-Javadoc)
      * @see javax.jms.TopicPublisher#getTopic()
      */
-    public Topic getTopic()
+    @Override
+	public Topic getTopic()
     {
         return (Topic)destination;
     }
@@ -48,7 +49,8 @@ public final class RemoteTopicPublisher extends RemoteMessageProducer implements
     /* (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Message, int, int, long)
      */
-    public void publish(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	public void publish(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
         send(message, deliveryMode, priority, timeToLive);
     }
@@ -56,7 +58,8 @@ public final class RemoteTopicPublisher extends RemoteMessageProducer implements
     /* (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Message)
      */
-    public void publish(Message message) throws JMSException
+    @Override
+	public void publish(Message message) throws JMSException
     {
         send(message,defaultDeliveryMode,defaultPriority,defaultTimeToLive);
     }
@@ -64,7 +67,8 @@ public final class RemoteTopicPublisher extends RemoteMessageProducer implements
     /* (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Topic, javax.jms.Message, int, int, long)
      */
-    public void publish(Topic topic, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	public void publish(Topic topic, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
         send(topic,message,deliveryMode,priority,timeToLive);
     }
@@ -72,7 +76,8 @@ public final class RemoteTopicPublisher extends RemoteMessageProducer implements
     /* (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Topic, javax.jms.Message)
      */
-    public void publish(Topic topic, Message message) throws JMSException
+    @Override
+	public void publish(Topic topic, Message message) throws JMSException
     {
         send(topic,message,defaultDeliveryMode,defaultPriority,defaultTimeToLive);
     }

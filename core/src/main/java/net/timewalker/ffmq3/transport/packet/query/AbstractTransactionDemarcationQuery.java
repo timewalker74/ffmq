@@ -27,12 +27,12 @@ import net.timewalker.ffmq3.utils.RawDataBuffer;
  */
 public abstract class AbstractTransactionDemarcationQuery extends AbstractSessionQuery
 {
-	private List deliveredMessageIDs;
+	private List<String> deliveredMessageIDs;
 	
 	/**
 	 * @return the deliveredMessageIDs
 	 */
-	public List getDeliveredMessageIDs()
+	public List<String> getDeliveredMessageIDs()
 	{
 		return deliveredMessageIDs;
 	}
@@ -40,7 +40,7 @@ public abstract class AbstractTransactionDemarcationQuery extends AbstractSessio
 	/**
 	 * @param deliveredMessageIDs the deliveredMessageIDs to set
 	 */
-	public void setDeliveredMessageIDs(List deliveredMessageIDs)
+	public void setDeliveredMessageIDs(List<String> deliveredMessageIDs)
 	{
 		this.deliveredMessageIDs = deliveredMessageIDs;
 	}
@@ -48,14 +48,15 @@ public abstract class AbstractTransactionDemarcationQuery extends AbstractSessio
 	public void addDeliveredMessageID( String msgID )
 	{
 		if (deliveredMessageIDs == null)
-			deliveredMessageIDs = new ArrayList();
+			deliveredMessageIDs = new ArrayList<>();
 		deliveredMessageIDs.add(msgID);
 	}
 	
 	/* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
     	super.serializeTo(out);
     	if (deliveredMessageIDs != null)
@@ -63,7 +64,7 @@ public abstract class AbstractTransactionDemarcationQuery extends AbstractSessio
     		int len = deliveredMessageIDs.size(); 
             out.writeInt(len);
             for (int i = 0; i < len; i++)
-            	out.writeUTF((String)deliveredMessageIDs.get(i));
+            	out.writeUTF(deliveredMessageIDs.get(i));
         }
         else
             out.writeInt(0);
@@ -72,7 +73,8 @@ public abstract class AbstractTransactionDemarcationQuery extends AbstractSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
     	super.unserializeFrom(in);
     	int idCount = in.readInt();
@@ -87,7 +89,8 @@ public abstract class AbstractTransactionDemarcationQuery extends AbstractSessio
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
        StringBuffer sb = new StringBuffer();
        

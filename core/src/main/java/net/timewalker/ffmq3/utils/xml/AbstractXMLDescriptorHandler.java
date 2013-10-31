@@ -33,7 +33,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public abstract class AbstractXMLDescriptorHandler extends DefaultHandler
 {
     private StringBuffer valueBuffer = new StringBuffer();
-    private Stack nameStack = new Stack();
+    private Stack<String> nameStack = new Stack<>();
     
     /**
      * Constructor
@@ -60,7 +60,8 @@ public abstract class AbstractXMLDescriptorHandler extends DefaultHandler
      * (non-Javadoc)
      * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    public void startElement( String uri , String localName , String qName , Attributes attributes ) throws SAXException
+    @Override
+	public void startElement( String uri , String localName , String qName , Attributes attributes ) throws SAXException
     {
         super.startElement(uri,localName,qName,attributes);
         valueBuffer.setLength(0); // Clear value buffer
@@ -72,7 +73,8 @@ public abstract class AbstractXMLDescriptorHandler extends DefaultHandler
     /* (non-Javadoc)
      * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
      */
-    public void endElement(String uri, String localName, String name) throws SAXException
+    @Override
+	public void endElement(String uri, String localName, String name) throws SAXException
     {
         super.endElement(uri, localName, name);
         String currentPath = StringTools.join(nameStack, "/");
@@ -83,7 +85,8 @@ public abstract class AbstractXMLDescriptorHandler extends DefaultHandler
     /* (non-Javadoc)
      * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
      */
-    public void characters( char[] ch , int start , int length ) throws SAXException
+    @Override
+	public void characters( char[] ch , int start , int length ) throws SAXException
     {
         valueBuffer.append(ch,start,length);
     }

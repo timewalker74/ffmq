@@ -100,6 +100,7 @@ public final class RemoteQueueBrowserEnumeration extends AbstractQueueBrowserEnu
 	/* (non-Javadoc)
 	 * @see java.util.Enumeration#hasMoreElements()
 	 */
+	@Override
 	public boolean hasMoreElements()
 	{
 		if (endOfQueueReached)
@@ -119,7 +120,8 @@ public final class RemoteQueueBrowserEnumeration extends AbstractQueueBrowserEnu
 	/* (non-Javadoc)
 	 * @see java.util.Enumeration#nextElement()
 	 */
-	public Object nextElement()
+	@Override
+	public AbstractMessage nextElement()
 	{
 		if (endOfQueueReached)
 			throw new NoSuchElementException();
@@ -154,6 +156,7 @@ public final class RemoteQueueBrowserEnumeration extends AbstractQueueBrowserEnu
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.common.session.AbstractQueueBrowserEnumeration#onQueueBrowserEnumerationClose()
 	 */
+	@Override
 	protected void onQueueBrowserEnumerationClose()
 	{
 	    try

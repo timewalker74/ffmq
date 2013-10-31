@@ -57,15 +57,15 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     private TopicDefinition topicDef;
     
     // Subscribers map
-    private CopyOnWriteList subscriptions = new CopyOnWriteList();
-    private Map subscriptionMap = new Hashtable();
+    private CopyOnWriteList<LocalTopicSubscription> subscriptions = new CopyOnWriteList<>();
+    private Map<String,LocalTopicSubscription> subscriptionMap = new Hashtable<>();
     
     // Stats
     private volatile long sentToTopicCount = 0;
     private volatile long dispatchedFromTopicCount = 0;
     
     // Runtime
-    private Set committables = new HashSet();
+    private Set<Committable> committables = new HashSet<>();
     private boolean pendingChanges;
     
     /**
@@ -89,7 +89,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      * (non-Javadoc)
      * @see javax.jms.Topic#getTopicName()
      */
-    public String getTopicName()
+    @Override
+	public String getTopicName()
     {
         return getName();
     }
@@ -97,12 +98,13 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#registerConsumer(net.timewalker.ffmq3.local.session.LocalMessageConsumer)
      */
-    public void registerConsumer(LocalMessageConsumer consumer)
+    @Override
+	public void registerConsumer(LocalMessageConsumer consumer)
     {
         super.registerConsumer(consumer);
         synchronized (subscriptionMap)
 		{
-        	LocalTopicSubscription subscription = (LocalTopicSubscription)subscriptionMap.remove(consumer.getSubscriberId());
+        	LocalTopicSubscription subscription = subscriptionMap.remove(consumer.getSubscriberId());
         	if (subscription == null)
         	{
         		// New subscription
@@ -125,7 +127,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#unregisterConsumer(net.timewalker.ffmq3.local.session.LocalMessageConsumer)
      */
-    public void unregisterConsumer(LocalMessageConsumer consumer)
+    @Override
+	public void unregisterConsumer(LocalMessageConsumer consumer)
     {
         super.unregisterConsumer(consumer);
         if (!consumer.isDurable())
@@ -133,7 +136,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
             log.debug("Removing non-durable subscription "+consumer.getSubscriberId());
             synchronized (subscriptionMap)
     		{
-            	LocalTopicSubscription subscription = (LocalTopicSubscription)subscriptionMap.remove(consumer.getSubscriberId());
+            	LocalTopicSubscription subscription = subscriptionMap.remove(consumer.getSubscriberId());
             	if (subscription != null)
             		subscriptions.remove(subscription);
     		}
@@ -147,7 +150,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     {
     	String subscriberID = clientID+"-"+subscriptionName;
     	
-    	LocalTopicSubscription subscription = (LocalTopicSubscription)subscriptionMap.get(subscriberID);
+    	LocalTopicSubscription subscription = subscriptionMap.get(subscriberID);
     	if (subscription == null)
     		return;
     	
@@ -165,7 +168,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#putLocked(net.timewalker.ffmq3.common.message.AbstractMessage, net.timewalker.ffmq3.local.session.LocalSession, net.timewalker.ffmq3.local.MessageLockSet)
      */
-    public boolean putLocked( AbstractMessage srcMessage, LocalSession session , MessageLockSet locks ) throws JMSException
+    @Override
+	public boolean putLocked( AbstractMessage srcMessage, LocalSession session , MessageLockSet locks ) throws JMSException
     {
     	checkNotClosed();
     	checkTransactionLock();
@@ -179,7 +183,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     	
         String connectionID = session.getConnection().getId();
         
-        CopyOnWriteList subscriptionsSnapshot;
+        CopyOnWriteList<LocalTopicSubscription> subscriptionsSnapshot;
         synchronized (subscriptionMap)
         {
         	sentToTopicCount++;
@@ -192,7 +196,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         boolean commitRequired = false;
         for (int i = 0; i < subscriptionsSnapshot.size(); i++)
 		{
-    		LocalTopicSubscription subscription = (LocalTopicSubscription)subscriptionsSnapshot.get(i);
+    		LocalTopicSubscription subscription = subscriptionsSnapshot.get(i);
             
             // No-local filtering
             if (subscription.getNoLocal() && subscription.getConnectionID().equals(connectionID))
@@ -245,7 +249,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         return commitRequired;
     }
     
-    private void processPutError( String subscriberId , JMSException e , int policy ) throws JMSException
+    private void processPutError( @SuppressWarnings("unused") String subscriberId , JMSException e , int policy ) throws JMSException
     {
     	if ((policy & FFMQSubscriberPolicy.SUBSCRIBER_POLICY_LOG) > 0)
     		ErrorTools.log(e, log);
@@ -258,14 +262,15 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getSize()
      */
-    public int getSize()
+    @Override
+	public int getSize()
     {
     	int size = 0;
     	synchronized (subscriptionMap)
         {
     		for (int i = 0; i < subscriptions.size(); i++)
     		{
-        		LocalTopicSubscription subscription = (LocalTopicSubscription)subscriptions.get(i);
+        		LocalTopicSubscription subscription = subscriptions.get(i);
                 size += subscription.getLocalQueue().getSize();
             }
         }
@@ -276,7 +281,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#resetStats()
      */
-    public void resetStats()
+    @Override
+	public void resetStats()
     {
     	super.resetStats();
     	sentToTopicCount = 0;
@@ -287,7 +293,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalTopicMBean#getSentToTopicCount()
      */
-    public long getSentToTopicCount()
+    @Override
+	public long getSentToTopicCount()
     {
         return sentToTopicCount;
     }
@@ -296,7 +303,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.LocalTopicMBean#getDispatchedFromTopicCount()
      */
-    public long getDispatchedFromTopicCount()
+    @Override
+	public long getDispatchedFromTopicCount()
     {
         return dispatchedFromTopicCount;
     }
@@ -305,7 +313,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
        StringBuffer sb = new StringBuffer();
        
@@ -332,7 +341,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         {
             for (int i = 0; i < subscriptions.size(); i++)
             {
-                LocalTopicSubscription subscription = (LocalTopicSubscription)subscriptions.get(i);
+                LocalTopicSubscription subscription = subscriptions.get(i);
                 
                 if (i>0)
                     sb.append("\n");
@@ -346,6 +355,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#hasTransactionSupport()
      */
+    @Override
     protected boolean requiresTransactionalUpdate()
     {
     	return topicDef.hasPersistentStore();
@@ -354,6 +364,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#hasPendingChanges()
      */
+    @Override
     protected boolean hasPendingChanges()
     {
     	return pendingChanges;
@@ -363,7 +374,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#close()
      */
-    public final void close() throws JMSException
+    @Override
+	public final void close() throws JMSException
     {
     	synchronized (closeLock)
 		{
@@ -376,6 +388,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.Committable#commitChanges(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
      */
+    @Override
     public void commitChanges(SynchronizationBarrier barrier) throws JMSException
     {
     	checkNotClosed();
@@ -385,10 +398,10 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         {
     		long start = System.currentTimeMillis();
     		
-    		Iterator allCommitables = committables.iterator();
+    		Iterator<Committable> allCommitables = committables.iterator();
         	while (allCommitables.hasNext())
         	{
-        		Committable committable = (Committable)allCommitables.next();
+        		Committable committable = allCommitables.next();
         		committable.commitChanges(barrier);
         	}
         	
@@ -402,15 +415,16 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#closeTransaction()
      */
+    @Override
     public void closeTransaction()
     {
     	// Unlock subscriptions queues first
     	if (!committables.isEmpty())
         {
-	    	Iterator allCommitables = committables.iterator();
+	    	Iterator<Committable> allCommitables = committables.iterator();
 	    	while (allCommitables.hasNext())
 	    	{
-	    		Committable committable = (Committable)allCommitables.next();
+	    		Committable committable = allCommitables.next();
 	    		committable.closeTransaction();
 	    	}
 	    	committables.clear();

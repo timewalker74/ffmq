@@ -32,7 +32,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * ObjectPool
  */
-public abstract class ObjectPool implements ObjectPoolMBean
+public abstract class ObjectPool<T> implements ObjectPoolMBean
 {
 	private static final Log log = LogFactory.getLog(ObjectPool.class);
 	
@@ -53,8 +53,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
 	private long waitTimeout;
 	
 	// Runtime
-	private Set all;
-	private List available;
+	private Set<T> all;
+	private List<T> available;
 	private boolean closed;
 	private int pendingWaits;
 	private Object closeLock = new Object();
@@ -93,15 +93,15 @@ public abstract class ObjectPool implements ObjectPoolMBean
 		this.maxSize = maxSize;
 		this.exhaustionPolicy = exhaustionPolicy;
 		this.waitTimeout = waitTimeout;
-		this.all = new HashSet(maxSize);
-		this.available = new ArrayList(maxSize);
+		this.all = new HashSet<>(maxSize);
+		this.available = new ArrayList<>(maxSize);
 	}
 	
 	protected void init() throws JMSException
 	{
 		for (int i = 0; i < minSize; i++)
 		{
-			Object poolObject = extendPool();
+			T poolObject = extendPool();
 			available.add(poolObject);
 		}
 	}
@@ -110,7 +110,7 @@ public abstract class ObjectPool implements ObjectPoolMBean
 	 * Borrow an object from the pool
 	 * @return a pooled object
 	 */
-	public synchronized Object borrow() throws JMSException
+	public synchronized T borrow() throws JMSException
 	{
 		if (closed)
 			throw new ObjectPoolException("Object pool is closed");
@@ -138,7 +138,7 @@ public abstract class ObjectPool implements ObjectPoolMBean
 		}
 	}
 	
-	private Object waitForAvailability() throws JMSException
+	private T waitForAvailability() throws JMSException
 	{
 		pendingWaits++;
 		try
@@ -172,7 +172,7 @@ public abstract class ObjectPool implements ObjectPoolMBean
 		}
 	}
 	
-	private Object waitForAvailability( long waitTimeout , boolean throwExceptionOnTimeout ) throws JMSException
+	private T waitForAvailability( long waitTimeout , boolean throwExceptionOnTimeout ) throws JMSException
 	{
 		pendingWaits++;
 		try
@@ -222,7 +222,7 @@ public abstract class ObjectPool implements ObjectPoolMBean
 	 * Return an object to the pool
 	 * @param poolObject a pooled object to be returned
 	 */
-	public synchronized void release( Object poolObject )
+	public synchronized void release( T poolObject )
 	{
 		if (closed)
 			return;
@@ -246,9 +246,9 @@ public abstract class ObjectPool implements ObjectPoolMBean
 		}
 	}
 
-	private Object extendPool() throws JMSException
+	private T extendPool() throws JMSException
 	{
-		Object newPoolObject;
+		T newPoolObject;
 		try
 		{
 			newPoolObject = createPoolObject();
@@ -265,7 +265,7 @@ public abstract class ObjectPool implements ObjectPoolMBean
 		return newPoolObject;
 	}
 
-	private void internalDestroyPoolObject( Object poolObject )
+	private void internalDestroyPoolObject( T poolObject )
 	{
 		try
 		{
@@ -291,10 +291,10 @@ public abstract class ObjectPool implements ObjectPoolMBean
 		
 		synchronized (this)
 		{
-			Iterator allObjects = all.iterator();
+			Iterator<T> allObjects = all.iterator();
 			while (allObjects.hasNext())
 			{
-				Object poolObject = allObjects.next();
+				T poolObject = allObjects.next();
 				internalDestroyPoolObject(poolObject);
 			}
 			
@@ -311,20 +311,21 @@ public abstract class ObjectPool implements ObjectPoolMBean
 	 * @return an new pool object
 	 * @throws Exception on creation error
 	 */
-	protected abstract Object createPoolObject() throws Exception;
+	protected abstract T createPoolObject() throws Exception;
 	
 	/**
 	 * Destroy a pool object
 	 * @param poolObject the object to destroy
 	 * @throws Exception on release error
 	 */
-	protected abstract void destroyPoolObject( Object poolObject ) throws Exception;
+	protected abstract void destroyPoolObject( T poolObject ) throws Exception;
 	
 	/*
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMaxIdle()
 	 */
-    public int getThreadPoolMaxIdle()
+    @Override
+	public int getThreadPoolMaxIdle()
     {
         return maxIdle;
     }
@@ -333,7 +334,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMinSize()
      */
-    public int getThreadPoolMinSize()
+    @Override
+	public int getThreadPoolMinSize()
     {
         return minSize;
     }
@@ -342,7 +344,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMaxSize()
      */
-    public int getThreadPoolMaxSize()
+    @Override
+	public int getThreadPoolMaxSize()
     {
         return maxSize;
     }
@@ -351,7 +354,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolExhaustionPolicy()
      */
-    public int getThreadPoolExhaustionPolicy()
+    @Override
+	public int getThreadPoolExhaustionPolicy()
     {
         return exhaustionPolicy;
     }
@@ -360,7 +364,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolWaitTimeout()
      */
-    public long getThreadPoolWaitTimeout()
+    @Override
+	public long getThreadPoolWaitTimeout()
     {
         return waitTimeout;
     }
@@ -369,7 +374,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolAvailableCount()
      */
-    public int getThreadPoolAvailableCount()
+    @Override
+	public int getThreadPoolAvailableCount()
     {
         return available.size();
     }
@@ -378,7 +384,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolPendingWaits()
      */
-    public int getThreadPoolPendingWaits()
+    @Override
+	public int getThreadPoolPendingWaits()
     {
         return pendingWaits;
     }
@@ -386,7 +393,8 @@ public abstract class ObjectPool implements ObjectPoolMBean
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolSize()
      */
-    public int getThreadPoolSize()
+    @Override
+	public int getThreadPoolSize()
     {
         return all.size();
     }

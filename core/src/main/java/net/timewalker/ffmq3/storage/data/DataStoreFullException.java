@@ -45,7 +45,8 @@ public class DataStoreFullException extends DataStoreException
      * (non-Javadoc)
      * @see javax.jms.JMSException#getErrorCode()
      */
-    public String getErrorCode()
+    @Override
+	public String getErrorCode()
     {
     	return "STORE_FULL";
     }

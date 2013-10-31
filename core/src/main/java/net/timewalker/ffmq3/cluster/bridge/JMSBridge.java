@@ -73,6 +73,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeMBean#getName()
 	 */
+	@Override
 	public String getName()
 	{
 		return bridgeDefinition.getName();
@@ -90,6 +91,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeMBean#getForwardedMessages()
 	 */
+	@Override
 	public long getForwardedMessages()
 	{
 		return forwardedMessages;
@@ -98,6 +100,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeMBean#getFailures()
 	 */
+	@Override
 	public long getFailures()
 	{
 		return failures;
@@ -106,6 +109,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeMBean#resetStats()
 	 */
+	@Override
 	public void resetStats()
 	{
 		forwardedMessages = 0;
@@ -116,6 +120,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeMBean#start()
 	 */
+	@Override
 	public synchronized void start()
 	{
 		if (started)
@@ -132,6 +137,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeMBean#stop()
 	 */
+	@Override
 	public synchronized void stop()
 	{
 		if (!started)
@@ -159,6 +165,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeMBean#isStarted()
 	 */
+	@Override
 	public synchronized boolean isStarted()
 	{
 		return started;
@@ -168,6 +175,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#getRetryInterval()
 	 */
+	@Override
 	public int getRetryInterval()
 	{
 		return bridgeDefinition.getRetryInterval();
@@ -177,6 +185,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#isCommitSourceFirst()
 	 */
+	@Override
 	public boolean isCommitSourceFirst()
 	{
 		return bridgeDefinition.isCommitSourceFirst();
@@ -186,6 +195,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#isProducerTransacted()
 	 */
+	@Override
 	public boolean isProducerTransacted()
 	{
 		return bridgeDefinition.isProducerTransacted();
@@ -195,6 +205,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#isConsumerTransacted()
 	 */
+	@Override
 	public boolean isConsumerTransacted()
 	{
 		return bridgeDefinition.isConsumerTransacted();
@@ -204,6 +215,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#getConsumerAcknowledgeMode()
 	 */
+	@Override
 	public int getConsumerAcknowledgeMode()
 	{
 		return bridgeDefinition.getConsumerAcknowledgeMode();
@@ -213,6 +225,7 @@ public final class JMSBridge implements JMSBridgeMBean
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.cluster.bridge.JMSBridgeDefinitionMBean#getProducerDeliveryMode()
 	 */
+	@Override
 	public int getProducerDeliveryMode()
 	{
 		return bridgeDefinition.getProducerDeliveryMode();
@@ -248,6 +261,7 @@ public final class JMSBridge implements JMSBridgeMBean
 		/* (non-Javadoc)
 		 * @see java.lang.Thread#run()
 		 */
+		@Override
 		public void run()
 		{
 			try

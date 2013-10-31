@@ -78,7 +78,7 @@ public class LocalSession extends AbstractSession
     protected FFMQEngine engine;
     
     // Runtime
-    private List pendingPuts = new Vector();
+    private List<AbstractMessage> pendingPuts = new Vector<>();
     private TransactionSet transactionSet = new TransactionSet();
     private boolean debugEnabled = log.isDebugEnabled();
     
@@ -192,7 +192,8 @@ public class LocalSession extends AbstractSession
      * (non-Javadoc)
      * @see javax.jms.Session#commit()
      */
-    public final void commit() throws JMSException
+    @Override
+	public final void commit() throws JMSException
     {
     	commit(true,null);
     }
@@ -203,7 +204,7 @@ public class LocalSession extends AbstractSession
      * @param deliveredMessageIDs
      * @throws JMSException
      */
-    public final void commit( boolean commitGets , List deliveredMessageIDs ) throws JMSException
+    public final void commit( boolean commitGets , List<String> deliveredMessageIDs ) throws JMSException
     {
     	if (!transacted)
             throw new IllegalStateException("Session is not transacted"); // [JMS SPEC]
@@ -223,7 +224,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#rollback()
      */
-    public final void rollback() throws JMSException
+    @Override
+	public final void rollback() throws JMSException
     {
     	rollback(true, null);
     }
@@ -234,7 +236,7 @@ public class LocalSession extends AbstractSession
      * @param deliveredMessageIDs
      * @throws JMSException
      */
-    public final void rollback( boolean rollbackGets, List deliveredMessageIDs ) throws JMSException
+    public final void rollback( boolean rollbackGets, List<String> deliveredMessageIDs ) throws JMSException
     {
     	if (!transacted)
             throw new IllegalStateException("Session is not transacted"); // [JMS SPEC]
@@ -256,7 +258,7 @@ public class LocalSession extends AbstractSession
      * @param undeliveredMessageIDs
      * @throws JMSException
      */
-    public final void rollbackUndelivered( List undeliveredMessageIDs ) throws JMSException
+    public final void rollbackUndelivered( List<String> undeliveredMessageIDs ) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -289,11 +291,11 @@ public class LocalSession extends AbstractSession
 			throw new InvalidDestinationException("Unsupported destination : "+destination);
     }
     
-    private List computeLocalTargetDestinations( List pendingPuts , List queuesWithGet ) throws JMSException
+    private List<Committable> computeLocalTargetDestinations( List<AbstractMessage> pendingPuts , List<LocalQueue> queuesWithGet ) throws JMSException
     {
     	int initialSize = Math.max((pendingPuts != null ? pendingPuts.size() : 0)+
     			                   (queuesWithGet != null ? queuesWithGet.size() : 0),16);
-    	List targetCommitables = new ArrayList(initialSize);
+    	List<Committable> targetCommitables = new ArrayList<>(initialSize);
     	
     	if (queuesWithGet != null)
     		targetCommitables.addAll(queuesWithGet);
@@ -302,7 +304,7 @@ public class LocalSession extends AbstractSession
     	{
     		for (int i = 0 ; i < pendingPuts.size() ; i++)
     		{
-    			AbstractMessage msg = (AbstractMessage)pendingPuts.get(i);
+    			AbstractMessage msg = pendingPuts.get(i);
     			AbstractLocalDestination destination = getLocalDestination(msg);
     			if (!targetCommitables.contains(destination))
                 	targetCommitables.add(destination);
@@ -315,13 +317,13 @@ public class LocalSession extends AbstractSession
         return targetCommitables; 
     }
     
-    private void commitUpdates( boolean commitGets , List deliveredMessageIDs , boolean commitPuts ) throws JMSException
+    private void commitUpdates( boolean commitGets , List<String> deliveredMessageIDs , boolean commitPuts ) throws JMSException
     {
     	SynchronizationBarrier commitBarrier = null;
-    	List queuesWithGet = null;
+    	List<LocalQueue> queuesWithGet = null;
     	MessageLockSet locks = null;
     	JMSException putFailure = null;
-    	Set committables = new HashSet();
+    	Set<Committable> committables = new HashSet<>();
     	
     	// 1 - Build a list of queues updated in get operations
     	if (commitGets && transactionSet.size() > 0)
@@ -333,12 +335,12 @@ public class LocalSession extends AbstractSession
     	}
     	
     	// 2 - Build a list of all target destinations
-    	List targetDestinations = computeLocalTargetDestinations(commitPuts ? pendingPuts : null,queuesWithGet);
+    	List<Committable> targetDestinations = computeLocalTargetDestinations(commitPuts ? pendingPuts : null,queuesWithGet);
     	
     	// 3 - Lock target destinations
     	for (int i = 0; i < targetDestinations.size(); i++)
 		{
-    		Committable committable = (Committable)targetDestinations.get(i);
+    		Committable committable = targetDestinations.get(i);
     		committable.openTransaction();
 		}
     	try
@@ -361,7 +363,7 @@ public class LocalSession extends AbstractSession
 	        			{
 		    		    	for (int i = 0; i < pendingPuts.size(); i++) 
 		    		    	{
-		    		    		AbstractMessage message = (AbstractMessage)pendingPuts.get(i);
+		    		    		AbstractMessage message = pendingPuts.get(i);
 		    		    		AbstractLocalDestination targetDestination = getLocalDestination(message);
 		    		    		if (targetDestination.putLocked(message, this, locks))
 		    		    			committables.add(targetDestination);
@@ -414,7 +416,7 @@ public class LocalSession extends AbstractSession
 	    		
 	            for (int i = 0; i < queuesWithGet.size(); i++)
 	            {
-	                LocalQueue localQueue = (LocalQueue)queuesWithGet.get(i);
+	                LocalQueue localQueue = queuesWithGet.get(i);
 	                if (localQueue.remove(this,pendingGets))
 	                	committables.add(localQueue);
 	                consumedCount++;
@@ -426,10 +428,10 @@ public class LocalSession extends AbstractSession
 	    	{
 	    		commitBarrier = new SynchronizationBarrier();
 	    		
-	    		Iterator commitables = committables.iterator();
+	    		Iterator<Committable> commitables = committables.iterator();
 	    		while (commitables.hasNext())
 	    		{
-	    			Committable commitable = (Committable)commitables.next();
+	    			Committable commitable = commitables.next();
 	    			commitable.commitChanges(commitBarrier);
 	    		}
 	    	}
@@ -439,7 +441,7 @@ public class LocalSession extends AbstractSession
     		// 7 - Release locks
     		for (int i = 0; i < targetDestinations.size(); i++)
     		{
-        		Committable committable = (Committable)targetDestinations.get(i);
+        		Committable committable = targetDestinations.get(i);
         		committable.closeTransaction();
     		}
     	}
@@ -472,7 +474,7 @@ public class LocalSession extends AbstractSession
     	}
     }
     
-    private void rollbackUpdates( boolean rollbackPuts , boolean rollbackGets, List deliveredMessageIDs ) throws JMSException
+    private void rollbackUpdates( boolean rollbackPuts , boolean rollbackGets, List<String> deliveredMessageIDs ) throws JMSException
     {
     	// Clear pending put messages
     	if (rollbackPuts && transacted)
@@ -490,7 +492,7 @@ public class LocalSession extends AbstractSession
     	if (rollbackGets && transactionSet.size() > 0)
     	{
     		SynchronizationBarrier commitBarrier = null;
-    		Set committables = new HashSet();
+    		Set<Committable> committables = new HashSet<>();
     		
     		// 1 - Check for pending get operations
     		TransactionItem[] pendingGets;
@@ -508,16 +510,16 @@ public class LocalSession extends AbstractSession
 	        		log.debug(this+" - ROLLBACK [GET] "+transactionSet.size()+" message(s)");
 				pendingGets = transactionSet.clear();
 			}
-			List queuesWithGet = computeUpdatedQueues(pendingGets);
+			List<LocalQueue> queuesWithGet = computeUpdatedQueues(pendingGets);
 			MessageLockSet locks = new MessageLockSet(pendingGets.length);
 			
 			// 2 - Compute target destinations lists
-			List targetDestinations = computeLocalTargetDestinations(null,queuesWithGet);
+			List<Committable> targetDestinations = computeLocalTargetDestinations(null,queuesWithGet);
 			
 			// 3 - Lock target destinations
 			for (int i = 0; i < targetDestinations.size(); i++)
 			{
-	    		Committable committable = (Committable)targetDestinations.get(i);
+	    		Committable committable = targetDestinations.get(i);
 	    		committable.openTransaction();
 			}
 	    	try
@@ -525,8 +527,8 @@ public class LocalSession extends AbstractSession
 	    		// 4 - Redeliver locked messages to queues
 	    		for (int i = 0; i < queuesWithGet.size(); i++)
 				{
-					LocalQueue localQueue = (LocalQueue)queuesWithGet.get(i);
-					if (localQueue.redeliverLocked(this,pendingGets,locks))
+					LocalQueue localQueue = queuesWithGet.get(i);
+					if (localQueue.redeliverLocked(pendingGets,locks))
 						committables.add(localQueue);
 				}
 	    		
@@ -535,10 +537,10 @@ public class LocalSession extends AbstractSession
 		    	{
 		    		commitBarrier = new SynchronizationBarrier();
 		    		
-		    		Iterator commitables = committables.iterator();
+		    		Iterator<Committable> commitables = committables.iterator();
 		    		while (commitables.hasNext())
 		    		{
-		    			Committable commitable = (Committable)commitables.next();
+		    			Committable commitable = commitables.next();
 		    			commitable.commitChanges(commitBarrier);
 		    		}
 		    	}
@@ -548,7 +550,7 @@ public class LocalSession extends AbstractSession
 	    		// 6 - Release locks
 	    		for (int i = 0; i < targetDestinations.size(); i++)
 	    		{
-	        		Committable committable = (Committable)targetDestinations.get(i);
+	        		Committable committable = targetDestinations.get(i);
 	        		committable.closeTransaction();
 	    		}
 	    	}
@@ -575,9 +577,9 @@ public class LocalSession extends AbstractSession
     	}
     }
     
-    private List computeUpdatedQueues( TransactionItem[] pendingGets )
+    private List<LocalQueue> computeUpdatedQueues( TransactionItem[] pendingGets )
     {
-        List updatedQueues = new ArrayList(Math.max(pendingGets.length,16));
+        List<LocalQueue> updatedQueues = new ArrayList<>(Math.max(pendingGets.length,16));
         for (int i = 0 ; i < pendingGets.length ; i++)
         {
             LocalQueue localQueue = pendingGets[i].getDestination();
@@ -603,6 +605,7 @@ public class LocalSession extends AbstractSession
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.common.session.AbstractSession#onSessionClose()
 	 */
+	@Override
 	protected void onSessionClose()
 	{
     	// Rollback updates
@@ -622,7 +625,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createBrowser(javax.jms.Queue, java.lang.String)
      */
-    public QueueBrowser createBrowser(Queue queueRef, String messageSelector) throws JMSException
+    @Override
+	public QueueBrowser createBrowser(Queue queueRef, String messageSelector) throws JMSException
     {
     	return createBrowser(idProvider.createID(), queueRef, messageSelector);
     }
@@ -651,7 +655,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createConsumer(javax.jms.Destination, java.lang.String, boolean)
      */
-    public MessageConsumer createConsumer(Destination destination, String messageSelector, boolean noLocal) throws JMSException
+    @Override
+	public MessageConsumer createConsumer(Destination destination, String messageSelector, boolean noLocal) throws JMSException
     {
     	return createConsumer(idProvider.createID(), destination, messageSelector, noLocal);
     }
@@ -679,7 +684,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createDurableSubscriber(javax.jms.Topic, java.lang.String, java.lang.String, boolean)
      */
-    public TopicSubscriber createDurableSubscriber(Topic topic, String subscriptionName, String messageSelector, boolean noLocal) throws JMSException
+    @Override
+	public TopicSubscriber createDurableSubscriber(Topic topic, String subscriptionName, String messageSelector, boolean noLocal) throws JMSException
     {
     	return createDurableSubscriber(idProvider.createID(), topic, subscriptionName, messageSelector, noLocal);
     }
@@ -717,7 +723,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createProducer(javax.jms.Destination)
      */
-    public MessageProducer createProducer(Destination destination) throws JMSException
+    @Override
+	public MessageProducer createProducer(Destination destination) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -736,7 +743,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#recover()
      */
-    public final void recover() throws JMSException
+    @Override
+	public final void recover() throws JMSException
     {
     	recover(null);
     }
@@ -744,7 +752,7 @@ public class LocalSession extends AbstractSession
     /**
      * @see #rollback(boolean, List)
      */
-    public final void recover( List deliveredMessageIDs ) throws JMSException
+    public final void recover( List<String> deliveredMessageIDs ) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -764,7 +772,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#unsubscribe(java.lang.String)
      */
-    public void unsubscribe(String subscriptionName) throws JMSException
+    @Override
+	public void unsubscribe(String subscriptionName) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -785,7 +794,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createTemporaryQueue()
      */
-    public TemporaryQueue createTemporaryQueue() throws JMSException
+    @Override
+	public TemporaryQueue createTemporaryQueue() throws JMSException
     { 	
     	externalAccessLock.readLock().lock();
     	try
@@ -806,7 +816,8 @@ public class LocalSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createTemporaryTopic()
      */
-    public TemporaryTopic createTemporaryTopic() throws JMSException
+    @Override
+	public TemporaryTopic createTemporaryTopic() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -828,7 +839,8 @@ public class LocalSession extends AbstractSession
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#acknowledge()
      */
-    public final void acknowledge() throws JMSException
+    @Override
+	public final void acknowledge() throws JMSException
     {      
     	acknowledge(null);
     }
@@ -836,7 +848,7 @@ public class LocalSession extends AbstractSession
     /**
      * @see #commit(boolean,List)
      */
-    public final void acknowledge( List deliveredMessageIDs ) throws JMSException
+    public final void acknowledge( List<String> deliveredMessageIDs ) throws JMSException
     {      
         if (transacted)
             throw new IllegalStateException("Session is transacted"); // [JMS SPEC]
@@ -886,7 +898,8 @@ public class LocalSession extends AbstractSession
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         sb.append(super.toString());
@@ -903,7 +916,7 @@ public class LocalSession extends AbstractSession
     
     private static final DestinationComparator DESTINATION_COMPARATOR = new DestinationComparator();
     
-    private static final class DestinationComparator implements Comparator
+    private static final class DestinationComparator implements Comparator<Committable>
     {
     	/**
 		 * Constructor
@@ -916,16 +929,14 @@ public class LocalSession extends AbstractSession
     	/* (non-Javadoc)
     	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
     	 */
-    	public int compare(Object obj1, Object obj2)
-    	{
-    		AbstractLocalDestination dest1 = (AbstractLocalDestination)obj1;
-    		AbstractLocalDestination dest2 = (AbstractLocalDestination)obj2;
-    		
-    		int delta = dest1.getName().compareTo(dest2.getName());
+    	@Override
+		public int compare(Committable c1, Committable c2)
+    	{    		
+    		int delta = c1.getName().compareTo(c2.getName());
     		if (delta != 0)
     			return delta;
     		
-    		return dest1.getClass().getName().compareTo(dest2.getClass().getName());
+    		return c1.getClass().getName().compareTo(c2.getClass().getName());
     	}
     }
 }

@@ -32,7 +32,7 @@ public final class Log4JTools
     	// Soft dependency -> use reflection to configure log4j
     	try
     	{
-	    	Class configuratorClass = Class.forName("org.apache.log4j.PropertyConfigurator");
+	    	Class<?> configuratorClass = Class.forName("org.apache.log4j.PropertyConfigurator");
 	    	Method configureMethod = configuratorClass.getMethod("configure", new Class[] { Properties.class });
 	    	configureMethod.invoke(null, new Object[] { props });
     	}

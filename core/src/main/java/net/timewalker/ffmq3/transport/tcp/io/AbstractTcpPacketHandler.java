@@ -53,6 +53,7 @@ public abstract class AbstractTcpPacketHandler implements ActiveObject
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getLastActivity()
      */
+	@Override
 	public final long getLastActivity()
 	{
 		return lastActivity;

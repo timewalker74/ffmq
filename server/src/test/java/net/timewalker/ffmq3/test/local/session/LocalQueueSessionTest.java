@@ -16,7 +16,8 @@ public class LocalQueueSessionTest extends LocalSessionTest
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalSessionTest#createConnection()
      */
-    protected Connection createConnection() throws Exception
+    @Override
+	protected Connection createConnection() throws Exception
     {
         if (isRemote())
             return TestUtils.openRemoteQueueConnection();

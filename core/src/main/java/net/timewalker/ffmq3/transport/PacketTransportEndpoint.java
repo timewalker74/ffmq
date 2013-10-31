@@ -1,5 +1,8 @@
 package net.timewalker.ffmq3.transport;
 
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
 import javax.jms.JMSException;
 
 import net.timewalker.ffmq3.FFMQClientSettings;
@@ -8,7 +11,6 @@ import net.timewalker.ffmq3.client.ClientEnvironment;
 import net.timewalker.ffmq3.transport.packet.AbstractQueryPacket;
 import net.timewalker.ffmq3.transport.packet.AbstractResponsePacket;
 import net.timewalker.ffmq3.transport.packet.response.ErrorResponse;
-import net.timewalker.ffmq3.utils.concurrent.Semaphore;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,7 +29,7 @@ public final class PacketTransportEndpoint
     private int transportTimeout;
     
     // Runtime
-    private Semaphore responseSemaphore = new Semaphore();
+    private Semaphore responseSemaphore = new Semaphore(0);
     private AbstractResponsePacket response;
     private boolean traceEnabled;
 
@@ -79,8 +81,15 @@ public final class PacketTransportEndpoint
         int n;
         for(n=0;n<transportTimeout;n++)
         {
-            if (responseSemaphore.tryAcquire(1000L) || transport.isClosed())
-                break;
+        	try
+        	{
+	            if (responseSemaphore.tryAcquire(1,TimeUnit.SECONDS) || transport.isClosed())
+	                break;
+        	}
+        	catch (InterruptedException e)
+        	{
+        		break; // Abort
+        	}
         }
         
         AbstractResponsePacket receivedResponse = response;

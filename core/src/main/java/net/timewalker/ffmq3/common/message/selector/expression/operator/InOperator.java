@@ -45,7 +45,8 @@ public class InOperator extends AbstractBinaryOperator implements ConditionalExp
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
      */
-    public Object evaluate(Message message) throws JMSException
+    @Override
+	public Object evaluate(Message message) throws JMSException
     {
         String leftValue = leftOperand.evaluateString(message);
         String[] rightValue = (String[])rightOperand.evaluate(message);
@@ -63,7 +64,8 @@ public class InOperator extends AbstractBinaryOperator implements ConditionalExp
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
     	return parenthesize(leftOperand)+" IN "+parenthesize(rightOperand);
     }

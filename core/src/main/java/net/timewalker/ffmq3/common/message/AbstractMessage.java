@@ -56,7 +56,7 @@ public abstract class AbstractMessage implements Message
     private Destination replyTo;
     private long timestamp;
     private String type;
-    private Map propertyMap;
+    private Map<String,Object> propertyMap;
 
     // Serialization related
     private int unserializationLevel;
@@ -65,7 +65,7 @@ public abstract class AbstractMessage implements Message
     // Volatile properties
     private boolean propertiesAreReadOnly;
     protected boolean bodyIsReadOnly; 
-    private transient WeakReference sessionRef; // Weak link to the parent session
+    private transient WeakReference<AbstractSession> sessionRef; // Weak link to the parent session
     private transient boolean internalCopy = false;
     
     /**
@@ -105,7 +105,7 @@ public abstract class AbstractMessage implements Message
         clone.replyTo = this.replyTo;
         clone.timestamp = this.timestamp;
         clone.type = this.type;            
-        clone.propertyMap = this.propertyMap != null ? (Map)((HashMap)this.propertyMap).clone() : null;
+        clone.propertyMap = this.propertyMap != null ? (Map<String,Object>)((HashMap<String,Object>)this.propertyMap).clone() : null;
         
         // Copy raw message cache if any
         clone.unserializationLevel = this.unserializationLevel; 
@@ -126,7 +126,7 @@ public abstract class AbstractMessage implements Message
         	if (sessionRef != null && sessionRef.get() != session)
         		throw new FFMQException("Message session already set","CONSISTENCY");
         		
-            this.sessionRef = new WeakReference(session);
+            this.sessionRef = new WeakReference<>(session);
         }
     }
     
@@ -138,7 +138,7 @@ public abstract class AbstractMessage implements Message
         if (sessionRef == null)
             throw new FFMQException("Message has no associated session","CONSISTENCY");
         
-        AbstractSession session = (AbstractSession)sessionRef.get();
+        AbstractSession session = sessionRef.get();
         if (session == null)
             throw new FFMQException("Message session is no longer valid","CONSISTENCY");
         
@@ -148,7 +148,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#acknowledge()
      */
-    public final void acknowledge() throws JMSException
+    @Override
+	public final void acknowledge() throws JMSException
     {
         AbstractSession session = getSession();
         
@@ -162,7 +163,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#clearProperties()
      */
-    public final void clearProperties()
+    @Override
+	public final void clearProperties()
     {
         if (propertyMap != null) propertyMap.clear();
         propertiesAreReadOnly = false;
@@ -171,7 +173,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getBooleanProperty(java.lang.String)
      */
-    public final boolean getBooleanProperty(String name) throws JMSException
+    @Override
+	public final boolean getBooleanProperty(String name) throws JMSException
     {
         return MessageConvertTools.asBoolean(getProperty(name));
     }
@@ -179,7 +182,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getByteProperty(java.lang.String)
      */
-    public final byte getByteProperty(String name) throws JMSException
+    @Override
+	public final byte getByteProperty(String name) throws JMSException
     {
         return MessageConvertTools.asByte(getProperty(name));
     }
@@ -187,7 +191,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getDoubleProperty(java.lang.String)
      */
-    public final double getDoubleProperty(String name) throws JMSException
+    @Override
+	public final double getDoubleProperty(String name) throws JMSException
     {
         return MessageConvertTools.asDouble(getProperty(name));
     }
@@ -195,7 +200,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getFloatProperty(java.lang.String)
      */
-    public final float getFloatProperty(String name) throws JMSException
+    @Override
+	public final float getFloatProperty(String name) throws JMSException
     {
         return MessageConvertTools.asFloat(getProperty(name));
     }
@@ -203,7 +209,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getIntProperty(java.lang.String)
      */
-    public final int getIntProperty(String name) throws JMSException
+    @Override
+	public final int getIntProperty(String name) throws JMSException
     {
         return MessageConvertTools.asInt(getProperty(name));
     }
@@ -211,7 +218,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSCorrelationID()
      */
-    public final String getJMSCorrelationID()
+    @Override
+	public final String getJMSCorrelationID()
     {
     	assertDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
         return correlId;
@@ -220,7 +228,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSCorrelationIDAsBytes()
      */
-    public final byte[] getJMSCorrelationIDAsBytes()
+    @Override
+	public final byte[] getJMSCorrelationIDAsBytes()
     {
         throw new UnsupportedOperationException();
     }
@@ -228,7 +237,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSDeliveryMode()
      */
-    public final int getJMSDeliveryMode()
+    @Override
+	public final int getJMSDeliveryMode()
     {
         return deliveryMode;
     }
@@ -236,7 +246,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSDestination()
      */
-    public final Destination getJMSDestination()
+    @Override
+	public final Destination getJMSDestination()
     {
         return destination;
     }
@@ -244,7 +255,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSExpiration()
      */
-    public final long getJMSExpiration()
+    @Override
+	public final long getJMSExpiration()
     {
         return expiration;
     }
@@ -252,7 +264,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSMessageID()
      */
-    public final String getJMSMessageID()
+    @Override
+	public final String getJMSMessageID()
     {
         return id != null ? "ID:"+id : null;
     }
@@ -260,7 +273,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSPriority()
      */
-    public final int getJMSPriority()
+    @Override
+	public final int getJMSPriority()
     {
         return priority;
     }
@@ -268,7 +282,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSRedelivered()
      */
-    public final boolean getJMSRedelivered()
+    @Override
+	public final boolean getJMSRedelivered()
     {
         return redelivered;
     }
@@ -276,7 +291,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSReplyTo()
      */
-    public final Destination getJMSReplyTo()
+    @Override
+	public final Destination getJMSReplyTo()
     {
     	assertDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
         return replyTo;
@@ -285,7 +301,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSTimestamp()
      */
-    public final long getJMSTimestamp()
+    @Override
+	public final long getJMSTimestamp()
     {
     	assertDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
         return timestamp;
@@ -294,7 +311,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getJMSType()
      */
-    public final String getJMSType()
+    @Override
+	public final String getJMSType()
     {
     	assertDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
         return type;
@@ -303,7 +321,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getLongProperty(java.lang.String)
      */
-    public final long getLongProperty(String name) throws JMSException
+    @Override
+	public final long getLongProperty(String name) throws JMSException
     {
         return MessageConvertTools.asLong(getProperty(name));
     }
@@ -311,7 +330,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getObjectProperty(java.lang.String)
      */
-    public final Object getObjectProperty(String name)
+    @Override
+	public final Object getObjectProperty(String name)
     {
         return getProperty(name);
     }
@@ -319,7 +339,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getShortProperty(java.lang.String)
      */
-    public final short getShortProperty(String name) throws JMSException
+    @Override
+	public final short getShortProperty(String name) throws JMSException
     {
         return MessageConvertTools.asShort(getProperty(name));
     }
@@ -327,7 +348,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#getStringProperty(java.lang.String)
      */
-    public final String getStringProperty(String name) throws JMSException
+    @Override
+	public final String getStringProperty(String name) throws JMSException
     {
         return MessageConvertTools.asString(getProperty(name));
     }
@@ -335,7 +357,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#propertyExists(java.lang.String)
      */
-    public final boolean propertyExists(String name)
+    @Override
+	public final boolean propertyExists(String name)
     {
         if (name == null || name.length() == 0)
             throw new IllegalArgumentException("Empty property name");
@@ -347,7 +370,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setBooleanProperty(java.lang.String, boolean)
      */
-    public final void setBooleanProperty(String name, boolean value) throws JMSException
+    @Override
+	public final void setBooleanProperty(String name, boolean value) throws JMSException
     {
         setProperty(name,Boolean.valueOf(value));
     }
@@ -355,7 +379,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setByteProperty(java.lang.String, byte)
      */
-    public final void setByteProperty(String name, byte value) throws JMSException
+    @Override
+	public final void setByteProperty(String name, byte value) throws JMSException
     {
         setProperty(name,new Byte(value));
     }
@@ -363,7 +388,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setDoubleProperty(java.lang.String, double)
      */
-    public final void setDoubleProperty(String name, double value) throws JMSException
+    @Override
+	public final void setDoubleProperty(String name, double value) throws JMSException
     {
         setProperty(name,new Double(value));
     }
@@ -371,7 +397,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setFloatProperty(java.lang.String, float)
      */
-    public final void setFloatProperty(String name, float value) throws JMSException
+    @Override
+	public final void setFloatProperty(String name, float value) throws JMSException
     {
         setProperty(name,new Float(value));
     }
@@ -379,7 +406,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setIntProperty(java.lang.String, int)
      */
-    public final void setIntProperty(String name, int value) throws JMSException
+    @Override
+	public final void setIntProperty(String name, int value) throws JMSException
     {
         setProperty(name,new Integer(value));
     }
@@ -387,7 +415,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSCorrelationID(java.lang.String)
      */
-    public final void setJMSCorrelationID(String correlationID)
+    @Override
+	public final void setJMSCorrelationID(String correlationID)
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         this.correlId = correlationID;
@@ -396,7 +425,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSCorrelationIDAsBytes(byte[])
      */
-    public final void setJMSCorrelationIDAsBytes(byte[] correlationID)
+    @Override
+	public final void setJMSCorrelationIDAsBytes(byte[] correlationID)
     {
         throw new UnsupportedOperationException();
     }
@@ -404,7 +434,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSDeliveryMode(int)
      */
-    public final void setJMSDeliveryMode(int deliveryMode) throws JMSException
+    @Override
+	public final void setJMSDeliveryMode(int deliveryMode) throws JMSException
     {
         if (deliveryMode != DeliveryMode.PERSISTENT &&
             deliveryMode != DeliveryMode.NON_PERSISTENT)
@@ -417,7 +448,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSDestination(javax.jms.Destination)
      */
-    public final void setJMSDestination(Destination destination) throws JMSException
+    @Override
+	public final void setJMSDestination(Destination destination) throws JMSException
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         this.destination = DestinationTools.asRef(destination);
@@ -426,7 +458,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSExpiration(long)
      */
-    public final void setJMSExpiration(long expiration)
+    @Override
+	public final void setJMSExpiration(long expiration)
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         this.expiration = expiration;
@@ -435,7 +468,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSMessageID(java.lang.String)
      */
-    public final void setJMSMessageID(String id) throws JMSException
+    @Override
+	public final void setJMSMessageID(String id) throws JMSException
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         this.id = id;
@@ -444,7 +478,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSPriority(int)
      */
-    public final void setJMSPriority(int priority) throws JMSException
+    @Override
+	public final void setJMSPriority(int priority) throws JMSException
     {
         if (priority < 0 || priority > 9)
             throw new FFMQException("Invalid priority value : "+priority,"INVALID_PRIORITY");
@@ -456,7 +491,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSRedelivered(boolean)
      */
-    public final void setJMSRedelivered(boolean redelivered)
+    @Override
+	public final void setJMSRedelivered(boolean redelivered)
     {
         this.redelivered = redelivered;
         
@@ -476,7 +512,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSReplyTo(javax.jms.Destination)
      */
-    public final void setJMSReplyTo(Destination replyTo)
+    @Override
+	public final void setJMSReplyTo(Destination replyTo)
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         this.replyTo = replyTo;
@@ -485,7 +522,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSTimestamp(long)
      */
-    public final void setJMSTimestamp(long timestamp)
+    @Override
+	public final void setJMSTimestamp(long timestamp)
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         this.timestamp = timestamp;
@@ -494,7 +532,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setJMSType(java.lang.String)
      */
-    public final void setJMSType(String type)
+    @Override
+	public final void setJMSType(String type)
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         this.type = type;
@@ -503,7 +542,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setLongProperty(java.lang.String, long)
      */
-    public final void setLongProperty(String name, long value) throws JMSException
+    @Override
+	public final void setLongProperty(String name, long value) throws JMSException
     {
         setProperty(name,new Long(value));
     }
@@ -511,7 +551,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setObjectProperty(java.lang.String, java.lang.Object)
      */
-    public final void setObjectProperty(String name, Object value) throws JMSException
+    @Override
+	public final void setObjectProperty(String name, Object value) throws JMSException
     {
         if (value == null)
             throw new MessageFormatException("A property value cannot be null");
@@ -541,7 +582,7 @@ public abstract class AbstractMessage implements Message
         assertDeserializationLevel(MessageSerializationLevel.FULL);
         
         if (propertyMap == null)
-        	propertyMap = new HashMap(17);
+        	propertyMap = new HashMap<>(17);
         propertyMap.put(name, value);
     }
     
@@ -554,7 +595,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setShortProperty(java.lang.String, short)
      */
-    public final void setShortProperty(String name, short value) throws JMSException
+    @Override
+	public final void setShortProperty(String name, short value) throws JMSException
     {
         setProperty(name,new Short(value));
     }
@@ -562,7 +604,8 @@ public abstract class AbstractMessage implements Message
     /* (non-Javadoc)
      * @see javax.jms.Message#setStringProperty(java.lang.String, java.lang.String)
      */
-    public final void setStringProperty(String name, String value) throws JMSException
+    @Override
+	public final void setStringProperty(String name, String value) throws JMSException
     {
         setProperty(name,value);
     }
@@ -571,14 +614,15 @@ public abstract class AbstractMessage implements Message
      * (non-Javadoc)
      * @see javax.jms.Message#getPropertyNames()
      */
-    public final Enumeration getPropertyNames()
+    @Override
+	public final Enumeration<String> getPropertyNames()
     {
     	assertDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
     	
     	if (propertyMap == null)
-    		return new EmptyEnumeration();
+    		return new EmptyEnumeration<>();
     		
-        return new IteratorEnumeration(propertyMap.keySet().iterator());
+        return new IteratorEnumeration<>(propertyMap.keySet().iterator());
     }
     
     /**
@@ -711,7 +755,7 @@ public abstract class AbstractMessage implements Message
     /**
      * Write a map to the given output stream
      */
-    protected final void writeMapTo( Map map , RawDataBuffer out )
+    protected final void writeMapTo( Map<String,Object> map , RawDataBuffer out )
     {
     	if (map == null)
     	{
@@ -722,11 +766,11 @@ public abstract class AbstractMessage implements Message
         out.writeInt(map.size());
         if (!map.isEmpty())
         {
-            Iterator allEntries = map.entrySet().iterator();
+            Iterator<Map.Entry<String,Object>> allEntries = map.entrySet().iterator();
             while (allEntries.hasNext())
             {
-                Map.Entry entry = (Map.Entry)allEntries.next();
-                out.writeUTF((String)entry.getKey());
+                Map.Entry<String,Object> entry = allEntries.next();
+                out.writeUTF(entry.getKey());
                 out.writeGeneric(entry.getValue());
             }
         }
@@ -735,13 +779,13 @@ public abstract class AbstractMessage implements Message
     /**
      * Write a map to the given output stream
      */
-    protected final Map readMapFrom( RawDataBuffer in )
+    protected final Map<String,Object> readMapFrom( RawDataBuffer in )
     {
         int mapSize = in.readInt();
         if (mapSize == 0)
         	return null;
         
-        Map map = new HashMap(Math.max(17,mapSize*4/3));
+        Map<String,Object> map = new HashMap<>(Math.max(17,mapSize*4/3));
         for (int n = 0 ; n < mapSize ; n++)
         {
             String propName = in.readUTF();
@@ -756,7 +800,8 @@ public abstract class AbstractMessage implements Message
      *  (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
        StringBuffer sb = new StringBuffer();
        
@@ -784,11 +829,11 @@ public abstract class AbstractMessage implements Message
        if (propertyMap != null && propertyMap.size() > 0)
        {
            sb.append(" properties=");
-           Iterator allProps = propertyMap.keySet().iterator();
+           Iterator<String> allProps = propertyMap.keySet().iterator();
            int count = 0;
            while (allProps.hasNext())
            {
-               String propName = (String)allProps.next();
+               String propName = allProps.next();
                Object propValue = propertyMap.get(propName);
                if (count++ > 0)
             	   sb.append(",");

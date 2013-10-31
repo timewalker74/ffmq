@@ -27,7 +27,8 @@ public final class QueueBrowserGetEnumerationQuery extends AbstractQueueBrowserQ
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.Q_CREATE_BROWSER_ENUM;
     }

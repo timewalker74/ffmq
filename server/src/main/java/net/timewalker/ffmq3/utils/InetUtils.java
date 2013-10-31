@@ -31,19 +31,19 @@ public final class InetUtils
 	{
 		try
 		{
-			Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
+			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 			if (interfaces != null)
 			{
 		        while (interfaces.hasMoreElements())
 		        {
-		            NetworkInterface iface = (NetworkInterface)interfaces.nextElement();
+		            NetworkInterface iface = interfaces.nextElement();
 		            if (iface.getName().equals(interfaceName))
 		            {
-		            	Enumeration addresses = iface.getInetAddresses();
+		            	Enumeration<InetAddress> addresses = iface.getInetAddresses();
 		            	if (!addresses.hasMoreElements())
 		            		throw new IllegalArgumentException("Network interface "+interfaceName+" has no attached address");
 		            	
-		            	InetAddress address = (InetAddress)addresses.nextElement();
+		            	InetAddress address = addresses.nextElement();
 		            	return address.getHostAddress();
 		            }
 		        }

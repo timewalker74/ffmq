@@ -133,7 +133,7 @@ public final class MessageTools
         MapMessageImpl copy = new MapMessageImpl();
         copyHeaders(srcMessage,copy);
         
-        Enumeration allNames = srcMessage.getMapNames();
+        Enumeration<?> allNames = srcMessage.getMapNames();
         while (allNames.hasMoreElements())
         {
             String name = (String)allNames.nextElement();
@@ -222,7 +222,7 @@ public final class MessageTools
         dstMessage.setJMSTimestamp(srcMessage.getJMSTimestamp());
         dstMessage.setJMSType(srcMessage.getJMSType());
         
-        Enumeration allProps = dstMessage.getPropertyNames();
+        Enumeration<?> allProps = dstMessage.getPropertyNames();
         while (allProps.hasMoreElements())
         {
             String propName = (String)allProps.nextElement();

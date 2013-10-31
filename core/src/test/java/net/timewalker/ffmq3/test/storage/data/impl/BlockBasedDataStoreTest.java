@@ -22,6 +22,7 @@ public class BlockBasedDataStoreTest extends TestCase
 	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp() throws Exception
 	{
 		super.setUp();
@@ -94,13 +95,13 @@ public class BlockBasedDataStoreTest extends TestCase
 	public void testFragmented() throws Exception
 	{
 		System.out.println("--------- Fragmented test ---------");
-		doTest(512, 1000, 500, 1000);
+		doTest(512, 500, 1000);
 	}
 
 	public void testNonFragmented() throws Exception
 	{
 		System.out.println("--------- Non fragmented test ---------");
-		doTest(1024, 1000, 1000, 1000);
+		doTest(1024, 1000, 1000);
 	}
 
     protected LinkedDataStore createStore(String baseName, File dataFolder) throws DataStoreException
@@ -119,7 +120,7 @@ public class BlockBasedDataStoreTest extends TestCase
 		return dataStore;
     }
 
-	private void doTest(int blockSize, int blockCount, int msgCount, int msgSize) throws Exception
+	private void doTest(int blockSize, int msgCount, int msgSize) throws Exception
 	{
 		String storeId = UUIDProvider.getInstance().getUUID();
 

@@ -53,7 +53,8 @@ public class LocalConnection extends AbstractConnection
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#setClientID(java.lang.String)
      */
-    public final void setClientID(String clientID) throws JMSException
+    @Override
+	public final void setClientID(String clientID) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -79,7 +80,8 @@ public class LocalConnection extends AbstractConnection
      * (non-Javadoc)
      * @see javax.jms.Connection#createSession(boolean, int)
      */
-    public final Session createSession(boolean transacted, int acknowledgeMode) throws JMSException
+    @Override
+	public final Session createSession(boolean transacted, int acknowledgeMode) throws JMSException
     {
     	return createSession(idProvider.createID(), transacted, acknowledgeMode);
     }
@@ -108,7 +110,8 @@ public class LocalConnection extends AbstractConnection
      * (non-Javadoc)
      * @see javax.jms.Connection#start()
      */
-    public final void start() throws JMSException
+    @Override
+	public final void start() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -131,7 +134,8 @@ public class LocalConnection extends AbstractConnection
      * (non-Javadoc)
      * @see javax.jms.Connection#stop()
      */
-    public final void stop() throws JMSException
+    @Override
+	public final void stop() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -154,7 +158,8 @@ public class LocalConnection extends AbstractConnection
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryQueue(java.lang.String)
      */
-    public final void deleteTemporaryQueue(String queueName) throws JMSException
+    @Override
+	public final void deleteTemporaryQueue(String queueName) throws JMSException
     {
         engine.deleteQueue(queueName);
         unregisterTemporaryQueue(queueName);
@@ -163,7 +168,8 @@ public class LocalConnection extends AbstractConnection
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryTopic(java.lang.String)
      */
-    public final void deleteTemporaryTopic(String topicName) throws JMSException
+    @Override
+	public final void deleteTemporaryTopic(String topicName) throws JMSException
     {
         engine.deleteTopic(topicName);
         unregisterTemporaryTopic(topicName);
@@ -214,7 +220,8 @@ public class LocalConnection extends AbstractConnection
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#onConnectionClose()
      */
-    protected void onConnectionClose()
+    @Override
+	protected void onConnectionClose()
     {
     	super.onConnectionClose();
     	

@@ -47,7 +47,8 @@ public final class TemporaryTopicRef extends TopicRef implements TemporaryTopic,
      * (non-Javadoc)
      * @see javax.jms.TemporaryTopic#delete()
      */
-    public void delete() throws JMSException
+    @Override
+	public void delete() throws JMSException
     {
         if (connection == null)
             throw new FFMQException("Temporary topic already deleted","TOPIC_DOES_NOT_EXIST");
@@ -60,7 +61,8 @@ public final class TemporaryTopicRef extends TopicRef implements TemporaryTopic,
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return super.toString()+"[T]";
     }

@@ -29,7 +29,8 @@ public final class RollbackMessageQuery extends AbstractConsumerQuery
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.Q_ROLLBACK_MESSAGE;
     }
@@ -37,7 +38,8 @@ public final class RollbackMessageQuery extends AbstractConsumerQuery
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
         super.serializeTo(out);
         out.writeUTF(messageId);
@@ -46,7 +48,8 @@ public final class RollbackMessageQuery extends AbstractConsumerQuery
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
         super.unserializeFrom(in);
         messageId = in.readUTF();

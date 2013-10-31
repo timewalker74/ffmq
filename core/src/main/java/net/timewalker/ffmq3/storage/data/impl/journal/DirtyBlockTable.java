@@ -27,7 +27,7 @@ import java.util.Map;
 public final class DirtyBlockTable
 {
 	// Attributes
-	private Map dirtyBlocksMap = new HashMap();
+	private Map<Integer,DirtyBlockEntry> dirtyBlocksMap = new HashMap<>();
 	private int size;
 	
 	/**
@@ -41,7 +41,7 @@ public final class DirtyBlockTable
 	public synchronized void markDirty( int blockIndex , byte[] blockData )
 	{
 		Integer key = new Integer(blockIndex);
-		DirtyBlockEntry entry = (DirtyBlockEntry)dirtyBlocksMap.get(key);
+		DirtyBlockEntry entry = dirtyBlocksMap.get(key);
 		if (entry == null)
 		{
 			entry = new DirtyBlockEntry();
@@ -58,7 +58,7 @@ public final class DirtyBlockTable
 	public synchronized void blockFlushed( int blockIndex )
 	{
 		Integer key = new Integer(blockIndex);
-		DirtyBlockEntry entry = (DirtyBlockEntry)dirtyBlocksMap.get(key);
+		DirtyBlockEntry entry = dirtyBlocksMap.get(key);
 		if (entry == null)
 			throw new IllegalArgumentException("Not a dirty block : "+blockIndex);
 		
@@ -72,7 +72,7 @@ public final class DirtyBlockTable
 	public synchronized byte[] get( int blockIndex )
 	{
 		Integer key = new Integer(blockIndex);
-		DirtyBlockEntry entry = (DirtyBlockEntry)dirtyBlocksMap.get(key);
+		DirtyBlockEntry entry = dirtyBlocksMap.get(key);
 		return entry != null ? entry.latestData : null;
 	}
 	

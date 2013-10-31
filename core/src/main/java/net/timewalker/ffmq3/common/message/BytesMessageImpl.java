@@ -70,7 +70,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#getType()
      */
-    protected byte getType()
+    @Override
+	protected byte getType()
     {
         return MessageType.BYTES;
     }
@@ -78,7 +79,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#unserializeBodyFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeBodyFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeBodyFrom(RawDataBuffer in)
     {
         body = in.readNullableByteArray();
     }
@@ -86,7 +88,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#serializeBodyTo(net.timewalker.ffmq3.utils.RawDataBuffer)
      */
-    protected void serializeBodyTo(RawDataBuffer out)
+    @Override
+	protected void serializeBodyTo(RawDataBuffer out)
     {
     	tidyUp();
         out.writeNullableByteArray(body);
@@ -136,7 +139,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.AbstractMessage#clearBody()
      */
-    public void clearBody()
+    @Override
+	public void clearBody()
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         body = null;
@@ -151,7 +155,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#getBodyLength()
      */
-    public long getBodyLength() throws JMSException
+    @Override
+	public long getBodyLength() throws JMSException
     {
         if (!bodyIsReadOnly)
             throw new MessageNotReadableException("Message body is write-only");
@@ -163,7 +168,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readBoolean()
      */
-    public boolean readBoolean() throws JMSException
+    @Override
+	public boolean readBoolean() throws JMSException
     {
     	backupState();
         try
@@ -191,7 +197,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readByte()
      */
-    public byte readByte() throws JMSException
+    @Override
+	public byte readByte() throws JMSException
     {
     	backupState();
         try
@@ -219,7 +226,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readBytes(byte[])
      */
-    public int readBytes(byte[] value) throws JMSException
+    @Override
+	public int readBytes(byte[] value) throws JMSException
     {
     	backupState();
         try
@@ -247,7 +255,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readBytes(byte[], int)
      */
-    public int readBytes(byte[] value, int length) throws JMSException
+    @Override
+	public int readBytes(byte[] value, int length) throws JMSException
     {
     	backupState();
         try
@@ -275,7 +284,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readChar()
      */
-    public char readChar() throws JMSException
+    @Override
+	public char readChar() throws JMSException
     {
     	backupState();
         try
@@ -303,7 +313,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readDouble()
      */
-    public double readDouble() throws JMSException
+    @Override
+	public double readDouble() throws JMSException
     {
     	backupState();
         try
@@ -331,7 +342,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readFloat()
      */
-    public float readFloat() throws JMSException
+    @Override
+	public float readFloat() throws JMSException
     {
     	backupState();
         try
@@ -359,7 +371,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readInt()
      */
-    public int readInt() throws JMSException
+    @Override
+	public int readInt() throws JMSException
     {
     	backupState();
         try
@@ -387,7 +400,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readLong()
      */
-    public long readLong() throws JMSException
+    @Override
+	public long readLong() throws JMSException
     {
     	backupState();
         try
@@ -415,7 +429,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readShort()
      */
-    public short readShort() throws JMSException
+    @Override
+	public short readShort() throws JMSException
     {
     	backupState();
         try
@@ -443,7 +458,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readUTF()
      */
-    public String readUTF() throws JMSException
+    @Override
+	public String readUTF() throws JMSException
     {
     	backupState();
         try
@@ -471,7 +487,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readUnsignedByte()
      */
-    public int readUnsignedByte() throws JMSException
+    @Override
+	public int readUnsignedByte() throws JMSException
     {
     	backupState();
         try
@@ -499,7 +516,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#readUnsignedShort()
      */
-    public int readUnsignedShort() throws JMSException
+    @Override
+	public int readUnsignedShort() throws JMSException
     {
     	backupState();
         try
@@ -527,7 +545,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#reset()
      */
-    public void reset()
+    @Override
+	public void reset()
     {
         assertDeserializationLevel(MessageSerializationLevel.FULL);
         
@@ -539,7 +558,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeBoolean(boolean)
      */
-    public void writeBoolean(boolean value) throws JMSException
+    @Override
+	public void writeBoolean(boolean value) throws JMSException
     {
         try
         {
@@ -555,7 +575,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeByte(byte)
      */
-    public void writeByte(byte value) throws JMSException
+    @Override
+	public void writeByte(byte value) throws JMSException
     {
         try
         {
@@ -571,7 +592,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeBytes(byte[])
      */
-    public void writeBytes(byte[] value) throws JMSException
+    @Override
+	public void writeBytes(byte[] value) throws JMSException
     {
         try
         {
@@ -587,7 +609,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeBytes(byte[], int, int)
      */
-    public void writeBytes(byte[] value, int offset, int length) throws JMSException
+    @Override
+	public void writeBytes(byte[] value, int offset, int length) throws JMSException
     {
         try
         {
@@ -603,7 +626,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeChar(char)
      */
-    public void writeChar(char value) throws JMSException
+    @Override
+	public void writeChar(char value) throws JMSException
     {
         try
         {
@@ -619,7 +643,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeDouble(double)
      */
-    public void writeDouble(double value) throws JMSException
+    @Override
+	public void writeDouble(double value) throws JMSException
     {
         try
         {
@@ -635,7 +660,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeFloat(float)
      */
-    public void writeFloat(float value) throws JMSException
+    @Override
+	public void writeFloat(float value) throws JMSException
     {
         try
         {
@@ -651,7 +677,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeInt(int)
      */
-    public void writeInt(int value) throws JMSException
+    @Override
+	public void writeInt(int value) throws JMSException
     {
         try
         {
@@ -667,7 +694,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeLong(long)
      */
-    public void writeLong(long value) throws JMSException
+    @Override
+	public void writeLong(long value) throws JMSException
     {
         try
         {
@@ -683,7 +711,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeObject(java.lang.Object)
      */
-    public void writeObject(Object value) throws JMSException
+    @Override
+	public void writeObject(Object value) throws JMSException
     {
         if (value == null)
             throw new NullPointerException(); // [JMS Spec]
@@ -722,7 +751,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeShort(short)
      */
-    public void writeShort(short value) throws JMSException
+    @Override
+	public void writeShort(short value) throws JMSException
     {
         try
         {
@@ -738,7 +768,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
      * (non-Javadoc)
      * @see javax.jms.BytesMessage#writeUTF(java.lang.String)
      */
-    public void writeUTF(String value) throws JMSException
+    @Override
+	public void writeUTF(String value) throws JMSException
     {
         try
         {
@@ -753,7 +784,8 @@ public final class BytesMessageImpl extends AbstractMessage implements BytesMess
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#copy()
      */
-    public AbstractMessage copy()
+    @Override
+	public AbstractMessage copy()
     {
         BytesMessageImpl clone = new BytesMessageImpl();
         copyCommonFields(clone);

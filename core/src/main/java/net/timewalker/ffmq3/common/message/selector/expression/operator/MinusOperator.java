@@ -42,7 +42,8 @@ public class MinusOperator extends AbstractArithmeticUnaryOperator
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
      */
-    public Object evaluate(Message message) throws JMSException
+    @Override
+	public Object evaluate(Message message) throws JMSException
     {
         Number value = operand.evaluateNumeric(message);
         if (value == null)
@@ -54,7 +55,8 @@ public class MinusOperator extends AbstractArithmeticUnaryOperator
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return "-"+parenthesize(operand);
     }

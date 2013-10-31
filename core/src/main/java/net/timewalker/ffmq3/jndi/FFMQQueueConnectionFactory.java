@@ -48,7 +48,7 @@ public final class FFMQQueueConnectionFactory extends FFMQConnectionFactory impl
     /**
      * Constructor
      */
-    public FFMQQueueConnectionFactory(Hashtable environment)
+    public FFMQQueueConnectionFactory(Hashtable<String,Object> environment)
     {
         super(environment);
     }
@@ -57,7 +57,8 @@ public final class FFMQQueueConnectionFactory extends FFMQConnectionFactory impl
      * (non-Javadoc)
      * @see javax.jms.QueueConnectionFactory#createQueueConnection()
      */
-    public QueueConnection createQueueConnection() throws JMSException
+    @Override
+	public QueueConnection createQueueConnection() throws JMSException
     {
     	String username = getStringProperty(Context.SECURITY_PRINCIPAL,null); 
     	String password = getStringProperty(Context.SECURITY_CREDENTIALS,null);
@@ -69,7 +70,8 @@ public final class FFMQQueueConnectionFactory extends FFMQConnectionFactory impl
      * (non-Javadoc)
      * @see javax.jms.QueueConnectionFactory#createQueueConnection(java.lang.String, java.lang.String)
      */
-    public QueueConnection createQueueConnection(String userName, String password) throws JMSException
+    @Override
+	public QueueConnection createQueueConnection(String userName, String password) throws JMSException
     {
         URI providerURL = getProviderURI();
         

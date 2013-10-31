@@ -37,7 +37,8 @@ public final class XMLSecurityDescriptorHandler extends AbstractXMLDescriptorHan
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#getDescriptor()
      */
-    public AbstractDescriptor getDescriptor()
+    @Override
+	public AbstractDescriptor getDescriptor()
     {
         return descriptor;
     }
@@ -46,7 +47,8 @@ public final class XMLSecurityDescriptorHandler extends AbstractXMLDescriptorHan
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#before(java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    protected void before(String name, String currentPath, Attributes attributes) throws SAXException
+    @Override
+	protected void before(String name, String currentPath, Attributes attributes) throws SAXException
     {
         if (currentPath.equals("security/users/user"))
         {
@@ -66,7 +68,8 @@ public final class XMLSecurityDescriptorHandler extends AbstractXMLDescriptorHan
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#onNode(java.lang.String, java.lang.String)
      */
-    protected void onNode(String name, String currentPath) throws SAXException
+    @Override
+	protected void onNode(String name, String currentPath) throws SAXException
     {
         if (currentPath.equals("security") ||
             currentPath.equals("security/users"))

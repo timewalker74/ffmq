@@ -45,7 +45,7 @@ public abstract class AbstractClientListener implements ClientListener
 	protected JMXAgent jmxAgent;
 	
 	// Runtime
-	private List clientList = new Vector();
+	private List<ClientProcessor> clientList = new Vector<>();
 	protected int acceptedClients;
 	private int droppedClients;
 	private int maxActiveClients;
@@ -64,6 +64,7 @@ public abstract class AbstractClientListener implements ClientListener
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientListener#getEngineName()
 	 */
+	@Override
 	public String getEngineName()
 	{
 		return localEngine.getName();
@@ -72,6 +73,7 @@ public abstract class AbstractClientListener implements ClientListener
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ClientListener#isStarted()
 	 */
+	@Override
 	public synchronized boolean isStarted()
 	{
 		return started;
@@ -130,15 +132,15 @@ public abstract class AbstractClientListener implements ClientListener
     
     protected void closeRemainingClients()
     {
-	    List clientsToStop = new ArrayList();
+	    List<ClientProcessor> clientsToStop = new ArrayList<>();
 	    synchronized (clientList)
 		{
 	    	clientsToStop.addAll(clientList);
 		}
-		Iterator clients = clientsToStop.iterator();
+		Iterator<ClientProcessor> clients = clientsToStop.iterator();
 		while (clients.hasNext())
 		{
-			ClientProcessor clientProcessor = (ClientProcessor)clients.next();
+			ClientProcessor clientProcessor = clients.next();
 			clientProcessor.stop();
 		}
 		clientList.clear();
@@ -147,6 +149,7 @@ public abstract class AbstractClientListener implements ClientListener
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ListenerMBean#getActiveClients()
 	 */
+	@Override
 	public int getActiveClients()
 	{
 		return clientList.size();
@@ -155,6 +158,7 @@ public abstract class AbstractClientListener implements ClientListener
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ListenerMBean#getAcceptedTotal()
 	 */
+	@Override
 	public int getAcceptedTotal()
 	{
 		return acceptedClients;
@@ -163,6 +167,7 @@ public abstract class AbstractClientListener implements ClientListener
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ListenerMBean#getDroppedTotal()
 	 */
+	@Override
 	public int getDroppedTotal()
 	{
 		return droppedClients;
@@ -171,6 +176,7 @@ public abstract class AbstractClientListener implements ClientListener
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ListenerMBean#getMaxActiveClients()
 	 */
+	@Override
 	public int getMaxActiveClients()
 	{
 		return maxActiveClients;
@@ -179,6 +185,7 @@ public abstract class AbstractClientListener implements ClientListener
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.listeners.ListenerMBean#resetStatistics()
 	 */
+	@Override
 	public void resetStats()
 	{
 		acceptedClients = 0;

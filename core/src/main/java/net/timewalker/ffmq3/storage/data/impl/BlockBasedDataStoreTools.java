@@ -168,6 +168,7 @@ public class BlockBasedDataStoreTools
 			 * (non-Javadoc)
 			 * @see java.io.FileFilter#accept(java.io.File)
 			 */
+			@Override
 			public boolean accept(File pathname)
 			{
 				if (!pathname.isFile())
@@ -179,11 +180,10 @@ public class BlockBasedDataStoreTools
 		});
     	
     	// Sort them in ascending order
-    	Arrays.sort(journalFiles, new Comparator() {
-			public int compare(Object o1, Object o2)
-			{
-				File f1 = (File)o1;
-				File f2 = (File)o2;				
+    	Arrays.sort(journalFiles, new Comparator<File>() {
+			@Override
+			public int compare(File f1, File f2)
+			{			
 				return f1.getName().compareTo(f2.getName());
 			}
 		});
@@ -205,6 +205,7 @@ public class BlockBasedDataStoreTools
 			 * (non-Javadoc)
 			 * @see java.io.FileFilter#accept(java.io.File)
 			 */
+			@Override
 			public boolean accept(File pathname)
 			{
 				if (!pathname.isFile())

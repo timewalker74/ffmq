@@ -23,14 +23,14 @@ import java.util.Iterator;
 /**
  * IteratorEnumeration
  */
-public final class IteratorEnumeration implements Enumeration
+public final class IteratorEnumeration<T> implements Enumeration<T>
 {
-    private Iterator iterator;
+    private Iterator<T> iterator;
     
     /**
      * Constructor
      */
-    public IteratorEnumeration( Iterator iterator )
+    public IteratorEnumeration( Iterator<T> iterator )
     {
         this.iterator = iterator;
     }
@@ -39,7 +39,8 @@ public final class IteratorEnumeration implements Enumeration
      * (non-Javadoc)
      * @see java.util.Enumeration#hasMoreElements()
      */
-    public boolean hasMoreElements()
+    @Override
+	public boolean hasMoreElements()
     {
         return iterator.hasNext();
     }
@@ -48,7 +49,8 @@ public final class IteratorEnumeration implements Enumeration
      * (non-Javadoc)
      * @see java.util.Enumeration#nextElement()
      */
-    public Object nextElement()
+    @Override
+	public T nextElement()
     {
         return iterator.next();
     }

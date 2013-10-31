@@ -18,7 +18,7 @@
 
 package net.timewalker.ffmq3.utils.async;
 
-import net.timewalker.ffmq3.utils.concurrent.Semaphore;
+import java.util.concurrent.Semaphore;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +35,7 @@ public class AsyncTaskProcessorThread extends Thread
 	
 	// Runtime
 	private boolean stopRequired = false;
-	private Semaphore waitLock = new Semaphore();
+	private Semaphore waitLock = new Semaphore(0);
 	private AsyncTask task;
 	private boolean traceEnabled = log.isTraceEnabled();
 	
@@ -52,6 +52,7 @@ public class AsyncTaskProcessorThread extends Thread
 	/* (non-Javadoc)
 	 * @see java.lang.Thread#run()
 	 */
+	@Override
 	public void run()
 	{
 		try

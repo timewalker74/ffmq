@@ -25,7 +25,7 @@ public class JavaTools
     /**
      * Get the short name of the given class
      */
-    public static String getShortClassName( Class clazz )
+    public static String getShortClassName( Class<?> clazz )
     {
         String className = clazz.getName();
         int idx = className.lastIndexOf('.');

@@ -241,12 +241,12 @@ public class StringTools
             return text;
     }
     
-    public static String join( Collection objects , String separator )
+    public static String join( Collection<?> objects , String separator )
     {
         StringBuffer sb = new StringBuffer();
         
         int count = 0;
-        Iterator allObjects = objects.iterator();
+        Iterator<?> allObjects = objects.iterator();
         while (allObjects.hasNext())
         {
             Object object = allObjects.next();
@@ -280,7 +280,7 @@ public class StringTools
         if (len == 0)
             return new String[0];
 
-        List list = new ArrayList();
+        List<String> list = new ArrayList<>();
         int i = 0, start = 0;
         boolean match = false;
         while (i < len)
@@ -301,7 +301,7 @@ public class StringTools
         if (match)
             list.add(str.substring(start, i));
 
-        return (String[])list.toArray(new String[list.size()]);
+        return list.toArray(new String[list.size()]);
     }
     
     /**

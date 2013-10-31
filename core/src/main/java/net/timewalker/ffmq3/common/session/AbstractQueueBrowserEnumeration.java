@@ -23,12 +23,13 @@ import javax.jms.JMSException;
 import javax.jms.QueueBrowser;
 
 import net.timewalker.ffmq3.FFMQException;
+import net.timewalker.ffmq3.common.message.AbstractMessage;
 import net.timewalker.ffmq3.utils.JavaTools;
 
 /**
  * <p>Base implementation for a {@link QueueBrowser} enumeration.</p>
  */
-public abstract class AbstractQueueBrowserEnumeration implements Enumeration
+public abstract class AbstractQueueBrowserEnumeration implements Enumeration<AbstractMessage>
 {
     // Unique ID
     protected String id;
@@ -93,7 +94,8 @@ public abstract class AbstractQueueBrowserEnumeration implements Enumeration
 	/* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         

@@ -87,7 +87,8 @@ public class LocalMessageProducer extends AbstractMessageProducer
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageProducer#sendToDestination(javax.jms.Destination, boolean, javax.jms.Message, int, int, long)
      */
-    protected final void sendToDestination(Destination destination, boolean destinationOverride, Message srcMessage, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	protected final void sendToDestination(Destination destination, boolean destinationOverride, Message srcMessage, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
         // Check that the destination was specified
         if (destination == null)

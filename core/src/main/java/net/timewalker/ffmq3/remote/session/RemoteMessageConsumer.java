@@ -18,10 +18,11 @@
 package net.timewalker.ffmq3.remote.session;
 
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageListener;
 
 import net.timewalker.ffmq3.FFMQCoreSettings;
@@ -37,7 +38,6 @@ import net.timewalker.ffmq3.utils.ErrorTools;
 import net.timewalker.ffmq3.utils.Settings;
 import net.timewalker.ffmq3.utils.async.AsyncTask;
 import net.timewalker.ffmq3.utils.async.AsyncTaskManager;
-import net.timewalker.ffmq3.utils.concurrent.Semaphore;
 import net.timewalker.ffmq3.utils.id.IntegerID;
 
 import org.apache.commons.logging.Log;
@@ -55,8 +55,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     
     // Runtime
     private boolean traceEnabled;
-    private LinkedList prefetchQueue = new LinkedList();
-    private Semaphore prefetchSemaphore = new Semaphore();
+    private LinkedList<AbstractMessage> prefetchQueue = new LinkedList<>();
+    private Semaphore prefetchSemaphore = new Semaphore(0);
     protected boolean donePrefetching = false;
     private AsyncTaskManager asyncTaskManager;
     
@@ -98,7 +98,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#shouldLogListenersFailures()
      */
-    protected final boolean shouldLogListenersFailures()
+    @Override
+	protected final boolean shouldLogListenersFailures()
     {
         return logListenersFailures;
     }
@@ -111,7 +112,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     /* (non-Javadoc)
      * @see javax.jms.MessageConsumer#setMessageListener(javax.jms.MessageListener)
      */
-    public final void setMessageListener(MessageListener messageListener) throws JMSException
+    @Override
+	public final void setMessageListener(MessageListener messageListener) throws JMSException
     {
         super.setMessageListener(messageListener);
         
@@ -124,7 +126,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#onConsumerClose()
      */
-    protected final void onConsumerClose()
+    @Override
+	protected final void onConsumerClose()
     {
     	super.onConsumerClose();
 
@@ -142,7 +145,7 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
             {
     		    while (!prefetchQueue.isEmpty())
     		    {
-    		        Message msg = (Message)prefetchQueue.removeFirst();
+    		    	AbstractMessage msg = prefetchQueue.removeFirst();
     		        query.addUndeliveredMessageID(msg.getJMSMessageID());
     		    }
             }
@@ -218,8 +221,20 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     	}
     	
     	// Wait for a message to be available
-    	if (!prefetchSemaphore.tryAcquire(timeout))
-			return null;
+    	try
+    	{
+    		if (timeout >= 0)
+    		{
+		    	if (!prefetchSemaphore.tryAcquire(timeout,TimeUnit.MILLISECONDS))
+					return null;
+    		}
+    		else
+    			prefetchSemaphore.acquire();
+    	}
+    	catch (InterruptedException e)
+    	{
+    		return null; // Abort
+    	}
     		
     	// Get the message from the queue
     	AbstractMessage message;
@@ -235,7 +250,7 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
 	        	if (prefetchQueue.isEmpty())
 	        		throw new IllegalStateException("Prefetch queue is empty");
 	        	
-	        	message = (AbstractMessage)prefetchQueue.removeFirst();
+	        	message = prefetchQueue.removeFirst();
 	        }
         }
     	finally
@@ -279,7 +294,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#receiveFromDestination(long, boolean)
      */
-    protected final AbstractMessage receiveFromDestination(long timeout, boolean duplicateRequired) throws JMSException
+    @Override
+	protected final AbstractMessage receiveFromDestination(long timeout, boolean duplicateRequired) throws JMSException
     {
         if (closed)
             return null; // [JMS SPEC]
@@ -292,7 +308,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#wakeUp()
      */
-    protected final void wakeUp()
+    @Override
+	protected final void wakeUp()
     {
     	// Check that the consumer is not closed
 		if (closed)
@@ -327,7 +344,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     	/* (non-Javadoc)
          * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
          */
-        public final boolean isMergeable()
+        @Override
+		public final boolean isMergeable()
         {
         	return true;
         }
@@ -335,7 +353,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
         /* (non-Javadoc)
          * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
          */
-        public final void execute()
+        @Override
+		public final void execute()
         {
         	wakeUp();
         }

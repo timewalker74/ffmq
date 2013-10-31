@@ -48,7 +48,8 @@ public final class QueueDefinition extends AbstractDestinationDefinition
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.management.destination.DestinationDescriptor#check()
      */
-    public void check() throws JMSException
+    @Override
+	public void check() throws JMSException
     {
         super.check();
         

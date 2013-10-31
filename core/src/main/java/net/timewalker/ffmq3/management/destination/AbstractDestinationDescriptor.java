@@ -76,7 +76,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.management.Descriptor#initFromSettings(net.timewalker.ffmq3.utils.Settings)
      */
-    protected void initFromSettings( Settings settings )
+    @Override
+	protected void initFromSettings( Settings settings )
     {
         this.name = settings.getStringProperty("name");
         this.initialBlockCount = settings.getIntProperty("persistentStore.initialBlockCount",0);
@@ -160,12 +161,14 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
         settings.setBooleanProperty("memoryStore.overflowToPersistent", overflowToPersistent);
     }
     
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
 
-    public boolean isTemporary()
+    @Override
+	public boolean isTemporary()
     {
         return temporary;
     }
@@ -175,7 +178,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
         return dataFolder;
     }
 
-    public int getMaxNonPersistentMessages()
+    @Override
+	public int getMaxNonPersistentMessages()
     {
         return maxNonPersistentMessages;
     }
@@ -183,17 +187,20 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
 	 * @return useJournal
 	 */
+	@Override
 	public boolean isUseJournal()
 	{
 		return useJournal;
 	}
 	
+	@Override
 	public int getInitialBlockCount()
     {
         return initialBlockCount;
     }
 
-    public int getBlockSize()
+    @Override
+	public int getBlockSize()
     {
         return blockSize;
     }
@@ -217,7 +224,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
      * @return the maxBlockCount
      */
-    public int getMaxBlockCount()
+    @Override
+	public int getMaxBlockCount()
     {
         return maxBlockCount;
     }
@@ -233,7 +241,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
      * @return the autoExtendAmount
      */
-    public int getAutoExtendAmount()
+    @Override
+	public int getAutoExtendAmount()
     {
         return autoExtendAmount;
     }
@@ -349,7 +358,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
      * @return the maxJournalSize
      */
-    public long getMaxJournalSize()
+    @Override
+	public long getMaxJournalSize()
     {
         return maxJournalSize;
     }
@@ -365,7 +375,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
      * @return the maxWriteBatchSize
      */
-    public int getMaxWriteBatchSize()
+    @Override
+	public int getMaxWriteBatchSize()
     {
         return maxWriteBatchSize;
     }
@@ -381,7 +392,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
      * @return the maxUnflushedJournalSize
      */
-    public int getMaxUnflushedJournalSize()
+    @Override
+	public int getMaxUnflushedJournalSize()
     {
         return maxUnflushedJournalSize;
     }
@@ -397,7 +409,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
      * @return the maxUncommittedStoreSize
      */
-    public int getMaxUncommittedStoreSize()
+    @Override
+	public int getMaxUncommittedStoreSize()
     {
         return maxUncommittedStoreSize;
     }
@@ -413,7 +426,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
      * @return the journalOutputBuffer
      */
-    public int getJournalOutputBuffer()
+    @Override
+	public int getJournalOutputBuffer()
     {
         return journalOutputBuffer;
     }
@@ -429,6 +443,7 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /**
 	 * @return the storageSyncMethod
 	 */
+	@Override
 	public int getStorageSyncMethod()
 	{
 		return storageSyncMethod;
@@ -445,6 +460,7 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
 	/**
 	 * @return the preAllocateFiles
 	 */
+	@Override
 	public boolean isPreAllocateFiles()
 	{
 		return preAllocateFiles;
@@ -478,7 +494,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.Checkable#check()
      */
-    public void check() throws JMSException
+    @Override
+	public void check() throws JMSException
     {
         if (StringTools.isEmpty(name))
             throw new InvalidDescriptorException("Missing descriptor property : name");
@@ -532,7 +549,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         

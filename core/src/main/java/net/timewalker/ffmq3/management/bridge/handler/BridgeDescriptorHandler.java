@@ -34,6 +34,7 @@ public final class BridgeDescriptorHandler extends AbstractXMLDescriptorHandler
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#getDescriptor()
 	 */
+	@Override
 	public AbstractDescriptor getDescriptor()
 	{
 		return bridgeDefinition;
@@ -42,6 +43,7 @@ public final class BridgeDescriptorHandler extends AbstractXMLDescriptorHandler
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#before(java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
+	@Override
 	protected void before(String name, String currentPath, Attributes attributes) throws SAXException
 	{
 		// Nothing
@@ -51,7 +53,8 @@ public final class BridgeDescriptorHandler extends AbstractXMLDescriptorHandler
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#onNode(java.lang.String, java.lang.String)
      */
-    protected void onNode(String name, String currentPath) throws SAXException
+    @Override
+	protected void onNode(String name, String currentPath) throws SAXException
     {
         if (currentPath.equals("bridgeDefinition"))
         {

@@ -51,6 +51,7 @@ public class TestConsumerClient implements Runnable, ExceptionListener
     /* (non-Javadoc)
 	 * @see javax.jms.ExceptionListener#onException(javax.jms.JMSException)
 	 */
+	@Override
 	public void onException(JMSException e)
 	{
 		e.printStackTrace();
@@ -68,11 +69,12 @@ public class TestConsumerClient implements Runnable, ExceptionListener
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
+	@Override
 	public void run()
 	{
 		try
 		{
-			Hashtable env = new Hashtable();
+			Hashtable<String,Object> env = new Hashtable<>();
 	        env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
 	        env.put(Context.PROVIDER_URL, TestUtils.TCP_TRANSPORT_URI);
 	        Context context = new InitialContext(env);

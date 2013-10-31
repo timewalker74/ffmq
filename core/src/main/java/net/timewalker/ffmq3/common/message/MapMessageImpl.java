@@ -38,7 +38,7 @@ import net.timewalker.ffmq3.utils.RawDataBuffer;
  */
 public final class MapMessageImpl extends AbstractMessage implements MapMessage
 {
-    private Map body;
+    private Map<String,Object> body;
     
     /**
      * Constructor
@@ -51,7 +51,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#getType()
      */
-    protected byte getType()
+    @Override
+	protected byte getType()
     {
         return MessageType.MAP;
     }
@@ -59,7 +60,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#unserializeBodyFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeBodyFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeBodyFrom(RawDataBuffer in)
     {
     	this.body = readMapFrom(in);
     }
@@ -67,7 +69,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#serializeBodyTo(net.timewalker.ffmq3.utils.RawDataBuffer)
      */
-    protected void serializeBodyTo(RawDataBuffer out)
+    @Override
+	protected void serializeBodyTo(RawDataBuffer out)
     {
     	writeMapTo(body, out);
     }
@@ -76,7 +79,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getBoolean(java.lang.String)
      */
-    public boolean getBoolean(String name) throws JMSException
+    @Override
+	public boolean getBoolean(String name) throws JMSException
     {
         return MessageConvertTools.asBoolean(getObject(name));
     }
@@ -85,7 +89,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getByte(java.lang.String)
      */
-    public byte getByte(String name) throws JMSException
+    @Override
+	public byte getByte(String name) throws JMSException
     {
         return MessageConvertTools.asByte(getObject(name));
     }
@@ -94,7 +99,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getBytes(java.lang.String)
      */
-    public byte[] getBytes(String name) throws JMSException
+    @Override
+	public byte[] getBytes(String name) throws JMSException
     {
         return MessageConvertTools.asBytes(getObject(name));
     }
@@ -103,7 +109,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getChar(java.lang.String)
      */
-    public char getChar(String name) throws JMSException
+    @Override
+	public char getChar(String name) throws JMSException
     {
         return MessageConvertTools.asChar(getObject(name));
     }
@@ -112,7 +119,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getDouble(java.lang.String)
      */
-    public double getDouble(String name) throws JMSException
+    @Override
+	public double getDouble(String name) throws JMSException
     {
         return MessageConvertTools.asDouble(getObject(name));
     }
@@ -121,7 +129,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getFloat(java.lang.String)
      */
-    public float getFloat(String name) throws JMSException
+    @Override
+	public float getFloat(String name) throws JMSException
     {
         return MessageConvertTools.asFloat(getObject(name));
     }
@@ -130,7 +139,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getInt(java.lang.String)
      */
-    public int getInt(String name) throws JMSException
+    @Override
+	public int getInt(String name) throws JMSException
     {
         return MessageConvertTools.asInt(getObject(name));
     }
@@ -139,7 +149,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getLong(java.lang.String)
      */
-    public long getLong(String name) throws JMSException
+    @Override
+	public long getLong(String name) throws JMSException
     {
         return MessageConvertTools.asLong(getObject(name));
     }
@@ -148,19 +159,21 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getMapNames()
      */
-    public Enumeration getMapNames()
+    @Override
+	public Enumeration<String> getMapNames()
     {
     	if (body == null)
-    		return new EmptyEnumeration();
+    		return new EmptyEnumeration<>();
     	
-        return new IteratorEnumeration(body.keySet().iterator());
+        return new IteratorEnumeration<>(body.keySet().iterator());
     }
 
     /*
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getObject(java.lang.String)
      */
-    public Object getObject(String name) throws JMSException
+    @Override
+	public Object getObject(String name) throws JMSException
     {
         if (name == null || name.length() == 0)
             throw new FFMQException("Object name cannot be null or empty","INVALID_OBJECT_NAME");
@@ -172,7 +185,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getShort(java.lang.String)
      */
-    public short getShort(String name) throws JMSException
+    @Override
+	public short getShort(String name) throws JMSException
     {
         return MessageConvertTools.asShort(getObject(name));
     }
@@ -181,7 +195,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#getString(java.lang.String)
      */
-    public String getString(String name) throws JMSException
+    @Override
+	public String getString(String name) throws JMSException
     {
         return MessageConvertTools.asString(getObject(name));
     }
@@ -190,7 +205,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#itemExists(java.lang.String)
      */
-    public boolean itemExists(String name) throws JMSException
+    @Override
+	public boolean itemExists(String name) throws JMSException
     {
         if (name == null || name.length() == 0)
             throw new FFMQException("Object name cannot be null or empty","INVALID_OBJECT_NAME");
@@ -208,7 +224,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
         
         assertDeserializationLevel(MessageSerializationLevel.FULL);
         if (body == null)
-        	body = new HashMap();
+        	body = new HashMap<>();
         	
         return body.put(name,value);
     }
@@ -217,7 +233,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setBoolean(java.lang.String, boolean)
      */
-    public void setBoolean(String name, boolean value) throws JMSException
+    @Override
+	public void setBoolean(String name, boolean value) throws JMSException
     {
         put(name,Boolean.valueOf(value));
     }
@@ -226,7 +243,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setByte(java.lang.String, byte)
      */
-    public void setByte(String name, byte value) throws JMSException
+    @Override
+	public void setByte(String name, byte value) throws JMSException
     {
         put(name,new Byte(value));
     }
@@ -235,7 +253,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setBytes(java.lang.String, byte[])
      */
-    public void setBytes(String name, byte[] value) throws JMSException
+    @Override
+	public void setBytes(String name, byte[] value) throws JMSException
     {
         put(name,value != null ? value.clone() : null);
     }
@@ -244,7 +263,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setBytes(java.lang.String, byte[], int, int)
      */
-    public void setBytes(String name, byte[] value, int offset, int length) throws JMSException
+    @Override
+	public void setBytes(String name, byte[] value, int offset, int length) throws JMSException
     {
         if (value != null)
         {
@@ -260,7 +280,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setChar(java.lang.String, char)
      */
-    public void setChar(String name, char value) throws JMSException
+    @Override
+	public void setChar(String name, char value) throws JMSException
     {
         put(name,new Character(value));
     }
@@ -269,7 +290,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setDouble(java.lang.String, double)
      */
-    public void setDouble(String name, double value) throws JMSException
+    @Override
+	public void setDouble(String name, double value) throws JMSException
     {
         put(name,new Double(value));
     }
@@ -278,7 +300,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setFloat(java.lang.String, float)
      */
-    public void setFloat(String name, float value) throws JMSException
+    @Override
+	public void setFloat(String name, float value) throws JMSException
     {
         put(name,new Float(value));
     }
@@ -287,7 +310,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setInt(java.lang.String, int)
      */
-    public void setInt(String name, int value) throws JMSException
+    @Override
+	public void setInt(String name, int value) throws JMSException
     {
         put(name,new Integer(value));
     }
@@ -296,7 +320,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setLong(java.lang.String, long)
      */
-    public void setLong(String name, long value) throws JMSException
+    @Override
+	public void setLong(String name, long value) throws JMSException
     {
         put(name,new Long(value));
     }
@@ -305,7 +330,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setObject(java.lang.String, java.lang.Object)
      */
-    public void setObject(String name, Object value) throws JMSException
+    @Override
+	public void setObject(String name, Object value) throws JMSException
     {
         if (value != null)
         {
@@ -334,7 +360,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setShort(java.lang.String, short)
      */
-    public void setShort(String name, short value) throws JMSException
+    @Override
+	public void setShort(String name, short value) throws JMSException
     {
         put(name,new Short(value));
     }
@@ -343,7 +370,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.MapMessage#setString(java.lang.String, java.lang.String)
      */
-    public void setString(String name, String value) throws JMSException
+    @Override
+	public void setString(String name, String value) throws JMSException
     {
         put(name,value);
     }
@@ -352,7 +380,8 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see javax.jms.Message#clearBody()
      */
-    public void clearBody()
+    @Override
+	public void clearBody()
     {
     	assertDeserializationLevel(MessageSerializationLevel.FULL);
         if (body != null) body.clear();
@@ -363,13 +392,14 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.message.AbstractMessage#copy()
      */
-    public AbstractMessage copy()
+    @Override
+	public AbstractMessage copy()
     {
         MapMessageImpl clone = new MapMessageImpl();
         copyCommonFields(clone);
         if (this.body != null)
         {
-        	clone.body = new HashMap();
+        	clone.body = new HashMap<>();
         	clone.body.putAll(this.body);
         }
         

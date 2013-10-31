@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 /**
  * EmptyEnumeration
  */
-public final class EmptyEnumeration implements Enumeration
+public final class EmptyEnumeration<T> implements Enumeration<T>
 {
 	/**
 	 * Constructor
@@ -38,6 +38,7 @@ public final class EmptyEnumeration implements Enumeration
 	 * (non-Javadoc)
 	 * @see java.util.Enumeration#hasMoreElements()
 	 */
+	@Override
 	public boolean hasMoreElements()
 	{
 		return false;
@@ -47,7 +48,8 @@ public final class EmptyEnumeration implements Enumeration
 	 * (non-Javadoc)
 	 * @see java.util.Enumeration#nextElement()
 	 */
-	public Object nextElement()
+	@Override
+	public T nextElement()
 	{
 		throw new NoSuchElementException();
 	}

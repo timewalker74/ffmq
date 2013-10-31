@@ -30,11 +30,11 @@ import net.timewalker.ffmq3.utils.descriptor.AbstractXMLBasedDescriptor;
  */
 public final class XMLSecurityDescriptor extends AbstractXMLBasedDescriptor
 {
-    private Map userMap = new Hashtable();
+    private Map<String,User> userMap = new Hashtable<>();
     
     public User getUser( String userName )
     {
-        return (User)userMap.get(userName);
+        return userMap.get(userName);
     }
     
     public void addUser( User user )
@@ -46,12 +46,13 @@ public final class XMLSecurityDescriptor extends AbstractXMLBasedDescriptor
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.Checkable#check()
      */
-    public void check() throws JMSException
+    @Override
+	public void check() throws JMSException
     {
-        Iterator users = userMap.values().iterator();
+        Iterator<User> users = userMap.values().iterator();
         while (users.hasNext())
         {
-            User user = (User)users.next();
+            User user = users.next();
             user.check();
         }
     }

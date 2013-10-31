@@ -71,7 +71,8 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageProducer#close()
      */
-    public final void close() throws JMSException
+    @Override
+	public final void close() throws JMSException
     {
     	externalAccessLock.writeLock().lock();
     	try
@@ -107,7 +108,8 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageConsumer#getMessageSelector()
      */
-    public final String getMessageSelector()
+    @Override
+	public final String getMessageSelector()
     {
         return messageSelector;
     }
@@ -115,7 +117,8 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageConsumer#getMessageListener()
      */
-    public final MessageListener getMessageListener()
+    @Override
+	public final MessageListener getMessageListener()
     {
         return messageListener;
     }
@@ -123,7 +126,8 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageConsumer#setMessageListener(javax.jms.MessageListener)
      */
-    public void setMessageListener(MessageListener messageListener) throws JMSException
+    @Override
+	public void setMessageListener(MessageListener messageListener) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -140,7 +144,8 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageConsumer#receive()
      */
-    public final Message receive() throws JMSException
+    @Override
+	public final Message receive() throws JMSException
     {
         return receive(-1);
     }
@@ -148,7 +153,8 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     /* (non-Javadoc)
      * @see javax.jms.MessageConsumer#receiveNoWait()
      */
-    public final Message receiveNoWait() throws JMSException
+    @Override
+	public final Message receiveNoWait() throws JMSException
     {
         return receive(0);
     }
@@ -157,7 +163,8 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
      * (non-Javadoc)
      * @see javax.jms.MessageConsumer#receive(long)
      */
-    public final Message receive(long timeout) throws JMSException
+    @Override
+	public final Message receive(long timeout) throws JMSException
     {
         if (messageListener != null)
             throw new FFMQException("Cannot receive messages while a listener is active","INVALID_OPERATION"); 

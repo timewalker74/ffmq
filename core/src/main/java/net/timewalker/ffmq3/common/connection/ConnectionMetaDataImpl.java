@@ -32,7 +32,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getJMSMajorVersion()
      */
-    public int getJMSMajorVersion()
+    @Override
+	public int getJMSMajorVersion()
     {
         return FFMQVersion.getJMSMajorVersion();
     }
@@ -41,7 +42,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getJMSMinorVersion()
      */
-    public int getJMSMinorVersion()
+    @Override
+	public int getJMSMinorVersion()
     {
         return FFMQVersion.getJMSMinorVersion();
     }
@@ -50,7 +52,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getJMSProviderName()
      */
-    public String getJMSProviderName()
+    @Override
+	public String getJMSProviderName()
     {
         return "FFMQ";
     }
@@ -59,7 +62,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getJMSVersion()
      */
-    public String getJMSVersion()
+    @Override
+	public String getJMSVersion()
     {
         return FFMQVersion.getJMSMajorVersion()+"."+FFMQVersion.getJMSMinorVersion();
     }
@@ -68,14 +72,16 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getJMSXPropertyNames()
      */
-    public Enumeration getJMSXPropertyNames()
+    @Override
+	public Enumeration getJMSXPropertyNames()
     {
-        return new Enumeration() {
+        return new Enumeration<Object>() {
             /*
              * (non-Javadoc)
              * @see java.util.Enumeration#hasMoreElements()
              */
-            public boolean hasMoreElements()
+            @Override
+			public boolean hasMoreElements()
             {
                 return false;
             }
@@ -84,7 +90,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
              * (non-Javadoc)
              * @see java.util.Enumeration#nextElement()
              */
-            public Object nextElement()
+            @Override
+			public Object nextElement()
             {
                 throw new NoSuchElementException();
             }
@@ -95,7 +102,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getProviderMajorVersion()
      */
-    public int getProviderMajorVersion()
+    @Override
+	public int getProviderMajorVersion()
     {
         return FFMQVersion.getProviderMajorVersion();
     }
@@ -104,7 +112,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getProviderMinorVersion()
      */
-    public int getProviderMinorVersion()
+    @Override
+	public int getProviderMinorVersion()
     {
         return FFMQVersion.getProviderMinorVersion();
     }
@@ -113,7 +122,8 @@ public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
      * (non-Javadoc)
      * @see javax.jms.ConnectionMetaData#getProviderVersion()
      */
-    public String getProviderVersion()
+    @Override
+	public String getProviderVersion()
     {
         return FFMQVersion.getProviderMajorVersion()+"."+FFMQVersion.getProviderMinorVersion();
     }

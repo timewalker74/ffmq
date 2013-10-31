@@ -36,7 +36,7 @@ public class User implements SecurityContext, Checkable
 {
     private String name;
     private String password;
-    private List privileges = new ArrayList();
+    private List<Privilege> privileges = new ArrayList<>();
     
     /**
      * Constructor
@@ -91,11 +91,12 @@ public class User implements SecurityContext, Checkable
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.security.SecurityContext#checkPermission(java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void checkPermission(String resourceName, String action) throws JMSException 
 	{
 		for (int i = 0; i < privileges.size(); i++)
 		{
-			Privilege privilege = (Privilege)privileges.get(i);
+			Privilege privilege = privileges.get(i);
 			if (privilege.matches(resourceName, action))
 				return;
 		}
@@ -106,6 +107,7 @@ public class User implements SecurityContext, Checkable
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.utils.Checkable#check()
 	 */
+	@Override
 	public void check() throws JMSException
     {
 	    if (StringTools.isEmpty(name))

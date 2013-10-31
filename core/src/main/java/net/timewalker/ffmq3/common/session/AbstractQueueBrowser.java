@@ -55,7 +55,7 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
 	protected AbstractSession session;
 	
 	// Children
-	private Map enumMap = new Hashtable();
+	private Map<String,AbstractQueueBrowserEnumeration> enumMap = new Hashtable<>();
 	
 	/**
 	 * Constructor
@@ -97,7 +97,7 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
      */
     public final AbstractQueueBrowserEnumeration lookupRegisteredEnumeration( String enumId )
     {
-        return (AbstractQueueBrowserEnumeration)enumMap.get(enumId);
+        return enumMap.get(enumId);
     }
     
     /**
@@ -105,13 +105,13 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
      */
     private void closeRemainingEnumerations()
     {
-        List enumsToClose = new Vector();
+        List<AbstractQueueBrowserEnumeration> enumsToClose = new Vector<>();
         synchronized (enumMap)
         {
         	enumsToClose.addAll(enumMap.values());
             for (int n = 0 ; n < enumsToClose.size() ; n++)
             {
-            	AbstractQueueBrowserEnumeration queueBrowserEnum = (AbstractQueueBrowserEnumeration)enumsToClose.get(n);
+            	AbstractQueueBrowserEnumeration queueBrowserEnum = enumsToClose.get(n);
                 log.debug("Auto-closing unclosed queue browser enumeration : "+queueBrowserEnum);
                 try
                 {
@@ -129,6 +129,7 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
 	 * (non-Javadoc)
 	 * @see javax.jms.QueueBrowser#getMessageSelector()
 	 */
+	@Override
 	public final String getMessageSelector() throws JMSException
 	{
 		return messageSelector;
@@ -138,6 +139,7 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
 	 * (non-Javadoc)
 	 * @see javax.jms.QueueBrowser#getQueue()
 	 */
+	@Override
 	public final Queue getQueue() throws JMSException
 	{
 		return queue;
@@ -147,6 +149,7 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
 	 * (non-Javadoc)
 	 * @see javax.jms.QueueBrowser#close()
 	 */
+	@Override
 	public final void close() throws JMSException
 	{
 		synchronized (closeLock)
@@ -180,7 +183,8 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
 	/* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer sb = new StringBuffer();
         

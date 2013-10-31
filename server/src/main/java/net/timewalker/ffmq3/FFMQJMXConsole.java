@@ -74,6 +74,7 @@ public final class FFMQJMXConsole implements Runnable
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
+	@Override
 	public void run()
 	{
 		try
@@ -271,10 +272,10 @@ public final class FFMQJMXConsole implements Runnable
 	private void printListenersStatus() throws Exception
 	{
 		MBeanServerConnection conn = getMBeanServerConnection();
-		Iterator listenerInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Listeners,listener=*"), null).iterator();
+		Iterator<ObjectInstance> listenerInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Listeners,listener=*"), null).iterator();
 		while (listenerInstances.hasNext())
 		{
-			ObjectInstance listenerInstance = (ObjectInstance)listenerInstances.next();
+			ObjectInstance listenerInstance = listenerInstances.next();
 			String listenerName = (String)conn.getAttribute(listenerInstance.getObjectName(),"Name");
 			
 			printListenerStatus(listenerName);
@@ -313,10 +314,10 @@ public final class FFMQJMXConsole implements Runnable
 	private void printBridgesStatus() throws Exception
 	{
 		MBeanServerConnection conn = getMBeanServerConnection(); 
-		Iterator bridgeInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Bridges,bridge=*"), null).iterator();
+		Iterator<ObjectInstance> bridgeInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Bridges,bridge=*"), null).iterator();
 		while (bridgeInstances.hasNext())
 		{
-			ObjectInstance bridgeInstance = (ObjectInstance)bridgeInstances.next();
+			ObjectInstance bridgeInstance = bridgeInstances.next();
 			String bridgeName = (String)conn.getAttribute(bridgeInstance.getObjectName(),"Name");
 			
 			printBridgeStatus(bridgeName);
@@ -363,10 +364,10 @@ public final class FFMQJMXConsole implements Runnable
 	private void printEnginesStatus() throws Exception
 	{
 		MBeanServerConnection conn = getMBeanServerConnection(); 
-		Iterator engineInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine=*"), null).iterator();
+		Iterator<ObjectInstance> engineInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine=*"), null).iterator();
 		while (engineInstances.hasNext())
 		{
-			ObjectInstance engineInstance = (ObjectInstance)engineInstances.next();
+			ObjectInstance engineInstance = engineInstances.next();
 			String engineName = (String)conn.getAttribute(engineInstance.getObjectName(),"Name");
 			
 			printEngineStatus(engineName);
@@ -402,10 +403,10 @@ public final class FFMQJMXConsole implements Runnable
 	private void printEngineQueues(String engineName,String indent) throws Exception
 	{
 		MBeanServerConnection conn = getMBeanServerConnection(); 
-		Iterator queueInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine="+engineName+",children=queues,name=*"), null).iterator();
+		Iterator<ObjectInstance> queueInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine="+engineName+",children=queues,name=*"), null).iterator();
 		while (queueInstances.hasNext())
 		{
-			ObjectInstance queueInstance = (ObjectInstance)queueInstances.next();
+			ObjectInstance queueInstance = queueInstances.next();
 			String queueName = (String)conn.getAttribute(queueInstance.getObjectName(),"Name");
 			
 			Long sentToQueueCount = (Long)connection.getAttribute(queueInstance.getObjectName(), "SentToQueueCount");
@@ -425,10 +426,10 @@ public final class FFMQJMXConsole implements Runnable
 	private void printEngineTopics(String engineName,String indent) throws Exception
 	{
 		MBeanServerConnection conn = getMBeanServerConnection(); 
-		Iterator topicInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine="+engineName+",children=topics,name=*"), null).iterator();
+		Iterator<ObjectInstance> topicInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine="+engineName+",children=topics,name=*"), null).iterator();
 		while (topicInstances.hasNext())
 		{
-			ObjectInstance topicInstance = (ObjectInstance)topicInstances.next();
+			ObjectInstance topicInstance = topicInstances.next();
 			String topicName = (String)conn.getAttribute(topicInstance.getObjectName(),"Name");
 			
 			Long sentToTopicCount = (Long)connection.getAttribute(topicInstance.getObjectName(), "SentToTopicCount");
@@ -445,10 +446,10 @@ public final class FFMQJMXConsole implements Runnable
 	private void printEngineAsyncManagers(String engineName,String indent) throws Exception
 	{
 		MBeanServerConnection conn = getMBeanServerConnection(); 
-		Iterator asyncManagerInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine="+engineName+",children=async-managers,name=*"), null).iterator();
+		Iterator<ObjectInstance> asyncManagerInstances = conn.queryMBeans(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Engines,engine="+engineName+",children=async-managers,name=*"), null).iterator();
 		while (asyncManagerInstances.hasNext())
 		{
-			ObjectInstance asyncManagerInstance = (ObjectInstance)asyncManagerInstances.next();
+			ObjectInstance asyncManagerInstance = asyncManagerInstances.next();
 			String asyncManagerName = (String)conn.getAttribute(asyncManagerInstance.getObjectName(),"Name");
 			
 			Integer taskQueueSize = (Integer)connection.getAttribute(asyncManagerInstance.getObjectName(), "TaskQueueSize");

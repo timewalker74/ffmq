@@ -15,6 +15,7 @@ import net.timewalker.ffmq3.utils.concurrent.SynchronizationPoint;
 /**
  * QueueListenerThread
  */
+@SuppressWarnings("all")
 public class QueueListenerThread extends AbstractQueueHandlerThread implements MessageListener
 {
     private String messageSelector;

@@ -36,6 +36,7 @@ public final class PingQuery extends AbstractQueryPacket
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.remote.transport.packet.AbstractPacket#getType()
 	 */
+	@Override
 	public byte getType()
 	{
 		return PacketType.Q_PING;

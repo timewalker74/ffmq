@@ -27,7 +27,8 @@ public final class TcpBufferedOutputStream extends FilterOutputStream
      * (non-Javadoc)
      * @see java.io.FilterOutputStream#write(int)
      */
-    public void write(int b) throws IOException
+    @Override
+	public void write(int b) throws IOException
     {
         if ((capacity - size) < 1)
             flush();
@@ -38,7 +39,8 @@ public final class TcpBufferedOutputStream extends FilterOutputStream
      * (non-Javadoc)
      * @see java.io.FilterOutputStream#write(byte[], int, int)
      */
-    public void write(byte data[], int offset, int len) throws IOException
+    @Override
+	public void write(byte data[], int offset, int len) throws IOException
     {
         if ((capacity - size) < len)
             flush();
@@ -60,7 +62,8 @@ public final class TcpBufferedOutputStream extends FilterOutputStream
      * (non-Javadoc)
      * @see java.io.FilterOutputStream#flush()
      */
-    public void flush() throws IOException
+    @Override
+	public void flush() throws IOException
     {
         if (size > 0)
         {

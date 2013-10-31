@@ -84,7 +84,7 @@ public class RemoteSession extends AbstractSession
     private long retryTimeout;
     
     // Runtime
-    private List deliveredMessageIDs = new Vector();
+    private List<String> deliveredMessageIDs = new Vector<>();
     private Object retryLock = new Object();
     private boolean debugEnabled = log.isDebugEnabled();
     private boolean synchronousAckRequired;
@@ -179,7 +179,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createBrowser(javax.jms.Queue, java.lang.String)
      */
-    public QueueBrowser createBrowser(Queue queue, String messageSelector) throws JMSException
+    @Override
+	public QueueBrowser createBrowser(Queue queue, String messageSelector) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -202,7 +203,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createConsumer(javax.jms.Destination, java.lang.String, boolean)
      */
-    public final MessageConsumer createConsumer(Destination destination, String messageSelector, boolean noLocal) throws JMSException
+    @Override
+	public final MessageConsumer createConsumer(Destination destination, String messageSelector, boolean noLocal) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -226,7 +228,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createDurableSubscriber(javax.jms.Topic, java.lang.String, java.lang.String, boolean)
      */
-    public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException
+    @Override
+	public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -251,7 +254,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createProducer(javax.jms.Destination)
      */
-    public final MessageProducer createProducer(Destination destination) throws JMSException
+    @Override
+	public final MessageProducer createProducer(Destination destination) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -272,7 +276,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createTemporaryQueue()
      */
-    public TemporaryQueue createTemporaryQueue() throws JMSException
+    @Override
+	public TemporaryQueue createTemporaryQueue() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -294,7 +299,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#createTemporaryTopic()
      */
-    public TemporaryTopic createTemporaryTopic() throws JMSException
+    @Override
+	public TemporaryTopic createTemporaryTopic() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -317,7 +323,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#recover()
      */
-    public final void recover() throws JMSException
+    @Override
+	public final void recover() throws JMSException
     {
     	if (transacted)
             throw new IllegalStateException("Session is transacted"); // [JMS SPEC]
@@ -344,7 +351,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see javax.jms.Session#unsubscribe(java.lang.String)
      */
-    public void unsubscribe(String subscriptionName) throws JMSException
+    @Override
+	public void unsubscribe(String subscriptionName) throws JMSException
     {
     	if (StringTools.isEmpty(subscriptionName))
             throw new FFMQException("Empty subscription name","INVALID_SUBSCRIPTION_NAME");
@@ -369,7 +377,8 @@ public class RemoteSession extends AbstractSession
      * (non-Javadoc)
      * @see javax.jms.Session#commit()
      */
-    public final void commit() throws JMSException
+    @Override
+	public final void commit() throws JMSException
     {
     	if (!transacted)
             throw new IllegalStateException("Session is not transacted"); // [JMS SPEC]
@@ -464,7 +473,8 @@ public class RemoteSession extends AbstractSession
      * (non-Javadoc)
      * @see javax.jms.Session#rollback()
      */
-    public final void rollback() throws JMSException
+    @Override
+	public final void rollback() throws JMSException
     {
     	if (!transacted)
             throw new IllegalStateException("Session is not transacted"); // [JMS SPEC]
@@ -491,7 +501,8 @@ public class RemoteSession extends AbstractSession
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#onSessionClose()
      */
-    protected void onSessionClose()
+    @Override
+	protected void onSessionClose()
     {
     	super.onSessionClose();
     	
@@ -519,7 +530,8 @@ public class RemoteSession extends AbstractSession
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#onSessionClosed()
      */
-    protected void onSessionClosed()
+    @Override
+	protected void onSessionClosed()
     {
         super.onSessionClosed();
         transportEndpoint.close();
@@ -529,7 +541,8 @@ public class RemoteSession extends AbstractSession
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#acknowledge()
      */
-    public final void acknowledge() throws JMSException
+    @Override
+	public final void acknowledge() throws JMSException
     {
     	if (transacted)
             throw new IllegalStateException("Session is transacted"); // [JMS SPEC]
@@ -544,7 +557,7 @@ public class RemoteSession extends AbstractSession
 	        if (sendAcksAsync && !synchronousAckRequired)
 	        {
 	        	// Copy message list
-	        	List messageIDs = new ArrayList(deliveredMessageIDs.size());
+	        	List<String> messageIDs = new ArrayList<>(deliveredMessageIDs.size());
 	        	for(int n=0;n<deliveredMessageIDs.size();n++)
 	        		messageIDs.add(deliveredMessageIDs.get(n));
 	        	deliveredMessageIDs.clear();

@@ -38,8 +38,8 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
 {
     private static final Log log = LogFactory.getLog(DestinationDefinitionProvider.class);
     
-    private Map queueDefinitions = new Hashtable();
-    private Map topicDefinitions = new Hashtable();
+    private Map<String,QueueDefinition> queueDefinitions = new Hashtable<>();
+    private Map<String,TopicDefinition> topicDefinitions = new Hashtable<>();
      
     /**
      * Constructor
@@ -83,7 +83,7 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
     
     public QueueDefinition getQueueDefinition( String queueName ) throws JMSException
     {
-        QueueDefinition queueDef = (QueueDefinition)queueDefinitions.get(queueName);
+        QueueDefinition queueDef = queueDefinitions.get(queueName);
         if (queueDef == null)  
         {
             queueDef = loadQueueDefinition(queueName);
@@ -159,7 +159,7 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
 
     public TopicDefinition getTopicDefinition( String topicName ) throws JMSException
     {
-        TopicDefinition topicDef = (TopicDefinition)topicDefinitions.get(topicName);
+        TopicDefinition topicDef = topicDefinitions.get(topicName);
         if (topicDef == null)  
         {
             topicDef = loadTopicDefinition(topicName);
@@ -233,11 +233,11 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
     
     public String[] getAllQueueNames()
     {
-        return (String[])queueDefinitions.keySet().toArray(new String[queueDefinitions.size()]);
+        return queueDefinitions.keySet().toArray(new String[queueDefinitions.size()]);
     }
     
     public String[] getAllTopicNames()
     {
-        return (String[])topicDefinitions.keySet().toArray(new String[topicDefinitions.size()]);
+        return topicDefinitions.keySet().toArray(new String[topicDefinitions.size()]);
     }
 }

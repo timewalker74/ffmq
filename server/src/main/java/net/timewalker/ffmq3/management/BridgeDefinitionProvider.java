@@ -41,8 +41,8 @@ public final class BridgeDefinitionProvider
 	private static final Log log = LogFactory.getLog(BridgeDefinitionProvider.class);
 	
 	private File bridgeDefinitionsDir;
-	private List bridgeDefinitionList = new Vector();
-	private Set bridgeNames = new HashSet(); 
+	private List<BridgeDefinition> bridgeDefinitionList = new Vector<>();
+	private Set<String> bridgeNames = new HashSet<>(); 
 	
 	/**
 	 * Constructor
@@ -57,7 +57,7 @@ public final class BridgeDefinitionProvider
 	 */
 	public BridgeDefinition[] getBridgeDefinitions()
 	{
-		return (BridgeDefinition[]) bridgeDefinitionList.toArray(new BridgeDefinition[bridgeDefinitionList.size()]);
+		return bridgeDefinitionList.toArray(new BridgeDefinition[bridgeDefinitionList.size()]);
 	}
 	
 	public void loadExistingDefinitions() throws JMSException

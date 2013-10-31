@@ -71,6 +71,7 @@ public final class RemoteQueueBrowser extends AbstractQueueBrowser
 	 * (non-Javadoc)
 	 * @see javax.jms.QueueBrowser#getEnumeration()
 	 */
+	@Override
 	public Enumeration getEnumeration() throws JMSException
 	{
 		checkNotClosed();
@@ -83,6 +84,7 @@ public final class RemoteQueueBrowser extends AbstractQueueBrowser
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.common.session.AbstractQueueBrowser#onQueueBrowserClose()
 	 */
+	@Override
 	protected void onQueueBrowserClose()
 	{
 		super.onQueueBrowserClose();

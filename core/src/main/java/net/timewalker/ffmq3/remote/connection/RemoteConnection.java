@@ -121,7 +121,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#setClientID(java.lang.String)
      */
-    public final void setClientID(String clientID) throws JMSException
+    @Override
+	public final void setClientID(String clientID) throws JMSException
     {
         super.setClientID(clientID);
         
@@ -133,7 +134,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#onConnectionClose()
      */
-    protected void onConnectionClose()
+    @Override
+	protected void onConnectionClose()
     {
     	super.onConnectionClose();
     	
@@ -155,7 +157,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#onConnectionClosed()
      */
-    protected void onConnectionClosed()
+    @Override
+	protected void onConnectionClosed()
     {
         super.onConnectionClosed();
         if (transportHub != null)
@@ -165,7 +168,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryQueue(java.lang.String)
      */
-    public final void deleteTemporaryQueue(String queueName) throws JMSException
+    @Override
+	public final void deleteTemporaryQueue(String queueName) throws JMSException
     {
         DeleteTemporaryQueueQuery query = new DeleteTemporaryQueueQuery();
         query.setQueueName(queueName);
@@ -175,7 +179,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryTopic(java.lang.String)
      */
-    public final void deleteTemporaryTopic(String topicName) throws JMSException
+    @Override
+	public final void deleteTemporaryTopic(String topicName) throws JMSException
     {
         DeleteTemporaryTopicQuery query = new DeleteTemporaryTopicQuery();
         query.setTopicName(topicName);
@@ -185,7 +190,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see javax.jms.Connection#createSession(boolean, int)
      */
-    public final Session createSession(boolean transacted, int acknowledgeMode) throws JMSException
+    @Override
+	public final Session createSession(boolean transacted, int acknowledgeMode) throws JMSException
     {
         if (!transacted && acknowledgeMode == Session.SESSION_TRANSACTED)
             throw new FFMQException("Acknowledge mode SESSION_TRANSACTED cannot be used for an non-transacted session","INVALID_ACK_MODE");
@@ -212,7 +218,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see javax.jms.Connection#start()
      */
-    public final void start() throws JMSException
+    @Override
+	public final void start() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -232,7 +239,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see javax.jms.Connection#stop()
      */
-    public final void stop() throws JMSException
+    @Override
+	public final void stop() throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -254,7 +262,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetReceived(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
      */
-    public final boolean packetReceived(AbstractPacket packet)
+    @Override
+	public final boolean packetReceived(AbstractPacket packet)
     {
         if (packet.getType() == PacketType.NOTIFICATION)
         {
@@ -306,13 +315,15 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
                  * (non-Javadoc)
                  * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
                  */
-                public boolean isMergeable() { return false; }
+                @Override
+				public boolean isMergeable() { return false; }
                 
                 /*
                  * (non-Javadoc)
                  * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
                  */
-                public void execute()
+                @Override
+				public void execute()
                 {
                     RollbackMessageQuery query = new RollbackMessageQuery();
                     query.setSessionId(sessionId);
@@ -339,7 +350,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetSent(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
      */
-    public final void packetSent(AbstractPacket packet)
+    @Override
+	public final void packetSent(AbstractPacket packet)
     {
         // Nothing
     }
@@ -347,7 +359,8 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#transportClosed(boolean)
      */
-    public final void transportClosed(boolean linkFailed)
+    @Override
+	public final void transportClosed(boolean linkFailed)
     {
         if (linkFailed)
         {

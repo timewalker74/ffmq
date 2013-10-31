@@ -46,7 +46,8 @@ public final class RemoteQueueConnection extends RemoteConnection implements Que
      * (non-Javadoc)
      * @see javax.jms.QueueConnection#createConnectionConsumer(javax.jms.Queue, java.lang.String, javax.jms.ServerSessionPool, int)
      */
-    public synchronized ConnectionConsumer createConnectionConsumer(Queue queue, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
+    @Override
+	public synchronized ConnectionConsumer createConnectionConsumer(Queue queue, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException
     {
         checkNotClosed();
         throw new FFMQException("Unsupported feature","UNSUPPORTED_FEATURE");
@@ -56,7 +57,8 @@ public final class RemoteQueueConnection extends RemoteConnection implements Que
      * (non-Javadoc)
      * @see javax.jms.QueueConnection#createQueueSession(boolean, int)
      */
-    public synchronized QueueSession createQueueSession(boolean transacted, int acknowledgeMode) throws JMSException
+    @Override
+	public synchronized QueueSession createQueueSession(boolean transacted, int acknowledgeMode) throws JMSException
     {
         checkNotClosed();
         

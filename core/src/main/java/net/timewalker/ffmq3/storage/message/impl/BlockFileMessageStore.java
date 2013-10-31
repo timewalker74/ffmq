@@ -53,7 +53,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#createDataStore()
      */
-    protected LinkedDataStore createDataStore()
+    @Override
+	protected LinkedDataStore createDataStore()
     {
         if (useJournal)
             return new JournalingBlockBasedDataStore(queueDef,asyncTaskManager);
@@ -64,7 +65,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#getDeliveryMode()
      */
-    public int getDeliveryMode()
+    @Override
+	public int getDeliveryMode()
     {
     	return DeliveryMode.PERSISTENT;
     }
@@ -72,7 +74,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#retrieveMessage(int)
      */
-    protected AbstractMessage retrieveMessage(int handle) throws JMSException
+    @Override
+	protected AbstractMessage retrieveMessage(int handle) throws JMSException
     {
     	byte[] rawMsg = (byte[])dataStore.retrieve(handle);
     	return MessageSerializer.unserialize(rawMsg, true);
@@ -81,7 +84,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#retrieveMessagePriority(int)
      */
-    protected int retrieveMessagePriority(int handle) throws JMSException
+    @Override
+	protected int retrieveMessagePriority(int handle) throws JMSException
     {
     	// Only read the first header bytes of the message to read the priority field
     	byte[] msgHeader = ((AbstractBlockBasedDataStore)dataStore).retrieveHeader(handle, 2);    	
@@ -96,7 +100,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#replaceMessage(int, net.timewalker.ffmq3.common.message.AbstractMessage)
      */
-    protected int replaceMessage(int handle, AbstractMessage message) throws JMSException
+    @Override
+	protected int replaceMessage(int handle, AbstractMessage message) throws JMSException
     {
         return dataStore.replace(handle,serialize(message));
     }
@@ -105,7 +110,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.impl.AbstractMessageStore#storeMessage(net.timewalker.ffmq3.common.message.AbstractMessage, int)
      */
-    protected int storeMessage(AbstractMessage message, int previousHandle) throws JMSException
+    @Override
+	protected int storeMessage(AbstractMessage message, int previousHandle) throws JMSException
     {
         return dataStore.store(serialize(message), previousHandle);
 	}
@@ -114,7 +120,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.local.destination.store.MessageStore#delete()
      */
-    public void delete() throws JMSException
+    @Override
+	public void delete() throws JMSException
     {
         BlockBasedDataStoreTools.delete(queueDef.getName(), 
                                         queueDef.getDataFolder(), 
@@ -124,7 +131,8 @@ public final class BlockFileMessageStore extends AbstractMessageStore
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.storage.message.MessageStore#isFailSafe()
      */
-    public boolean isFailSafe()
+    @Override
+	public boolean isFailSafe()
     {
     	return useJournal;
     }

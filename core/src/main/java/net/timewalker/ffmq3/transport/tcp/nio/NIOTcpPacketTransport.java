@@ -56,7 +56,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	private int maxPacketSize;
 	
 	// Runtime
-	private LinkedList sendQueue = new LinkedList();
+	private LinkedList<AbstractPacket> sendQueue = new LinkedList<>();
 	private RawDataBuffer packetOutputBuffer;
 	private RawDataBuffer packetInputBuffer;
 	private int currentInputOffset;
@@ -93,6 +93,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.AbstractTcpPacketTransport#getRemotePeer()
 	 */
+	@Override
 	public SocketAddress getRemotePeer()
 	{
 		return socketChannel.socket().getRemoteSocketAddress();
@@ -120,6 +121,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 				/* (non-Javadoc)
 				 * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getLastActivity()
 				 */
+				@Override
 				public long getLastActivity()
 				{
 					return lastSendActivity;
@@ -128,6 +130,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 				/* (non-Javadoc)
 				 * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
 				 */
+				@Override
 				public long getTimeoutDelay()
 				{
 					return pingInterval*1000L;
@@ -136,6 +139,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 				/* (non-Javadoc)
 				 * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
 				 */
+				@Override
 				public boolean onActivityTimeout() throws Exception
 				{
 					send(new PingQuery());
@@ -148,6 +152,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 			/* (non-Javadoc)
 			 * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getLastActivity()
 			 */
+			@Override
 			public long getLastActivity()
 			{
 				return lastRecvActivity;
@@ -156,6 +161,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 			/* (non-Javadoc)
 			 * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
 			 */
+			@Override
 			public long getTimeoutDelay()
 			{
 				return pingInterval*1000L*2;
@@ -164,6 +170,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 			/* (non-Javadoc)
 			 * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
 			 */
+			@Override
 			public boolean onActivityTimeout() throws Exception
 			{
 				log.warn(getId()+" : ping timeout on client socket, closing connection.");
@@ -205,6 +212,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.nio.NIOClientSocketHandler#getInputBuffer()
 	 */
+	@Override
 	public ByteBuffer getInputBuffer()
 	{
 		return inputBuffer;
@@ -213,6 +221,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.nio.NIOClientSocketHandler#getOutputBuffer()
 	 */
+	@Override
 	public ByteBuffer getOutputBuffer()
 	{
 		return outputBuffer;
@@ -221,6 +230,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.nio.NIOClientSocketHandler#getSocketChannel()
 	 */
+	@Override
 	public SocketChannel getSocketChannel()
 	{
 		return socketChannel;
@@ -229,6 +239,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.nio.NIOClientSocketHandler#handleIncomingData()
 	 */
+	@Override
 	public boolean handleIncomingData()
 	{
 		lastRecvActivity = System.currentTimeMillis();
@@ -288,6 +299,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.nio.NIOClientSocketHandler#appendOutgoingData()
 	 */
+	@Override
 	public boolean appendOutgoingData()
 	{
 		while (outputBuffer.remaining() > 0)
@@ -301,7 +313,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 					return true; // Not enough space to proceed
 				
 				// Write packet size
-				if (!serializePacket((AbstractPacket)sendQueue.getFirst(),packetOutputBuffer))
+				if (!serializePacket(sendQueue.getFirst(),packetOutputBuffer))
 					return false; // Invalid packet
 				outputBuffer.putInt(packetOutputBuffer.size());
 				currentOutputOffset = 0;
@@ -318,7 +330,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 					AbstractPacket sentPacket;
 					synchronized (sendQueue)
 					{
-						sentPacket = (AbstractPacket)sendQueue.removeFirst();
+						sentPacket = sendQueue.removeFirst();
 					}
 					packetOutputBuffer.clear();
 					
@@ -362,6 +374,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.nio.NIOClientSocketHandler#hasWriteInterest()
 	 */
+	@Override
 	public boolean hasWriteInterest()
 	{
 		synchronized (sendQueue)
@@ -373,6 +386,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#send(net.timewalker.ffmq3.transport.packet.AbstractPacket)
 	 */
+	@Override
 	public void send(AbstractPacket packet) throws PacketTransportException
 	{
 		if (closed)
@@ -394,6 +408,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#needsThrottling()
 	 */
+	@Override
 	public boolean needsThrottling()
 	{
 		synchronized (sendQueue)
@@ -405,6 +420,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#start()
 	 */
+	@Override
 	public void start() throws PacketTransportException
 	{
 		if (client)
@@ -439,6 +455,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.tcp.nio.NIOClientSocketHandler#onSocketChannelClosed()
 	 */
+	@Override
 	public void onSocketChannelClosed()
 	{
 		closeTransport(true);
@@ -447,6 +464,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#close()
 	 */
+	@Override
 	public void close()
 	{
 		closeTransport(false);

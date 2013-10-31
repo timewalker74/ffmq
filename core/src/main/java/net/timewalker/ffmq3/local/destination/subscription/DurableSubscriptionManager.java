@@ -30,7 +30,7 @@ import net.timewalker.ffmq3.local.FFMQEngine;
 public final class DurableSubscriptionManager
 {
     // Attributes
-	private Map subscriptions = new Hashtable();
+	private Map<String,DurableTopicSubscription> subscriptions = new Hashtable<>();
 	
 	/**
 	 * Register a new durable subscription

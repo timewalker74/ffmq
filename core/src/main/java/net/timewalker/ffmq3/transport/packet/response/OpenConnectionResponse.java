@@ -31,7 +31,8 @@ public final class OpenConnectionResponse extends AbstractResponsePacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.R_OPEN_CONNECTION;
     }
@@ -55,7 +56,8 @@ public final class OpenConnectionResponse extends AbstractResponsePacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractResponsePacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
      */
-    protected void serializeTo(RawDataBuffer out)
+    @Override
+	protected void serializeTo(RawDataBuffer out)
     {
         super.serializeTo(out);
         out.writeInt(protocolVersion);
@@ -64,7 +66,8 @@ public final class OpenConnectionResponse extends AbstractResponsePacket
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractResponsePacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
      */
-    protected void unserializeFrom(RawDataBuffer in)
+    @Override
+	protected void unserializeFrom(RawDataBuffer in)
     {
         super.unserializeFrom(in);
         protocolVersion = in.readInt();

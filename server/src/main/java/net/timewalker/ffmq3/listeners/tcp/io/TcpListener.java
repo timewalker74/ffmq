@@ -89,7 +89,8 @@ public final class TcpListener extends AbstractTcpClientListener implements Runn
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.listeners.AbstractListener#start()
      */
-    public synchronized void start() throws JMSException
+    @Override
+	public synchronized void start() throws JMSException
     {
     	if (started)
     		return;
@@ -108,7 +109,8 @@ public final class TcpListener extends AbstractTcpClientListener implements Runn
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.listeners.Listener#getName()
      */
-    public String getName()
+    @Override
+	public String getName()
     {
     	return (usingSSL ? PacketTransportType.TCPS : PacketTransportType.TCP)+"-"+listenAddr+"-"+listenPort;
     }
@@ -156,7 +158,8 @@ public final class TcpListener extends AbstractTcpClientListener implements Runn
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.utils.concurrent.SynchronizableThread#run()
      */
-    public void run()
+    @Override
+	public void run()
     {
         try
         {
@@ -224,7 +227,8 @@ public final class TcpListener extends AbstractTcpClientListener implements Runn
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.listeners.AbstractListener#stop()
      */
-    public synchronized void stop()
+    @Override
+	public synchronized void stop()
     {
     	if (!started)
     		return;

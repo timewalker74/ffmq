@@ -63,7 +63,7 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     private ClientListener tcpListener;
     private RemoteAdministrationThread adminThread;
     private BridgeDefinitionProvider bridgeDefinitionProvider;
-    private List bridges = new Vector();
+    private List<JMSBridge> bridges = new Vector<>();
     private boolean started;
     private boolean stopRequired;
     private boolean inRunnableMode;
@@ -94,7 +94,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.FFMQServerMBean#getVersion()
      */
-    public String getVersion()
+    @Override
+	public String getVersion()
     {
     	return FFMQVersion.getProviderMajorVersion()+"."+FFMQVersion.getProviderMinorVersion()+"."+FFMQVersion.getProviderReleaseVersion();
     }
@@ -103,7 +104,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.FFMQServerMBean#start()
      */
-    public synchronized boolean start()
+    @Override
+	public synchronized boolean start()
     {
     	if (started)
     		return false;
@@ -254,7 +256,7 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     {
         for (int i = 0; i < bridges.size(); i++)
         {
-            JMSBridge bridge = (JMSBridge)bridges.get(i);
+            JMSBridge bridge = bridges.get(i);
             
             log.debug("Undeploying JMS bridge : "+bridge.getBridgeDefinition().getName());
             if (bridge.isStarted())
@@ -268,7 +270,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.FFMQServerMBean#shutdown()
      */
-    public synchronized boolean shutdown()
+    @Override
+	public synchronized boolean shutdown()
     {
     	if (!started)
     		return false;
@@ -335,7 +338,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.FFMQServerMBean#isStarted()
      */
-    public synchronized boolean isStarted()
+    @Override
+	public synchronized boolean isStarted()
     {
         return started;
     }
@@ -343,7 +347,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineListener#engineDeployed()
      */
-    public void engineDeployed()
+    @Override
+	public void engineDeployed()
     {
         try
         {
@@ -363,7 +368,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineListener#engineUndeployed()
      */
-    public void engineUndeployed()
+    @Override
+	public void engineUndeployed()
     {
         try
         {
@@ -383,7 +389,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineListener#queueDeployed(net.timewalker.ffmq3.local.destination.LocalQueue)
      */
-    public void queueDeployed(LocalQueue queue)
+    @Override
+	public void queueDeployed(LocalQueue queue)
     {
     	try
     	{
@@ -399,7 +406,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineListener#queueUndeployed(net.timewalker.ffmq3.local.destination.LocalQueue)
      */
-    public void queueUndeployed(LocalQueue queue)
+    @Override
+	public void queueUndeployed(LocalQueue queue)
     {
     	try
     	{
@@ -415,7 +423,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineListener#topicDeployed(net.timewalker.ffmq3.local.destination.LocalTopic)
      */
-    public void topicDeployed(LocalTopic topic)
+    @Override
+	public void topicDeployed(LocalTopic topic)
     {
     	try
     	{
@@ -431,7 +440,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.LocalEngineListener#topicUndeployed(net.timewalker.ffmq3.local.destination.LocalTopic)
      */
-    public void topicUndeployed(LocalTopic topic)
+    @Override
+	public void topicUndeployed(LocalTopic topic)
     {
     	try
     	{
@@ -473,7 +483,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.FFMQServerMBean#isRemoteAdministrationEnabled()
      */
-    public synchronized boolean isRemoteAdministrationEnabled()
+    @Override
+	public synchronized boolean isRemoteAdministrationEnabled()
     {
     	return adminThread != null;
     }
@@ -481,7 +492,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.FFMQServerMBean#getUptime()
      */
-    public synchronized long getUptime()
+    @Override
+	public synchronized long getUptime()
     {
     	return started ? System.currentTimeMillis()-startupTime : 0;
     }
@@ -489,7 +501,8 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
     /* (non-Javadoc)
      * @see java.lang.Runnable#run()
      */
-    public synchronized void run()
+    @Override
+	public synchronized void run()
     {
         if (!start())
         	return;

@@ -19,7 +19,8 @@ public class BlockFileMessageStoreTest extends AbstractMessageStoreTest
     /* (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
-    protected void setUp() throws Exception
+    @Override
+	protected void setUp() throws Exception
     {
         super.setUp();
         File dataDir = new File("target/test");
@@ -29,7 +30,8 @@ public class BlockFileMessageStoreTest extends AbstractMessageStoreTest
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.test.local.destination.store.impl.AbstractMessageStoreTest#createMessageStore(boolean)
      */
-    protected MessageStore createMessageStore(boolean createStoreFiles) throws Exception 
+    @Override
+	protected MessageStore createMessageStore(boolean createStoreFiles) throws Exception 
 	{
     	if (createStoreFiles)
     		BlockBasedDataStoreTools.create(id,new File("target/test"), 200, 512, true);

@@ -57,9 +57,9 @@ public final class NIOTcpMultiplexer
 	protected int socketRecvBufferSize;
 	
 	// Runtime
-	protected List pendingAcceptHandlers = new Vector();
-	protected List serverHandlers = new Vector();
-	protected Map clientHandlers = new Hashtable();
+	protected List<NIOServerSocketHandler> pendingAcceptHandlers = new Vector<>();
+	protected List<NIOServerSocketHandler> serverHandlers = new Vector<>();
+	protected Map<String,NIOClientSocketHandler> clientHandlers = new Hashtable<>();
 	private boolean waiting;
 	
 	/**
@@ -189,7 +189,7 @@ public final class NIOTcpMultiplexer
         }
     }
 	
-	protected boolean acceptClient( NIOServerSocketHandler serverHandler , SocketChannel socketChannel , Selector selector )
+	protected boolean acceptClient( NIOServerSocketHandler serverHandler , SocketChannel socketChannel )
     {
 		synchronized (clientHandlers)
 		{
@@ -408,7 +408,8 @@ public final class NIOTcpMultiplexer
          * (non-Javadoc)
          * @see java.lang.Thread#run()
          */
-        public void run()
+        @Override
+		public void run()
         {
             try
             {
@@ -423,13 +424,13 @@ public final class NIOTcpMultiplexer
                     
                     if (selectedCount > 0)
                     {
-                        Set readyKeys = selector.selectedKeys();
-                        Iterator i = readyKeys.iterator();
+                        Set<SelectionKey> readyKeys = selector.selectedKeys();
+                        Iterator<SelectionKey> i = readyKeys.iterator();
                         
                         // Walk through the active keys
                         while (i.hasNext()) 
                         {
-                            SelectionKey sk = (SelectionKey)i.next();
+                            SelectionKey sk = i.next();
                             i.remove();
                             
                             // Concurrently cancelled, skip
@@ -471,7 +472,7 @@ public final class NIOTcpMultiplexer
 	            			                                socketRecvBufferSize);
 	                                
 	                                // Create a new client handler
-	                                if (!acceptClient(serverHandler,clientChannel,selector))
+	                                if (!acceptClient(serverHandler,clientChannel))
 	                                {
 	                                    log.error("Dropping incoming connection due to errors ...");
 	                                    clientChannel.close();
@@ -511,7 +512,7 @@ public final class NIOTcpMultiplexer
                     	{
 	                    	for (int i = 0; i < pendingAcceptHandlers.size(); i++)
 							{
-	                    		NIOServerSocketHandler serverHandler = (NIOServerSocketHandler)pendingAcceptHandlers.get(i);
+	                    		NIOServerSocketHandler serverHandler = pendingAcceptHandlers.get(i);
 	                        	addInterest(serverHandler.getServerSocketChannel(), SelectionKey.OP_ACCEPT, serverHandler, selector);
 	                        	serverHandlers.add(serverHandler);
 	                        }
@@ -522,10 +523,10 @@ public final class NIOTcpMultiplexer
                     // Update read/write interests
                     synchronized (clientHandlers)
                     {
-                    	Iterator clientsIt = clientHandlers.values().iterator();
+                    	Iterator<NIOClientSocketHandler> clientsIt = clientHandlers.values().iterator();
                         while (clientsIt.hasNext())
                         {
-                            NIOClientSocketHandler clientHandler = (NIOClientSocketHandler)clientsIt.next();
+                            NIOClientSocketHandler clientHandler = clientsIt.next();
                             updateConnectInterest(clientHandler,selector);
                             updateReadInterest(clientHandler,selector);
                             updateWriteInterest(clientHandler,selector);

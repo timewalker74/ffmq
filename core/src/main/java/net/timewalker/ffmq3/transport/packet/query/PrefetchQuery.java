@@ -27,7 +27,8 @@ public final class PrefetchQuery extends AbstractConsumerQuery
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
      */
-    public byte getType()
+    @Override
+	public byte getType()
     {
         return PacketType.Q_PREFETCH;
     }

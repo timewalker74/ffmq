@@ -17,7 +17,6 @@
  */
 package net.timewalker.ffmq3.transport;
 
-import net.timewalker.ffmq3.utils.Settings;
 
 /**
  * <p>Base class for a packet transport</p>
@@ -36,7 +35,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
 	/**
 	 * Constructor
 	 */
-	public AbstractPacketTransport( String id , boolean client , Settings settings )
+	public AbstractPacketTransport( String id , boolean client )
 	{
 		this.id = id;
 		this.client = client;	
@@ -46,6 +45,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#getId()
 	 */
+	@Override
 	public final String getId()
     {
         return id;
@@ -54,6 +54,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#isClosed()
 	 */
+	@Override
 	public boolean isClosed()
 	{
 		return closed;
@@ -63,6 +64,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
 	 * (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#setListener(net.timewalker.ffmq3.transport.PacketTransportListener)
 	 */
+	@Override
 	public void setListener(PacketTransportListener listener)
 	{
 		this.listener = listener;

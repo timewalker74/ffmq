@@ -44,7 +44,8 @@ public final class LocalTopicPublisher extends LocalMessageProducer implements T
      * (non-Javadoc)
      * @see javax.jms.TopicPublisher#getTopic()
      */
-    public final Topic getTopic()
+    @Override
+	public final Topic getTopic()
     {
         return (Topic)destination;
     }
@@ -53,7 +54,8 @@ public final class LocalTopicPublisher extends LocalMessageProducer implements T
      * (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Message)
      */
-    public final void publish(Message message) throws JMSException
+    @Override
+	public final void publish(Message message) throws JMSException
     {
         send(message);
     }
@@ -62,7 +64,8 @@ public final class LocalTopicPublisher extends LocalMessageProducer implements T
      * (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Topic, javax.jms.Message)
      */
-    public final void publish(Topic topic, Message message) throws JMSException
+    @Override
+	public final void publish(Topic topic, Message message) throws JMSException
     {
         send(topic,message);
     }
@@ -71,7 +74,8 @@ public final class LocalTopicPublisher extends LocalMessageProducer implements T
      * (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Message, int, int, long)
      */
-    public final void publish(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	public final void publish(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
         send(message,deliveryMode,priority,timeToLive);
     }
@@ -80,7 +84,8 @@ public final class LocalTopicPublisher extends LocalMessageProducer implements T
      * (non-Javadoc)
      * @see javax.jms.TopicPublisher#publish(javax.jms.Topic, javax.jms.Message, int, int, long)
      */
-    public final void publish(Topic topic, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
+    @Override
+	public final void publish(Topic topic, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
     {
         send(topic, message, deliveryMode, priority, timeToLive);
     }

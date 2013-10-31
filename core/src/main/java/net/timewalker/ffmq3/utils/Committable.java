@@ -28,6 +28,11 @@ import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
 public interface Committable
 {
 	/**
+     * Get the committable name
+     */
+    public String getName();
+    
+	/**
      * Lock the destination for transactional update
      */
     public void openTransaction();

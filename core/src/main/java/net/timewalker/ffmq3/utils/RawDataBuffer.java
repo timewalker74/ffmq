@@ -112,7 +112,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#write(int)
      */
-    public void write(int b)
+    @Override
+	public void write(int b)
     {
         ensureCapacity(size+1);
         buf[size++] = (byte)b;
@@ -122,7 +123,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#write(byte[])
      */
-    public void write(byte[] data)
+    @Override
+	public void write(byte[] data)
     {
         int newCount = size+data.length; 
         ensureCapacity(newCount);
@@ -133,7 +135,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
     /* (non-Javadoc)
      * @see java.io.DataOutput#writeBytes(java.lang.String)
      */
-    public void writeBytes(String s)
+    @Override
+	public void writeBytes(String s)
     {
     	int len = s.length();
     	ensureCapacity(size+len);
@@ -144,6 +147,7 @@ public final class RawDataBuffer implements DataOutput, DataInput
 	/* (non-Javadoc)
 	 * @see java.io.DataOutput#writeChars(java.lang.String)
 	 */
+	@Override
 	public void writeChars(String s)
 	{
 		int len = s.length();
@@ -159,7 +163,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#write(byte[], int, int)
      */
-    public void write(byte[] data,int offset,int len)
+    @Override
+	public void write(byte[] data,int offset,int len)
     {
         int newCount = size+len; 
         ensureCapacity(newCount);
@@ -171,7 +176,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeByte(int)
      */
-    public void writeByte(int b)
+    @Override
+	public void writeByte(int b)
     {
         ensureCapacity(size+1);
         buf[size++] = (byte)b;
@@ -181,7 +187,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeBoolean(boolean)
      */
-    public void writeBoolean(boolean v)
+    @Override
+	public void writeBoolean(boolean v)
     {
         write(v ? 1 : 0);
     }
@@ -209,7 +216,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeShort(int)
      */
-    public void writeShort(int v)
+    @Override
+	public void writeShort(int v)
     {
         ensureCapacity(size + 2);
         buf[size++] = (byte)((v >>>  8) & 0xFF);
@@ -220,7 +228,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeInt(int)
      */
-    public void writeInt(int v)
+    @Override
+	public void writeInt(int v)
     {
         ensureCapacity(size + 4);
         buf[size++] = (byte)((v >>> 24) & 0xFF);
@@ -246,7 +255,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeLong(long)
      */
-    public void writeLong(long v)
+    @Override
+	public void writeLong(long v)
     {
         ensureCapacity(size + 8);
         buf[size++] = (byte)(v >>> 56);
@@ -263,7 +273,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeFloat(float)
      */
-    public void writeFloat(float v)
+    @Override
+	public void writeFloat(float v)
     {
         writeInt(Float.floatToIntBits(v));
     }
@@ -272,7 +283,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeDouble(double)
      */
-    public void writeDouble(double v)
+    @Override
+	public void writeDouble(double v)
     {
         writeLong(Double.doubleToLongBits(v));
     }
@@ -281,7 +293,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeChar(int)
      */
-    public void writeChar(int v)
+    @Override
+	public void writeChar(int v)
     {
         ensureCapacity(size + 2);
         buf[size++] = (byte)((v >>>  8) & 0xFF);
@@ -292,7 +305,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataOutput#writeUTF(java.lang.String)
      */
-    public void writeUTF(String str)
+    @Override
+	public void writeUTF(String str)
     {
         int strlen = str.length();
         if (strlen < 255)
@@ -469,7 +483,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readBoolean()
      */
-    public boolean readBoolean()
+    @Override
+	public boolean readBoolean()
     {
         int ch = buf[pos++];
         return (ch != 0);
@@ -497,7 +512,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readFully(byte[])
      */
-    public void readFully(byte b[])
+    @Override
+	public void readFully(byte b[])
     {
         readFully(b, 0, b.length);
     }
@@ -506,7 +522,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readFully(byte[], int, int)
      */
-    public void readFully(byte b[], int off, int len)
+    @Override
+	public void readFully(byte b[], int off, int len)
     {
         System.arraycopy(buf, pos, b, off, len);
         pos += len;
@@ -516,7 +533,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readByte()
      */
-    public byte readByte()
+    @Override
+	public byte readByte()
     {
         return buf[pos++];
     }
@@ -524,7 +542,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
     /* (non-Javadoc)
      * @see java.io.DataInput#readUnsignedByte()
      */
-    public int readUnsignedByte()
+    @Override
+	public int readUnsignedByte()
     {
     	return buf[pos++] & 0xff;
     }
@@ -532,7 +551,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
     /* (non-Javadoc)
      * @see java.io.DataInput#readLine()
      */
-    public String readLine()
+    @Override
+	public String readLine()
     {
     	throw new IllegalStateException("Unsupported operation (deprecated)");
     }
@@ -540,7 +560,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
     /* (non-Javadoc)
      * @see java.io.DataInput#skipBytes(int)
      */
-    public int skipBytes(int n)
+    @Override
+	public int skipBytes(int n)
     {
     	int skippable = Math.min(n, size-pos);
     	pos += skippable;
@@ -551,7 +572,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readShort()
      */
-    public short readShort()
+    @Override
+	public short readShort()
     {
         int ch1 = buf[pos++] & 0xff;
         int ch2 = buf[pos++] & 0xff;
@@ -561,7 +583,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
     /* (non-Javadoc)
      * @see java.io.DataInput#readUnsignedShort()
      */
-    public int readUnsignedShort()
+    @Override
+	public int readUnsignedShort()
     {
     	int ch1 = buf[pos++] & 0xff;
         int ch2 = buf[pos++] & 0xff;
@@ -572,7 +595,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readInt()
      */
-    public int readInt()
+    @Override
+	public int readInt()
     {
         int ch1 = buf[pos++] & 0xff;
         int ch2 = buf[pos++] & 0xff;
@@ -585,7 +609,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readLong()
      */
-    public long readLong()
+    @Override
+	public long readLong()
     {
         return (((long)buf[pos++] << 56) +
                 ((long)(buf[pos++] & 255) << 48) +
@@ -601,7 +626,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readFloat()
      */
-    public float readFloat()
+    @Override
+	public float readFloat()
     {
         return Float.intBitsToFloat(readInt());
     }
@@ -610,7 +636,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readDouble()
      */
-    public double readDouble()
+    @Override
+	public double readDouble()
     {
         return Double.longBitsToDouble(readLong());
     }
@@ -619,7 +646,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readChar()
      */
-    public char readChar()
+    @Override
+	public char readChar()
     {
         int ch1 = buf[pos++] & 0xFF;
         int ch2 = buf[pos++] & 0xFF;
@@ -630,7 +658,8 @@ public final class RawDataBuffer implements DataOutput, DataInput
      * (non-Javadoc)
      * @see java.io.DataInput#readUTF()
      */
-    public String readUTF()
+    @Override
+	public String readUTF()
     {
         int type = buf[pos++] & 0xff; // Read UTF type prefix
         

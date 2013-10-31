@@ -91,7 +91,8 @@ public abstract class AbstractJournalOperation
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString()
+    @Override
+	public String toString()
     {
     	return "#"+transactionId;
     }

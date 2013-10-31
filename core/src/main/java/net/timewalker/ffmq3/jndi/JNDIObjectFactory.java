@@ -46,7 +46,8 @@ public final class JNDIObjectFactory implements ObjectFactory
 	/* (non-Javadoc)
 	 * @see javax.naming.spi.ObjectFactory#getObjectInstance(java.lang.Object, javax.naming.Name, javax.naming.Context, java.util.Hashtable)
 	 */
-	public Object getObjectInstance(Object obj, Name name, Context context, Hashtable environment) throws Exception
+	@Override
+	public Object getObjectInstance(Object obj, Name name, Context context, Hashtable<?,?> environment) throws Exception
 	{
 		if (!(obj instanceof Reference))
 			throw new IllegalStateException("Object is not a reference : "+obj);
@@ -84,9 +85,9 @@ public final class JNDIObjectFactory implements ObjectFactory
         return null; 
 	}
 	
-	private Hashtable recreateConnectionFactoryEnv( Reference reference )
+	private Hashtable<String,Object> recreateConnectionFactoryEnv( Reference reference )
 	{
-		Hashtable env = new Hashtable();
+		Hashtable<String,Object> env = new Hashtable<>();
 		
 		// Provider URL
 		String providerURL = getRequiredAttribute(reference, "providerURL");

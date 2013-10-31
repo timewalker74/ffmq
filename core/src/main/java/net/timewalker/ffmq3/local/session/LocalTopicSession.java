@@ -50,7 +50,8 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
      * (non-Javadoc)
      * @see javax.jms.TopicSession#createPublisher(javax.jms.Topic)
      */
-    public TopicPublisher createPublisher(Topic topic) throws JMSException
+    @Override
+	public TopicPublisher createPublisher(Topic topic) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -70,7 +71,8 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
      * (non-Javadoc)
      * @see javax.jms.TopicSession#createSubscriber(javax.jms.Topic)
      */
-    public TopicSubscriber createSubscriber(Topic topic) throws JMSException
+    @Override
+	public TopicSubscriber createSubscriber(Topic topic) throws JMSException
     {
         return createSubscriber(topic,null,false);
     }
@@ -79,7 +81,8 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
      * (non-Javadoc)
      * @see javax.jms.TopicSession#createSubscriber(javax.jms.Topic, java.lang.String, boolean)
      */
-    public TopicSubscriber createSubscriber(Topic topic, String messageSelector, boolean noLocal) throws JMSException
+    @Override
+	public TopicSubscriber createSubscriber(Topic topic, String messageSelector, boolean noLocal) throws JMSException
     {
     	externalAccessLock.readLock().lock();
     	try
@@ -100,7 +103,8 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#createBrowser(javax.jms.Queue)
      */
-    public QueueBrowser createBrowser(Queue queue) throws JMSException
+    @Override
+	public QueueBrowser createBrowser(Queue queue) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }
@@ -108,7 +112,8 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalSession#createBrowser(javax.jms.Queue, java.lang.String)
      */
-    public synchronized QueueBrowser createBrowser(Queue queueRef, String messageSelector) throws JMSException
+    @Override
+	public synchronized QueueBrowser createBrowser(Queue queueRef, String messageSelector) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }
@@ -116,7 +121,8 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.common.session.AbstractSession#createQueue(java.lang.String)
      */
-    public Queue createQueue(String queueName) throws JMSException
+    @Override
+	public Queue createQueue(String queueName) throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }
@@ -124,7 +130,8 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.local.session.LocalSession#createTemporaryQueue()
      */
-    public TemporaryQueue createTemporaryQueue() throws JMSException
+    @Override
+	public TemporaryQueue createTemporaryQueue() throws JMSException
     {
     	throw new IllegalStateException("Method not available on this domain.");
     }

@@ -92,7 +92,8 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.transport.tcp.AbstractTcpPacketTransport#getRemotePeer()
      */
-    public SocketAddress getRemotePeer()
+    @Override
+	public SocketAddress getRemotePeer()
     {
     	return socket.getRemoteSocketAddress();
     }
@@ -178,7 +179,8 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransport#start()
      */
-    public void start() throws PacketTransportException
+    @Override
+	public void start() throws PacketTransportException
     {
         try
         {
@@ -220,7 +222,8 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransport#send(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
      */
-    public void send( AbstractPacket packet ) throws PacketTransportException
+    @Override
+	public void send( AbstractPacket packet ) throws PacketTransportException
     {
         if (closed)
    			throw new PacketTransportException("Transport is closed");
@@ -228,7 +231,8 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
         sender.send(packet);
     }
     
-    public boolean needsThrottling()
+    @Override
+	public boolean needsThrottling()
     {
     	return sender.needsThrottling();
     }
@@ -272,7 +276,8 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransport#close()
      */
-    public void close()
+    @Override
+	public void close()
     {
         closeTransport(false);
         

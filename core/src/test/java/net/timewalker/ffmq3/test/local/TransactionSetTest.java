@@ -101,7 +101,7 @@ public class TransactionSetTest extends TestCase
 	public void testPartialClear() throws Exception
 	{
 		TransactionSet set = new TransactionSet();
-		List deliveredMessageIDs = new ArrayList();
+		List<String> deliveredMessageIDs = new ArrayList<>();
 		
 		int msgCount = 50;
 		

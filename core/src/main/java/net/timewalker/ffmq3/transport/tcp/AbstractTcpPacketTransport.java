@@ -43,7 +43,7 @@ public abstract class AbstractTcpPacketTransport extends AbstractPacketTransport
 	 */
 	public AbstractTcpPacketTransport( String id , boolean client , Settings settings )
 	{
-		super(id,client,settings);
+		super(id,client);
 
 		this.streamSendBufferSize  = settings.getIntProperty(FFMQCoreSettings.TRANSPORT_TCP_STREAM_SEND_BUFFER_SIZE,8192);	
     	this.streamRecvBufferSize  = settings.getIntProperty(FFMQCoreSettings.TRANSPORT_TCP_STREAM_RECV_BUFFER_SIZE,8192);
@@ -57,6 +57,7 @@ public abstract class AbstractTcpPacketTransport extends AbstractPacketTransport
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.transport.PacketTransport#getRemotePeerID()
 	 */
+	@Override
 	public final String getRemotePeerID()
 	{
 		SocketAddress peerAddress = getRemotePeer();
