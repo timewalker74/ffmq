@@ -22,6 +22,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
@@ -61,8 +62,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     private Map<String,LocalTopicSubscription> subscriptionMap = new Hashtable<>();
     
     // Stats
-    private volatile long sentToTopicCount = 0;
-    private volatile long dispatchedFromTopicCount = 0;
+    private AtomicLong sentToTopicCount = new AtomicLong();
+    private AtomicLong dispatchedFromTopicCount = new AtomicLong();
     
     // Runtime
     private Set<Committable> committables = new HashSet<>();
@@ -181,12 +182,12 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
                     "DeliveryMode.NON_PERSISTENT" : "DeliveryMode.PERSISTENT"),
                     "INVALID_DELIVERY_MODE");
     	
+    	sentToTopicCount.incrementAndGet();
+    	
         String connectionID = session.getConnection().getId();
-        
         CopyOnWriteList<LocalTopicSubscription> subscriptionsSnapshot;
         synchronized (subscriptionMap)
         {
-        	sentToTopicCount++;
         	if (subscriptions.isEmpty())
         		return false;
         	
@@ -234,7 +235,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
                 		throw new IllegalStateException("Should not require a commit");
                 }
             	
-            	dispatchedFromTopicCount++;
+            	dispatchedFromTopicCount.incrementAndGet();
             }
             catch (DataStoreFullException e)
             {
@@ -285,8 +286,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
 	public void resetStats()
     {
     	super.resetStats();
-    	sentToTopicCount = 0;
-    	dispatchedFromTopicCount = 0;
+    	sentToTopicCount.set(0);
+    	dispatchedFromTopicCount.set(0);
     }
     
     /*
@@ -296,7 +297,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     @Override
 	public long getSentToTopicCount()
     {
-        return sentToTopicCount;
+        return sentToTopicCount.get();
     }
 
     /*
@@ -306,7 +307,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     @Override
 	public long getDispatchedFromTopicCount()
     {
-        return dispatchedFromTopicCount;
+        return dispatchedFromTopicCount.get();
     }
 
     /*

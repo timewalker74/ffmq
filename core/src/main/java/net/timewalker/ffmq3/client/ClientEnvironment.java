@@ -49,7 +49,7 @@ public final class ClientEnvironment
     /**
      * Get the singleton instance
      */
-    public static Settings getSettings()
+    public static synchronized Settings getSettings()
     {
         if (settings == null)
             settings = loadSettings();

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
@@ -75,11 +76,11 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     private Object storeLock = new Object();
    
     // Statistics
-    private volatile long sentToQueueCount = 0;
-    private volatile long receivedFromQueueCount = 0;
-    private volatile long acknowledgedGetCount = 0;
-    private volatile long rollbackedGetCount = 0;
-    private volatile long expiredCount = 0;
+    private AtomicLong sentToQueueCount = new AtomicLong();
+    private AtomicLong receivedFromQueueCount = new AtomicLong();
+    private AtomicLong acknowledgedGetCount = new AtomicLong();
+    private AtomicLong rollbackedGetCount = new AtomicLong();
+    private AtomicLong expiredCount = new AtomicLong();
     
     // Settings
     private long inactivityTimeout;
@@ -223,8 +224,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	synchronized (storeLock)
         {
     		targetStore.unlock(handle);
-    		sentToQueueCount++;
         }
+    	sentToQueueCount.incrementAndGet();
     	
     	sendAvailabilityNotification(message);
     }
@@ -287,9 +288,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
             		volatileCommitted++;
             	}
             }
-            
-        	acknowledgedGetCount += volatileCommitted + persistentCommitted;
         }
+        acknowledgedGetCount.addAndGet(volatileCommitted + persistentCommitted);
         
         if (persistentCommitted > 0 && requiresTransactionalUpdate())
         {
@@ -349,9 +349,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
                 else
                 	volatileRollbacked++;
             }
-            
-            rollbackedGetCount += volatileRollbacked + persistentRollbacked;
         }
+        rollbackedGetCount.addAndGet(volatileRollbacked + persistentRollbacked);
 
         if (persistentRollbacked > 0 && requiresTransactionalUpdate())
         {
@@ -551,8 +550,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
 					synchronized (storeLock)
 			        {
 						store.delete(expiredHandle);
-						expiredCount++;
 			        }
+					expiredCount.incrementAndGet();
 				}
         		commitChanges(null); // Async commit
         	}
@@ -616,7 +615,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
                         		           msg.getJMSMessageID(),
                         		           store.getDeliveryMode(),
                         		           this);
-                        receivedFromQueueCount++;
+                        receivedFromQueueCount.incrementAndGet();
                         result = msg;
                         break;
                     }
@@ -638,8 +637,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
 					synchronized (storeLock)
 			        {
 						store.delete(expiredHandle);
-						expiredCount++;
 			        }
+					expiredCount.incrementAndGet();
 				}
         		commitChanges(null); // Async commit
         	}
@@ -844,11 +843,11 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
 	public void resetStats()
     {
     	super.resetStats();
-    	sentToQueueCount = 0;
-    	receivedFromQueueCount = 0;
-    	acknowledgedGetCount = 0;
-    	rollbackedGetCount = 0;
-    	expiredCount = 0;
+    	sentToQueueCount.set(0);
+    	receivedFromQueueCount.set(0);
+    	acknowledgedGetCount.set(0);
+    	rollbackedGetCount.set(0);
+    	expiredCount.set(0);
     }
     
     /*
@@ -941,7 +940,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
 	public long getSentToQueueCount()
     {
-        return sentToQueueCount;
+        return sentToQueueCount.get();
     }
 
     /*
@@ -951,7 +950,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
 	public long getReceivedFromQueueCount()
     {
-        return receivedFromQueueCount;
+        return receivedFromQueueCount.get();
     }
 
     /*
@@ -961,7 +960,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
 	public long getAcknowledgedGetCount()
     {
-        return acknowledgedGetCount;
+        return acknowledgedGetCount.get();
     }
 
     /*
@@ -971,7 +970,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
 	public long getRollbackedGetCount()
     {
-        return rollbackedGetCount;
+        return rollbackedGetCount.get();
     }
     
     /*
@@ -981,7 +980,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
 	public long getExpiredCount()
 	{
-		return expiredCount;
+		return expiredCount.get();
 	}
     
     /* (non-Javadoc)
