@@ -15,42 +15,42 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.connection;
+package net.timewalker.ffmq4.remote.connection;
 
 import java.net.URI;
 
 import javax.jms.JMSException;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.client.ClientEnvironment;
-import net.timewalker.ffmq3.common.connection.AbstractConnection;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.session.AbstractSession;
-import net.timewalker.ffmq3.remote.session.RemoteMessageConsumer;
-import net.timewalker.ffmq3.remote.session.RemoteSession;
-import net.timewalker.ffmq3.transport.PacketTransport;
-import net.timewalker.ffmq3.transport.PacketTransportEndpoint;
-import net.timewalker.ffmq3.transport.PacketTransportException;
-import net.timewalker.ffmq3.transport.PacketTransportFactory;
-import net.timewalker.ffmq3.transport.PacketTransportHub;
-import net.timewalker.ffmq3.transport.PacketTransportListener;
-import net.timewalker.ffmq3.transport.packet.AbstractPacket;
-import net.timewalker.ffmq3.transport.packet.AbstractResponsePacket;
-import net.timewalker.ffmq3.transport.packet.NotificationPacket;
-import net.timewalker.ffmq3.transport.packet.PacketType;
-import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryQueueQuery;
-import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryTopicQuery;
-import net.timewalker.ffmq3.transport.packet.query.OpenConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.query.RollbackMessageQuery;
-import net.timewalker.ffmq3.transport.packet.query.SetClientIDQuery;
-import net.timewalker.ffmq3.transport.packet.query.StartConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.query.StopConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.response.OpenConnectionResponse;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.async.AsyncTask;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.client.ClientEnvironment;
+import net.timewalker.ffmq4.common.connection.AbstractConnection;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.session.AbstractSession;
+import net.timewalker.ffmq4.remote.session.RemoteMessageConsumer;
+import net.timewalker.ffmq4.remote.session.RemoteSession;
+import net.timewalker.ffmq4.transport.PacketTransport;
+import net.timewalker.ffmq4.transport.PacketTransportEndpoint;
+import net.timewalker.ffmq4.transport.PacketTransportException;
+import net.timewalker.ffmq4.transport.PacketTransportFactory;
+import net.timewalker.ffmq4.transport.PacketTransportHub;
+import net.timewalker.ffmq4.transport.PacketTransportListener;
+import net.timewalker.ffmq4.transport.packet.AbstractPacket;
+import net.timewalker.ffmq4.transport.packet.AbstractResponsePacket;
+import net.timewalker.ffmq4.transport.packet.NotificationPacket;
+import net.timewalker.ffmq4.transport.packet.PacketType;
+import net.timewalker.ffmq4.transport.packet.query.DeleteTemporaryQueueQuery;
+import net.timewalker.ffmq4.transport.packet.query.DeleteTemporaryTopicQuery;
+import net.timewalker.ffmq4.transport.packet.query.OpenConnectionQuery;
+import net.timewalker.ffmq4.transport.packet.query.RollbackMessageQuery;
+import net.timewalker.ffmq4.transport.packet.query.SetClientIDQuery;
+import net.timewalker.ffmq4.transport.packet.query.StartConnectionQuery;
+import net.timewalker.ffmq4.transport.packet.query.StopConnectionQuery;
+import net.timewalker.ffmq4.transport.packet.response.OpenConnectionResponse;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.async.AsyncTask;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -119,7 +119,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#setClientID(java.lang.String)
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#setClientID(java.lang.String)
      */
     @Override
 	public final void setClientID(String clientID) throws JMSException
@@ -132,7 +132,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#onConnectionClose()
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#onConnectionClose()
      */
     @Override
 	protected void onConnectionClose()
@@ -155,7 +155,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#onConnectionClosed()
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#onConnectionClosed()
      */
     @Override
 	protected void onConnectionClosed()
@@ -166,7 +166,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryQueue(java.lang.String)
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#deleteTemporaryQueue(java.lang.String)
      */
     @Override
 	public final void deleteTemporaryQueue(String queueName) throws JMSException
@@ -177,7 +177,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryTopic(java.lang.String)
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#deleteTemporaryTopic(java.lang.String)
      */
     @Override
 	public final void deleteTemporaryTopic(String topicName) throws JMSException
@@ -260,7 +260,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetReceived(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransportListener#packetReceived(net.timewalker.ffmq4.remote.transport.packet.AbstractPacket)
      */
     @Override
 	public final boolean packetReceived(AbstractPacket packet)
@@ -313,14 +313,14 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
             {
                 /*
                  * (non-Javadoc)
-                 * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
+                 * @see net.timewalker.ffmq4.utils.async.AsyncTask#isMergeable()
                  */
                 @Override
 				public boolean isMergeable() { return false; }
                 
                 /*
                  * (non-Javadoc)
-                 * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
+                 * @see net.timewalker.ffmq4.utils.async.AsyncTask#execute()
                  */
                 @Override
 				public void execute()
@@ -348,7 +348,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetSent(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransportListener#packetSent(net.timewalker.ffmq4.remote.transport.packet.AbstractPacket)
      */
     @Override
 	public final void packetSent(AbstractPacket packet)
@@ -357,7 +357,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#transportClosed(boolean)
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransportListener#transportClosed(boolean)
      */
     @Override
 	public final void transportClosed(boolean linkFailed)

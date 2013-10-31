@@ -15,44 +15,44 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message.selector;
+package net.timewalker.ffmq4.common.message.selector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.jms.InvalidSelectorException;
 
-import net.timewalker.ffmq3.common.message.selector.expression.ConditionalExpression;
-import net.timewalker.ffmq3.common.message.selector.expression.Identifier;
-import net.timewalker.ffmq3.common.message.selector.expression.SelectorNode;
-import net.timewalker.ffmq3.common.message.selector.expression.literal.BooleanLiteral;
-import net.timewalker.ffmq3.common.message.selector.expression.literal.NullLiteral;
-import net.timewalker.ffmq3.common.message.selector.expression.literal.NumericLiteral;
-import net.timewalker.ffmq3.common.message.selector.expression.literal.StringLiteral;
-import net.timewalker.ffmq3.common.message.selector.expression.literal.StringLiteralList;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.AndOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.BetweenOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.DivideOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.EqualsOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.GreaterThanOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.GreaterThanOrEqualsOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.InOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.IsNotNullOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.IsNullOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.LessThanOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.LessThanOrEqualsOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.LikeOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.MinusOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.MultiplyOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.NotBetweenOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.NotEqualsOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.NotInOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.NotLikeOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.NotOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.OrOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.SubstractOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.operator.SumOperator;
-import net.timewalker.ffmq3.common.message.selector.expression.utils.StringUtils;
+import net.timewalker.ffmq4.common.message.selector.expression.ConditionalExpression;
+import net.timewalker.ffmq4.common.message.selector.expression.Identifier;
+import net.timewalker.ffmq4.common.message.selector.expression.SelectorNode;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.BooleanLiteral;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.NullLiteral;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.NumericLiteral;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.StringLiteral;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.StringLiteralList;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.AndOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.BetweenOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.DivideOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.EqualsOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.GreaterThanOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.GreaterThanOrEqualsOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.InOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.IsNotNullOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.IsNullOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.LessThanOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.LessThanOrEqualsOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.LikeOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.MinusOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.MultiplyOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.NotBetweenOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.NotEqualsOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.NotInOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.NotLikeOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.NotOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.OrOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.SubstractOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.SumOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.utils.StringUtils;
 
 /**
  * <p>

@@ -15,11 +15,11 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.storage.data.impl;
+package net.timewalker.ffmq4.storage.data.impl;
 
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.utils.FastBitSet;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.utils.FastBitSet;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 /**
  * InMemoryLinkedObjectStore
@@ -57,7 +57,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.LinkedDataStore#init()
+     * @see net.timewalker.ffmq4.storage.data.LinkedDataStore#init()
      */
     @Override
 	public void init() throws DataStoreException
@@ -96,7 +96,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.AbstractDataStore#checkHandle(int)
+     * @see net.timewalker.ffmq4.storage.data.impl.AbstractDataStore#checkHandle(int)
      */
     @Override
 	protected void checkHandle(int handle) throws DataStoreException
@@ -126,7 +126,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedObjectStore#retrieve(int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedObjectStore#retrieve(int)
      */
     @Override
 	public Object retrieve(int handle) throws DataStoreException
@@ -136,7 +136,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.LinkedDataStore#replace(int, java.lang.Object)
+     * @see net.timewalker.ffmq4.storage.data.LinkedDataStore#replace(int, java.lang.Object)
      */
     @Override
 	public int replace(int handle, Object obj) throws DataStoreException
@@ -148,7 +148,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedObjectStore#store(java.lang.Object, int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedObjectStore#store(java.lang.Object, int)
      */
     @Override
 	public int store(Object obj, int previousHandle) throws DataStoreException
@@ -192,7 +192,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedStore#delete(int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedStore#delete(int)
      */
     @Override
 	public int delete(int handle) throws DataStoreException
@@ -224,7 +224,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedStore#first()
+     * @see net.timewalker.ffmq4.utils.store.LinkedStore#first()
      */
     @Override
 	public int first() throws DataStoreException
@@ -234,7 +234,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedStore#next(int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedStore#next(int)
      */
     @Override
 	public int next(int handle) throws DataStoreException
@@ -245,7 +245,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedStore#previous(int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedStore#previous(int)
      */
     @Override
 	public int previous(int handle) throws DataStoreException
@@ -256,7 +256,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
 	
 	/*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedStore#size()
+     * @see net.timewalker.ffmq4.utils.store.LinkedStore#size()
      */
     @Override
 	public int size()
@@ -265,7 +265,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.DataStore#commit(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
+     * @see net.timewalker.ffmq4.storage.data.DataStore#commit(net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier)
      */
     @Override
 	public void commitChanges(SynchronizationBarrier barrier) throws DataStoreException
@@ -274,7 +274,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.DataStore#commit()
+     * @see net.timewalker.ffmq4.storage.data.DataStore#commit()
      */
     @Override
 	public void commitChanges() throws DataStoreException
@@ -284,7 +284,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedStore#close()
+     * @see net.timewalker.ffmq4.utils.store.LinkedStore#close()
      */
     @Override
 	public void close()
@@ -293,7 +293,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.LinkedDataStore#getStoreUsage()
+     * @see net.timewalker.ffmq4.storage.data.LinkedDataStore#getStoreUsage()
      */
     @Override
 	public int getStoreUsage()

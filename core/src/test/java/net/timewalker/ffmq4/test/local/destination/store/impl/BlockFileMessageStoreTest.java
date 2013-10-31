@@ -1,13 +1,13 @@
-package net.timewalker.ffmq3.test.local.destination.store.impl;
+package net.timewalker.ffmq4.test.local.destination.store.impl;
 
 import java.io.File;
 
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.storage.data.impl.BlockBasedDataStoreTools;
-import net.timewalker.ffmq3.storage.message.MessageStore;
-import net.timewalker.ffmq3.storage.message.impl.BlockFileMessageStore;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.storage.data.impl.BlockBasedDataStoreTools;
+import net.timewalker.ffmq4.storage.message.MessageStore;
+import net.timewalker.ffmq4.storage.message.impl.BlockFileMessageStore;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 /**
  * BlockFileMessageStoreTest
@@ -28,7 +28,7 @@ public class BlockFileMessageStoreTest extends AbstractMessageStoreTest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.test.local.destination.store.impl.AbstractMessageStoreTest#createMessageStore(boolean)
+     * @see net.timewalker.ffmq4.test.local.destination.store.impl.AbstractMessageStoreTest#createMessageStore(boolean)
      */
     @Override
 	protected MessageStore createMessageStore(boolean createStoreFiles) throws Exception 

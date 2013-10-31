@@ -1,12 +1,12 @@
-package net.timewalker.ffmq3.test.utils;
+package net.timewalker.ffmq4.test.utils;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.utils.concurrent.SynchronizableThread;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationPoint;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizableThread;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationPoint;
 
 /**
  * AbstractHandlerThread

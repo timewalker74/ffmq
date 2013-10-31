@@ -15,12 +15,12 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.connection;
+package net.timewalker.ffmq4.common.connection;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
-import net.timewalker.ffmq3.FFMQVersion;
+import net.timewalker.ffmq4.FFMQVersion;
 
 /**
  * <p>FFMQ implementation of the ConnectionMetaData interface</p>

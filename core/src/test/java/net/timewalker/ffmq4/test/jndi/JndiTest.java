@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.jndi;
+package net.timewalker.ffmq4.test.jndi;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -25,8 +25,8 @@ import javax.jms.Topic;
 import javax.naming.Context;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.utils.JNDITools;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.utils.JNDITools;
 
 /**
  * JndiTest

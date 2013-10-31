@@ -15,13 +15,13 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.utils.xml;
+package net.timewalker.ffmq4.utils.xml;
 
 import java.util.Stack;
 
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.SystemTools;
-import net.timewalker.ffmq3.utils.descriptor.AbstractDescriptor;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.SystemTools;
+import net.timewalker.ffmq4.utils.descriptor.AbstractDescriptor;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

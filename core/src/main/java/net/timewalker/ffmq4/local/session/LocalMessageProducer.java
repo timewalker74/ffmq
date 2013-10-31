@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import javax.jms.Destination;
 import javax.jms.InvalidDestinationException;
@@ -24,16 +24,16 @@ import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.destination.TemporaryDestination;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.MessageTools;
-import net.timewalker.ffmq3.common.session.AbstractMessageProducer;
-import net.timewalker.ffmq3.local.connection.LocalConnection;
-import net.timewalker.ffmq3.security.Action;
-import net.timewalker.ffmq3.security.Resource;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.destination.TemporaryDestination;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.MessageTools;
+import net.timewalker.ffmq4.common.session.AbstractMessageProducer;
+import net.timewalker.ffmq4.local.connection.LocalConnection;
+import net.timewalker.ffmq4.security.Action;
+import net.timewalker.ffmq4.security.Resource;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * <p>Implementation of a local JMS {@link MessageProducer}</p>
@@ -85,7 +85,7 @@ public class LocalMessageProducer extends AbstractMessageProducer
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractMessageProducer#sendToDestination(javax.jms.Destination, boolean, javax.jms.Message, int, int, long)
+     * @see net.timewalker.ffmq4.common.session.AbstractMessageProducer#sendToDestination(javax.jms.Destination, boolean, javax.jms.Message, int, int, long)
      */
     @Override
 	protected final void sendToDestination(Destination destination, boolean destinationOverride, Message srcMessage, int deliveryMode, int priority, long timeToLive) throws JMSException

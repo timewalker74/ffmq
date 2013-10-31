@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.storage.data.impl;
+package net.timewalker.ffmq4.storage.data.impl;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
@@ -28,8 +28,8 @@ import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.storage.data.impl.journal.JournalFile;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.storage.data.impl.journal.JournalFile;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

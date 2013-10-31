@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.jndi;
+package net.timewalker.ffmq4.jndi;
 
 import java.net.URI;
 import java.util.Hashtable;
@@ -25,10 +25,10 @@ import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
 import javax.naming.Context;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.remote.connection.RemoteTopicConnection;
-import net.timewalker.ffmq3.transport.PacketTransportType;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.remote.connection.RemoteTopicConnection;
+import net.timewalker.ffmq4.transport.PacketTransportType;
 
 /**
  * <p>Implementation of a JMS {@link TopicConnectionFactory}</p>

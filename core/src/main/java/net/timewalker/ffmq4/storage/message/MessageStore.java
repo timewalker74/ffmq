@@ -15,12 +15,12 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.storage.message;
+package net.timewalker.ffmq4.storage.message;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 /**
  * MessageStore

@@ -15,15 +15,15 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.storage.message.impl;
+package net.timewalker.ffmq4.storage.message.impl;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.storage.data.LinkedDataStore;
-import net.timewalker.ffmq3.storage.message.MessageStore;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.storage.data.LinkedDataStore;
+import net.timewalker.ffmq4.storage.message.MessageStore;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,7 +54,7 @@ public abstract class AbstractMessageStore implements MessageStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#init()
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#init()
      */
     @Override
 	public void init() throws JMSException
@@ -121,7 +121,7 @@ public abstract class AbstractMessageStore implements MessageStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#getStoreUsage()
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#getStoreUsage()
      */
     @Override
 	public int getStoreUsage()
@@ -131,7 +131,7 @@ public abstract class AbstractMessageStore implements MessageStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#previous(int)
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#previous(int)
      */
     @Override
 	public final int previous(int handle) throws JMSException
@@ -141,7 +141,7 @@ public abstract class AbstractMessageStore implements MessageStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#delete(int)
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#delete(int)
      */
     @Override
 	public final void delete(int handle) throws JMSException
@@ -169,7 +169,7 @@ public abstract class AbstractMessageStore implements MessageStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#first()
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#first()
      */
     @Override
 	public final int first() throws JMSException
@@ -179,7 +179,7 @@ public abstract class AbstractMessageStore implements MessageStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#next(int)
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#next(int)
      */
     @Override
 	public final int next(int handle) throws JMSException
@@ -189,7 +189,7 @@ public abstract class AbstractMessageStore implements MessageStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#size()
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#size()
      */
     @Override
 	public final int size()
@@ -198,7 +198,7 @@ public abstract class AbstractMessageStore implements MessageStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#commit(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#commit(net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier)
      */
     @Override
 	public final void commitChanges(SynchronizationBarrier barrier) throws JMSException
@@ -207,7 +207,7 @@ public abstract class AbstractMessageStore implements MessageStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#commitChanges()
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#commitChanges()
      */
     @Override
 	public final void commitChanges() throws JMSException
@@ -217,7 +217,7 @@ public abstract class AbstractMessageStore implements MessageStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#close()
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#close()
      */
     @Override
 	public final void close()
@@ -241,7 +241,7 @@ public abstract class AbstractMessageStore implements MessageStore
     protected abstract int storeMessage( AbstractMessage message , int previousHandle ) throws JMSException;
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#retrieve(int)
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#retrieve(int)
      */
     @Override
 	public final AbstractMessage retrieve(int handle) throws JMSException
@@ -250,7 +250,7 @@ public abstract class AbstractMessageStore implements MessageStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#replace(int, net.timewalker.ffmq3.common.message.AbstractMessage)
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#replace(int, net.timewalker.ffmq4.common.message.AbstractMessage)
      */
     @Override
 	public final int replace(int handle, AbstractMessage message) throws JMSException
@@ -277,7 +277,7 @@ public abstract class AbstractMessageStore implements MessageStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#store(net.timewalker.ffmq3.common.message.AbstractMessage)
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#store(net.timewalker.ffmq4.common.message.AbstractMessage)
      */
     @Override
 	public final int store(AbstractMessage message) throws JMSException
@@ -296,7 +296,7 @@ public abstract class AbstractMessageStore implements MessageStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#isLocked(int)
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#isLocked(int)
      */
 	@Override
 	public final boolean isLocked(int handle) throws JMSException 
@@ -306,7 +306,7 @@ public abstract class AbstractMessageStore implements MessageStore
 
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.destination.store.MessageStore#lock(int)
+	 * @see net.timewalker.ffmq4.local.destination.store.MessageStore#lock(int)
 	 */
 	@Override
 	public final void lock(int handle) throws JMSException 
@@ -316,7 +316,7 @@ public abstract class AbstractMessageStore implements MessageStore
 
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.destination.store.MessageStore#unlock(int)
+	 * @see net.timewalker.ffmq4.local.destination.store.MessageStore#unlock(int)
 	 */
 	@Override
 	public final void unlock(int handle) throws JMSException 

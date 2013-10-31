@@ -16,15 +16,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.local.destination.store.impl;
+package net.timewalker.ffmq4.test.local.destination.store.impl;
 
 import java.io.File;
 
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.storage.data.impl.BlockBasedDataStoreTools;
-import net.timewalker.ffmq3.storage.message.MessageStore;
-import net.timewalker.ffmq3.storage.message.impl.BlockFileMessageStore;
-import net.timewalker.ffmq3.utils.Settings;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.storage.data.impl.BlockBasedDataStoreTools;
+import net.timewalker.ffmq4.storage.message.MessageStore;
+import net.timewalker.ffmq4.storage.message.impl.BlockFileMessageStore;
+import net.timewalker.ffmq4.utils.Settings;
 
 /**
  * FailSafeBlockFileMessageStoreTest
@@ -33,7 +33,7 @@ public class JournalingBlockFileMessageStoreTest extends BlockFileMessageStoreTe
 {
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.destination.store.impl.AbstractMessageStoreTest#createMessageStore()
+	 * @see net.timewalker.ffmq4.local.destination.store.impl.AbstractMessageStoreTest#createMessageStore()
 	 */
 	protected MessageStore createMessageStore() throws Exception 
 	{

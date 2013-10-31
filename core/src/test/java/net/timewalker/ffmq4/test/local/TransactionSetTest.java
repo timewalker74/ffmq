@@ -16,14 +16,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.local;
+package net.timewalker.ffmq4.test.local;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.local.TransactionItem;
-import net.timewalker.ffmq3.local.TransactionSet;
+import net.timewalker.ffmq4.local.TransactionItem;
+import net.timewalker.ffmq4.local.TransactionSet;
 
 /**
  * TransactionSetTest

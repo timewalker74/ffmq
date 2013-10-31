@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.utils.async;
+package net.timewalker.ffmq4.utils.async;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -93,7 +93,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.async.AsyncTaskProcessorThreadListener#executionComplete(net.timewalker.ffmq3.utils.async.AsyncTaskProcessorThread)
+	 * @see net.timewalker.ffmq4.utils.async.AsyncTaskProcessorThreadListener#executionComplete(net.timewalker.ffmq4.utils.async.AsyncTaskProcessorThread)
 	 */
 	@Override
 	public synchronized void executionComplete( AsyncTaskProcessorThread thread )
@@ -121,7 +121,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.async.AsyncTaskManagerMBean#getName()
+	 * @see net.timewalker.ffmq4.utils.async.AsyncTaskManagerMBean#getName()
 	 */
 	@Override
 	public String getName()
@@ -131,7 +131,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.async.AsyncTaskManagerMBean#getTaskQueueSize()
+	 * @see net.timewalker.ffmq4.utils.async.AsyncTaskManagerMBean#getTaskQueueSize()
 	 */
 	@Override
 	public int getTaskQueueSize()
@@ -141,7 +141,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMaxIdle()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolMaxIdle()
      */
     @Override
 	public int getThreadPoolMaxIdle()
@@ -151,7 +151,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMinSize()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolMinSize()
      */
     @Override
 	public int getThreadPoolMinSize()
@@ -161,7 +161,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMaxSize()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolMaxSize()
      */
     @Override
 	public int getThreadPoolMaxSize()
@@ -171,7 +171,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolExhaustionPolicy()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolExhaustionPolicy()
      */
     @Override
 	public int getThreadPoolExhaustionPolicy()
@@ -181,7 +181,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolWaitTimeout()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolWaitTimeout()
      */
     @Override
 	public long getThreadPoolWaitTimeout()
@@ -191,7 +191,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolAvailableCount()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolAvailableCount()
      */
     @Override
 	public int getThreadPoolAvailableCount()
@@ -201,7 +201,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolPendingWaits()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolPendingWaits()
      */
     @Override
 	public int getThreadPoolPendingWaits()
@@ -210,7 +210,7 @@ public final class AsyncTaskManager implements AsyncTaskProcessorThreadListener,
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolSize()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolSize()
      */
     @Override
 	public int getThreadPoolSize()

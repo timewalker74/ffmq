@@ -15,15 +15,15 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * <p>Implementation of a local JMS {@link TopicSubscriber}</p>

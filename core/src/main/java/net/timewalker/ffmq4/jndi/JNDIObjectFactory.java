@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.jndi;
+package net.timewalker.ffmq4.jndi;
 
 import java.util.Hashtable;
 
@@ -26,9 +26,9 @@ import javax.naming.Reference;
 import javax.naming.StringRefAddr;
 import javax.naming.spi.ObjectFactory;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.common.destination.QueueRef;
-import net.timewalker.ffmq3.common.destination.TopicRef;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.common.destination.QueueRef;
+import net.timewalker.ffmq4.common.destination.TopicRef;
 
 /**
  * <p>Implementation of an {@link ObjectFactory} allowing to transport JNDI references of the following JMS objects :

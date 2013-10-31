@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.session;
+package net.timewalker.ffmq4.common.session;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,20 +44,20 @@ import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.connection.AbstractConnection;
-import net.timewalker.ffmq3.common.destination.QueueRef;
-import net.timewalker.ffmq3.common.destination.TopicRef;
-import net.timewalker.ffmq3.common.message.BytesMessageImpl;
-import net.timewalker.ffmq3.common.message.EmptyMessageImpl;
-import net.timewalker.ffmq3.common.message.MapMessageImpl;
-import net.timewalker.ffmq3.common.message.ObjectMessageImpl;
-import net.timewalker.ffmq3.common.message.StreamMessageImpl;
-import net.timewalker.ffmq3.common.message.TextMessageImpl;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.local.destination.LocalTopic;
-import net.timewalker.ffmq3.utils.id.IntegerID;
-import net.timewalker.ffmq3.utils.id.IntegerIDProvider;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.connection.AbstractConnection;
+import net.timewalker.ffmq4.common.destination.QueueRef;
+import net.timewalker.ffmq4.common.destination.TopicRef;
+import net.timewalker.ffmq4.common.message.BytesMessageImpl;
+import net.timewalker.ffmq4.common.message.EmptyMessageImpl;
+import net.timewalker.ffmq4.common.message.MapMessageImpl;
+import net.timewalker.ffmq4.common.message.ObjectMessageImpl;
+import net.timewalker.ffmq4.common.message.StreamMessageImpl;
+import net.timewalker.ffmq4.common.message.TextMessageImpl;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.local.destination.LocalTopic;
+import net.timewalker.ffmq4.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.IntegerIDProvider;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

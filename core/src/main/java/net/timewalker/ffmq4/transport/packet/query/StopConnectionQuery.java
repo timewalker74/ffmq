@@ -15,10 +15,10 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.transport.packet.query;
+package net.timewalker.ffmq4.transport.packet.query;
 
-import net.timewalker.ffmq3.transport.packet.AbstractQueryPacket;
-import net.timewalker.ffmq3.transport.packet.PacketType;
+import net.timewalker.ffmq4.transport.packet.AbstractQueryPacket;
+import net.timewalker.ffmq4.transport.packet.PacketType;
 
 /**
  * StopConnectionQuery
@@ -34,7 +34,7 @@ public final class StopConnectionQuery extends AbstractQueryPacket
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
+     * @see net.timewalker.ffmq4.network.packet.AbstractPacket#getType()
      */
     @Override
 	public byte getType()

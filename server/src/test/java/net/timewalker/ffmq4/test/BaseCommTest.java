@@ -1,8 +1,8 @@
-package net.timewalker.ffmq3.test;
+package net.timewalker.ffmq4.test;
 
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.test.utils.CommTestParameters;
+import net.timewalker.ffmq4.test.utils.CommTestParameters;
 
 /**
  * BaseCommTestw

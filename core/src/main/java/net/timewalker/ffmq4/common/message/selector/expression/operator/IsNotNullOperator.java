@@ -15,14 +15,14 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message.selector.expression.operator;
+package net.timewalker.ffmq4.common.message.selector.expression.operator;
 
 
 import javax.jms.InvalidSelectorException;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import net.timewalker.ffmq3.common.message.selector.expression.SelectorNode;
+import net.timewalker.ffmq4.common.message.selector.expression.SelectorNode;
 
 /**
  * IsNotNullOperator
@@ -39,7 +39,7 @@ public class IsNotNullOperator extends IsNullOperator
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.message.selector.expression.IsNullOperator#evaluate(javax.jms.Message)
+     * @see net.timewalker.ffmq4.common.message.selector.expression.IsNullOperator#evaluate(javax.jms.Message)
      */
     @Override
 	public Object evaluate(Message message) throws JMSException

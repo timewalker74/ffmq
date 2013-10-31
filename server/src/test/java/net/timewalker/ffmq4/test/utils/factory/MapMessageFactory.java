@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.utils.factory;
+package net.timewalker.ffmq4.test.utils.factory;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -11,7 +11,7 @@ public class MapMessageFactory implements DummyMessageFactory
 {
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.additional.utils.DummyMessageFactory#createDummyMessage()
+     * @see net.timewalker.ffmq4.additional.utils.DummyMessageFactory#createDummyMessage()
      */
     @Override
 	public Message createDummyMessage( int size ) throws JMSException

@@ -15,11 +15,11 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.security;
+package net.timewalker.ffmq4.security;
 
-import net.timewalker.ffmq3.security.Privilege;
-import net.timewalker.ffmq3.utils.descriptor.AbstractDescriptor;
-import net.timewalker.ffmq3.utils.xml.AbstractXMLDescriptorHandler;
+import net.timewalker.ffmq4.security.Privilege;
+import net.timewalker.ffmq4.utils.descriptor.AbstractDescriptor;
+import net.timewalker.ffmq4.utils.xml.AbstractXMLDescriptorHandler;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -35,7 +35,7 @@ public final class XMLSecurityDescriptorHandler extends AbstractXMLDescriptorHan
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#getDescriptor()
+     * @see net.timewalker.ffmq4.utils.xml.DescriptorHandler#getDescriptor()
      */
     @Override
 	public AbstractDescriptor getDescriptor()
@@ -45,7 +45,7 @@ public final class XMLSecurityDescriptorHandler extends AbstractXMLDescriptorHan
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#before(java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     * @see net.timewalker.ffmq4.utils.xml.DescriptorHandler#before(java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     @Override
 	protected void before(String name, String currentPath, Attributes attributes) throws SAXException
@@ -66,7 +66,7 @@ public final class XMLSecurityDescriptorHandler extends AbstractXMLDescriptorHan
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.xml.DescriptorHandler#onNode(java.lang.String, java.lang.String)
+     * @see net.timewalker.ffmq4.utils.xml.DescriptorHandler#onNode(java.lang.String, java.lang.String)
      */
     @Override
 	protected void onNode(String name, String currentPath) throws SAXException

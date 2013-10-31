@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.session;
+package net.timewalker.ffmq4.common.session;
 
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
@@ -23,10 +23,10 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.message.MessageTools;
-import net.timewalker.ffmq3.utils.id.IntegerID;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.message.MessageTools;
+import net.timewalker.ffmq4.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 /**
  * <p>Base implementation for a {@link MessageProducer}</p>

@@ -1,7 +1,7 @@
-package net.timewalker.ffmq3.test.utils.concurrent;
+package net.timewalker.ffmq4.test.utils.concurrent;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.utils.concurrent.CopyOnWriteList;
+import net.timewalker.ffmq4.utils.concurrent.CopyOnWriteList;
 
 /**
  * CopyOnWriteListTest

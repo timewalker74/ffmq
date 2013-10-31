@@ -15,13 +15,13 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.management.destination.definition;
+package net.timewalker.ffmq4.management.destination.definition;
 
 import javax.jms.JMSException;
 import javax.jms.Queue;
 
-import net.timewalker.ffmq3.common.destination.DestinationTools;
-import net.timewalker.ffmq3.utils.Settings;
+import net.timewalker.ffmq4.common.destination.DestinationTools;
+import net.timewalker.ffmq4.utils.Settings;
 
 /**
  * <p>Implementation of a {@link Queue} definition descriptor.</p>
@@ -46,7 +46,7 @@ public final class QueueDefinition extends AbstractDestinationDefinition
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptor#check()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptor#check()
      */
     @Override
 	public void check() throws JMSException

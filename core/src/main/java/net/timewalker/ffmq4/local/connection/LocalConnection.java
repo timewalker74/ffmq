@@ -15,21 +15,21 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.connection;
+package net.timewalker.ffmq4.local.connection;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.connection.AbstractConnection;
-import net.timewalker.ffmq3.common.destination.DestinationRef;
-import net.timewalker.ffmq3.common.destination.DestinationTools;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.local.session.LocalSession;
-import net.timewalker.ffmq3.security.SecurityContext;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.connection.AbstractConnection;
+import net.timewalker.ffmq4.common.destination.DestinationRef;
+import net.timewalker.ffmq4.common.destination.DestinationTools;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.local.session.LocalSession;
+import net.timewalker.ffmq4.security.SecurityContext;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * <p>Local implementation of a JMS {@link Connection}</p>
@@ -51,7 +51,7 @@ public class LocalConnection extends AbstractConnection
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#setClientID(java.lang.String)
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#setClientID(java.lang.String)
      */
     @Override
 	public final void setClientID(String clientID) throws JMSException
@@ -156,7 +156,7 @@ public class LocalConnection extends AbstractConnection
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryQueue(java.lang.String)
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#deleteTemporaryQueue(java.lang.String)
      */
     @Override
 	public final void deleteTemporaryQueue(String queueName) throws JMSException
@@ -166,7 +166,7 @@ public class LocalConnection extends AbstractConnection
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#deleteTemporaryTopic(java.lang.String)
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#deleteTemporaryTopic(java.lang.String)
      */
     @Override
 	public final void deleteTemporaryTopic(String topicName) throws JMSException
@@ -218,7 +218,7 @@ public class LocalConnection extends AbstractConnection
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.connection.AbstractConnection#onConnectionClose()
+     * @see net.timewalker.ffmq4.common.connection.AbstractConnection#onConnectionClose()
      */
     @Override
 	protected void onConnectionClose()

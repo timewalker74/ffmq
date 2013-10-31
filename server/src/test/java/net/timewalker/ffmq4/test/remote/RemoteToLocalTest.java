@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.remote;
+package net.timewalker.ffmq4.test.remote;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
@@ -26,8 +26,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import net.timewalker.ffmq3.test.AbstractCommTest;
-import net.timewalker.ffmq3.test.TestUtils;
+import net.timewalker.ffmq4.test.AbstractCommTest;
+import net.timewalker.ffmq4.test.TestUtils;
 
 /**
  * RemoteToLocalTest
@@ -36,7 +36,7 @@ import net.timewalker.ffmq3.test.TestUtils;
 public class RemoteToLocalTest extends AbstractCommTest
 {
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isRemote()
+	 * @see net.timewalker.ffmq4.additional.AbstractCommTest#isRemote()
 	 */
 	@Override
 	protected boolean isRemote()
@@ -45,7 +45,7 @@ public class RemoteToLocalTest extends AbstractCommTest
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isListenerTest()
+	 * @see net.timewalker.ffmq4.additional.AbstractCommTest#isListenerTest()
 	 */
 	@Override
 	protected boolean isListenerTest()
@@ -54,7 +54,7 @@ public class RemoteToLocalTest extends AbstractCommTest
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isTopicTest()
+	 * @see net.timewalker.ffmq4.additional.AbstractCommTest#isTopicTest()
 	 */
 	@Override
 	protected boolean isTopicTest()
@@ -63,7 +63,7 @@ public class RemoteToLocalTest extends AbstractCommTest
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#useMultipleConnections()
+	 * @see net.timewalker.ffmq4.additional.AbstractCommTest#useMultipleConnections()
 	 */
 	@Override
 	protected boolean useMultipleConnections()

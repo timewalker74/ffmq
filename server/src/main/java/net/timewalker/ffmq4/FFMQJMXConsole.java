@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3;
+package net.timewalker.ffmq4;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -34,12 +34,12 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import net.timewalker.ffmq3.common.message.selector.expression.utils.StringUtils;
-import net.timewalker.ffmq3.jmx.JMXAgent;
-import net.timewalker.ffmq3.management.ManagementUtils;
-import net.timewalker.ffmq3.utils.InetUtils;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.pool.ObjectPool;
+import net.timewalker.ffmq4.common.message.selector.expression.utils.StringUtils;
+import net.timewalker.ffmq4.jmx.JMXAgent;
+import net.timewalker.ffmq4.management.ManagementUtils;
+import net.timewalker.ffmq4.utils.InetUtils;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.pool.ObjectPool;
 
 /**
  * FFMQJMXConsole

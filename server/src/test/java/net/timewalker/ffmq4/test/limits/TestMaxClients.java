@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.limits;
+package net.timewalker.ffmq4.test.limits;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -27,8 +27,8 @@ import javax.jms.ConnectionFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.test.TestUtils;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.test.TestUtils;
 
 /**
  * TestMaxClients

@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.transport.tcp.nio;
+package net.timewalker.ffmq4.transport.tcp.nio;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -35,10 +35,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import net.timewalker.ffmq3.FFMQCoreSettings;
-import net.timewalker.ffmq3.transport.PacketTransportException;
-import net.timewalker.ffmq3.transport.tcp.SocketUtils;
-import net.timewalker.ffmq3.utils.Settings;
+import net.timewalker.ffmq4.FFMQCoreSettings;
+import net.timewalker.ffmq4.transport.PacketTransportException;
+import net.timewalker.ffmq4.transport.tcp.SocketUtils;
+import net.timewalker.ffmq4.utils.Settings;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

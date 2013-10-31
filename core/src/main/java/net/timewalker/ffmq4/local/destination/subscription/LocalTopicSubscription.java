@@ -15,14 +15,14 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.destination.subscription;
+package net.timewalker.ffmq4.local.destination.subscription;
 
 import javax.jms.Topic;
 
-import net.timewalker.ffmq3.common.message.MessageSelector;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.local.destination.LocalTopic;
-import net.timewalker.ffmq3.local.session.LocalMessageConsumer;
+import net.timewalker.ffmq4.common.message.MessageSelector;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.local.destination.LocalTopic;
+import net.timewalker.ffmq4.local.session.LocalMessageConsumer;
 
 /**
  * <p>Internal holder of a durable {@link Topic} subscription, to be used by the {@link LocalTopic} implementation.</p>

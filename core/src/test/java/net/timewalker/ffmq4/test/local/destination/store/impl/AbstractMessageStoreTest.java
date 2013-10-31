@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.local.destination.store.impl;
+package net.timewalker.ffmq4.test.local.destination.store.impl;
 
 import java.util.Random;
 
@@ -6,10 +6,10 @@ import javax.jms.DeliveryMode;
 import javax.jms.Message;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.TextMessageImpl;
-import net.timewalker.ffmq3.storage.message.MessageStore;
-import net.timewalker.ffmq3.utils.async.AsyncTaskManager;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.TextMessageImpl;
+import net.timewalker.ffmq4.storage.message.MessageStore;
+import net.timewalker.ffmq4.utils.async.AsyncTaskManager;
 
 /**
  * AbstractMessageStoreTest

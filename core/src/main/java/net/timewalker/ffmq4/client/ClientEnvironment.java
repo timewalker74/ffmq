@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.client;
+package net.timewalker.ffmq4.client;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -25,12 +25,12 @@ import javax.jms.JMSException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import net.timewalker.ffmq3.FFMQClientSettings;
-import net.timewalker.ffmq3.FFMQCoreSettings;
-import net.timewalker.ffmq3.transport.PacketTransportException;
-import net.timewalker.ffmq3.transport.tcp.nio.NIOTcpMultiplexer;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.async.AsyncTaskManager;
+import net.timewalker.ffmq4.FFMQClientSettings;
+import net.timewalker.ffmq4.FFMQCoreSettings;
+import net.timewalker.ffmq4.transport.PacketTransportException;
+import net.timewalker.ffmq4.transport.tcp.nio.NIOTcpMultiplexer;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.async.AsyncTaskManager;
 
 /**
  * <p>Holds global settings and managers shared among all clients in a given JVM.</p>
@@ -39,7 +39,7 @@ public final class ClientEnvironment
 {
     private static final Log log = LogFactory.getLog(ClientEnvironment.class);
     
-    public static final String SETTINGS_FILE_NAME = "ffmq3.properties";
+    public static final String SETTINGS_FILE_NAME = "ffmq4.properties";
     
     // Global vars
    	private static NIOTcpMultiplexer multiplexer;
@@ -64,7 +64,7 @@ public final class ClientEnvironment
             // Load default settings first
             InputStream defaultIn = 
                 FFMQClientSettings.class.getClassLoader().getResourceAsStream(
-                    "net/timewalker/ffmq3/" + SETTINGS_FILE_NAME);
+                    "net/timewalker/ffmq4/" + SETTINGS_FILE_NAME);
             if (defaultIn != null)
             {
                 settings.load(defaultIn);

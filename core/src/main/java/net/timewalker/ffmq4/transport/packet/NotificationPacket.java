@@ -15,12 +15,12 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.transport.packet;
+package net.timewalker.ffmq4.transport.packet;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.MessageSerializer;
-import net.timewalker.ffmq3.utils.RawDataBuffer;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.MessageSerializer;
+import net.timewalker.ffmq4.utils.RawDataBuffer;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 
 /**
@@ -34,7 +34,7 @@ public final class NotificationPacket extends AbstractPacket
     private boolean donePrefetching;
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
+     * @see net.timewalker.ffmq4.network.packet.AbstractPacket#getType()
      */
     @Override
 	public byte getType()
@@ -43,7 +43,7 @@ public final class NotificationPacket extends AbstractPacket
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq3.utils.RawDataOutputStream)
+     * @see net.timewalker.ffmq4.network.packet.AbstractPacket#serializeTo(net.timewalker.ffmq4.utils.RawDataOutputStream)
      */
     @Override
 	protected void serializeTo(RawDataBuffer out)
@@ -56,7 +56,7 @@ public final class NotificationPacket extends AbstractPacket
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
+     * @see net.timewalker.ffmq4.network.packet.AbstractPacket#unserializeFrom(net.timewalker.ffmq4.utils.RawDataInputStream)
      */
     @Override
 	protected void unserializeFrom(RawDataBuffer in)

@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.transport.tcp.io;
+package net.timewalker.ffmq4.transport.tcp.io;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -29,16 +29,16 @@ import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
-import net.timewalker.ffmq3.FFMQClientSettings;
-import net.timewalker.ffmq3.FFMQCoreSettings;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.transport.PacketTransportException;
-import net.timewalker.ffmq3.transport.PacketTransportType;
-import net.timewalker.ffmq3.transport.packet.AbstractPacket;
-import net.timewalker.ffmq3.transport.tcp.AbstractTcpPacketTransport;
-import net.timewalker.ffmq3.transport.tcp.SocketUtils;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.ssl.PermissiveTrustManager;
+import net.timewalker.ffmq4.FFMQClientSettings;
+import net.timewalker.ffmq4.FFMQCoreSettings;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.transport.PacketTransportException;
+import net.timewalker.ffmq4.transport.PacketTransportType;
+import net.timewalker.ffmq4.transport.packet.AbstractPacket;
+import net.timewalker.ffmq4.transport.tcp.AbstractTcpPacketTransport;
+import net.timewalker.ffmq4.transport.tcp.SocketUtils;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.ssl.PermissiveTrustManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -90,7 +90,7 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.transport.tcp.AbstractTcpPacketTransport#getRemotePeer()
+     * @see net.timewalker.ffmq4.transport.tcp.AbstractTcpPacketTransport#getRemotePeer()
      */
     @Override
 	public SocketAddress getRemotePeer()
@@ -177,7 +177,7 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransport#start()
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransport#start()
      */
     @Override
 	public void start() throws PacketTransportException
@@ -220,7 +220,7 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransport#send(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransport#send(net.timewalker.ffmq4.remote.transport.packet.AbstractPacket)
      */
     @Override
 	public void send( AbstractPacket packet ) throws PacketTransportException
@@ -274,7 +274,7 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransport#close()
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransport#close()
      */
     @Override
 	public void close()

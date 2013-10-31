@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,34 +36,34 @@ import javax.jms.TemporaryTopic;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
-import net.timewalker.ffmq3.FFMQClientSettings;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.client.ClientEnvironment;
-import net.timewalker.ffmq3.common.destination.DestinationTools;
-import net.timewalker.ffmq3.common.destination.TemporaryQueueRef;
-import net.timewalker.ffmq3.common.destination.TemporaryTopicRef;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.MessageTools;
-import net.timewalker.ffmq3.common.session.AbstractSession;
-import net.timewalker.ffmq3.remote.connection.RemoteConnection;
-import net.timewalker.ffmq3.storage.data.DataStoreFullException;
-import net.timewalker.ffmq3.transport.PacketTransportEndpoint;
-import net.timewalker.ffmq3.transport.packet.AbstractQueryPacket;
-import net.timewalker.ffmq3.transport.packet.query.AcknowledgeQuery;
-import net.timewalker.ffmq3.transport.packet.query.CloseSessionQuery;
-import net.timewalker.ffmq3.transport.packet.query.CommitQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateSessionQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateTemporaryQueueQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateTemporaryTopicQuery;
-import net.timewalker.ffmq3.transport.packet.query.PutQuery;
-import net.timewalker.ffmq3.transport.packet.query.RecoverQuery;
-import net.timewalker.ffmq3.transport.packet.query.RollbackQuery;
-import net.timewalker.ffmq3.transport.packet.query.UnsubscribeQuery;
-import net.timewalker.ffmq3.transport.packet.response.CreateTemporaryQueueResponse;
-import net.timewalker.ffmq3.transport.packet.response.CreateTemporaryTopicResponse;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.FFMQClientSettings;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.client.ClientEnvironment;
+import net.timewalker.ffmq4.common.destination.DestinationTools;
+import net.timewalker.ffmq4.common.destination.TemporaryQueueRef;
+import net.timewalker.ffmq4.common.destination.TemporaryTopicRef;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.MessageTools;
+import net.timewalker.ffmq4.common.session.AbstractSession;
+import net.timewalker.ffmq4.remote.connection.RemoteConnection;
+import net.timewalker.ffmq4.storage.data.DataStoreFullException;
+import net.timewalker.ffmq4.transport.PacketTransportEndpoint;
+import net.timewalker.ffmq4.transport.packet.AbstractQueryPacket;
+import net.timewalker.ffmq4.transport.packet.query.AcknowledgeQuery;
+import net.timewalker.ffmq4.transport.packet.query.CloseSessionQuery;
+import net.timewalker.ffmq4.transport.packet.query.CommitQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateSessionQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateTemporaryQueueQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateTemporaryTopicQuery;
+import net.timewalker.ffmq4.transport.packet.query.PutQuery;
+import net.timewalker.ffmq4.transport.packet.query.RecoverQuery;
+import net.timewalker.ffmq4.transport.packet.query.RollbackQuery;
+import net.timewalker.ffmq4.transport.packet.query.UnsubscribeQuery;
+import net.timewalker.ffmq4.transport.packet.response.CreateTemporaryQueueResponse;
+import net.timewalker.ffmq4.transport.packet.response.CreateTemporaryTopicResponse;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -499,7 +499,7 @@ public class RemoteSession extends AbstractSession
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#onSessionClose()
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#onSessionClose()
      */
     @Override
 	protected void onSessionClose()
@@ -528,7 +528,7 @@ public class RemoteSession extends AbstractSession
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#onSessionClosed()
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#onSessionClosed()
      */
     @Override
 	protected void onSessionClosed()
@@ -539,7 +539,7 @@ public class RemoteSession extends AbstractSession
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#acknowledge()
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#acknowledge()
      */
     @Override
 	public final void acknowledge() throws JMSException

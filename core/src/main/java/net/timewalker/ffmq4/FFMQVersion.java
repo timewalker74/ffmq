@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3;
+package net.timewalker.ffmq4;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -44,7 +44,7 @@ public class FFMQVersion
     static {
     	try
     	{
-	    	InputStream in = FFMQVersion.class.getClassLoader().getResourceAsStream("net/timewalker/ffmq3/FFMQ.version");
+	    	InputStream in = FFMQVersion.class.getClassLoader().getResourceAsStream("net/timewalker/ffmq4/FFMQ.version");
 	    	if (in != null)
 	    	{
 	    		BufferedReader reader = new BufferedReader(new InputStreamReader(in));

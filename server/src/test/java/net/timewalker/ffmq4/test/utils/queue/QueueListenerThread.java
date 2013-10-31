@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.utils.queue;
+package net.timewalker.ffmq4.test.utils.queue;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -8,9 +8,9 @@ import javax.jms.QueueConnection;
 import javax.jms.QueueReceiver;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.test.TestUtils;
-import net.timewalker.ffmq3.test.utils.TestRuntimeException;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationPoint;
+import net.timewalker.ffmq4.test.TestUtils;
+import net.timewalker.ffmq4.test.utils.TestRuntimeException;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationPoint;
 
 /**
  * QueueListenerThread
@@ -100,7 +100,7 @@ public class QueueListenerThread extends AbstractQueueHandlerThread implements M
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.concurrent.SynchronizableThread#run()
+     * @see net.timewalker.ffmq4.utils.concurrent.SynchronizableThread#run()
      */
     public synchronized void run()
     {
@@ -127,7 +127,7 @@ public class QueueListenerThread extends AbstractQueueHandlerThread implements M
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.additional.utils.AbstractQueueHandlerThread#close()
+     * @see net.timewalker.ffmq4.additional.utils.AbstractQueueHandlerThread#close()
      */
     public  void close() throws JMSException
     {

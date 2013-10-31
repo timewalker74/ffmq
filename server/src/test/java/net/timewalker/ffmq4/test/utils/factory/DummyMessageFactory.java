@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.utils.factory;
+package net.timewalker.ffmq4.test.utils.factory;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

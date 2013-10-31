@@ -1,23 +1,23 @@
-package net.timewalker.ffmq3.test;
+package net.timewalker.ffmq4.test;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import net.timewalker.ffmq3.test.common.message.BytesMessageImplTest;
-import net.timewalker.ffmq3.test.common.message.EmptyMessageImplTest;
-import net.timewalker.ffmq3.test.common.message.MapMessageImplTest;
-import net.timewalker.ffmq3.test.common.message.StreamMessageImplTest;
-import net.timewalker.ffmq3.test.common.message.selector.MessageSelectorParserTest;
-import net.timewalker.ffmq3.test.common.message.selector.expression.utils.StringUtilsTest;
-import net.timewalker.ffmq3.test.jndi.JndiTest;
-import net.timewalker.ffmq3.test.local.TransactionSetTest;
-import net.timewalker.ffmq3.test.local.destination.store.impl.BlockFileMessageStoreTest;
-import net.timewalker.ffmq3.test.local.destination.store.impl.InMemoryMessageStoreTest;
-import net.timewalker.ffmq3.test.local.destination.store.impl.JournalingBlockFileMessageStoreTest;
-import net.timewalker.ffmq3.test.storage.data.impl.BlockBasedDataStoreTest;
-import net.timewalker.ffmq3.test.storage.data.impl.InMemoryLinkedObjectStoreTest;
-import net.timewalker.ffmq3.test.storage.data.impl.JournalingBlockBasedDataStoreTest;
-import net.timewalker.ffmq3.test.utils.concurrent.CopyOnWriteListTest;
+import net.timewalker.ffmq4.test.common.message.BytesMessageImplTest;
+import net.timewalker.ffmq4.test.common.message.EmptyMessageImplTest;
+import net.timewalker.ffmq4.test.common.message.MapMessageImplTest;
+import net.timewalker.ffmq4.test.common.message.StreamMessageImplTest;
+import net.timewalker.ffmq4.test.common.message.selector.MessageSelectorParserTest;
+import net.timewalker.ffmq4.test.common.message.selector.expression.utils.StringUtilsTest;
+import net.timewalker.ffmq4.test.jndi.JndiTest;
+import net.timewalker.ffmq4.test.local.TransactionSetTest;
+import net.timewalker.ffmq4.test.local.destination.store.impl.BlockFileMessageStoreTest;
+import net.timewalker.ffmq4.test.local.destination.store.impl.InMemoryMessageStoreTest;
+import net.timewalker.ffmq4.test.local.destination.store.impl.JournalingBlockFileMessageStoreTest;
+import net.timewalker.ffmq4.test.storage.data.impl.BlockBasedDataStoreTest;
+import net.timewalker.ffmq4.test.storage.data.impl.InMemoryLinkedObjectStoreTest;
+import net.timewalker.ffmq4.test.storage.data.impl.JournalingBlockBasedDataStoreTest;
+import net.timewalker.ffmq4.test.utils.concurrent.CopyOnWriteListTest;
 
 /**
  * AllTests

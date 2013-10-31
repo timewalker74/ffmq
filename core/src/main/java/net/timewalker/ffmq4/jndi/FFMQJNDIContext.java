@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.jndi;
+package net.timewalker.ffmq4.jndi;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -36,8 +36,8 @@ import javax.naming.NamingException;
 import javax.naming.NotContextException;
 import javax.naming.OperationNotSupportedException;
 
-import net.timewalker.ffmq3.common.destination.QueueRef;
-import net.timewalker.ffmq3.common.destination.TopicRef;
+import net.timewalker.ffmq4.common.destination.QueueRef;
+import net.timewalker.ffmq4.common.destination.TopicRef;
 
 /**
  * <p>Implementation of a JNDI {@link Context}, providing lookup for FFMQ connection factories.</p>
@@ -563,7 +563,7 @@ public final class FFMQJNDIContext implements Context
         
         /*
          * (non-Javadoc)
-         * @see net.timewalker.ffmq3.common.jndi.FFMQJNDIContext.ListOfNames#next()
+         * @see net.timewalker.ffmq4.common.jndi.FFMQJNDIContext.ListOfNames#next()
          */
         @Override
 		public Binding next()

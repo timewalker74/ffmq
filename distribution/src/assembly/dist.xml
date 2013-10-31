@@ -19,9 +19,9 @@
     </dependencySet>
 		<dependencySet>
 		  <includes>
-				<include>net.timewalker.ffmq:ffmq3-core</include>
-                <include>net.timewalker.ffmq:ffmq3-tools</include>
-				<include>net.timewalker.ffmq:ffmq3-server</include>
+				<include>net.timewalker.ffmq:ffmq4-core</include>
+                <include>net.timewalker.ffmq:ffmq4-tools</include>
+				<include>net.timewalker.ffmq:ffmq4-server</include>
       </includes>
       <outputDirectory>lib</outputDirectory>
 			<outputFileNameMapping>${artifactId}.${extension}</outputFileNameMapping>

@@ -15,23 +15,23 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import java.util.NoSuchElementException;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.session.AbstractQueueBrowserEnumeration;
-import net.timewalker.ffmq3.storage.message.MessageSerializationLevel;
-import net.timewalker.ffmq3.transport.PacketTransportEndpoint;
-import net.timewalker.ffmq3.transport.packet.query.CloseBrowserEnumerationQuery;
-import net.timewalker.ffmq3.transport.packet.query.QueueBrowserFetchElementQuery;
-import net.timewalker.ffmq3.transport.packet.query.QueueBrowserGetEnumerationQuery;
-import net.timewalker.ffmq3.transport.packet.response.QueueBrowserFetchElementResponse;
-import net.timewalker.ffmq3.transport.packet.response.QueueBrowserGetEnumerationResponse;
-import net.timewalker.ffmq3.utils.ErrorTools;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.session.AbstractQueueBrowserEnumeration;
+import net.timewalker.ffmq4.storage.message.MessageSerializationLevel;
+import net.timewalker.ffmq4.transport.PacketTransportEndpoint;
+import net.timewalker.ffmq4.transport.packet.query.CloseBrowserEnumerationQuery;
+import net.timewalker.ffmq4.transport.packet.query.QueueBrowserFetchElementQuery;
+import net.timewalker.ffmq4.transport.packet.query.QueueBrowserGetEnumerationQuery;
+import net.timewalker.ffmq4.transport.packet.response.QueueBrowserFetchElementResponse;
+import net.timewalker.ffmq4.transport.packet.response.QueueBrowserGetEnumerationResponse;
+import net.timewalker.ffmq4.utils.ErrorTools;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -154,7 +154,7 @@ public final class RemoteQueueBrowserEnumeration extends AbstractQueueBrowserEnu
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.common.session.AbstractQueueBrowserEnumeration#onQueueBrowserEnumerationClose()
+	 * @see net.timewalker.ffmq4.common.session.AbstractQueueBrowserEnumeration#onQueueBrowserEnumerationClose()
 	 */
 	@Override
 	protected void onQueueBrowserEnumerationClose()

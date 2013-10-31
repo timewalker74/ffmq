@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.storage.data.impl.journal;
+package net.timewalker.ffmq4.storage.data.impl.journal;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,12 +26,12 @@ import java.util.List;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.storage.StorageSyncMethod;
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore;
-import net.timewalker.ffmq3.utils.async.AsyncTask;
-import net.timewalker.ffmq3.utils.async.AsyncTaskManager;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.storage.StorageSyncMethod;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore;
+import net.timewalker.ffmq4.utils.async.AsyncTask;
+import net.timewalker.ffmq4.utils.async.AsyncTaskManager;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -816,7 +816,7 @@ public final class BlockBasedDataStoreJournal
         }
         
         /* (non-Javadoc)
-         * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
+         * @see net.timewalker.ffmq4.utils.async.AsyncTask#execute()
          */
         @Override
 		public void execute()
@@ -825,7 +825,7 @@ public final class BlockBasedDataStoreJournal
         }
         
         /* (non-Javadoc)
-         * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
+         * @see net.timewalker.ffmq4.utils.async.AsyncTask#isMergeable()
          */
         @Override
 		public boolean isMergeable()
@@ -845,7 +845,7 @@ public final class BlockBasedDataStoreJournal
         }
         
         /* (non-Javadoc)
-         * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
+         * @see net.timewalker.ffmq4.utils.async.AsyncTask#execute()
          */
         @Override
 		public void execute()
@@ -854,7 +854,7 @@ public final class BlockBasedDataStoreJournal
         }
         
         /* (non-Javadoc)
-         * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
+         * @see net.timewalker.ffmq4.utils.async.AsyncTask#isMergeable()
          */
         @Override
 		public boolean isMergeable()

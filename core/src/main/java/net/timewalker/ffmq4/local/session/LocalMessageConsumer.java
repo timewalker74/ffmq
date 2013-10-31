@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import javax.jms.Destination;
 import javax.jms.InvalidDestinationException;
@@ -25,29 +25,29 @@ import javax.jms.MessageListener;
 import javax.jms.Queue;
 import javax.jms.Topic;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQCoreSettings;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.MessageSelector;
-import net.timewalker.ffmq3.common.message.MessageTools;
-import net.timewalker.ffmq3.common.session.AbstractMessageConsumer;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.local.TransactionSet;
-import net.timewalker.ffmq3.local.connection.LocalConnection;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.local.destination.LocalTopic;
-import net.timewalker.ffmq3.local.destination.notification.NotificationProxy;
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.management.destination.definition.TopicDefinition;
-import net.timewalker.ffmq3.security.Action;
-import net.timewalker.ffmq3.security.Resource;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.async.AsyncTask;
-import net.timewalker.ffmq3.utils.id.IntegerID;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQCoreSettings;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.MessageSelector;
+import net.timewalker.ffmq4.common.message.MessageTools;
+import net.timewalker.ffmq4.common.session.AbstractMessageConsumer;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.local.TransactionSet;
+import net.timewalker.ffmq4.local.connection.LocalConnection;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.local.destination.LocalTopic;
+import net.timewalker.ffmq4.local.destination.notification.NotificationProxy;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.management.destination.definition.TopicDefinition;
+import net.timewalker.ffmq4.security.Action;
+import net.timewalker.ffmq4.security.Resource;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.async.AsyncTask;
+import net.timewalker.ffmq4.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -112,7 +112,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#shouldLogListenersFailures()
+     * @see net.timewalker.ffmq4.common.session.AbstractMessageConsumer#shouldLogListenersFailures()
      */
     @Override
 	protected final boolean shouldLogListenersFailures()
@@ -283,7 +283,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#onConsumerClose()
+     * @see net.timewalker.ffmq4.common.session.AbstractMessageConsumer#onConsumerClose()
      */
     @Override
 	protected final void onConsumerClose()
@@ -304,7 +304,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#onConsumerClosed()
+     * @see net.timewalker.ffmq4.common.session.AbstractMessageConsumer#onConsumerClosed()
      */
     @Override
 	protected final void onConsumerClosed()
@@ -317,7 +317,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#receiveFromDestination(long, boolean)
+     * @see net.timewalker.ffmq4.common.session.AbstractMessageConsumer#receiveFromDestination(long, boolean)
      */
     @Override
 	public final AbstractMessage receiveFromDestination(long timeout, boolean duplicateRequired) throws JMSException
@@ -413,7 +413,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractMessageConsumer#wakeUp()
+     * @see net.timewalker.ffmq4.common.session.AbstractMessageConsumer#wakeUp()
      */
     @Override
 	public final void wakeUp() throws JMSException
@@ -539,7 +539,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
 		}
 		
 		/* (non-Javadoc)
-	     * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
+	     * @see net.timewalker.ffmq4.utils.async.AsyncTask#isMergeable()
 	     */
 	    @Override
 		public final boolean isMergeable()
@@ -548,7 +548,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
 	    }
 	    
 		/* (non-Javadoc)
-		 * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
+		 * @see net.timewalker.ffmq4.utils.async.AsyncTask#execute()
 		 */
 		@Override
 		public final void execute()

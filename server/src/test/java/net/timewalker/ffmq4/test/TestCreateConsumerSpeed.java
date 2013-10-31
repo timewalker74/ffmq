@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test;
+package net.timewalker.ffmq4.test;
 
 import java.util.Hashtable;
 
@@ -12,7 +12,7 @@ import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-import net.timewalker.ffmq3.FFMQConstants;
+import net.timewalker.ffmq4.FFMQConstants;
 
 public class TestCreateConsumerSpeed implements Runnable, ExceptionListener
 {

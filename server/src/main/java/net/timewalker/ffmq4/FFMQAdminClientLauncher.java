@@ -15,13 +15,13 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3;
+package net.timewalker.ffmq4;
 
 import java.io.File;
 
-import net.timewalker.ffmq3.logging.Log4JTools;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.StringTools;
+import net.timewalker.ffmq4.logging.Log4JTools;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.StringTools;
 
 /**
  * FFMQAdminClientLauncher

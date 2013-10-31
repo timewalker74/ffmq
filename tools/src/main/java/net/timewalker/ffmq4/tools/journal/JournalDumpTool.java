@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.tools.journal;
+package net.timewalker.ffmq4.tools.journal;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -24,10 +24,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import net.timewalker.ffmq3.storage.data.impl.journal.AbstractJournalOperation;
-import net.timewalker.ffmq3.storage.data.impl.journal.CommitOperation;
-import net.timewalker.ffmq3.storage.data.impl.journal.JournalException;
-import net.timewalker.ffmq3.storage.data.impl.journal.JournalRecovery;
+import net.timewalker.ffmq4.storage.data.impl.journal.AbstractJournalOperation;
+import net.timewalker.ffmq4.storage.data.impl.journal.CommitOperation;
+import net.timewalker.ffmq4.storage.data.impl.journal.JournalException;
+import net.timewalker.ffmq4.storage.data.impl.journal.JournalRecovery;
 
 /**
  * JournalDumpTool

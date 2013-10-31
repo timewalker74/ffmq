@@ -16,17 +16,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.common.message.selector;
+package net.timewalker.ffmq4.test.common.message.selector;
 
 import javax.jms.InvalidSelectorException;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.common.message.MessageSelector;
-import net.timewalker.ffmq3.common.message.TextMessageImpl;
-import net.timewalker.ffmq3.common.message.selector.MessageSelectorParser;
-import net.timewalker.ffmq3.common.message.selector.expression.SelectorNode;
+import net.timewalker.ffmq4.common.message.MessageSelector;
+import net.timewalker.ffmq4.common.message.TextMessageImpl;
+import net.timewalker.ffmq4.common.message.selector.MessageSelectorParser;
+import net.timewalker.ffmq4.common.message.selector.expression.SelectorNode;
 
 /**
  * MessageSelectorParserTest

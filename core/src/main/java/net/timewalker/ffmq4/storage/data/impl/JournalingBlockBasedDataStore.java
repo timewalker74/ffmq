@@ -16,18 +16,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.storage.data.impl;
+package net.timewalker.ffmq4.storage.data.impl;
 
 import java.io.File;
 import java.io.IOException;
 
-import net.timewalker.ffmq3.management.destination.AbstractDestinationDescriptor;
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.storage.data.impl.journal.BlockBasedDataStoreJournal;
-import net.timewalker.ffmq3.storage.data.impl.journal.DirtyBlockTable;
-import net.timewalker.ffmq3.storage.data.impl.journal.JournalRecovery;
-import net.timewalker.ffmq3.utils.async.AsyncTaskManager;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.management.destination.AbstractDestinationDescriptor;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.storage.data.impl.journal.BlockBasedDataStoreJournal;
+import net.timewalker.ffmq4.storage.data.impl.journal.DirtyBlockTable;
+import net.timewalker.ffmq4.storage.data.impl.journal.JournalRecovery;
+import net.timewalker.ffmq4.utils.async.AsyncTaskManager;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,7 +55,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#initFilesystem()
+	 * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#initFilesystem()
 	 */
 	@Override
 	protected void initFilesystem() throws DataStoreException
@@ -117,7 +117,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#writeFirstBlock()
+	 * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#writeFirstBlock()
 	 */
     @Override
 	protected void writeFirstBlock() throws DataStoreException
@@ -127,7 +127,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#writeAllocationBlock(int)
+     * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#writeAllocationBlock(int)
      */
     @Override
 	protected void writeAllocationBlock( int blockIndex ) throws DataStoreException
@@ -138,7 +138,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#writeDataBlock(byte[], int, int, int)
+     * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#writeDataBlock(byte[], int, int, int)
      */
     @Override
 	protected void writeDataBlock(byte[] data, int offset, int len, int blockHandle) throws DataStoreException
@@ -152,7 +152,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#readDataBlock(byte[], int, int, int)
+     * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#readDataBlock(byte[], int, int, int)
      */
     @Override
 	protected void readDataBlock(byte[] data, int offset, int len, int blockHandle) throws DataStoreException
@@ -189,7 +189,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
     }
 	
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#extendStoreFiles(int, int)
+     * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#extendStoreFiles(int, int)
      */
     @Override
 	protected void extendStoreFiles(int oldBlockCount, int newBlockCount) throws DataStoreException
@@ -198,7 +198,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
     }
     
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#flush()
+	 * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#flush()
 	 */
 	@Override
 	protected void flush() throws DataStoreException
@@ -207,7 +207,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
 	}
 	
 	/* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.DataStore#commit(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
+     * @see net.timewalker.ffmq4.storage.data.DataStore#commit(net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier)
      */
     @Override
 	public void commitChanges(SynchronizationBarrier barrier) throws DataStoreException
@@ -216,7 +216,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.DataStore#commit()
+     * @see net.timewalker.ffmq4.storage.data.DataStore#commit()
      */
     @Override
 	public void commitChanges() throws DataStoreException
@@ -234,7 +234,7 @@ public final class JournalingBlockBasedDataStore extends AbstractBlockBasedDataS
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.AbstractBlockBasedDataStore#close()
+     * @see net.timewalker.ffmq4.storage.data.impl.AbstractBlockBasedDataStore#close()
      */
     @Override
 	public void close()

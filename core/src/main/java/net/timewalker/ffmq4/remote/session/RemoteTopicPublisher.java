@@ -15,14 +15,14 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Topic;
 import javax.jms.TopicPublisher;
 
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * RemoteTopicPublisher

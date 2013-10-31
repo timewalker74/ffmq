@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.utils.random;
+package net.timewalker.ffmq4.utils.random;
 
 /*
  * MTRandom : A Java implementation of the MT19937 (Mersenne Twister)

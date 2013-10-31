@@ -15,16 +15,16 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.listeners.tcp;
+package net.timewalker.ffmq4.listeners.tcp;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import net.timewalker.ffmq3.FFMQServerSettings;
-import net.timewalker.ffmq3.jmx.JMXAgent;
-import net.timewalker.ffmq3.listeners.AbstractClientListener;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.utils.Settings;
+import net.timewalker.ffmq4.FFMQServerSettings;
+import net.timewalker.ffmq4.jmx.JMXAgent;
+import net.timewalker.ffmq4.listeners.AbstractClientListener;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.utils.Settings;
 
 /**
  * AbstractTcpClientListener
@@ -55,7 +55,7 @@ public abstract class AbstractTcpClientListener extends AbstractClientListener
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientListener#getCapacity()
+	 * @see net.timewalker.ffmq4.listeners.ClientListener#getCapacity()
 	 */
 	@Override
 	public int getCapacity()

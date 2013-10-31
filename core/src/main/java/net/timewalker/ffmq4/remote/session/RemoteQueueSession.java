@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import javax.jms.IllegalStateException;
 import javax.jms.JMSException;
@@ -27,10 +27,10 @@ import javax.jms.TemporaryTopic;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
-import net.timewalker.ffmq3.common.destination.DestinationTools;
-import net.timewalker.ffmq3.remote.connection.RemoteConnection;
-import net.timewalker.ffmq3.transport.PacketTransportEndpoint;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.common.destination.DestinationTools;
+import net.timewalker.ffmq4.remote.connection.RemoteConnection;
+import net.timewalker.ffmq4.transport.PacketTransportEndpoint;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * RemoteQueueSession
@@ -106,7 +106,7 @@ public final class RemoteQueueSession extends RemoteSession implements QueueSess
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#createDurableSubscriber(javax.jms.Topic, java.lang.String)
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#createDurableSubscriber(javax.jms.Topic, java.lang.String)
      */
     @Override
 	public TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException
@@ -115,7 +115,7 @@ public final class RemoteQueueSession extends RemoteSession implements QueueSess
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.session.RemoteSession#createDurableSubscriber(javax.jms.Topic, java.lang.String, java.lang.String, boolean)
+     * @see net.timewalker.ffmq4.remote.session.RemoteSession#createDurableSubscriber(javax.jms.Topic, java.lang.String, java.lang.String, boolean)
      */
     @Override
 	public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException
@@ -124,7 +124,7 @@ public final class RemoteQueueSession extends RemoteSession implements QueueSess
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.session.RemoteSession#createTemporaryTopic()
+     * @see net.timewalker.ffmq4.remote.session.RemoteSession#createTemporaryTopic()
      */
     @Override
 	public TemporaryTopic createTemporaryTopic() throws JMSException
@@ -133,7 +133,7 @@ public final class RemoteQueueSession extends RemoteSession implements QueueSess
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#createTopic(java.lang.String)
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#createTopic(java.lang.String)
      */
     @Override
 	public Topic createTopic(String topicName) throws JMSException
@@ -142,7 +142,7 @@ public final class RemoteQueueSession extends RemoteSession implements QueueSess
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.session.RemoteSession#unsubscribe(java.lang.String)
+     * @see net.timewalker.ffmq4.remote.session.RemoteSession#unsubscribe(java.lang.String)
      */
     @Override
 	public void unsubscribe(String subscriptionName) throws JMSException

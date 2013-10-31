@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.spring;
+package net.timewalker.ffmq4.spring;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,9 +24,9 @@ import java.util.Properties;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.FFMQServer;
-import net.timewalker.ffmq3.utils.Settings;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.FFMQServer;
+import net.timewalker.ffmq4.utils.Settings;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

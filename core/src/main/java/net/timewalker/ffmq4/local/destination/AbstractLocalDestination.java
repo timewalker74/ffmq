@@ -15,23 +15,23 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.destination;
+package net.timewalker.ffmq4.local.destination;
 
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.local.MessageLockSet;
-import net.timewalker.ffmq3.local.session.LocalMessageConsumer;
-import net.timewalker.ffmq3.local.session.LocalSession;
-import net.timewalker.ffmq3.management.destination.definition.AbstractDestinationDefinition;
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.utils.Committable;
-import net.timewalker.ffmq3.utils.concurrent.CopyOnWriteList;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.local.MessageLockSet;
+import net.timewalker.ffmq4.local.session.LocalMessageConsumer;
+import net.timewalker.ffmq4.local.session.LocalSession;
+import net.timewalker.ffmq4.management.destination.definition.AbstractDestinationDefinition;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.utils.Committable;
+import net.timewalker.ffmq4.utils.concurrent.CopyOnWriteList;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 /**
  * <p>Base implementation for a local JMS destination</p>
@@ -65,7 +65,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getName()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getName()
      */
     @Override
 	public final String getName()
@@ -110,7 +110,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
 	}
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getRegisteredConsumersCount()
+     * @see net.timewalker.ffmq4.local.destination.LocalQueueMBean#getRegisteredConsumersCount()
      */
     @Override
 	public final int getRegisteredConsumersCount()
@@ -119,7 +119,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#isTemporary()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#isTemporary()
      */
     @Override
 	public final boolean isTemporary()
@@ -128,7 +128,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getStorageSyncMethod()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getStorageSyncMethod()
      */
     @Override
 	public int getStorageSyncMethod()
@@ -137,7 +137,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getBlockCount()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getBlockCount()
      */
     @Override
 	public final int getInitialBlockCount()
@@ -146,7 +146,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getMaxBlockCount()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getMaxBlockCount()
      */
     @Override
 	public int getMaxBlockCount()
@@ -155,7 +155,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#isUseJournal()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#isUseJournal()
      */
     @Override
 	public boolean isUseJournal()
@@ -164,7 +164,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getBlockSize()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getBlockSize()
      */
     @Override
 	public final int getBlockSize()
@@ -174,7 +174,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getMaxNonPersistentMessages()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getMaxNonPersistentMessages()
      */
     @Override
 	public final int getMaxNonPersistentMessages()
@@ -183,7 +183,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptorMBean#getAutoExtendAmount()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptorMBean#getAutoExtendAmount()
      */
     @Override
     public int getAutoExtendAmount()
@@ -192,7 +192,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptorMBean#getJournalOutputBuffer()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptorMBean#getJournalOutputBuffer()
      */
     @Override
     public int getJournalOutputBuffer()
@@ -201,7 +201,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptorMBean#getMaxJournalSize()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptorMBean#getMaxJournalSize()
      */
     @Override
     public long getMaxJournalSize()
@@ -210,7 +210,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptorMBean#getMaxUncommittedJournalSize()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptorMBean#getMaxUncommittedJournalSize()
      */
     @Override
     public int getMaxUnflushedJournalSize()
@@ -219,7 +219,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptorMBean#getMaxUncommittedStoreSize()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptorMBean#getMaxUncommittedStoreSize()
      */
     @Override
     public int getMaxUncommittedStoreSize()
@@ -228,7 +228,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptorMBean#getMaxWriteBatchSize()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptorMBean#getMaxWriteBatchSize()
      */
     @Override
     public int getMaxWriteBatchSize()
@@ -237,7 +237,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.destination.DestinationDescriptorMBean#isPreAllocateFiles()
+     * @see net.timewalker.ffmq4.management.destination.DestinationDescriptorMBean#isPreAllocateFiles()
      */
     @Override
     public boolean isPreAllocateFiles()
@@ -266,7 +266,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getMinCommitTime()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getMinCommitTime()
      */
     @Override
 	public final long getMinCommitTime()
@@ -276,7 +276,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getMaxCommitTime()
+	 * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getMaxCommitTime()
 	 */
     @Override
 	public final long getMaxCommitTime()
@@ -286,7 +286,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalQueueMBean#getAverageCommitTime()
+     * @see net.timewalker.ffmq4.local.destination.LocalQueueMBean#getAverageCommitTime()
      */
     @Override
     public final double getAverageCommitTime()
@@ -306,7 +306,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#resetStats()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#resetStats()
      */
     @Override
     public void resetStats()
@@ -336,7 +336,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#openTransaction()
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#openTransaction()
      */
     @Override
     public final void openTransaction()
@@ -347,7 +347,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#closeTransaction()
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#closeTransaction()
      */
     @Override
     public void closeTransaction()
@@ -362,7 +362,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.Committable#commitChanges()
+     * @see net.timewalker.ffmq4.utils.Committable#commitChanges()
      */
     @Override
     public void commitChanges() throws JMSException

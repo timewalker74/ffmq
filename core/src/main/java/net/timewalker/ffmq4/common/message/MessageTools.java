@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message;
+package net.timewalker.ffmq4.common.message;
 
 import java.util.Enumeration;
 
@@ -31,9 +31,9 @@ import javax.jms.StreamMessage;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
-import net.timewalker.ffmq3.common.destination.DestinationRef;
-import net.timewalker.ffmq3.common.destination.QueueRef;
-import net.timewalker.ffmq3.common.destination.TopicRef;
+import net.timewalker.ffmq4.common.destination.DestinationRef;
+import net.timewalker.ffmq4.common.destination.QueueRef;
+import net.timewalker.ffmq4.common.destination.TopicRef;
 
 /**
  * <p>Utility functions to copy and normalize JMS messages.</p> 

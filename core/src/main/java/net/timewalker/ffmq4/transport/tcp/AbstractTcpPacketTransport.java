@@ -16,13 +16,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.transport.tcp;
+package net.timewalker.ffmq4.transport.tcp;
 
 import java.net.SocketAddress;
 
-import net.timewalker.ffmq3.FFMQCoreSettings;
-import net.timewalker.ffmq3.transport.AbstractPacketTransport;
-import net.timewalker.ffmq3.utils.Settings;
+import net.timewalker.ffmq4.FFMQCoreSettings;
+import net.timewalker.ffmq4.transport.AbstractPacketTransport;
+import net.timewalker.ffmq4.utils.Settings;
 
 /**
  * <p>Base class for a TCP-based packet transport</p>
@@ -55,7 +55,7 @@ public abstract class AbstractTcpPacketTransport extends AbstractPacketTransport
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.transport.PacketTransport#getRemotePeerID()
+	 * @see net.timewalker.ffmq4.transport.PacketTransport#getRemotePeerID()
 	 */
 	@Override
 	public final String getRemotePeerID()

@@ -1,16 +1,16 @@
-package net.timewalker.ffmq3.transport;
+package net.timewalker.ffmq4.transport;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.FFMQClientSettings;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.client.ClientEnvironment;
-import net.timewalker.ffmq3.transport.packet.AbstractQueryPacket;
-import net.timewalker.ffmq3.transport.packet.AbstractResponsePacket;
-import net.timewalker.ffmq3.transport.packet.response.ErrorResponse;
+import net.timewalker.ffmq4.FFMQClientSettings;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.client.ClientEnvironment;
+import net.timewalker.ffmq4.transport.packet.AbstractQueryPacket;
+import net.timewalker.ffmq4.transport.packet.AbstractResponsePacket;
+import net.timewalker.ffmq4.transport.packet.response.ErrorResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

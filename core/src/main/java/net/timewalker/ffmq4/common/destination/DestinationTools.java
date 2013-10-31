@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.destination;
+package net.timewalker.ffmq4.common.destination;
 
 import javax.jms.Destination;
 import javax.jms.InvalidDestinationException;
@@ -23,8 +23,8 @@ import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.Topic;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
 
 
 /**

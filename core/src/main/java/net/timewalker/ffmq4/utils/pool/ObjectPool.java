@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.utils.pool;
+package net.timewalker.ffmq4.utils.pool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -322,7 +322,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMaxIdle()
+	 * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolMaxIdle()
 	 */
     @Override
 	public int getThreadPoolMaxIdle()
@@ -332,7 +332,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMinSize()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolMinSize()
      */
     @Override
 	public int getThreadPoolMinSize()
@@ -342,7 +342,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolMaxSize()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolMaxSize()
      */
     @Override
 	public int getThreadPoolMaxSize()
@@ -352,7 +352,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolExhaustionPolicy()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolExhaustionPolicy()
      */
     @Override
 	public int getThreadPoolExhaustionPolicy()
@@ -362,7 +362,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolWaitTimeout()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolWaitTimeout()
      */
     @Override
 	public long getThreadPoolWaitTimeout()
@@ -372,7 +372,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolAvailableCount()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolAvailableCount()
      */
     @Override
 	public int getThreadPoolAvailableCount()
@@ -382,7 +382,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolPendingWaits()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolPendingWaits()
      */
     @Override
 	public int getThreadPoolPendingWaits()
@@ -391,7 +391,7 @@ public abstract class ObjectPool<T> implements ObjectPoolMBean
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.pool.ObjectPoolMBean#getThreadPoolSize()
+     * @see net.timewalker.ffmq4.utils.pool.ObjectPoolMBean#getThreadPoolSize()
      */
     @Override
 	public int getThreadPoolSize()

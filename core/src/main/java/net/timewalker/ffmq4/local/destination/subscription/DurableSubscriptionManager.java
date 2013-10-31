@@ -16,12 +16,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.local.destination.subscription;
+package net.timewalker.ffmq4.local.destination.subscription;
 
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.timewalker.ffmq3.local.FFMQEngine;
+import net.timewalker.ffmq4.local.FFMQEngine;
 
 /**
  * <p>Manager for durable subscriptions. 

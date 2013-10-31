@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.local.session;
+package net.timewalker.ffmq4.test.local.session;
 
 import java.util.Date;
 import java.util.Enumeration;
@@ -30,10 +30,10 @@ import javax.jms.TemporaryQueue;
 import javax.jms.TemporaryTopic;
 import javax.jms.TextMessage;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.test.AbstractCommTest;
-import net.timewalker.ffmq3.test.TestUtils;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.test.AbstractCommTest;
+import net.timewalker.ffmq4.test.TestUtils;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 /**
  * LocalSessionTest
@@ -1234,7 +1234,7 @@ public class LocalSessionTest extends AbstractCommTest
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isListenerTest()
+	 * @see net.timewalker.ffmq4.additional.AbstractCommTest#isListenerTest()
 	 */
 	@Override
 	protected boolean isListenerTest()
@@ -1245,7 +1245,7 @@ public class LocalSessionTest extends AbstractCommTest
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isRemote()
+	 * @see net.timewalker.ffmq4.additional.AbstractCommTest#isRemote()
 	 */
 	@Override
 	protected boolean isRemote()
@@ -1256,7 +1256,7 @@ public class LocalSessionTest extends AbstractCommTest
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.timewalker.ffmq3.additional.AbstractCommTest#isTopicTest()
+	 * @see net.timewalker.ffmq4.additional.AbstractCommTest#isTopicTest()
 	 */
 	@Override
 	protected boolean isTopicTest()
@@ -1268,7 +1268,7 @@ public class LocalSessionTest extends AbstractCommTest
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * net.timewalker.ffmq3.additional.AbstractCommTest#useMultipleConnections()
+	 * net.timewalker.ffmq4.additional.AbstractCommTest#useMultipleConnections()
 	 */
 	@Override
 	protected boolean useMultipleConnections()

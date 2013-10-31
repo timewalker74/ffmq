@@ -15,17 +15,17 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.security;
+package net.timewalker.ffmq4.security;
 
 import java.io.File;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.FFMQSecurityException;
-import net.timewalker.ffmq3.FFMQServerSettings;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.xml.XMLDescriptorReader;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.FFMQSecurityException;
+import net.timewalker.ffmq4.FFMQServerSettings;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.xml.XMLDescriptorReader;
 
 /**
  * XMLSecurityConnector
@@ -52,7 +52,7 @@ public final class XMLSecurityConnector implements SecurityConnector
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.security.SecurityConnector#getContext(java.lang.String, java.lang.String)
+     * @see net.timewalker.ffmq4.security.SecurityConnector#getContext(java.lang.String, java.lang.String)
      */
 	@Override
 	public SecurityContext getContext(String userName, String password) throws FFMQSecurityException 

@@ -15,15 +15,15 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.test;
+package net.timewalker.ffmq4.test;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import net.timewalker.ffmq3.test.remote.RemoteTopicMultiConnListenerTest;
-import net.timewalker.ffmq3.test.remote.RemoteTopicMultiConnReceiverTest;
-import net.timewalker.ffmq3.test.remote.RemoteTopicSingleConnListenerTest;
-import net.timewalker.ffmq3.test.remote.RemoteTopicSingleConnReceiverTest;
+import net.timewalker.ffmq4.test.remote.RemoteTopicMultiConnListenerTest;
+import net.timewalker.ffmq4.test.remote.RemoteTopicMultiConnReceiverTest;
+import net.timewalker.ffmq4.test.remote.RemoteTopicSingleConnListenerTest;
+import net.timewalker.ffmq4.test.remote.RemoteTopicSingleConnReceiverTest;
 
 /**
  * AllRemoteTopicTests

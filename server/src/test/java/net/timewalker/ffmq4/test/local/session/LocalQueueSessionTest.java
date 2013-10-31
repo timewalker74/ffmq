@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.local.session;
+package net.timewalker.ffmq4.test.local.session;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
@@ -6,7 +6,7 @@ import javax.jms.QueueConnection;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.test.TestUtils;
+import net.timewalker.ffmq4.test.TestUtils;
 
 /**
  * LocalSessionTest
@@ -14,7 +14,7 @@ import net.timewalker.ffmq3.test.TestUtils;
 public class LocalQueueSessionTest extends LocalSessionTest
 {    
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.session.LocalSessionTest#createConnection()
+     * @see net.timewalker.ffmq4.local.session.LocalSessionTest#createConnection()
      */
     @Override
 	protected Connection createConnection() throws Exception

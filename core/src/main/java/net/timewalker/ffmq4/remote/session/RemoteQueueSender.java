@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -23,7 +23,7 @@ import javax.jms.Message;
 import javax.jms.Queue;
 import javax.jms.QueueSender;
 
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * RemoteQueueSender
@@ -40,7 +40,7 @@ public final class RemoteQueueSender extends RemoteMessageProducer implements Qu
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.QueueSender#getQueue()
+     * @see net.timewalker.ffmq4.QueueSender#getQueue()
      */
     @Override
 	public Queue getQueue()

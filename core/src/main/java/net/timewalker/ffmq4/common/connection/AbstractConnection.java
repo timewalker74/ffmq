@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.connection;
+package net.timewalker.ffmq4.common.connection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,13 +39,13 @@ import javax.jms.ServerSessionPool;
 import javax.jms.Session;
 import javax.jms.Topic;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.session.AbstractSession;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.id.IntegerID;
-import net.timewalker.ffmq3.utils.id.IntegerIDProvider;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.session.AbstractSession;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.IntegerIDProvider;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

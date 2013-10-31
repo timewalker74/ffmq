@@ -1,6 +1,6 @@
-package net.timewalker.ffmq3.test.storage.data.impl;
+package net.timewalker.ffmq4.test.storage.data.impl;
 
-import net.timewalker.ffmq3.storage.data.impl.InMemoryLinkedDataStore;
+import net.timewalker.ffmq4.storage.data.impl.InMemoryLinkedDataStore;
 import junit.framework.TestCase;
 
 /**

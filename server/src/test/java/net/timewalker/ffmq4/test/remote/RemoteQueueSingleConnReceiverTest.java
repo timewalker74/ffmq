@@ -1,6 +1,6 @@
-package net.timewalker.ffmq3.test.remote;
+package net.timewalker.ffmq4.test.remote;
 
-import net.timewalker.ffmq3.test.local.LocalQueueSingleConnReceiverTest;
+import net.timewalker.ffmq4.test.local.LocalQueueSingleConnReceiverTest;
 
 /**
  * RemoteQueueSingleConnReceiverTest

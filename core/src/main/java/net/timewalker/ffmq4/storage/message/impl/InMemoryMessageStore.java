@@ -15,15 +15,15 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.storage.message.impl;
+package net.timewalker.ffmq4.storage.message.impl;
 
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.storage.data.LinkedDataStore;
-import net.timewalker.ffmq3.storage.data.impl.InMemoryLinkedDataStore;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.storage.data.LinkedDataStore;
+import net.timewalker.ffmq4.storage.data.impl.InMemoryLinkedDataStore;
 
 /**
  * InMemoryMessageStore
@@ -39,7 +39,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#createDataStore()
+     * @see net.timewalker.ffmq4.storage.message.impl.AbstractMessageStore#createDataStore()
      */
     @Override
 	protected LinkedDataStore createDataStore()
@@ -51,7 +51,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#getDeliveryMode()
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#getDeliveryMode()
      */
     @Override
 	public int getDeliveryMode()
@@ -60,7 +60,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#retrieveMessage(int)
+     * @see net.timewalker.ffmq4.storage.message.impl.AbstractMessageStore#retrieveMessage(int)
      */
     @Override
 	protected AbstractMessage retrieveMessage(int handle) throws JMSException
@@ -69,7 +69,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#retrieveMessagePriority(int)
+     * @see net.timewalker.ffmq4.storage.message.impl.AbstractMessageStore#retrieveMessagePriority(int)
      */
     @Override
 	protected int retrieveMessagePriority(int handle) throws JMSException
@@ -79,7 +79,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.impl.AbstractMessageStore#storeMessage(net.timewalker.ffmq3.common.message.AbstractMessage, int)
+     * @see net.timewalker.ffmq4.local.destination.store.impl.AbstractMessageStore#storeMessage(net.timewalker.ffmq4.common.message.AbstractMessage, int)
      */
     @Override
 	protected int storeMessage(AbstractMessage message, int previousHandle) throws JMSException
@@ -88,7 +88,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
 	}
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.impl.AbstractMessageStore#replaceMessage(int, net.timewalker.ffmq3.common.message.AbstractMessage)
+     * @see net.timewalker.ffmq4.storage.message.impl.AbstractMessageStore#replaceMessage(int, net.timewalker.ffmq4.common.message.AbstractMessage)
      */
     @Override
 	protected int replaceMessage(int handle, AbstractMessage message) throws JMSException
@@ -98,7 +98,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.store.MessageStore#delete()
+     * @see net.timewalker.ffmq4.local.destination.store.MessageStore#delete()
      */
     @Override
 	public void delete() throws JMSException
@@ -107,7 +107,7 @@ public final class InMemoryMessageStore extends AbstractMessageStore
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.message.MessageStore#isFailSafe()
+     * @see net.timewalker.ffmq4.storage.message.MessageStore#isFailSafe()
      */
     @Override
 	public boolean isFailSafe()

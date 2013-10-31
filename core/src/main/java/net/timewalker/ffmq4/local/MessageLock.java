@@ -16,10 +16,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.local;
+package net.timewalker.ffmq4.local;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
 
 /**
  * <p>Immutable message lock reference</p>
@@ -48,7 +48,7 @@ public final class MessageLock
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.StoredMessageReference#getHandle()
+	 * @see net.timewalker.ffmq4.local.StoredMessageReference#getHandle()
 	 */
 	public int getHandle()
 	{
@@ -57,7 +57,7 @@ public final class MessageLock
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.StoredMessageReference#getDeliveryMode()
+	 * @see net.timewalker.ffmq4.local.StoredMessageReference#getDeliveryMode()
 	 */
 	public int getDeliveryMode()
 	{
@@ -66,7 +66,7 @@ public final class MessageLock
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.StoredMessageReference#getDestination()
+	 * @see net.timewalker.ffmq4.local.StoredMessageReference#getDestination()
 	 */
 	public LocalQueue getDestination()
 	{

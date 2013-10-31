@@ -16,14 +16,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.cluster.resolver;
+package net.timewalker.ffmq4.cluster.resolver;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.management.destination.DestinationReferenceDescriptor;
-import net.timewalker.ffmq3.management.peer.PeerDescriptor;
+import net.timewalker.ffmq4.management.destination.DestinationReferenceDescriptor;
+import net.timewalker.ffmq4.management.peer.PeerDescriptor;
 
 /**
  * <p>
@@ -34,7 +34,7 @@ import net.timewalker.ffmq3.management.peer.PeerDescriptor;
 public class SessionDestinationResolver implements DestinationResolver 
 {
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.cluster.resolver.DestinationResolver#getDestination(net.timewalker.ffmq3.management.peer.PeerDescriptor, net.timewalker.ffmq3.management.destination.DestinationReferenceDescriptor, javax.jms.Session)
+	 * @see net.timewalker.ffmq4.cluster.resolver.DestinationResolver#getDestination(net.timewalker.ffmq4.management.peer.PeerDescriptor, net.timewalker.ffmq4.management.destination.DestinationReferenceDescriptor, javax.jms.Session)
 	 */
 	@Override
 	public Destination getDestination(PeerDescriptor peer, DestinationReferenceDescriptor destinationReference,Session session) throws JMSException

@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.utils;
+package net.timewalker.ffmq4.utils;
 
 import java.io.DataInput;
 import java.io.DataOutput;

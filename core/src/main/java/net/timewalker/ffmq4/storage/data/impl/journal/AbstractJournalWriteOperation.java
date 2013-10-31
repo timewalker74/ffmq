@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.storage.data.impl.journal;
+package net.timewalker.ffmq4.storage.data.impl.journal;
 
 /**
  * AbstractJournalWriteOperation
@@ -44,7 +44,7 @@ public abstract class AbstractJournalWriteOperation extends AbstractJournalOpera
 	}
 	
 	/* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.journal.AbstractJournalOperation#writeTo(net.timewalker.ffmq3.storage.data.impl.journal.JournalFile)
+     * @see net.timewalker.ffmq4.storage.data.impl.journal.AbstractJournalOperation#writeTo(net.timewalker.ffmq4.storage.data.impl.journal.JournalFile)
      */
     @Override
 	protected void writeTo(JournalFile journalFile) throws JournalException
@@ -54,7 +54,7 @@ public abstract class AbstractJournalWriteOperation extends AbstractJournalOpera
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.storage.data.impl.journal.AbstractJournalOperation#size()
+     * @see net.timewalker.ffmq4.storage.data.impl.journal.AbstractJournalOperation#size()
      */
     @Override
 	public int size()

@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message.selector.expression;
+package net.timewalker.ffmq4.common.message.selector.expression;
 
 
 import javax.jms.DeliveryMode;
@@ -41,7 +41,7 @@ public final class Identifier extends SelectorNode implements AtomicOperand, Con
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
+     * @see net.timewalker.ffmq4.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
      */
     @Override
 	public Object evaluate( Message message ) throws JMSException

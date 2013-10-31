@@ -16,12 +16,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.common.message;
+package net.timewalker.ffmq4.test.common.message;
 
 import javax.jms.MessageEOFException;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.common.message.BytesMessageImpl;
+import net.timewalker.ffmq4.common.message.BytesMessageImpl;
 
 /**
  * BytesMessageImplTest

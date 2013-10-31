@@ -15,15 +15,15 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.destination;
+package net.timewalker.ffmq4.common.destination;
 
 import javax.jms.Topic;
 import javax.naming.NamingException;
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
 
-import net.timewalker.ffmq3.jndi.JNDIObjectFactory;
-import net.timewalker.ffmq3.security.Resource;
+import net.timewalker.ffmq4.jndi.JNDIObjectFactory;
+import net.timewalker.ffmq4.security.Resource;
 
 
 /**
@@ -57,7 +57,7 @@ public class TopicRef extends DestinationRef implements Topic
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.destination.DestinationRef#getResourceName()
+     * @see net.timewalker.ffmq4.common.destination.DestinationRef#getResourceName()
      */
     @Override
 	public final String getResourceName() 

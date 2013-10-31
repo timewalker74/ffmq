@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.utils.queue;
+package net.timewalker.ffmq4.test.utils.queue;
 
 import java.util.Random;
 
@@ -7,8 +7,8 @@ import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueSession;
 
-import net.timewalker.ffmq3.utils.concurrent.SynchronizableThread;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationPoint;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizableThread;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationPoint;
 
 /**
  * AbstractQueueHandler

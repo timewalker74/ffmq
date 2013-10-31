@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.jndi;
+package net.timewalker.ffmq4.jndi;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -31,11 +31,11 @@ import javax.naming.Reference;
 import javax.naming.Referenceable;
 import javax.naming.StringRefAddr;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.remote.connection.RemoteConnection;
-import net.timewalker.ffmq3.transport.PacketTransportType;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.remote.connection.RemoteConnection;
+import net.timewalker.ffmq4.transport.PacketTransportType;
 
 /**
  * <p>Implementation of a JMS {@link ConnectionFactory}</p>

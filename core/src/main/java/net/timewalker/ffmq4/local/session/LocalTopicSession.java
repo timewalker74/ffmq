@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import javax.jms.IllegalStateException;
 import javax.jms.JMSException;
@@ -28,9 +28,9 @@ import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
 
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.local.connection.LocalConnection;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.local.connection.LocalConnection;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * <p>Topic specific implementation of a local {@link Session}</p>
@@ -101,7 +101,7 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#createBrowser(javax.jms.Queue)
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#createBrowser(javax.jms.Queue)
      */
     @Override
 	public QueueBrowser createBrowser(Queue queue) throws JMSException
@@ -110,7 +110,7 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.session.LocalSession#createBrowser(javax.jms.Queue, java.lang.String)
+     * @see net.timewalker.ffmq4.local.session.LocalSession#createBrowser(javax.jms.Queue, java.lang.String)
      */
     @Override
 	public synchronized QueueBrowser createBrowser(Queue queueRef, String messageSelector) throws JMSException
@@ -119,7 +119,7 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#createQueue(java.lang.String)
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#createQueue(java.lang.String)
      */
     @Override
 	public Queue createQueue(String queueName) throws JMSException
@@ -128,7 +128,7 @@ public final class LocalTopicSession extends LocalSession implements TopicSessio
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.session.LocalSession#createTemporaryQueue()
+     * @see net.timewalker.ffmq4.local.session.LocalSession#createTemporaryQueue()
      */
     @Override
 	public TemporaryQueue createTemporaryQueue() throws JMSException

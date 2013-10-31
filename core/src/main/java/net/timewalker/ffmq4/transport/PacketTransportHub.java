@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.transport;
+package net.timewalker.ffmq4.transport;
 
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.transport.packet.AbstractResponsePacket;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.transport.packet.AbstractResponsePacket;
 
 /**
  * PacketTransportHub

@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.destination;
+package net.timewalker.ffmq4.local.destination;
 
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -28,21 +28,21 @@ import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.Topic;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.FFMQSubscriberPolicy;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.MessageSelector;
-import net.timewalker.ffmq3.local.MessageLockSet;
-import net.timewalker.ffmq3.local.destination.subscription.LocalTopicSubscription;
-import net.timewalker.ffmq3.local.session.LocalMessageConsumer;
-import net.timewalker.ffmq3.local.session.LocalSession;
-import net.timewalker.ffmq3.management.destination.definition.TopicDefinition;
-import net.timewalker.ffmq3.storage.data.DataStoreFullException;
-import net.timewalker.ffmq3.storage.message.MessageSerializationLevel;
-import net.timewalker.ffmq3.utils.Committable;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.concurrent.CopyOnWriteList;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.FFMQSubscriberPolicy;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.MessageSelector;
+import net.timewalker.ffmq4.local.MessageLockSet;
+import net.timewalker.ffmq4.local.destination.subscription.LocalTopicSubscription;
+import net.timewalker.ffmq4.local.session.LocalMessageConsumer;
+import net.timewalker.ffmq4.local.session.LocalSession;
+import net.timewalker.ffmq4.management.destination.definition.TopicDefinition;
+import net.timewalker.ffmq4.storage.data.DataStoreFullException;
+import net.timewalker.ffmq4.storage.message.MessageSerializationLevel;
+import net.timewalker.ffmq4.utils.Committable;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.concurrent.CopyOnWriteList;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -97,7 +97,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#registerConsumer(net.timewalker.ffmq3.local.session.LocalMessageConsumer)
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#registerConsumer(net.timewalker.ffmq4.local.session.LocalMessageConsumer)
      */
     @Override
 	public void registerConsumer(LocalMessageConsumer consumer)
@@ -126,7 +126,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#unregisterConsumer(net.timewalker.ffmq3.local.session.LocalMessageConsumer)
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#unregisterConsumer(net.timewalker.ffmq4.local.session.LocalMessageConsumer)
      */
     @Override
 	public void unregisterConsumer(LocalMessageConsumer consumer)
@@ -167,7 +167,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#putLocked(net.timewalker.ffmq3.common.message.AbstractMessage, net.timewalker.ffmq3.local.session.LocalSession, net.timewalker.ffmq3.local.MessageLockSet)
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#putLocked(net.timewalker.ffmq4.common.message.AbstractMessage, net.timewalker.ffmq4.local.session.LocalSession, net.timewalker.ffmq4.local.MessageLockSet)
      */
     @Override
 	public boolean putLocked( AbstractMessage srcMessage, LocalSession session , MessageLockSet locks ) throws JMSException
@@ -261,7 +261,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#getSize()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#getSize()
      */
     @Override
 	public int getSize()
@@ -280,7 +280,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalDestinationMBean#resetStats()
+     * @see net.timewalker.ffmq4.local.destination.LocalDestinationMBean#resetStats()
      */
     @Override
 	public void resetStats()
@@ -292,7 +292,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalTopicMBean#getSentToTopicCount()
+     * @see net.timewalker.ffmq4.local.destination.LocalTopicMBean#getSentToTopicCount()
      */
     @Override
 	public long getSentToTopicCount()
@@ -302,7 +302,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.LocalTopicMBean#getDispatchedFromTopicCount()
+     * @see net.timewalker.ffmq4.local.destination.LocalTopicMBean#getDispatchedFromTopicCount()
      */
     @Override
 	public long getDispatchedFromTopicCount()
@@ -354,7 +354,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#hasTransactionSupport()
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#hasTransactionSupport()
      */
     @Override
     protected boolean requiresTransactionalUpdate()
@@ -363,7 +363,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#hasPendingChanges()
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#hasPendingChanges()
      */
     @Override
     protected boolean hasPendingChanges()
@@ -373,7 +373,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#close()
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#close()
      */
     @Override
 	public final void close() throws JMSException
@@ -387,7 +387,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.Committable#commitChanges(net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier)
+     * @see net.timewalker.ffmq4.utils.Committable#commitChanges(net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier)
      */
     @Override
     public void commitChanges(SynchronizationBarrier barrier) throws JMSException
@@ -414,7 +414,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.AbstractLocalDestination#closeTransaction()
+     * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#closeTransaction()
      */
     @Override
     public void closeTransaction()

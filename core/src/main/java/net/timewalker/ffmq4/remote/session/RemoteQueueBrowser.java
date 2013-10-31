@@ -15,19 +15,19 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import java.util.Enumeration;
 
 import javax.jms.JMSException;
 import javax.jms.Queue;
 
-import net.timewalker.ffmq3.common.session.AbstractQueueBrowser;
-import net.timewalker.ffmq3.transport.PacketTransportEndpoint;
-import net.timewalker.ffmq3.transport.packet.query.CloseBrowserQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateBrowserQuery;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.common.session.AbstractQueueBrowser;
+import net.timewalker.ffmq4.transport.PacketTransportEndpoint;
+import net.timewalker.ffmq4.transport.packet.query.CloseBrowserQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateBrowserQuery;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -82,7 +82,7 @@ public final class RemoteQueueBrowser extends AbstractQueueBrowser
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.common.session.AbstractQueueBrowser#onQueueBrowserClose()
+	 * @see net.timewalker.ffmq4.common.session.AbstractQueueBrowser#onQueueBrowserClose()
 	 */
 	@Override
 	protected void onQueueBrowserClose()

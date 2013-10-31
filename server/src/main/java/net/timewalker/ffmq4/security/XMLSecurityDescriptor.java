@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.security;
+package net.timewalker.ffmq4.security;
 
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -23,7 +23,7 @@ import java.util.Map;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.utils.descriptor.AbstractXMLBasedDescriptor;
+import net.timewalker.ffmq4.utils.descriptor.AbstractXMLBasedDescriptor;
 
 /**
  * XMLSecurityDescriptor
@@ -44,7 +44,7 @@ public final class XMLSecurityDescriptor extends AbstractXMLBasedDescriptor
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.Checkable#check()
+     * @see net.timewalker.ffmq4.utils.Checkable#check()
      */
     @Override
 	public void check() throws JMSException

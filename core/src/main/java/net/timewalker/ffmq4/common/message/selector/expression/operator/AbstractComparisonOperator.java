@@ -15,10 +15,10 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message.selector.expression.operator;
+package net.timewalker.ffmq4.common.message.selector.expression.operator;
 
-import net.timewalker.ffmq3.common.message.selector.expression.ConditionalExpression;
-import net.timewalker.ffmq3.common.message.selector.expression.SelectorNode;
+import net.timewalker.ffmq4.common.message.selector.expression.ConditionalExpression;
+import net.timewalker.ffmq4.common.message.selector.expression.SelectorNode;
 
 /**
  * AbstractComparisonOperator

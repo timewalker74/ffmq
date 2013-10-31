@@ -16,11 +16,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.storage.data.impl;
+package net.timewalker.ffmq4.storage.data.impl;
 
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.storage.data.LinkedDataStore;
-import net.timewalker.ffmq3.utils.FastBitSet;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.storage.data.LinkedDataStore;
+import net.timewalker.ffmq4.utils.FastBitSet;
 
 /**
  * AbstractDataStore
@@ -42,7 +42,7 @@ public abstract class AbstractDataStore implements LinkedDataStore
 	
 	/*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedDataStore#isLocked(int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedDataStore#isLocked(int)
      */
     @Override
 	public final boolean isLocked(int handle) throws DataStoreException 
@@ -53,7 +53,7 @@ public abstract class AbstractDataStore implements LinkedDataStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedDataStore#lock(int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedDataStore#lock(int)
      */
     @Override
 	public final void lock(int handle) throws DataStoreException 
@@ -68,7 +68,7 @@ public abstract class AbstractDataStore implements LinkedDataStore
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.store.LinkedDataStore#unlock(int)
+     * @see net.timewalker.ffmq4.utils.store.LinkedDataStore#unlock(int)
      */
     @Override
 	public final void unlock(int handle) throws DataStoreException 

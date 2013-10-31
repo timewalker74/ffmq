@@ -1,10 +1,10 @@
-package net.timewalker.ffmq3.test.common.message;
+package net.timewalker.ffmq4.test.common.message;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.MessageSerializer;
-import net.timewalker.ffmq3.test.utils.factory.MessageCreator;
-import net.timewalker.ffmq3.utils.RawDataBuffer;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.MessageSerializer;
+import net.timewalker.ffmq4.test.utils.factory.MessageCreator;
+import net.timewalker.ffmq4.utils.RawDataBuffer;
 
 /**
  * MessageSerializerTest

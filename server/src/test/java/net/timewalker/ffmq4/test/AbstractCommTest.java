@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test;
+package net.timewalker.ffmq4.test;
 
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
@@ -18,28 +18,28 @@ import javax.jms.Topic;
 import javax.jms.TopicConnection;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.common.destination.QueueRef;
-import net.timewalker.ffmq3.common.destination.TopicRef;
-import net.timewalker.ffmq3.listeners.AbstractClientListener;
-import net.timewalker.ffmq3.listeners.tcp.io.TcpListener;
-import net.timewalker.ffmq3.listeners.tcp.nio.NIOTcpListener;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.local.destination.LocalTopic;
-import net.timewalker.ffmq3.test.utils.CommTestParameters;
-import net.timewalker.ffmq3.test.utils.factory.DummyMessageFactory;
-import net.timewalker.ffmq3.test.utils.factory.TextMessageFactory;
-import net.timewalker.ffmq3.test.utils.queue.QueueListenerThread;
-import net.timewalker.ffmq3.test.utils.queue.QueueReceiverThread;
-import net.timewalker.ffmq3.test.utils.queue.QueueSenderThread;
-import net.timewalker.ffmq3.test.utils.topic.TopicListenerThread;
-import net.timewalker.ffmq3.test.utils.topic.TopicPublisherThread;
-import net.timewalker.ffmq3.test.utils.topic.TopicSubscriberThread;
-import net.timewalker.ffmq3.utils.JavaTools;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationPoint;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.common.destination.QueueRef;
+import net.timewalker.ffmq4.common.destination.TopicRef;
+import net.timewalker.ffmq4.listeners.AbstractClientListener;
+import net.timewalker.ffmq4.listeners.tcp.io.TcpListener;
+import net.timewalker.ffmq4.listeners.tcp.nio.NIOTcpListener;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.local.destination.LocalTopic;
+import net.timewalker.ffmq4.test.utils.CommTestParameters;
+import net.timewalker.ffmq4.test.utils.factory.DummyMessageFactory;
+import net.timewalker.ffmq4.test.utils.factory.TextMessageFactory;
+import net.timewalker.ffmq4.test.utils.queue.QueueListenerThread;
+import net.timewalker.ffmq4.test.utils.queue.QueueReceiverThread;
+import net.timewalker.ffmq4.test.utils.queue.QueueSenderThread;
+import net.timewalker.ffmq4.test.utils.topic.TopicListenerThread;
+import net.timewalker.ffmq4.test.utils.topic.TopicPublisherThread;
+import net.timewalker.ffmq4.test.utils.topic.TopicSubscriberThread;
+import net.timewalker.ffmq4.utils.JavaTools;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationPoint;
 
 import org.apache.log4j.PropertyConfigurator;
 

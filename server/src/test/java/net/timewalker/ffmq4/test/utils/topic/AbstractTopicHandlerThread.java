@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test.utils.topic;
+package net.timewalker.ffmq4.test.utils.topic;
 
 import java.util.Random;
 
@@ -7,8 +7,8 @@ import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicSession;
 
-import net.timewalker.ffmq3.utils.concurrent.SynchronizableThread;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationPoint;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizableThread;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationPoint;
 
 /**
  * AbstractTopicHandlerThread

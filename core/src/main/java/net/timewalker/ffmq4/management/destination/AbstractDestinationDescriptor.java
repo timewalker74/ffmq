@@ -15,19 +15,19 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.management.destination;
+package net.timewalker.ffmq4.management.destination;
 
 import java.io.File;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.management.InvalidDescriptorException;
-import net.timewalker.ffmq3.management.destination.definition.AbstractDestinationDefinition;
-import net.timewalker.ffmq3.storage.StorageSyncMethod;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.SystemTools;
-import net.timewalker.ffmq3.utils.descriptor.AbstractSettingsBasedDescriptor;
+import net.timewalker.ffmq4.management.InvalidDescriptorException;
+import net.timewalker.ffmq4.management.destination.definition.AbstractDestinationDefinition;
+import net.timewalker.ffmq4.storage.StorageSyncMethod;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.SystemTools;
+import net.timewalker.ffmq4.utils.descriptor.AbstractSettingsBasedDescriptor;
 
 /**
  * <p>Base implementation for a destination descriptor.</p>
@@ -74,7 +74,7 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.management.Descriptor#initFromSettings(net.timewalker.ffmq3.utils.Settings)
+     * @see net.timewalker.ffmq4.management.Descriptor#initFromSettings(net.timewalker.ffmq4.utils.Settings)
      */
     @Override
 	protected void initFromSettings( Settings settings )
@@ -492,7 +492,7 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
 	
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.Checkable#check()
+     * @see net.timewalker.ffmq4.utils.Checkable#check()
      */
     @Override
 	public void check() throws JMSException

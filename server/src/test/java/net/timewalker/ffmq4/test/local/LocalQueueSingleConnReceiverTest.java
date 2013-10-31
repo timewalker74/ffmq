@@ -1,6 +1,6 @@
-package net.timewalker.ffmq3.test.local;
+package net.timewalker.ffmq4.test.local;
 
-import net.timewalker.ffmq3.test.BaseCommTest;
+import net.timewalker.ffmq4.test.BaseCommTest;
 
 /**
  * LocalQueueSingleConnReceiverTest

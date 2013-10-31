@@ -15,12 +15,12 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local;
+package net.timewalker.ffmq4.local;
 
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
 
 /**
  * <p>Item of a {@link TransactionSet}. Keeps track of a message lock obtained by a JMS {@link Session} in the current transaction.</p>
@@ -49,7 +49,7 @@ public final class TransactionItem
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.StoredMessageReference#getHandle()
+	 * @see net.timewalker.ffmq4.local.StoredMessageReference#getHandle()
 	 */
 	public int getHandle()
 	{
@@ -71,7 +71,7 @@ public final class TransactionItem
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.StoredMessageReference#getDeliveryMode()
+	 * @see net.timewalker.ffmq4.local.StoredMessageReference#getDeliveryMode()
 	 */
 	public int getDeliveryMode()
 	{
@@ -80,7 +80,7 @@ public final class TransactionItem
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.StoredMessageReference#getDestination()
+	 * @see net.timewalker.ffmq4.local.StoredMessageReference#getDestination()
 	 */
 	public LocalQueue getDestination()
 	{

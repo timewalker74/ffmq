@@ -15,15 +15,15 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.Queue;
 import javax.jms.QueueReceiver;
 
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * <p>Queue specific implementation of a local {@link MessageConsumer}</p>
@@ -44,7 +44,7 @@ public final class LocalQueueReceiver extends LocalMessageConsumer implements Qu
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.QueueReceiver#getQueue()
+     * @see net.timewalker.ffmq4.QueueReceiver#getQueue()
      */
     @Override
 	public Queue getQueue()

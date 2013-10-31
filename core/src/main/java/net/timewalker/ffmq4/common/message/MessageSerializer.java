@@ -15,9 +15,9 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message;
+package net.timewalker.ffmq4.common.message;
 
-import net.timewalker.ffmq3.utils.RawDataBuffer;
+import net.timewalker.ffmq4.utils.RawDataBuffer;
 
 /**
  * <p>

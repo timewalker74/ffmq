@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.management;
+package net.timewalker.ffmq4.management;
 
 import java.io.File;
 import java.util.HashSet;
@@ -25,10 +25,10 @@ import java.util.Vector;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.management.bridge.BridgeDefinition;
-import net.timewalker.ffmq3.management.bridge.handler.BridgeDescriptorHandler;
-import net.timewalker.ffmq3.utils.xml.XMLDescriptorReader;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.management.bridge.BridgeDefinition;
+import net.timewalker.ffmq4.management.bridge.handler.BridgeDescriptorHandler;
+import net.timewalker.ffmq4.utils.xml.XMLDescriptorReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

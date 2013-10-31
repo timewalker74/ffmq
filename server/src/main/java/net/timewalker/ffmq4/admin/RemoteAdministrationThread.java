@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.admin;
+package net.timewalker.ffmq4.admin;
 
 import java.util.Enumeration;
 
@@ -28,19 +28,19 @@ import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.FFMQAdminConstants;
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.FFMQServer;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.local.connection.LocalQueueConnection;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.management.destination.definition.TopicDefinition;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizableThread;
+import net.timewalker.ffmq4.FFMQAdminConstants;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.FFMQServer;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.local.connection.LocalQueueConnection;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.management.destination.definition.TopicDefinition;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizableThread;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -72,7 +72,7 @@ public final class RemoteAdministrationThread extends SynchronizableThread
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.concurrent.SynchronizableThread#run()
+     * @see net.timewalker.ffmq4.utils.concurrent.SynchronizableThread#run()
      */
     @Override
 	public void run()

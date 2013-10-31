@@ -15,12 +15,12 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message.selector.expression.literal;
+package net.timewalker.ffmq4.common.message.selector.expression.literal;
 
 import javax.jms.InvalidSelectorException;
 
-import net.timewalker.ffmq3.common.message.selector.expression.ArithmeticExpression;
-import net.timewalker.ffmq3.common.message.selector.expression.utils.StringUtils;
+import net.timewalker.ffmq4.common.message.selector.expression.ArithmeticExpression;
+import net.timewalker.ffmq4.common.message.selector.expression.utils.StringUtils;
 
 
 /**

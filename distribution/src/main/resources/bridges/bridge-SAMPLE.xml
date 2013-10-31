@@ -13,7 +13,7 @@
 
   <source>
   	<peer>
-  		<jdniInitialContextFactoryName>net.timewalker.ffmq3.jndi.FFMQInitialContextFactory</jdniInitialContextFactoryName>
+  		<jdniInitialContextFactoryName>net.timewalker.ffmq4.jndi.FFMQInitialContextFactory</jdniInitialContextFactoryName>
   		<jndiConnectionFactoryName>factory/ConnectionFactory</jndiConnectionFactoryName>
   		<providerURL>tcp://localhost:10002</providerURL>
   		<userName>test</userName>
@@ -27,7 +27,7 @@
   
   <target>
   	<peer>
-  		<jdniInitialContextFactoryName>net.timewalker.ffmq3.jndi.FFMQInitialContextFactory</jdniInitialContextFactoryName>
+  		<jdniInitialContextFactoryName>net.timewalker.ffmq4.jndi.FFMQInitialContextFactory</jdniInitialContextFactoryName>
   		<jndiConnectionFactoryName>factory/ConnectionFactory</jndiConnectionFactoryName>
   		<providerURL>tcp://localhost:10002</providerURL>
   		<userName>test</userName>

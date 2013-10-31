@@ -15,12 +15,12 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.management.peer;
+package net.timewalker.ffmq4.management.peer;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.management.InvalidDescriptorException;
-import net.timewalker.ffmq3.utils.Checkable;
+import net.timewalker.ffmq4.management.InvalidDescriptorException;
+import net.timewalker.ffmq4.utils.Checkable;
 
 /**
  * <p>Implementation of a JMS peer descriptor.</p>
@@ -85,7 +85,7 @@ public final class PeerDescriptor implements Checkable
 	}
 
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.Checkable#check()
+	 * @see net.timewalker.ffmq4.utils.Checkable#check()
 	 */
 	@Override
 	public void check() throws JMSException

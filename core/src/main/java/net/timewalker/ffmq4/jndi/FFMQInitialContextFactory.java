@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.jndi;
+package net.timewalker.ffmq4.jndi;
 
 import java.util.Hashtable;
 
@@ -23,7 +23,7 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
-import net.timewalker.ffmq3.FFMQConstants;
+import net.timewalker.ffmq4.FFMQConstants;
 
 /**
  * <p>

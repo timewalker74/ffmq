@@ -15,19 +15,19 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.security;
+package net.timewalker.ffmq4.security;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.management.InvalidDescriptorException;
-import net.timewalker.ffmq3.security.Privilege;
-import net.timewalker.ffmq3.security.SecurityContext;
-import net.timewalker.ffmq3.utils.Checkable;
-import net.timewalker.ffmq3.utils.StringTools;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.management.InvalidDescriptorException;
+import net.timewalker.ffmq4.security.Privilege;
+import net.timewalker.ffmq4.security.SecurityContext;
+import net.timewalker.ffmq4.utils.Checkable;
+import net.timewalker.ffmq4.utils.StringTools;
 
 /**
  * UserImpl
@@ -89,7 +89,7 @@ public class User implements SecurityContext, Checkable
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.security.SecurityContext#checkPermission(java.lang.String, java.lang.String)
+	 * @see net.timewalker.ffmq4.security.SecurityContext#checkPermission(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void checkPermission(String resourceName, String action) throws JMSException 
@@ -105,7 +105,7 @@ public class User implements SecurityContext, Checkable
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.Checkable#check()
+	 * @see net.timewalker.ffmq4.utils.Checkable#check()
 	 */
 	@Override
 	public void check() throws JMSException

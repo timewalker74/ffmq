@@ -1,7 +1,7 @@
-package net.timewalker.ffmq3.transport.packet.response;
+package net.timewalker.ffmq4.transport.packet.response;
 
-import net.timewalker.ffmq3.transport.packet.AbstractResponsePacket;
-import net.timewalker.ffmq3.transport.packet.PacketType;
+import net.timewalker.ffmq4.transport.packet.AbstractResponsePacket;
+import net.timewalker.ffmq4.transport.packet.PacketType;
 
 /**
  * RollbackMessagesResponse
@@ -17,7 +17,7 @@ public final class RollbackMessageResponse extends AbstractResponsePacket
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.network.packet.AbstractPacket#getType()
+     * @see net.timewalker.ffmq4.network.packet.AbstractPacket#getType()
      */
     @Override
 	public byte getType()

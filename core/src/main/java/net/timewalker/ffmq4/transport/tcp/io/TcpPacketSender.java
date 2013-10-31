@@ -15,19 +15,19 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.transport.tcp.io;
+package net.timewalker.ffmq4.transport.tcp.io;
 
 import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 
-import net.timewalker.ffmq3.transport.PacketTransportListener;
-import net.timewalker.ffmq3.transport.packet.AbstractPacket;
-import net.timewalker.ffmq3.transport.packet.PacketSerializer;
-import net.timewalker.ffmq3.transport.packet.query.PingQuery;
-import net.timewalker.ffmq3.utils.RawDataBuffer;
-import net.timewalker.ffmq3.utils.SerializationTools;
-import net.timewalker.ffmq3.utils.watchdog.ActivityWatchdog;
+import net.timewalker.ffmq4.transport.PacketTransportListener;
+import net.timewalker.ffmq4.transport.packet.AbstractPacket;
+import net.timewalker.ffmq4.transport.packet.PacketSerializer;
+import net.timewalker.ffmq4.transport.packet.query.PingQuery;
+import net.timewalker.ffmq4.utils.RawDataBuffer;
+import net.timewalker.ffmq4.utils.SerializationTools;
+import net.timewalker.ffmq4.utils.watchdog.ActivityWatchdog;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -163,7 +163,7 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
+     * @see net.timewalker.ffmq4.utils.watchdog.ActiveObject#getTimeoutDelay()
      */
     @Override
 	public long getTimeoutDelay()
@@ -172,7 +172,7 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
+     * @see net.timewalker.ffmq4.utils.watchdog.ActiveObject#onActivityTimeout()
      */
     @Override
 	public boolean onActivityTimeout() throws Exception

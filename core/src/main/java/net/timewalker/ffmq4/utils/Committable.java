@@ -16,11 +16,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.utils;
+package net.timewalker.ffmq4.utils;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 /**
  * Committable

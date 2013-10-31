@@ -15,16 +15,16 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.listeners.utils;
+package net.timewalker.ffmq4.listeners.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.local.destination.notification.NotificationProxy;
-import net.timewalker.ffmq3.transport.PacketTransport;
-import net.timewalker.ffmq3.transport.packet.NotificationPacket;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.local.destination.notification.NotificationProxy;
+import net.timewalker.ffmq4.transport.PacketTransport;
+import net.timewalker.ffmq4.transport.packet.NotificationPacket;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,7 +53,7 @@ public final class RemoteNotificationProxy implements NotificationProxy
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.notification.NotificationProxy#sendNotification(net.timewalker.ffmq3.utils.id.IntegerID, net.timewalker.ffmq3.common.message.AbstractMessage)
+     * @see net.timewalker.ffmq4.local.destination.notification.NotificationProxy#sendNotification(net.timewalker.ffmq4.utils.id.IntegerID, net.timewalker.ffmq4.common.message.AbstractMessage)
      */
     @Override
 	public synchronized void addNotification(IntegerID consumerId, AbstractMessage prefetchedMessage)
@@ -68,7 +68,7 @@ public final class RemoteNotificationProxy implements NotificationProxy
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.destination.notification.NotificationProxy#flush()
+     * @see net.timewalker.ffmq4.local.destination.notification.NotificationProxy#flush()
      */
     @Override
 	public synchronized void flush()

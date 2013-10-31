@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.connection;
+package net.timewalker.ffmq4.remote.connection;
 
 import java.net.URI;
 
@@ -26,8 +26,8 @@ import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicSession;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.remote.session.RemoteTopicSession;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.remote.session.RemoteTopicSession;
 
 /**
  * RemoteTopicConnection

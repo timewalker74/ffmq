@@ -1,17 +1,17 @@
-package net.timewalker.ffmq3.test.utils.factory;
+package net.timewalker.ffmq4.test.utils.factory;
 
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.common.destination.QueueRef;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.BytesMessageImpl;
-import net.timewalker.ffmq3.common.message.EmptyMessageImpl;
-import net.timewalker.ffmq3.common.message.MapMessageImpl;
-import net.timewalker.ffmq3.common.message.ObjectMessageImpl;
-import net.timewalker.ffmq3.common.message.StreamMessageImpl;
-import net.timewalker.ffmq3.common.message.TextMessageImpl;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.common.destination.QueueRef;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.BytesMessageImpl;
+import net.timewalker.ffmq4.common.message.EmptyMessageImpl;
+import net.timewalker.ffmq4.common.message.MapMessageImpl;
+import net.timewalker.ffmq4.common.message.ObjectMessageImpl;
+import net.timewalker.ffmq4.common.message.StreamMessageImpl;
+import net.timewalker.ffmq4.common.message.TextMessageImpl;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 /**
  * MessageCreator

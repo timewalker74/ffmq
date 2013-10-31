@@ -16,10 +16,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.local;
+package net.timewalker.ffmq4.local;
 
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.local.destination.LocalTopic;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.local.destination.LocalTopic;
 
 /**
  * <p>Interface for an {@link FFMQEngine} listener</p>

@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message;
+package net.timewalker.ffmq4.common.message;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -28,9 +28,9 @@ import javax.jms.MessageNotReadableException;
 import javax.jms.MessageNotWriteableException;
 import javax.jms.StreamMessage;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.storage.message.MessageSerializationLevel;
-import net.timewalker.ffmq3.utils.RawDataBuffer;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.storage.message.MessageSerializationLevel;
+import net.timewalker.ffmq4.utils.RawDataBuffer;
 
 /**
  * <p>Implementation of a {@link StreamMessage}</p>
@@ -54,7 +54,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.message.AbstractMessage#getType()
+     * @see net.timewalker.ffmq4.common.message.AbstractMessage#getType()
      */
     @Override
 	protected byte getType()
@@ -63,7 +63,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.message.AbstractMessage#unserializeBodyFrom(net.timewalker.ffmq3.utils.RawDataInputStream)
+     * @see net.timewalker.ffmq4.common.message.AbstractMessage#unserializeBodyFrom(net.timewalker.ffmq4.utils.RawDataInputStream)
      */
     @Override
 	protected void unserializeBodyFrom(RawDataBuffer in)
@@ -78,7 +78,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.message.AbstractMessage#serializeBodyTo(net.timewalker.ffmq3.utils.RawDataBuffer)
+     * @see net.timewalker.ffmq4.common.message.AbstractMessage#serializeBodyTo(net.timewalker.ffmq4.utils.RawDataBuffer)
      */
     @Override
 	protected final void serializeBodyTo(RawDataBuffer out)
@@ -568,7 +568,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.message.AbstractMessage#copy()
+     * @see net.timewalker.ffmq4.common.message.AbstractMessage#copy()
      */
     @Override
 	public AbstractMessage copy()

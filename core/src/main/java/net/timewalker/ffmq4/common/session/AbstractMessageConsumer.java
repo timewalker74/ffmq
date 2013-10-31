@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.session;
+package net.timewalker.ffmq4.common.session;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -24,11 +24,11 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.storage.message.MessageSerializationLevel;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.storage.message.MessageSerializationLevel;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

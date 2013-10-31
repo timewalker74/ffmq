@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.jmx.rmi;
+package net.timewalker.ffmq4.jmx.rmi;
 
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;
@@ -36,8 +36,8 @@ import javax.management.remote.JMXConnectorServerFactory;
 import javax.management.remote.JMXServiceURL;
 import javax.management.remote.rmi.RMIConnectorServer;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.jmx.JMXAgent;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.jmx.JMXAgent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -164,7 +164,7 @@ public final class JMXOverRMIAgent implements JMXAgent
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.jmx.JMXAgent#stop()
+     * @see net.timewalker.ffmq4.jmx.JMXAgent#stop()
      */
     @Override
 	public void stop()
@@ -221,7 +221,7 @@ public final class JMXOverRMIAgent implements JMXAgent
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.jmx.JMXAgent#register(javax.management.ObjectName, java.lang.Object)
+     * @see net.timewalker.ffmq4.jmx.JMXAgent#register(javax.management.ObjectName, java.lang.Object)
      */
 	@Override
 	public void register( ObjectName name , Object mBean ) throws JMSException
@@ -239,7 +239,7 @@ public final class JMXOverRMIAgent implements JMXAgent
   
   	/*
   	 * (non-Javadoc)
-  	 * @see net.timewalker.ffmq3.jmx.JMXAgent#unregister(javax.management.ObjectName)
+  	 * @see net.timewalker.ffmq4.jmx.JMXAgent#unregister(javax.management.ObjectName)
   	 */
 	@Override
 	public void unregister( ObjectName name ) throws JMSException

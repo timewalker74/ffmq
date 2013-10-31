@@ -16,10 +16,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.utils.md5;
+package net.timewalker.ffmq4.test.utils.md5;
 
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.md5.MD5;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.md5.MD5;
 import junit.framework.TestCase;
 
 /**

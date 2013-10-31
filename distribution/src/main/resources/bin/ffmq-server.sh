@@ -33,12 +33,12 @@ fi
 CONFIG=$FFMQ_BASE/conf/ffmq-server.properties
 
 # Create classpath
-CLASSPATH=$FFMQ_HOME/lib/commons-logging-1.1.jar:$FFMQ_HOME/lib/log4j-1.2.15.jar:$FFMQ_HOME/lib/jms-1.1.jar:$FFMQ_HOME/lib/mx4j-3.0.2.jar:$FFMQ_HOME/lib/mx4j-remote-3.0.2.jar
-CLASSPATH=$CLASSPATH:$FFMQ_HOME/lib/ffmq3-core.jar:$FFMQ_HOME/lib/ffmq3-server.jar
+CLASSPATH=$FFMQ_HOME/lib/commons-logging-1.1.jar:$FFMQ_HOME/lib/log4j-1.2.15.jar:$FFMQ_HOME/lib/jms-1.1.jar
+CLASSPATH=$CLASSPATH:$FFMQ_HOME/lib/ffmq4-core.jar:$FFMQ_HOME/lib/ffmq4-server.jar
 
 # Run the queuer
 cd $PRGDIR || exit 1
-nohup java $JAVA_OPTS -DFFMQ_HOME="$FFMQ_HOME" -DFFMQ_BASE="$FFMQ_BASE" -cp "$CLASSPATH" net.timewalker.ffmq3.FFMQServerLauncher -conf "$CONFIG" 1> stdout.log 2> stderr.log &
+nohup java $JAVA_OPTS -DFFMQ_HOME="$FFMQ_HOME" -DFFMQ_BASE="$FFMQ_BASE" -cp "$CLASSPATH" net.timewalker.ffmq4.FFMQServerLauncher -conf "$CONFIG" 1> stdout.log 2> stderr.log &
 SERVER_PID=$!
 echo $SERVER_PID > $FFMQ_BASE/bin/ffmq-server.pid
 

@@ -15,19 +15,19 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import java.util.NoSuchElementException;
 
 import javax.jms.JMSException;
 import javax.jms.QueueBrowser;
 
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.message.MessageSelector;
-import net.timewalker.ffmq3.common.message.MessageTools;
-import net.timewalker.ffmq3.common.session.AbstractQueueBrowserEnumeration;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.storage.message.MessageSerializationLevel;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.message.MessageSelector;
+import net.timewalker.ffmq4.common.message.MessageTools;
+import net.timewalker.ffmq4.common.session.AbstractQueueBrowserEnumeration;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.storage.message.MessageSerializationLevel;
 
 /**
  * <p>

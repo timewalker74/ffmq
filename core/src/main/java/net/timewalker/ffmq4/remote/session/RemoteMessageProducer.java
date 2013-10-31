@@ -15,14 +15,14 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import net.timewalker.ffmq3.common.session.AbstractMessageProducer;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.common.session.AbstractMessageProducer;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * RemoteMessageProducer
@@ -40,7 +40,7 @@ public class RemoteMessageProducer extends AbstractMessageProducer
     }
 
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractMessageProducer#sendToDestination(javax.jms.Destination, boolean, javax.jms.Message, int, int, long)
+     * @see net.timewalker.ffmq4.common.session.AbstractMessageProducer#sendToDestination(javax.jms.Destination, boolean, javax.jms.Message, int, int, long)
      */
     @Override
 	protected final void sendToDestination(Destination destination, boolean destinationOverride, Message srcMessage, int deliveryMode, int priority, long timeToLive) throws JMSException

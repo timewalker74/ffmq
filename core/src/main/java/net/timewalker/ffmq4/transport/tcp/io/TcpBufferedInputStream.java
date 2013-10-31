@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.transport.tcp.io;
+package net.timewalker.ffmq4.transport.tcp.io;
 
 import java.io.FilterInputStream;
 import java.io.IOException;

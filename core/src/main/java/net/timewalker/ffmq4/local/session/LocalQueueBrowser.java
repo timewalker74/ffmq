@@ -15,25 +15,25 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import java.util.Enumeration;
 
 import javax.jms.JMSException;
 import javax.jms.QueueBrowser;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.destination.TemporaryDestination;
-import net.timewalker.ffmq3.common.message.MessageSelector;
-import net.timewalker.ffmq3.common.session.AbstractQueueBrowser;
-import net.timewalker.ffmq3.local.connection.LocalConnection;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.security.Action;
-import net.timewalker.ffmq3.security.Resource;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.id.IntegerID;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.destination.TemporaryDestination;
+import net.timewalker.ffmq4.common.message.MessageSelector;
+import net.timewalker.ffmq4.common.session.AbstractQueueBrowser;
+import net.timewalker.ffmq4.local.connection.LocalConnection;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.security.Action;
+import net.timewalker.ffmq4.security.Resource;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 /**
  * <p>Implementation of a local JMS {@link QueueBrowser}</p>

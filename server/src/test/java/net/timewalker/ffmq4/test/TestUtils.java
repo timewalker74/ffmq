@@ -1,4 +1,4 @@
-package net.timewalker.ffmq3.test;
+package net.timewalker.ffmq4.test;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -11,9 +11,9 @@ import javax.jms.TopicConnectionFactory;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.transport.PacketTransportType;
-import net.timewalker.ffmq3.utils.JNDITools;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.transport.PacketTransportType;
+import net.timewalker.ffmq4.utils.JNDITools;
 
 /**
  * TestUtils

@@ -1,6 +1,6 @@
-package net.timewalker.ffmq3.test.remote.session;
+package net.timewalker.ffmq4.test.remote.session;
 
-import net.timewalker.ffmq3.test.local.session.LocalQueueSessionTest;
+import net.timewalker.ffmq4.test.local.session.LocalQueueSessionTest;
 
 /**
  * RemoteQueueSessionTest
@@ -9,7 +9,7 @@ public class RemoteQueueSessionTest extends LocalQueueSessionTest
 {
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.session.LocalSessionTest#isRemote()
+     * @see net.timewalker.ffmq4.local.session.LocalSessionTest#isRemote()
      */
     @Override
 	protected boolean isRemote()

@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.listeners;
+package net.timewalker.ffmq4.listeners;
 
 
 import java.util.ArrayList;
@@ -29,84 +29,84 @@ import javax.jms.Session;
 import javax.jms.TemporaryQueue;
 import javax.jms.TemporaryTopic;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.FFMQServerSettings;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.listeners.utils.RemoteNotificationProxy;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.local.connection.LocalConnection;
-import net.timewalker.ffmq3.local.session.LocalDurableTopicSubscriber;
-import net.timewalker.ffmq3.local.session.LocalMessageConsumer;
-import net.timewalker.ffmq3.local.session.LocalQueueBrowser;
-import net.timewalker.ffmq3.local.session.LocalQueueBrowserEnumeration;
-import net.timewalker.ffmq3.local.session.LocalSession;
-import net.timewalker.ffmq3.transport.PacketTransport;
-import net.timewalker.ffmq3.transport.PacketTransportException;
-import net.timewalker.ffmq3.transport.PacketTransportListener;
-import net.timewalker.ffmq3.transport.packet.AbstractPacket;
-import net.timewalker.ffmq3.transport.packet.AbstractQueryPacket;
-import net.timewalker.ffmq3.transport.packet.AbstractResponsePacket;
-import net.timewalker.ffmq3.transport.packet.PacketType;
-import net.timewalker.ffmq3.transport.packet.query.AbstractConsumerQuery;
-import net.timewalker.ffmq3.transport.packet.query.AbstractQueueBrowserEnumerationQuery;
-import net.timewalker.ffmq3.transport.packet.query.AbstractQueueBrowserQuery;
-import net.timewalker.ffmq3.transport.packet.query.AbstractSessionQuery;
-import net.timewalker.ffmq3.transport.packet.query.AcknowledgeQuery;
-import net.timewalker.ffmq3.transport.packet.query.CloseBrowserEnumerationQuery;
-import net.timewalker.ffmq3.transport.packet.query.CloseBrowserQuery;
-import net.timewalker.ffmq3.transport.packet.query.CloseConsumerQuery;
-import net.timewalker.ffmq3.transport.packet.query.CloseSessionQuery;
-import net.timewalker.ffmq3.transport.packet.query.CommitQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateBrowserQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateConsumerQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateDurableSubscriberQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateSessionQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateTemporaryQueueQuery;
-import net.timewalker.ffmq3.transport.packet.query.CreateTemporaryTopicQuery;
-import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryQueueQuery;
-import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryTopicQuery;
-import net.timewalker.ffmq3.transport.packet.query.GetQuery;
-import net.timewalker.ffmq3.transport.packet.query.OpenConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.query.PrefetchQuery;
-import net.timewalker.ffmq3.transport.packet.query.PutQuery;
-import net.timewalker.ffmq3.transport.packet.query.QueueBrowserFetchElementQuery;
-import net.timewalker.ffmq3.transport.packet.query.QueueBrowserGetEnumerationQuery;
-import net.timewalker.ffmq3.transport.packet.query.RecoverQuery;
-import net.timewalker.ffmq3.transport.packet.query.RollbackMessageQuery;
-import net.timewalker.ffmq3.transport.packet.query.RollbackQuery;
-import net.timewalker.ffmq3.transport.packet.query.SetClientIDQuery;
-import net.timewalker.ffmq3.transport.packet.query.UnsubscribeQuery;
-import net.timewalker.ffmq3.transport.packet.response.AcknowledgeResponse;
-import net.timewalker.ffmq3.transport.packet.response.CloseBrowserEnumerationResponse;
-import net.timewalker.ffmq3.transport.packet.response.CloseBrowserResponse;
-import net.timewalker.ffmq3.transport.packet.response.CloseConsumerResponse;
-import net.timewalker.ffmq3.transport.packet.response.CloseSessionResponse;
-import net.timewalker.ffmq3.transport.packet.response.CommitResponse;
-import net.timewalker.ffmq3.transport.packet.response.CreateBrowserResponse;
-import net.timewalker.ffmq3.transport.packet.response.CreateConsumerResponse;
-import net.timewalker.ffmq3.transport.packet.response.CreateSessionResponse;
-import net.timewalker.ffmq3.transport.packet.response.CreateTemporaryQueueResponse;
-import net.timewalker.ffmq3.transport.packet.response.CreateTemporaryTopicResponse;
-import net.timewalker.ffmq3.transport.packet.response.DeleteTemporaryQueueResponse;
-import net.timewalker.ffmq3.transport.packet.response.DeleteTemporaryTopicResponse;
-import net.timewalker.ffmq3.transport.packet.response.ErrorResponse;
-import net.timewalker.ffmq3.transport.packet.response.GetResponse;
-import net.timewalker.ffmq3.transport.packet.response.OpenConnectionResponse;
-import net.timewalker.ffmq3.transport.packet.response.PingResponse;
-import net.timewalker.ffmq3.transport.packet.response.PrefetchResponse;
-import net.timewalker.ffmq3.transport.packet.response.PutResponse;
-import net.timewalker.ffmq3.transport.packet.response.QueueBrowserFetchElementResponse;
-import net.timewalker.ffmq3.transport.packet.response.QueueBrowserGetEnumerationResponse;
-import net.timewalker.ffmq3.transport.packet.response.RecoverResponse;
-import net.timewalker.ffmq3.transport.packet.response.RollbackMessageResponse;
-import net.timewalker.ffmq3.transport.packet.response.RollbackResponse;
-import net.timewalker.ffmq3.transport.packet.response.SetClientIDResponse;
-import net.timewalker.ffmq3.transport.packet.response.StartConnectionResponse;
-import net.timewalker.ffmq3.transport.packet.response.StopConnectionResponse;
-import net.timewalker.ffmq3.transport.packet.response.UnsubscribeResponse;
-import net.timewalker.ffmq3.utils.watchdog.ActiveObject;
-import net.timewalker.ffmq3.utils.watchdog.ActivityWatchdog;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.FFMQServerSettings;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.listeners.utils.RemoteNotificationProxy;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.local.connection.LocalConnection;
+import net.timewalker.ffmq4.local.session.LocalDurableTopicSubscriber;
+import net.timewalker.ffmq4.local.session.LocalMessageConsumer;
+import net.timewalker.ffmq4.local.session.LocalQueueBrowser;
+import net.timewalker.ffmq4.local.session.LocalQueueBrowserEnumeration;
+import net.timewalker.ffmq4.local.session.LocalSession;
+import net.timewalker.ffmq4.transport.PacketTransport;
+import net.timewalker.ffmq4.transport.PacketTransportException;
+import net.timewalker.ffmq4.transport.PacketTransportListener;
+import net.timewalker.ffmq4.transport.packet.AbstractPacket;
+import net.timewalker.ffmq4.transport.packet.AbstractQueryPacket;
+import net.timewalker.ffmq4.transport.packet.AbstractResponsePacket;
+import net.timewalker.ffmq4.transport.packet.PacketType;
+import net.timewalker.ffmq4.transport.packet.query.AbstractConsumerQuery;
+import net.timewalker.ffmq4.transport.packet.query.AbstractQueueBrowserEnumerationQuery;
+import net.timewalker.ffmq4.transport.packet.query.AbstractQueueBrowserQuery;
+import net.timewalker.ffmq4.transport.packet.query.AbstractSessionQuery;
+import net.timewalker.ffmq4.transport.packet.query.AcknowledgeQuery;
+import net.timewalker.ffmq4.transport.packet.query.CloseBrowserEnumerationQuery;
+import net.timewalker.ffmq4.transport.packet.query.CloseBrowserQuery;
+import net.timewalker.ffmq4.transport.packet.query.CloseConsumerQuery;
+import net.timewalker.ffmq4.transport.packet.query.CloseSessionQuery;
+import net.timewalker.ffmq4.transport.packet.query.CommitQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateBrowserQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateConsumerQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateDurableSubscriberQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateSessionQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateTemporaryQueueQuery;
+import net.timewalker.ffmq4.transport.packet.query.CreateTemporaryTopicQuery;
+import net.timewalker.ffmq4.transport.packet.query.DeleteTemporaryQueueQuery;
+import net.timewalker.ffmq4.transport.packet.query.DeleteTemporaryTopicQuery;
+import net.timewalker.ffmq4.transport.packet.query.GetQuery;
+import net.timewalker.ffmq4.transport.packet.query.OpenConnectionQuery;
+import net.timewalker.ffmq4.transport.packet.query.PrefetchQuery;
+import net.timewalker.ffmq4.transport.packet.query.PutQuery;
+import net.timewalker.ffmq4.transport.packet.query.QueueBrowserFetchElementQuery;
+import net.timewalker.ffmq4.transport.packet.query.QueueBrowserGetEnumerationQuery;
+import net.timewalker.ffmq4.transport.packet.query.RecoverQuery;
+import net.timewalker.ffmq4.transport.packet.query.RollbackMessageQuery;
+import net.timewalker.ffmq4.transport.packet.query.RollbackQuery;
+import net.timewalker.ffmq4.transport.packet.query.SetClientIDQuery;
+import net.timewalker.ffmq4.transport.packet.query.UnsubscribeQuery;
+import net.timewalker.ffmq4.transport.packet.response.AcknowledgeResponse;
+import net.timewalker.ffmq4.transport.packet.response.CloseBrowserEnumerationResponse;
+import net.timewalker.ffmq4.transport.packet.response.CloseBrowserResponse;
+import net.timewalker.ffmq4.transport.packet.response.CloseConsumerResponse;
+import net.timewalker.ffmq4.transport.packet.response.CloseSessionResponse;
+import net.timewalker.ffmq4.transport.packet.response.CommitResponse;
+import net.timewalker.ffmq4.transport.packet.response.CreateBrowserResponse;
+import net.timewalker.ffmq4.transport.packet.response.CreateConsumerResponse;
+import net.timewalker.ffmq4.transport.packet.response.CreateSessionResponse;
+import net.timewalker.ffmq4.transport.packet.response.CreateTemporaryQueueResponse;
+import net.timewalker.ffmq4.transport.packet.response.CreateTemporaryTopicResponse;
+import net.timewalker.ffmq4.transport.packet.response.DeleteTemporaryQueueResponse;
+import net.timewalker.ffmq4.transport.packet.response.DeleteTemporaryTopicResponse;
+import net.timewalker.ffmq4.transport.packet.response.ErrorResponse;
+import net.timewalker.ffmq4.transport.packet.response.GetResponse;
+import net.timewalker.ffmq4.transport.packet.response.OpenConnectionResponse;
+import net.timewalker.ffmq4.transport.packet.response.PingResponse;
+import net.timewalker.ffmq4.transport.packet.response.PrefetchResponse;
+import net.timewalker.ffmq4.transport.packet.response.PutResponse;
+import net.timewalker.ffmq4.transport.packet.response.QueueBrowserFetchElementResponse;
+import net.timewalker.ffmq4.transport.packet.response.QueueBrowserGetEnumerationResponse;
+import net.timewalker.ffmq4.transport.packet.response.RecoverResponse;
+import net.timewalker.ffmq4.transport.packet.response.RollbackMessageResponse;
+import net.timewalker.ffmq4.transport.packet.response.RollbackResponse;
+import net.timewalker.ffmq4.transport.packet.response.SetClientIDResponse;
+import net.timewalker.ffmq4.transport.packet.response.StartConnectionResponse;
+import net.timewalker.ffmq4.transport.packet.response.StopConnectionResponse;
+import net.timewalker.ffmq4.transport.packet.response.UnsubscribeResponse;
+import net.timewalker.ffmq4.utils.watchdog.ActiveObject;
+import net.timewalker.ffmq4.utils.watchdog.ActivityWatchdog;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -148,7 +148,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getClientID()
+	 * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#getClientID()
 	 */
 	@Override
 	public String getClientID()
@@ -157,7 +157,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getPeerDescription()
+	 * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#getPeerDescription()
 	 */
 	@Override
 	public String getPeerDescription()
@@ -166,7 +166,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#isAuthenticated()
+	 * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#isAuthenticated()
 	 */
 	@Override
 	public boolean isAuthenticated()
@@ -175,7 +175,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	}
 
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getSessionsCount()
+	 * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#getSessionsCount()
 	 */
 	@Override
 	public int getSessionsCount()
@@ -184,7 +184,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getProducersCount()
+	 * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#getProducersCount()
 	 */
 	@Override
 	public int getProducersCount()
@@ -193,7 +193,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getConsumersCount()
+	 * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#getConsumersCount()
 	 */
 	@Override
 	public int getConsumersCount()
@@ -202,7 +202,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getEntitiesDescription()
+	 * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#getEntitiesDescription()
 	 */
 	@Override
 	public String getEntitiesDescription()
@@ -234,7 +234,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getLastActivity()
+     * @see net.timewalker.ffmq4.utils.watchdog.ActiveObject#getLastActivity()
      */
     @Override
 	public long getLastActivity()
@@ -243,7 +243,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.listeners.ClientProcessorMBean#getConnectionDate()
+     * @see net.timewalker.ffmq4.listeners.ClientProcessorMBean#getConnectionDate()
      */
     @Override
 	public Date getConnectionDate()
@@ -252,7 +252,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getTimeoutDelay()
+     * @see net.timewalker.ffmq4.utils.watchdog.ActiveObject#getTimeoutDelay()
      */
     @Override
 	public long getTimeoutDelay()
@@ -261,7 +261,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     }
     
     /* (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#onActivityTimeout()
+     * @see net.timewalker.ffmq4.utils.watchdog.ActiveObject#onActivityTimeout()
      */
     @Override
 	public boolean onActivityTimeout() throws Exception
@@ -276,7 +276,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     
 	/*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetReceived(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransportListener#packetReceived(net.timewalker.ffmq4.remote.transport.packet.AbstractPacket)
      */
     @Override
 	public boolean packetReceived(AbstractPacket packet)
@@ -326,7 +326,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#packetSent(net.timewalker.ffmq3.remote.transport.packet.AbstractPacket)
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransportListener#packetSent(net.timewalker.ffmq4.remote.transport.packet.AbstractPacket)
      */
     @Override
 	public void packetSent(AbstractPacket packet)
@@ -336,7 +336,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     }
     
 	/* (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#transportClosed(boolean)
+     * @see net.timewalker.ffmq4.remote.transport.PacketTransportListener#transportClosed(boolean)
      */
     @Override
 	public void transportClosed(boolean closedByRemotePeer)

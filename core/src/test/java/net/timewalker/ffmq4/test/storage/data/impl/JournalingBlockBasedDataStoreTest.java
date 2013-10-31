@@ -16,19 +16,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.test.storage.data.impl;
+package net.timewalker.ffmq4.test.storage.data.impl;
 
 import java.io.File;
 
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.storage.data.LinkedDataStore;
-import net.timewalker.ffmq3.storage.data.impl.BlockBasedDataStoreTools;
-import net.timewalker.ffmq3.storage.data.impl.JournalingBlockBasedDataStore;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.async.AsyncTaskManager;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.storage.data.LinkedDataStore;
+import net.timewalker.ffmq4.storage.data.impl.BlockBasedDataStoreTools;
+import net.timewalker.ffmq4.storage.data.impl.JournalingBlockBasedDataStore;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.async.AsyncTaskManager;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 /**
  * JournalingBlockBasedDataStoreTest
@@ -63,7 +63,7 @@ public class JournalingBlockBasedDataStoreTest extends BlockBasedDataStoreTest
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.test.storage.data.impl.BlockBasedDataStoreTest#createStore(java.lang.String, java.io.File)
+	 * @see net.timewalker.ffmq4.test.storage.data.impl.BlockBasedDataStoreTest#createStore(java.lang.String, java.io.File)
 	 */
 	@Override
 	protected LinkedDataStore createStore(String baseName, File dataFolder) throws DataStoreException

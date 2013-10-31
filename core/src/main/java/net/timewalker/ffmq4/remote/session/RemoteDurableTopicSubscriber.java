@@ -15,14 +15,14 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.remote.session;
+package net.timewalker.ffmq4.remote.session;
 
 import javax.jms.JMSException;
 import javax.jms.Topic;
 
-import net.timewalker.ffmq3.transport.PacketTransportEndpoint;
-import net.timewalker.ffmq3.transport.packet.query.CreateDurableSubscriberQuery;
-import net.timewalker.ffmq3.utils.id.IntegerID;
+import net.timewalker.ffmq4.transport.PacketTransportEndpoint;
+import net.timewalker.ffmq4.transport.packet.query.CreateDurableSubscriberQuery;
+import net.timewalker.ffmq4.utils.id.IntegerID;
 
 /**
  * RemoteDurableTopicSubscriber
@@ -45,7 +45,7 @@ public final class RemoteDurableTopicSubscriber extends RemoteTopicSubscriber
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.remote.session.RemoteMessageConsumer#remoteInit()
+     * @see net.timewalker.ffmq4.remote.session.RemoteMessageConsumer#remoteInit()
      */
     @Override
 	protected final void remoteInit() throws JMSException

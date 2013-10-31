@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.utils.concurrent;
+package net.timewalker.ffmq4.utils.concurrent;
 
 import java.util.LinkedList;
 import java.util.concurrent.Semaphore;

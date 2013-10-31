@@ -15,9 +15,9 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.utils.async;
+package net.timewalker.ffmq4.utils.async;
 
-import net.timewalker.ffmq3.utils.pool.ObjectPoolMBean;
+import net.timewalker.ffmq4.utils.pool.ObjectPoolMBean;
 
 /**
  * <p>JMX interface for an {@link AsyncTaskManager}</p>

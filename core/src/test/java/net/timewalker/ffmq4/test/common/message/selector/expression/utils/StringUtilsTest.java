@@ -1,7 +1,7 @@
-package net.timewalker.ffmq3.test.common.message.selector.expression.utils;
+package net.timewalker.ffmq4.test.common.message.selector.expression.utils;
 
 import junit.framework.TestCase;
-import net.timewalker.ffmq3.common.message.selector.expression.utils.StringUtils;
+import net.timewalker.ffmq4.common.message.selector.expression.utils.StringUtils;
 
 public class StringUtilsTest
     extends TestCase

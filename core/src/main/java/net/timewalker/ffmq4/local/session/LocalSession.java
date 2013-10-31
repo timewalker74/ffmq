@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local.session;
+package net.timewalker.ffmq4.local.session;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,29 +40,29 @@ import javax.jms.TemporaryTopic;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
-import net.timewalker.ffmq3.FFMQConstants;
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.destination.TemporaryQueueRef;
-import net.timewalker.ffmq3.common.destination.TemporaryTopicRef;
-import net.timewalker.ffmq3.common.message.AbstractMessage;
-import net.timewalker.ffmq3.common.session.AbstractSession;
-import net.timewalker.ffmq3.local.FFMQEngine;
-import net.timewalker.ffmq3.local.MessageLock;
-import net.timewalker.ffmq3.local.MessageLockSet;
-import net.timewalker.ffmq3.local.TransactionItem;
-import net.timewalker.ffmq3.local.TransactionSet;
-import net.timewalker.ffmq3.local.connection.LocalConnection;
-import net.timewalker.ffmq3.local.destination.AbstractLocalDestination;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.local.destination.notification.NotificationProxy;
-import net.timewalker.ffmq3.security.Action;
-import net.timewalker.ffmq3.security.Resource;
-import net.timewalker.ffmq3.utils.Committable;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
-import net.timewalker.ffmq3.utils.id.IntegerID;
-import net.timewalker.ffmq3.utils.id.UUIDProvider;
+import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.destination.TemporaryQueueRef;
+import net.timewalker.ffmq4.common.destination.TemporaryTopicRef;
+import net.timewalker.ffmq4.common.message.AbstractMessage;
+import net.timewalker.ffmq4.common.session.AbstractSession;
+import net.timewalker.ffmq4.local.FFMQEngine;
+import net.timewalker.ffmq4.local.MessageLock;
+import net.timewalker.ffmq4.local.MessageLockSet;
+import net.timewalker.ffmq4.local.TransactionItem;
+import net.timewalker.ffmq4.local.TransactionSet;
+import net.timewalker.ffmq4.local.connection.LocalConnection;
+import net.timewalker.ffmq4.local.destination.AbstractLocalDestination;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.local.destination.notification.NotificationProxy;
+import net.timewalker.ffmq4.security.Action;
+import net.timewalker.ffmq4.security.Resource;
+import net.timewalker.ffmq4.utils.Committable;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
+import net.timewalker.ffmq4.utils.id.IntegerID;
+import net.timewalker.ffmq4.utils.id.UUIDProvider;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -603,7 +603,7 @@ public class LocalSession extends AbstractSession
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.common.session.AbstractSession#onSessionClose()
+	 * @see net.timewalker.ffmq4.common.session.AbstractSession#onSessionClose()
 	 */
 	@Override
 	protected void onSessionClose()
@@ -837,7 +837,7 @@ public class LocalSession extends AbstractSession
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.common.session.AbstractSession#acknowledge()
+     * @see net.timewalker.ffmq4.common.session.AbstractSession#acknowledge()
      */
     @Override
 	public final void acknowledge() throws JMSException

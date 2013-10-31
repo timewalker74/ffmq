@@ -15,10 +15,10 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.transport.tcp.io;
+package net.timewalker.ffmq4.transport.tcp.io;
 
-import net.timewalker.ffmq3.transport.PacketTransportListener;
-import net.timewalker.ffmq3.utils.watchdog.ActiveObject;
+import net.timewalker.ffmq4.transport.PacketTransportListener;
+import net.timewalker.ffmq4.utils.watchdog.ActiveObject;
 
 /**
  * <p>Base class for threads handling the outgoing/incoming traffic on a TCP socket</p>
@@ -51,7 +51,7 @@ public abstract class AbstractTcpPacketHandler implements ActiveObject
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.utils.watchdog.ActiveObject#getLastActivity()
+     * @see net.timewalker.ffmq4.utils.watchdog.ActiveObject#getLastActivity()
      */
 	@Override
 	public final long getLastActivity()

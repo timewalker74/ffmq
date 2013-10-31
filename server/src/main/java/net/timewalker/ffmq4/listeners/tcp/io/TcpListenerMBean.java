@@ -16,9 +16,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.listeners.tcp.io;
+package net.timewalker.ffmq4.listeners.tcp.io;
 
-import net.timewalker.ffmq3.listeners.ClientListener;
+import net.timewalker.ffmq4.listeners.ClientListener;
 
 /**
  * TcpListenerMBean

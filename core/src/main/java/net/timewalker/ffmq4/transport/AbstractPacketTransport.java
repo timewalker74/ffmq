@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.transport;
+package net.timewalker.ffmq4.transport;
 
 
 /**
@@ -43,7 +43,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.transport.PacketTransport#getId()
+	 * @see net.timewalker.ffmq4.transport.PacketTransport#getId()
 	 */
 	@Override
 	public final String getId()
@@ -52,7 +52,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
     }
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.transport.PacketTransport#isClosed()
+	 * @see net.timewalker.ffmq4.transport.PacketTransport#isClosed()
 	 */
 	@Override
 	public boolean isClosed()
@@ -62,7 +62,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
 	
 	/*
 	 * (non-Javadoc)
-	 * @see net.timewalker.ffmq3.transport.PacketTransport#setListener(net.timewalker.ffmq3.transport.PacketTransportListener)
+	 * @see net.timewalker.ffmq4.transport.PacketTransport#setListener(net.timewalker.ffmq4.transport.PacketTransportListener)
 	 */
 	@Override
 	public void setListener(PacketTransportListener listener)

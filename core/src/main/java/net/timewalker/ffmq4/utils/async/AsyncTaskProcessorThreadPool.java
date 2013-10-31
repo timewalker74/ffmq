@@ -16,11 +16,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.timewalker.ffmq3.utils.async;
+package net.timewalker.ffmq4.utils.async;
 
 import javax.jms.JMSException;
 
-import net.timewalker.ffmq3.utils.pool.ObjectPool;
+import net.timewalker.ffmq4.utils.pool.ObjectPool;
 
 /**
  * MessageListenerDispatcherThreadPool
@@ -47,7 +47,7 @@ public final class AsyncTaskProcessorThreadPool extends ObjectPool<AsyncTaskProc
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.pool.ObjectPool#createPoolObject()
+	 * @see net.timewalker.ffmq4.utils.pool.ObjectPool#createPoolObject()
 	 */
 	@Override
 	protected AsyncTaskProcessorThread createPoolObject() throws Exception
@@ -59,7 +59,7 @@ public final class AsyncTaskProcessorThreadPool extends ObjectPool<AsyncTaskProc
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.utils.pool.ObjectPool#destroyPoolObject(java.lang.Object)
+	 * @see net.timewalker.ffmq4.utils.pool.ObjectPool#destroyPoolObject(java.lang.Object)
 	 */
 	@Override
 	protected void destroyPoolObject(AsyncTaskProcessorThread thread) throws Exception

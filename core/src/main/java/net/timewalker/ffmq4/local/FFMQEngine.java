@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.local;
+package net.timewalker.ffmq4.local;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -29,31 +29,31 @@ import javax.jms.JMSException;
 import javax.jms.QueueConnection;
 import javax.jms.TopicConnection;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.FFMQSecurityException;
-import net.timewalker.ffmq3.local.connection.ClientIDRegistry;
-import net.timewalker.ffmq3.local.connection.LocalConnection;
-import net.timewalker.ffmq3.local.connection.LocalQueueConnection;
-import net.timewalker.ffmq3.local.connection.LocalTopicConnection;
-import net.timewalker.ffmq3.local.destination.LocalQueue;
-import net.timewalker.ffmq3.local.destination.LocalTopic;
-import net.timewalker.ffmq3.local.destination.subscription.DurableSubscriptionManager;
-import net.timewalker.ffmq3.management.DestinationDefinitionProvider;
-import net.timewalker.ffmq3.management.DestinationTemplateProvider;
-import net.timewalker.ffmq3.management.FFMQEngineSetup;
-import net.timewalker.ffmq3.management.TemplateMappingProvider;
-import net.timewalker.ffmq3.management.destination.definition.QueueDefinition;
-import net.timewalker.ffmq3.management.destination.definition.TopicDefinition;
-import net.timewalker.ffmq3.management.destination.template.QueueTemplate;
-import net.timewalker.ffmq3.management.destination.template.TopicTemplate;
-import net.timewalker.ffmq3.security.SecurityConnectorProvider;
-import net.timewalker.ffmq3.security.SecurityContext;
-import net.timewalker.ffmq3.storage.data.DataStoreException;
-import net.timewalker.ffmq3.storage.data.impl.BlockBasedDataStoreTools;
-import net.timewalker.ffmq3.utils.ErrorTools;
-import net.timewalker.ffmq3.utils.Settings;
-import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.async.AsyncTaskManager;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.FFMQSecurityException;
+import net.timewalker.ffmq4.local.connection.ClientIDRegistry;
+import net.timewalker.ffmq4.local.connection.LocalConnection;
+import net.timewalker.ffmq4.local.connection.LocalQueueConnection;
+import net.timewalker.ffmq4.local.connection.LocalTopicConnection;
+import net.timewalker.ffmq4.local.destination.LocalQueue;
+import net.timewalker.ffmq4.local.destination.LocalTopic;
+import net.timewalker.ffmq4.local.destination.subscription.DurableSubscriptionManager;
+import net.timewalker.ffmq4.management.DestinationDefinitionProvider;
+import net.timewalker.ffmq4.management.DestinationTemplateProvider;
+import net.timewalker.ffmq4.management.FFMQEngineSetup;
+import net.timewalker.ffmq4.management.TemplateMappingProvider;
+import net.timewalker.ffmq4.management.destination.definition.QueueDefinition;
+import net.timewalker.ffmq4.management.destination.definition.TopicDefinition;
+import net.timewalker.ffmq4.management.destination.template.QueueTemplate;
+import net.timewalker.ffmq4.management.destination.template.TopicTemplate;
+import net.timewalker.ffmq4.security.SecurityConnectorProvider;
+import net.timewalker.ffmq4.security.SecurityContext;
+import net.timewalker.ffmq4.storage.data.DataStoreException;
+import net.timewalker.ffmq4.storage.data.impl.BlockBasedDataStoreTools;
+import net.timewalker.ffmq4.utils.ErrorTools;
+import net.timewalker.ffmq4.utils.Settings;
+import net.timewalker.ffmq4.utils.StringTools;
+import net.timewalker.ffmq4.utils.async.AsyncTaskManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -126,7 +126,7 @@ public final class FFMQEngine implements FFMQEngineMBean
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.LocalEngineMBean#getName()
+     * @see net.timewalker.ffmq4.local.LocalEngineMBean#getName()
      */
     @Override
 	public String getName()
@@ -145,7 +145,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.LocalEngineMBean#isDeployed()
+     * @see net.timewalker.ffmq4.local.LocalEngineMBean#isDeployed()
      */
     @Override
 	public boolean isDeployed()
@@ -155,7 +155,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.FFMQEngineMBean#isSecurityEnabled()
+     * @see net.timewalker.ffmq4.local.FFMQEngineMBean#isSecurityEnabled()
      */
     @Override
 	public boolean isSecurityEnabled()
@@ -174,7 +174,7 @@ public final class FFMQEngine implements FFMQEngineMBean
     
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.LocalEngineMBean#deploy()
+     * @see net.timewalker.ffmq4.local.LocalEngineMBean#deploy()
      */
     public void deploy() throws JMSException
     {
@@ -321,7 +321,7 @@ public final class FFMQEngine implements FFMQEngineMBean
 
     /*
      * (non-Javadoc)
-     * @see net.timewalker.ffmq3.local.LocalEngineMBean#undeploy()
+     * @see net.timewalker.ffmq4.local.LocalEngineMBean#undeploy()
      */
     public void undeploy()
     {
@@ -858,7 +858,7 @@ public final class FFMQEngine implements FFMQEngineMBean
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.timewalker.ffmq3.local.FFMQEngineMBean#clearAllStatistics()
+	 * @see net.timewalker.ffmq4.local.FFMQEngineMBean#clearAllStatistics()
 	 */
 	@Override
 	public void resetAllStatistics()

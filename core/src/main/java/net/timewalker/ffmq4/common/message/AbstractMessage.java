@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.message;
+package net.timewalker.ffmq4.common.message;
 
 import java.lang.ref.WeakReference;
 import java.util.Enumeration;
@@ -31,14 +31,14 @@ import javax.jms.MessageFormatException;
 import javax.jms.MessageNotWriteableException;
 import javax.jms.Session;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.destination.DestinationSerializer;
-import net.timewalker.ffmq3.common.destination.DestinationTools;
-import net.timewalker.ffmq3.common.session.AbstractSession;
-import net.timewalker.ffmq3.storage.message.MessageSerializationLevel;
-import net.timewalker.ffmq3.utils.EmptyEnumeration;
-import net.timewalker.ffmq3.utils.IteratorEnumeration;
-import net.timewalker.ffmq3.utils.RawDataBuffer;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.destination.DestinationSerializer;
+import net.timewalker.ffmq4.common.destination.DestinationTools;
+import net.timewalker.ffmq4.common.session.AbstractSession;
+import net.timewalker.ffmq4.storage.message.MessageSerializationLevel;
+import net.timewalker.ffmq4.utils.EmptyEnumeration;
+import net.timewalker.ffmq4.utils.IteratorEnumeration;
+import net.timewalker.ffmq4.utils.RawDataBuffer;
 
 /**
  * <p>Base implementation for a JMS message</p>

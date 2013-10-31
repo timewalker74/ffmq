@@ -15,13 +15,13 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.common.destination;
+package net.timewalker.ffmq4.common.destination;
 
 import javax.jms.JMSException;
 import javax.jms.TemporaryTopic;
 
-import net.timewalker.ffmq3.FFMQException;
-import net.timewalker.ffmq3.common.connection.AbstractConnection;
+import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.connection.AbstractConnection;
 
 /**
  * <p>Implementation of a TemporaryTopic reference (not a real topic)</p>
