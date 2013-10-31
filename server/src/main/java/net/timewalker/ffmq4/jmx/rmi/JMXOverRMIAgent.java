@@ -18,7 +18,6 @@
 package net.timewalker.ffmq4.jmx.rmi;
 
 import java.lang.management.ManagementFactory;
-import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -59,7 +58,6 @@ public final class JMXOverRMIAgent implements JMXAgent
     private JMXConnectorServer connectorServer;
     private JMXOverRMIServerSocketFactory mBeanServerSocketFactory;
     private Registry registry;
-    private static boolean mx4jInitialized = false;
     
     /**
      * Constructor
@@ -72,45 +70,12 @@ public final class JMXOverRMIAgent implements JMXAgent
         init();
     }
     
-    /**
-     * One-shot MX4J initialization
-     */
-    private static synchronized void initMX4J()
-    {
-        if (mx4jInitialized)
-            return;
-        
-        LogFactory.getLog("javax.management");
-        try
-        {
-        	// Soft dependency on MX4J
-        	//-------------------------
-        	// Execute the following code using introspection :
-        	//   mx4j.log.Log.redirectTo(new Log4JLogger());
-        	Class<?> logClass = Class.forName("mx4j.log.Log");
-        	Class<?> loggerClass = Class.forName("mx4j.log.Logger");
-        	Class<?> log4JLoggerClass = Class.forName("mx4j.log.Log4JLogger");
-        	Object logger = log4JLoggerClass.newInstance();
-        	Method redirectToMethod = logClass.getMethod("redirectTo", new Class[] { loggerClass });
-        	redirectToMethod.invoke(null, new Object[] { logger });
-        }
-        catch (Exception e)
-        {
-        	log.debug("mx4j not available : "+e.toString());
-        }
-        
-        mx4jInitialized = true;
-    }
-    
     private void init() throws JMSException
     {
         try
         {
             log.info("Starting JMX agent");
 
-            // Setup mx4j
-            initMX4J();
-            
             // Get or create an RMI registry
             if (rmiListenAddr == null || rmiListenAddr.equals("auto"))
                 rmiListenAddr = InetAddress.getLocalHost().getHostName();

@@ -12,8 +12,6 @@
 				<include>commons-digester:commons-digester</include>
 				<include>commons-beanutils:commons-beanutils</include>
 				<include>javax.jms:jms</include>
-				<include>mx4j:mx4j</include>
-				<include>mx4j:mx4j-remote</include>
       </includes>
       <outputDirectory>lib</outputDirectory>
     </dependencySet>
