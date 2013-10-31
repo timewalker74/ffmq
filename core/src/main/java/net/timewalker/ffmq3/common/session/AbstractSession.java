@@ -23,6 +23,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.jms.BytesMessage;
 import javax.jms.Destination;
@@ -54,8 +56,6 @@ import net.timewalker.ffmq3.common.message.StreamMessageImpl;
 import net.timewalker.ffmq3.common.message.TextMessageImpl;
 import net.timewalker.ffmq3.local.destination.LocalQueue;
 import net.timewalker.ffmq3.local.destination.LocalTopic;
-import net.timewalker.ffmq3.utils.concurrent.locks.ReadWriteLock;
-import net.timewalker.ffmq3.utils.concurrent.locks.ReentrantReadWriteLock;
 import net.timewalker.ffmq3.utils.id.IntegerID;
 import net.timewalker.ffmq3.utils.id.IntegerIDProvider;
 

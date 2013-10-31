@@ -17,14 +17,15 @@
  */
 package net.timewalker.ffmq3.common.session;
 
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import javax.jms.Destination;
 import javax.jms.IllegalStateException;
 import javax.jms.JMSException;
 
 import net.timewalker.ffmq3.common.connection.AbstractConnection;
 import net.timewalker.ffmq3.utils.JavaTools;
-import net.timewalker.ffmq3.utils.concurrent.locks.ReadWriteLock;
-import net.timewalker.ffmq3.utils.concurrent.locks.ReentrantReadWriteLock;
 import net.timewalker.ffmq3.utils.id.IntegerID;
 
 /**

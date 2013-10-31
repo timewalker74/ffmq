@@ -17,6 +17,8 @@
  */
 package net.timewalker.ffmq3.local.destination;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import javax.jms.Destination;
 import javax.jms.JMSException;
 
@@ -30,7 +32,6 @@ import net.timewalker.ffmq3.storage.data.DataStoreException;
 import net.timewalker.ffmq3.utils.Committable;
 import net.timewalker.ffmq3.utils.concurrent.CopyOnWriteList;
 import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
-import net.timewalker.ffmq3.utils.concurrent.locks.ReentrantLock;
 
 /**
  * <p>Base implementation for a local JMS destination</p>

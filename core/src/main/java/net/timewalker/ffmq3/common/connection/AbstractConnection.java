@@ -24,6 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionConsumer;
@@ -41,8 +43,6 @@ import net.timewalker.ffmq3.FFMQException;
 import net.timewalker.ffmq3.common.session.AbstractSession;
 import net.timewalker.ffmq3.utils.ErrorTools;
 import net.timewalker.ffmq3.utils.StringTools;
-import net.timewalker.ffmq3.utils.concurrent.locks.ReadWriteLock;
-import net.timewalker.ffmq3.utils.concurrent.locks.ReentrantReadWriteLock;
 import net.timewalker.ffmq3.utils.id.IntegerID;
 import net.timewalker.ffmq3.utils.id.IntegerIDProvider;
 import net.timewalker.ffmq3.utils.id.UUIDProvider;
