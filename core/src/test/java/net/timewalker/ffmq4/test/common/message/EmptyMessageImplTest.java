@@ -196,17 +196,17 @@ public class EmptyMessageImplTest extends TestCase
 		msg.setObjectProperty("prop", new Boolean(true));
 		assertEquals(Boolean.TRUE,msg.getObjectProperty("prop"));
 		
-		msg.setObjectProperty("prop", new Byte((byte)123));
-		assertEquals(new Byte((byte)123),msg.getObjectProperty("prop"));
+		msg.setObjectProperty("prop", Byte.valueOf((byte)123));
+		assertEquals(Byte.valueOf((byte)123),msg.getObjectProperty("prop"));
 		
-		msg.setObjectProperty("prop", new Short((short)123));
-		assertEquals(new Short((short)123),msg.getObjectProperty("prop"));
+		msg.setObjectProperty("prop", Short.valueOf((short)123));
+		assertEquals(Short.valueOf((short)123),msg.getObjectProperty("prop"));
 		
-		msg.setObjectProperty("prop", new Integer(123));
-		assertEquals(new Integer(123),msg.getObjectProperty("prop"));
+		msg.setObjectProperty("prop", Integer.valueOf(123));
+		assertEquals(Integer.valueOf(123),msg.getObjectProperty("prop"));
 		
-		msg.setObjectProperty("prop", new Long(123));
-		assertEquals(new Long(123),msg.getObjectProperty("prop"));
+		msg.setObjectProperty("prop", Long.valueOf(123));
+		assertEquals(Long.valueOf(123),msg.getObjectProperty("prop"));
 		
 		msg.setObjectProperty("prop", new Float(123));
 		assertEquals(new Float(123),msg.getObjectProperty("prop"));

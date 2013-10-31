@@ -382,7 +382,7 @@ public abstract class AbstractMessage implements Message
     @Override
 	public final void setByteProperty(String name, byte value) throws JMSException
     {
-        setProperty(name,new Byte(value));
+        setProperty(name,Byte.valueOf(value));
     }
 
     /* (non-Javadoc)
@@ -409,7 +409,7 @@ public abstract class AbstractMessage implements Message
     @Override
 	public final void setIntProperty(String name, int value) throws JMSException
     {
-        setProperty(name,new Integer(value));
+        setProperty(name,Integer.valueOf(value));
     }
 
     /* (non-Javadoc)
@@ -545,7 +545,7 @@ public abstract class AbstractMessage implements Message
     @Override
 	public final void setLongProperty(String name, long value) throws JMSException
     {
-        setProperty(name,new Long(value));
+        setProperty(name,Long.valueOf(value));
     }
 
     /* (non-Javadoc)
@@ -598,7 +598,7 @@ public abstract class AbstractMessage implements Message
     @Override
 	public final void setShortProperty(String name, short value) throws JMSException
     {
-        setProperty(name,new Short(value));
+        setProperty(name,Short.valueOf(value));
     }
 
     /* (non-Javadoc)

@@ -2040,7 +2040,7 @@ public class LocalSessionTest extends AbstractCommTest
 		msg.writeFloat(4.5678f);
 		msg.writeInt(1234);
 		msg.writeLong(1234567890);
-		msg.writeObject(new Integer(444));
+		msg.writeObject(Integer.valueOf(444));
 		msg.writeObject(null);
 		msg.writeShort((short) 123);
 		msg.writeString("foobar");
@@ -2072,7 +2072,7 @@ public class LocalSessionTest extends AbstractCommTest
 		assertEquals(4.5678f, msg.readFloat(), 0.000001);
 		assertEquals(1234, msg.readInt());
 		assertEquals(1234567890, msg.readLong());
-		assertEquals(new Integer(444), msg.readObject());
+		assertEquals(Integer.valueOf(444), msg.readObject());
 		assertEquals(null, msg.readObject());
 		assertEquals((short) 123, msg.readShort());
 		assertEquals("foobar", msg.readString());
@@ -2195,7 +2195,7 @@ public class LocalSessionTest extends AbstractCommTest
 		msg.setFloat("float", 4.5678f);
 		msg.setInt("int", 1234);
 		msg.setLong("long", 1234567890);
-		msg.setObject("object", new Integer(444));
+		msg.setObject("object", Integer.valueOf(444));
 		msg.setObject("null", null);
 		msg.setShort("short", (short) 123);
 		msg.setString("string", "foobar");
@@ -2219,7 +2219,7 @@ public class LocalSessionTest extends AbstractCommTest
 		assertEquals(4.5678f, msg.getFloat("float"), 0.000001);
 		assertEquals(1234, msg.getInt("int"));
 		assertEquals(1234567890, msg.getLong("long"));
-		assertEquals(new Integer(444), msg.getObject("object"));
+		assertEquals(Integer.valueOf(444), msg.getObject("object"));
 		assertEquals(null, msg.getObject("null"));
 		assertEquals((short) 123, msg.getShort("short"));
 		assertEquals("foobar", msg.getString("string"));

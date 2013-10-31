@@ -56,9 +56,9 @@ public final class Identifier extends SelectorNode implements AtomicOperand, Con
         if (name.equals("JMSDeliveryMode"))
             return message.getJMSDeliveryMode() == DeliveryMode.PERSISTENT ? "PERSISTENT" : "NON_PERSISTENT";
         if (name.equals("JMSPriority"))
-            return new Integer(message.getJMSPriority());
+            return Integer.valueOf(message.getJMSPriority());
         if (name.equals("JMSTimestamp"))
-            return new Long(message.getJMSTimestamp());
+            return Long.valueOf(message.getJMSTimestamp());
                 
         return message.getObjectProperty(name);
     }

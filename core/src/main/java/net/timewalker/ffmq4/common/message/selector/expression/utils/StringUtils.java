@@ -104,7 +104,7 @@ public final class StringUtils
                 return new Double(numberAsString);
             }
             else
-                return new Long(numberAsString);
+                return Long.valueOf(numberAsString);
         }
         catch (NumberFormatException e)
         {

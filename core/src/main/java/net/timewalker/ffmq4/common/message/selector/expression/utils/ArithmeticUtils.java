@@ -32,7 +32,7 @@ public final class ArithmeticUtils
         Number val2 = convertTo(n2,type);
 
         if (type == Long.class)
-            return new Long(val1.longValue()+val2.longValue());
+            return Long.valueOf(val1.longValue()+val2.longValue());
         
         return new Double(val1.doubleValue()+val2.doubleValue());
     }
@@ -47,7 +47,7 @@ public final class ArithmeticUtils
         Number val2 = convertTo(n2,type);
 
         if (type == Long.class)
-            return new Long(val1.longValue()-val2.longValue());
+            return Long.valueOf(val1.longValue()-val2.longValue());
         
         return new Double(val1.doubleValue()-val2.doubleValue());
     }
@@ -62,7 +62,7 @@ public final class ArithmeticUtils
         Number val2 = convertTo(n2,type);
 
         if (type == Long.class)
-            return new Long(val1.longValue()*val2.longValue());
+            return Long.valueOf(val1.longValue()*val2.longValue());
         
         return new Double(val1.doubleValue()*val2.doubleValue());
     }
@@ -80,7 +80,7 @@ public final class ArithmeticUtils
         {
             if (val2.longValue() == 0)
                 return null;
-            return new Long(val1.longValue()/val2.longValue());
+            return Long.valueOf(val1.longValue()/val2.longValue());
         }
         
         if (val2.doubleValue() == 0)
@@ -97,7 +97,7 @@ public final class ArithmeticUtils
         Class<?> type = value.getClass();
         
         if (type == Long.class)
-            return new Long(-n.longValue());
+            return Long.valueOf(-n.longValue());
         
         return new Double(-n.doubleValue());
     }
@@ -179,7 +179,7 @@ public final class ArithmeticUtils
             return n;
 
         if (type == Long.class)
-            return new Long(n.longValue());
+            return Long.valueOf(n.longValue());
         return new Double(n.doubleValue());
     }
     
@@ -190,7 +190,7 @@ public final class ArithmeticUtils
             return value;
         
         if (isIntegerType(type))
-            return new Long(value.longValue());
+            return Long.valueOf(value.longValue());
         else
             return new Double(value.doubleValue());
     }

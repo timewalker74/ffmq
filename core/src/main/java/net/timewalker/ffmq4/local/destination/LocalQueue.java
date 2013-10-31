@@ -511,7 +511,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
                     	if (expiredHandles == null)
                     		expiredHandles = new ArrayList<>();
                     	store.lock(current);
-                    	expiredHandles.add(new Integer(current));
+                    	expiredHandles.add(Integer.valueOf(current));
                     	current = store.next(current);
                     	continue;
                     }
@@ -589,7 +589,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
                     	if (expiredHandles == null)
                     		expiredHandles = new ArrayList<>();
                     	store.lock(current);
-                    	expiredHandles.add(new Integer(current));
+                    	expiredHandles.add(Integer.valueOf(current));
                     	current = store.next(current);
                     	continue;
                     }

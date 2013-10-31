@@ -432,7 +432,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     @Override
 	public void writeByte(byte value) throws JMSException
     {
-        write(new Byte(value));
+        write(Byte.valueOf(value));
     }
 
     /*
@@ -494,7 +494,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     @Override
 	public void writeInt(int value) throws JMSException
     {
-        write(new Integer(value));
+        write(Integer.valueOf(value));
     }
 
     /*
@@ -504,7 +504,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     @Override
 	public void writeLong(long value) throws JMSException
     {
-        write(new Long(value));
+        write(Long.valueOf(value));
     }
 
     /*
@@ -540,7 +540,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     @Override
 	public void writeShort(short value) throws JMSException
     {
-        write(new Short(value));
+        write(Short.valueOf(value));
     }
 
     /*

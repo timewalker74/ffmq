@@ -45,13 +45,13 @@ public final class PacketTransportHub
             throw new FFMQException("Transport is closed", "TRANSPORT_CLOSED");
         
         PacketTransportEndpoint endpoint = new PacketTransportEndpoint(nextEndpointId++, this);
-        registeredEndpoints.put(new Integer(endpoint.getId()), endpoint);
+        registeredEndpoints.put(Integer.valueOf(endpoint.getId()), endpoint);
         return endpoint;
     }
 
     protected void unregisterEndpoint( PacketTransportEndpoint endpoint )
     {
-        registeredEndpoints.remove(new Integer(endpoint.getId()));
+        registeredEndpoints.remove(Integer.valueOf(endpoint.getId()));
     }
     
     public void routeResponse( AbstractResponsePacket response )
@@ -60,7 +60,7 @@ public final class PacketTransportHub
         if (endpointId == -1)
         	return; // Response to an async call
         
-        PacketTransportEndpoint endpoint = registeredEndpoints.get(new Integer(endpointId));
+        PacketTransportEndpoint endpoint = registeredEndpoints.get(Integer.valueOf(endpointId));
         if (endpoint == null)
             return; // Endpoint is gone
         

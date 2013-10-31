@@ -773,10 +773,10 @@ public final class RawDataBuffer implements DataOutput, DataInput
             case NULL_VALUE     : return null;
             case TYPE_STRING    : return readUTF();
             case TYPE_BOOLEAN   : return Boolean.valueOf(readBoolean());
-            case TYPE_BYTE      : return new Byte(readByte());
-            case TYPE_SHORT     : return new Short(readShort());
-            case TYPE_INT       : return new Integer(readInt());
-            case TYPE_LONG      : return new Long(readLong());
+            case TYPE_BYTE      : return Byte.valueOf(readByte());
+            case TYPE_SHORT     : return Short.valueOf(readShort());
+            case TYPE_INT       : return Integer.valueOf(readInt());
+            case TYPE_LONG      : return Long.valueOf(readLong());
             case TYPE_FLOAT     : return new Float(readFloat());
             case TYPE_DOUBLE    : return new Double(readDouble());
             case TYPE_BYTEARRAY : return readByteArray();

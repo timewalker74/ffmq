@@ -295,11 +295,10 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
         if (thread.isAlive())
         {
             System.err.println("Cannot properly terminate thread : "+thread);
-         // JAVA 1.4 ?
-//            StackTraceElement[] stack = thread.getStackTrace();
-//            if (stack != null)
-//                for(int n=0;n<stack.length;n++)
-//                    System.err.println(" "+stack[n]);
+            StackTraceElement[] stack = thread.getStackTrace();
+            if (stack != null)
+                for(int n=0;n<stack.length;n++)
+                    System.err.println(" "+stack[n]);
             thread.stop();
         }
     }

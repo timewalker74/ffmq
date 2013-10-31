@@ -40,7 +40,7 @@ public final class DirtyBlockTable
 	
 	public synchronized void markDirty( int blockIndex , byte[] blockData )
 	{
-		Integer key = new Integer(blockIndex);
+		Integer key = Integer.valueOf(blockIndex);
 		DirtyBlockEntry entry = dirtyBlocksMap.get(key);
 		if (entry == null)
 		{
@@ -57,7 +57,7 @@ public final class DirtyBlockTable
 	
 	public synchronized void blockFlushed( int blockIndex )
 	{
-		Integer key = new Integer(blockIndex);
+		Integer key = Integer.valueOf(blockIndex);
 		DirtyBlockEntry entry = dirtyBlocksMap.get(key);
 		if (entry == null)
 			throw new IllegalArgumentException("Not a dirty block : "+blockIndex);
@@ -71,7 +71,7 @@ public final class DirtyBlockTable
 	
 	public synchronized byte[] get( int blockIndex )
 	{
-		Integer key = new Integer(blockIndex);
+		Integer key = Integer.valueOf(blockIndex);
 		DirtyBlockEntry entry = dirtyBlocksMap.get(key);
 		return entry != null ? entry.latestData : null;
 	}

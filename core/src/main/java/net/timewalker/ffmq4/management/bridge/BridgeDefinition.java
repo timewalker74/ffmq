@@ -104,7 +104,7 @@ public final class BridgeDefinition extends AbstractXMLBasedDescriptor implement
 
 	public void setRetryInterval(int retryInterval)
 	{
-		this.retryInterval = new Integer(retryInterval);
+		this.retryInterval = Integer.valueOf(retryInterval);
 	}
 
 	/*

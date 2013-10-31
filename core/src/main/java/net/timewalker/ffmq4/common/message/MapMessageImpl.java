@@ -246,7 +246,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     @Override
 	public void setByte(String name, byte value) throws JMSException
     {
-        put(name,new Byte(value));
+        put(name,Byte.valueOf(value));
     }
 
     /*
@@ -313,7 +313,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     @Override
 	public void setInt(String name, int value) throws JMSException
     {
-        put(name,new Integer(value));
+        put(name,Integer.valueOf(value));
     }
 
     /*
@@ -323,7 +323,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     @Override
 	public void setLong(String name, long value) throws JMSException
     {
-        put(name,new Long(value));
+        put(name,Long.valueOf(value));
     }
 
     /*
@@ -363,7 +363,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     @Override
 	public void setShort(String name, short value) throws JMSException
     {
-        put(name,new Short(value));
+        put(name,Short.valueOf(value));
     }
 
     /*
