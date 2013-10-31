@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.timewalker.ffmq</groupId>
-  <artifactId>ffmq3</artifactId>
+  <artifactId>ffmq4</artifactId>
   <packaging>pom</packaging>
   <version>4.0.0-pre1</version><!--FFMQ_VERSION-->
   <name>FFMQ</name>
@@ -75,16 +75,6 @@
 				<groupId>javax.jms</groupId>
 				<artifactId>jms</artifactId>
 				<version>1.1</version>
-			</dependency>
-			<dependency>
-				<groupId>mx4j</groupId>
-				<artifactId>mx4j</artifactId>
-				<version>3.0.2</version>
-			</dependency>
-			<dependency>
-				<groupId>mx4j</groupId>
-				<artifactId>mx4j-remote</artifactId>
-				<version>3.0.2</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>

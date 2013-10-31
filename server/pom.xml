@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.timewalker.ffmq</groupId>
-	<artifactId>ffmq3-server</artifactId>
+	<artifactId>ffmq4-server</artifactId>
 	<packaging>jar</packaging>
 	<version>4.0.0-pre1</version><!--FFMQ_VERSION-->
 	<name>FFMQ Server</name>
@@ -11,7 +11,7 @@
 
 	<parent>
 		<groupId>net.timewalker.ffmq</groupId>
-		<artifactId>ffmq3</artifactId>
+		<artifactId>ffmq4</artifactId>
 		<version>4.0.0-pre1</version><!--FFMQ_VERSION-->
 	</parent>
 
@@ -60,7 +60,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.timewalker.ffmq</groupId>
-			<artifactId>ffmq3-core</artifactId>
+			<artifactId>ffmq4-core</artifactId>
 			<version>4.0.0-pre1</version><!--FFMQ_VERSION-->
 		</dependency>
 		<dependency>
