@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+	    <title>FFMQ - Full-Java, native JMS 1.1, lightweight and fast message queuer</title>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+	</head>
+	<body>
+		<table class="header">
+			<tr>
+				<td><img src="ffmq.gif"/></td>
+				<td><p class="navbar">
+                                    <a href="http://sourceforge.net">
+                                      <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=236128&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" />
+                                    </a><br/>
+<a href="index.html">Main</a> | Documentation | <a href="faq.html">FAQ</a> | <a href="changelog.html">ChangeLog</a> | <a href="performance.html">Performance</a> | <a href="technical_overview.html">Technical Overview</a> | <a href="http://sourceforge.net/project/showfiles.php?group_id=236128">Downloads</a> | <a href="http://sourceforge.net/tracker/?group_id=236128&atid=1099055">Bugs</a></p></td>
+			</tr>
+		</table>
+
+		<hr/>
+
+		<small><i style="color:red"><u>Note</u> : this documentation applies to the previous FFMQ version (2.x) and is deprecated.</i></small>
+		<h1>FFMQ 2.x Documentation</h1>
+		<div class="doc">
+		<p class="contents"><b>Table of contents</b></p>
+		<ul>
+			<li><a href="#I">I. Installing</a><br/>
+				<ul>
+					<li><a href="#I_1">I.1. Prerequisites</a></li>
+					<li><a href="#I_2">I.2. Server side</a><br/>
+						<ul>
+							<li><a href="#I_2_1">I.2.1. Unpacking the distribution</a></li>
+							<li><a href="#I_2_2">I.2.2. What's inside ?</a></li>
+						</ul>
+					</li>
+					<li><a href="#I_3">I.3. Client side</a></li>
+				</ul>
+			</li>
+			<li><a href="#II">II. Configuring</a><br/>
+				<ul>
+					<li><a href="#II_1">II.1. Server side</a><br/>
+						<ul>
+							<li><a href="#II_1_1">II.1.1. Destination auto-creation</a></li>
+							<li><a href="#II_1_2">II.1.2. Security</a></li>
+							<li><a href="#II_1_3">II.1.3. Templates</a></li>
+							<li><a href="#II_1_4">II.1.4. Descriptors</a></li>
+							<li><a href="#II_1_5">II.1.5. Command-line utility</a></li>
+							<li><a href="#II_1_6">II.1.6. Spring integration</a></li>
+						</ul>
+					</li>
+					<li><a href="#II_2">II.2. Client side</a><br/>
+						<ul>
+							<li><a href="#II_2_1">II.2.1. Client properties</a></li>
+							<li><a href="#II_2_2">II.2.2. Spring integration</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#III">III. Running</a><br/>
+				<ul>
+					<li><a href="#III_1">III.1. Server side</a><br/>
+						<ul>
+							<li><a href="#III_1_1">III.1.1. Starting and stopping</a></li>
+							<li><a href="#III_1_2">III.1.2. Diskspace usage</a></li>
+						</ul>
+					</li>
+					<li><a href="#III_2">III.2. Client side</a><br/>
+						<ul>
+							<li><a href="#III_2_1">III.2.1. JNDI integration</a></li>
+							<li><a href="#III_2_2">III.2.2. Command-line administration</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+
+		<hr/>
+
+<a name="I"></a>
+		<h1>Installing</h1>
+<a name="I_1"></a>
+		<h2>Prerequisites</h2>
+		<p>
+			FFMQ requires a JRE version 1.4 or above to run.
+		</p>
+		<p>
+			Default JVM parameters are set in the <i>bin/setenv.sh</i> script, which is read on startup.<br/>
+			If you want to change things like the default FFMQ heap size this is the file to edit.
+		</p>
+<a name="I_2"></a>		
+		<h2>Server side</h2>
+<a name="I_2_1"></a>	
+		<h3>Unpacking the distribution</h3>
+		<p>
+		  Download the latest <b>ffmq-distribution-&lt;version&gt;-dist.zip</b> archive from the <i>Downloads</i> page, and unpack it somewhere.<br/>
+		  You will get the following directory tree :
+		</p>
+		  <ul>
+			<li>bin/</li>
+			<li>bridges/</li>
+			<li>conf/</li>
+			<li>conf/templates/</li>
+			<li>data/</li>
+			<li>destinations/</li>
+			<li>lib/</li>
+		  </ul>
+<a name="I_2_2"></a>			  
+		<h3>What's inside ?</h3>
+		<p>
+		  The bin/ directory contains shell scripts to start, stop and manage the FFMQ server.<br/>
+		  The bridges/ directory holds JMS bridges descriptors loaded by the server on startup.<br/>
+		  The conf/ directory contains various configuration files used by the server (see <i>Configuring</i> below). <br/>
+		  The conf/templates/ directory contains default templates used to create new destinations (queues or topics).<br/>
+		  The data/ directory (empty upon installation) is the default data folder where queues mapping/data files will be stored.<br/>
+		  The destinations/ directory (empty upon installation) is the default descriptor folder where queues and topics descriptors will be stored.<br/>
+		  The lib/ directory contains all the jar files used by the server.
+		</p>
+<a name="I_3"></a>		
+		<h2>Client side</h2>
+		<p>
+			On the client-side, you need the <i>ffmq-core.jar</i> in your classpath. (plus commons-logging and log4j if you don't already have them)<br/>
+			You will find those jars in the lib/ directory of the server package.<br/>
+		</p>
+		
+<a name="II"></a>		
+		<h1>Configuring</h1>
+<a name="II_1"></a>			
+		<h2>Server side</h2>
+		<p>
+			The main configuration file is <i>conf/ffmq-server.properties</i>. 
+			This is a standard java properties file with key/pair values.<br/>
+			See inside the distributed file for details, the various configuration settings are described in comments.<br/>
+		</p>
+<a name="II_1_1"></a>		
+		<h3>Destination auto-creation</h3>
+		<p>
+		    FFMQ supports destination auto-creation based on templates.<br/>
+			When enabled, on first usage of a non-existing queue (or topic), a matching template will be looked up in the 
+			<i>templates.mapping</i> file and used to generate a valid queue (or topic) descriptor.
+			This operation is transparent to clients and is useful to create auto-deploying queuers.<br/>
+		</p>
+<a name="II_1_2"></a>		
+		<h3>Security</h3>
+		<p>
+			If the default XML-based security module is enabled in the main configuration file, users and permissions must 
+			be described in the <i>security.xml</i> file.<br/>
+			See syntax inside the distributed file. <i>Please note that security is disabled by default.</i>
+		</p>
+<a name="II_1_3"></a>		
+		<h3>Templates</h3>
+		<p>
+			When a queue (or topic) is auto-created, the FFMQ engine looks up a template descriptor and 
+			copy the template values into a real descriptor (in the destinations/ folder)<br/>
+			Here is a sample queue template descriptor :
+		</p>
+		<p class="src">
+			&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/>
+			&lt;queueTemplate&gt;<br/>
+			  &nbsp;&nbsp;&lt;name&gt;ADMIN_QUEUE_TEMPLATE&lt;/name&gt;<br/>
+			  &nbsp;&nbsp;&lt;blockCount&gt;100&lt;/blockCount&gt;<br/>
+			  &nbsp;&nbsp;&lt;blockSize&gt;1024&lt;/blockSize&gt;<br/>
+			  &nbsp;&nbsp;&lt;dataFolder&gt;../data&lt;/dataFolder&gt;<br/>
+			  &nbsp;&nbsp;&lt;maxMessageSize&gt;1024&lt;/maxMessageSize&gt;<br/>
+			  &nbsp;&nbsp;&lt;maxNonPersistentMessages&gt;100&lt;/maxNonPersistentMessages&gt;<br/>
+			  &nbsp;&nbsp;&lt;syncOnWrite&gt;true&lt;/syncOnWrite&gt;<br/>
+  			  &nbsp;&nbsp;&lt;useNIOMap&gt;true&lt;/useNIOMap&gt;<br/>
+			&lt;/queueTemplate&gt;<br/>
+		</p>
+		<ul>
+			<li><b>name</b> : the template name (also referenced in the <i>templates.mapping</i> file)</li>
+			<li><b>blockCount</b> : the number of blocks in the associated persistent block-file (0 disables persistent storage for this destination)</li>
+			<li><b>blockSize</b> : the size of a block (in bytes)</li>
+			<li><b>dataFolder</b> : the folder where to look for/create persistent storage files (may be relative to the server working directory, i.e. bin/)</li>
+			<li><b>maxMessageSize</b> : the maximum allowed size for a message (in bytes)</li>
+			<li><b>maxNonPersistentMessages</b> : maximum number of non-persistent messages allowed in this queue 
+			                              (0 disables non-persistent storage for this destination)</li>
+			<li><b>syncOnWrite</b> : (true/false) if set to false it disables synchronous I/O, 
+			                        making persistent storage way faster but less reliable</li>
+			<li><b>useNIOMap</b> : (true/false) if set to true it enables NIO memory-mapping of data
+			                        files making persistent storage way faster. 
+			                        Note that memory-mapping space is limited and you may want to disable this on 
+			                        some queues to save the memory space for others.</li>
+		</ul>
+		<p>
+			Notes :
+		</p>
+		<ul>
+			<li>The syntax is the same for a topic (except for the root node which is &lt;topicTemplate&gt;)</li>
+			<li>For a topic, the various parameters will be applied to the temporary queues holding messages for the topic subscribers.</li>
+			<li>There will be one temporary queue for each subscriber, so you need to take this into account when sizing your topic.</li>
+			<li>A queue template filename must start with <i>queueTemplate-</i> to be taken into account.</li>
+			<li>A topic template filename must start with <i>topicTemplate-</i> to be taken into account.</li>
+		</ul>
+<a name="II_1_4"></a>
+		<h3>Descriptors</h3>
+		<p>
+			A destination descriptor is much like a template descriptor but it represents an actual existing destination.<br/>
+			Descriptors are automatically created from a template or created on demand from the administration utility (see below).<br/>
+			Here is a sample queue descriptor :
+		</p>
+		<p class="src">
+			&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/>
+			&lt;queueDefinition&gt;<br/>
+			  &nbsp;&nbsp;&lt;name&gt;adm_in&lt;/name&gt;<br/>
+			  &nbsp;&nbsp;&lt;temporary&gt;false&lt;/temporary&gt;<br/>
+			  &nbsp;&nbsp;&lt;blockCount&gt;1200&lt;/blockCount&gt;<br/>
+			  &nbsp;&nbsp;&lt;blockSize&gt;4096&lt;/blockSize&gt;<br/>
+			  &nbsp;&nbsp;&lt;dataFolder&gt;E:\_workspaceFFMQ_\ffmq\server\runtime\bin\..\data&lt;/dataFolder&gt;<br/>
+			  &nbsp;&nbsp;&lt;maxMessageSize&gt;4096&lt;/maxMessageSize&gt;<br/>
+			  &nbsp;&nbsp;&lt;maxNonPersistentMessages&gt;1200&lt;/maxNonPersistentMessages&gt;<br/>
+			  &nbsp;&nbsp;&lt;syncOnWrite&gt;true&lt;/syncOnWrite&gt;<br/>
+  			  &nbsp;&nbsp;&lt;useNIOMap&gt;true&lt;/useNIOMap&gt;<br/>
+			&lt;/queueDefinition&gt;<br/>
+		</p>
+		<ul>
+			<li><b>name</b> : the queue name</li>
+			<li><b>temporary</b> : (true/false) if set to true the queue is temporary and will be deleted on release</li>
+			<li><b>blockCount</b> : the number of blocks in the associated persistent block-file (0 disables persistent storage for this destination)</li>
+			<li><b>blockSize</b> : the size of a block (in bytes)</li>
+			<li><b>dataFolder</b> : the folder where the persistent storage files are located (may be relative to the server working directory, i.e. bin/)</li>
+			<li><b>maxMessageSize</b> : the maximum allowed size for a message (in bytes)</li>
+			<li><b>maxNonPersistentMessages</b> : maximum number of non-persistent messages allowed in this queue 
+			                              (0 disables non-persistent storage for this destination)</li>
+			<li><b>syncOnWrite</b> : (true/false) if set to false it disables synchronous I/O, 
+			                        making persistent storage way faster but less reliable</li>
+			<li><b>useNIOMap</b> : (true/false) if set to true it enables NIO memory-mapping of data
+			                        files making persistent storage way faster. 
+			                        Note that memory-mapping space is limited and you may want to disable this on 
+			                        some queues to save the memory space for others.</li>
+		</ul>
+		<p>
+			Notes :
+		</p>
+		<ul>
+			<li>The syntax is the same for a topic (except for the root node which is &lt;topicDefinition&gt;)</li>
+			<li>A queue definition filename must start with <i>queue-</i></li>
+			<li>A topic definition filename must start with <i>topic-</i></li>
+		</ul>
+<a name="II_1_5"></a>		
+		<h3>Command-line utility</h3>
+		<p>
+			There is a command-line utility to administrate the server. The utility must be configured 
+			in the <i>conf/ffmq-admin-client.properties</i> properties file.
+		</p>
+<a name="II_1_6"></a>		
+		<h3>Spring integration</h3>
+		<p>
+			You can start one (or more) engine instance in a given ApplicationContext, using a provided helper bean :
+		</p>
+		<p class="src">
+			net.timewalker.ffmq.spring.FFMQServerBean
+		</p>
+		<p>
+			Here is a typical XML spring definition for this :
+		</p>
+		<p class="src">
+			&lt;bean id="FFMQServer" class="net.timewalker.ffmq.spring.FFMQServerBean" init-method="start" destroy-method="stop"&gt;<br/>
+				&nbsp;&nbsp;&lt;property name="engineName" value="myEngine"/&gt;<br/>
+				&nbsp;&nbsp;&lt;property name="configLocation" value="../conf/ffmq-server.properties"/&gt;<br/>
+			&lt;/bean&gt;<br/>
+		</p>
+		<p>
+		  Notes : 
+		</p>
+		<ul>
+			<li>The <i>engineName</i> property value must be unique in a given VM</li>
+			<li>The <i>configLocation</i> property supports the <i>classpath:</i> notation and must point to an existing properties file</li>
+			<li>This spring definition automatically calls the server start() and stop() methods on context init and close</li>
+		</ul>
+
+<a name="II_2"></a>			
+		<h2>Client side</h2>
+<a name="II_2_1"></a>		
+		<h3>Client properties</h3>
+		<p>
+			The client-side API looks for a resource named <b>ffmq.properties</b> in the classpath.<br/> 
+			If you need to override some settings, you can create this file and add it to your classpath.
+			You can refer to <b>net/timewalker/ffmq/ffmq.properties</b> in <i>ffmq-core.jar</i> to
+			see available keys and their default values.<br/>
+			Here are the available options in the <i>ffmq.properties</i> file : 
+		</p>
+		<p class="src">
+			# Time to wait for an anwser from the server (seconds)<br/>
+			transport.timeout=120<br/>
+
+			# Time to wait for a connection attempt (seconds)<br/>
+			transport.tcp.connectTimeout=30<br/>
+
+			# SSL options<br/>
+			transport.tcp.ssl.protocol=SSLv3<br/>
+			transport.tcp.ssl.ignoreCertificates=false<br/>
+			
+			# Producer buffering (max number of messages to hold on the client side before flushing)<br/>
+			producer.buffering.size=2<br/>
+		</p>
+		<p>
+			Note that in most cases you won't have to change anything in these default settings.<br/>
+		</p>
+<a name="II_2_2"></a>		
+		<h3>Spring integration</h3>
+		<p>
+			The FFMQ provider can be integrated in spring like any other JMS client implementation.
+		</p>
+		<p>
+			Here is how you would define a JMS connection factory :
+		</p>
+		<p class="src">
+			&lt;bean id="JMSConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean"&gt;<br/>
+			&nbsp;&nbsp;&lt;property name="jndiName" value="factory/ConnectionFactory"/&gt;<br/>
+			&nbsp;&nbsp;&lt;property name="jndiEnvironment"&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;props&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;prop key="java.naming.factory.initial"&gt;net.timewalker.ffmq.jndi.FFMQInitialContextFactory&lt;/prop&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;prop key="java.naming.provider.url"&gt;tcp://localhost:10001&lt;/prop&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/props&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;<br/>
+			&lt;/bean&gt;<br/>
+		</p>
+		<p>
+			And here is how to obtain a a JMS destination bean from JNDI :
+		</p>
+		<p class="src">
+			&lt;bean id="myJMSQueue" class="org.springframework.jndi.JndiObjectFactoryBean"&gt;<br/>
+			&nbsp;&nbsp;&lt;property name="jndiName" value="queue/myJMSQueue"/&gt;<br/>
+			&nbsp;&nbsp;&lt;property name="jndiEnvironment"&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&lt;props&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;prop key="java.naming.factory.initial"&gt;net.timewalker.ffmq.jndi.FFMQInitialContextFactory&lt;/prop&gt;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&lt;/props&gt;<br/>
+			&nbsp;&nbsp;&lt;/property&gt;<br/>
+			&lt;/bean&gt;<br/>
+		</p>
+		<p>
+			Then, you can declare spring JMS templates and listeners.<br/>
+			<i>See the spring documentation for details.</i>
+		</p>
+<a name="III"></a>		
+		<h1>Running</h1>
+<a name="III_1"></a>			
+		<h2>Server side</h2>
+<a name="III_1_1"></a>
+		<h3>Starting and stopping</h3>
+		<p>
+			- To start the server, use the <i>ffmq-server.bat</i> or <i>ffmq-server.sh</i> shell script in the server <i>bin/</i> directory.<br/>
+			- To stop the server, use the <i>ffmq-shutdown.bat</i> or <i>ffmq-shutdown.sh</i> shell script in the server <i>bin/</i> directory.<br/>
+			(If you want to remotely stop the server, you need to enable the administrative queues in the server configuration and use the <i>ffmq-remote-shutdown.bat</i> or <i>ffmq-remote-shutdown.sh</i> shell script)<br/> 
+			It is not recommended to kill the server process as it will cause a recovery of all the active persistent storages on next restart.
+		</p>
+<a name="III_1_2"></a>		
+		<h3>Diskspace usage</h3>
+		<p>
+			The persistent storage for a given destination is made of two files :
+		</p>
+		<ul>
+			<li>A data file (blockCount*blockSize bytes large), containing the messages</li>
+			<li>A map file (~ blockCount*14 bytes large) acting as an allocation table</li>
+		</ul>
+		<p>
+			The required disk space for a queue is close to <b>blockCount*(blockSize+14)</b><br/>
+			Note that messages are splitted over complete blocks, which means you can store between<br/>
+			<b>blockCount / (maxMessageSize modulo blockSize)</b> (worst case) and <b>blockCount</b> (best case)
+			in a given message store.
+		</p>
+		
+<a name="III_2"></a>		
+		<h2>Client side</h2>
+<a name="III_2_1"></a>		
+		<h3>JNDI integration</h3>
+		<p>
+			The client implementation can be accessed through JNDI like any other standard JMS implementation.<br/>
+			Here is the JNDI configuration to use :
+		</p>
+		<ul>
+			<li><b>Naming Context Factory</b> : net.timewalker.ffmq.jndi.FFMQInitialContextFactory</li>
+			<li><b>Connection Factory JNDI Name</b> : factory/ConnectionFactory</li>
+			<li><b>Provider URL</b> : tcp://&lt;hostname&gt;:10001</li>
+		</ul>
+		<p>
+			Here is a sample source code if you need to do it yourself :<br/>
+		</p>
+		<p class="src">
+			// Create and initialize a JNDI context<br/>
+			Hashtable env = new Hashtable();<br/>
+	        env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);<br/>
+	        env.put(Context.PROVIDER_URL, "tcp://localhost:10001");<br/>
+	        Context context = new InitialContext(env);<br/>
+	        <br/>
+			// Lookup a connection factory in the context<br/>
+	        ConnectionFactory connFactory = (ConnectionFactory)context.lookup(FFMQConstants.JNDI_CONNECTION_FACTORY_NAME);<br/>
+	        <br/>
+			// Obtain a JMS connection from the factory<br/>
+	        Connection conn = connFactory.createConnection();<br/>
+	        conn.start();<br/>
+			...<br/>
+		</p>
+		<p>
+			Note that to provide JMS 1.0.2 compliance, the following connection factories are also declared in the JNDI context :
+		</p>
+		<ul>
+			<li>factory/QueueConnectionFactory</li>
+			<li>factory/TopicConnectionFactory</li>
+		</ul>
+<a name="III_2_2"></a>			
+		<h3>Command-line administration</h3>
+		<p>
+			The FFMQ server can be (remotely) administered through a command-line utility.<br/>
+			To execute this utility, use the <i>ffmq-admin-client.bat</i> or <i>ffmq-admin-client.sh</i> shell script in the server <i>bin/</i> directory.<br/> 
+			Executing the utility without command-line parameters will display usage information :
+		</p>
+		<p class="src">
+		Command-line parameters<br/>
+		-------------------------<br/>
+		  -command <command>      : the command to execute (createQueue,createTopic,deleteQueue,deleteTopic,shutdown)<br/>
+		  -destinationName <name> : the queue/topic name<br/>
+		  -conf <propertiesFile>  : path to a properties file (optional)<br/>
+          <br/>
+		  Additional options for createQueue and createTopic commands<br/>
+			-blockCount <value>       : the block count<br/>
+			-blockSize <value>        : the block size (in bytes)<br/>
+			-maxMessageSize <value>   : the max. size allowed for messages (in bytes)<br/>
+			-maxNonPersistentMessages <value> : max. number of non-persistent messages allowed<br/>
+			-syncOnWrite <true/false> : force syncing to disk on write<br/>
+            -useNIOMap <true/false>   : use NIO Memory Mapping of data files<br/>
+		</p>
+		<p>
+			Examples :
+		</p>
+		<p class="src">
+		    # Ask the server to create queue test1 (a template must exist and be mapped to that name in the templates.mapping file)<br/>
+			ffmq-admin-client -command createQueue -destinationName test1<br/>
+			<br/>
+			# Ask the server to create queue test2, giving all necessary parameters<br/>
+			ffmq-admin-client -command createQueue -destinationName test2 -blockCount 1000 -blockSize 1024<br/>
+			                  -maxMessageSize 32768 -maxNonPersistentMessages 0 -temporary false -syncOnWrite true -useNIOMap true<br/>
+			<br/>
+			# Ask the server to shutdown<br/>
+			ffmq-admin-client -command shutdown<br/>
+		</p>
+		</div>
+		
+	</body>
+</html>

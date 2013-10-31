@@ -1,0 +1,13 @@
+- ConnectionConsumer
+- Auto discovery of nodes
+- Multi-queues store file
+- Connection failover
+- Persist durable subscriptions / Recover durable subscriptions on restart
+- Improve large transactions by caching the lock horizon
+- Redelivery limit
+- NIO: use one thread per core ?
+- command line options for ffmq-server.sh
+- Bridges msg/s stats
+- Bridges in command line JMX console
+- Utility to shrink queues
+- Real file locks

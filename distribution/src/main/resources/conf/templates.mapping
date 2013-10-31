@@ -1,0 +1,25 @@
+#--------------------------------------------------------------------------------------
+#                    Templates mapping to queue/topic names
+#--------------------------------------------------------------------------------------
+#
+# Syntax: <queue or topic>:<name pattern>:<template name>
+# Notes: - order is important here as the first matching rule will be applied  
+#        - name patterns may use wildcards * and ?
+#
+
+# Define your custom mapping rules here :
+# ...
+
+# Rule for the server remote admin queues
+queue:_FFMQ_ADM_*:ADMIN_QUEUE_TEMPLATE
+
+# Catch-all rule for temporary destinations
+queue:TEMP-QUEUE-*:TEMP_QUEUE_TEMPLATE
+topic:TEMP-TOPIC-*:TEMP_TOPIC_TEMPLATE
+
+# Catch-all rules for persistent destinations
+#  Note : This is active by default because it is mostly useful to quick test the server in
+#         existing environments, but you may want to comment out these lines so the server 
+#         does not auto-create whatever destinations clients are asking for without control
+queue:*:DEFAULT_QUEUE_TEMPLATE
+topic:*:DEFAULT_TOPIC_TEMPLATE

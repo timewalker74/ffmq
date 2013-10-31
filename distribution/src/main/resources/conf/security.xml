@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  
+    XML descriptor used by the FFMQ XML security connector
+    - Define a list of users with privileges on resources
+    - Resources names can use wildcards (* and ?)
+    - Available resources and actions are :
+    
+         queue/<queueName>         ex:  queue/myQueue1
+                                   available actions: consume, produce, browse
+         
+         topic/<topicName>         ex:  topic/myTopic1
+                                   available actions: consume, produce, browse
+         
+         server                    pseudo-resource representing the whole server
+                                   available actions: remoteAdmin
+                                   
+-->
+<security>
+	<users>
+		
+		<!--  Admin user -->
+		<user name="admin" password="admin">
+			<privilege resource="queue/*" actions="consume,produce,browse"/>
+			<privilege resource="topic/*" actions="consume,produce,browse"/>
+			<privilege resource="server" actions="remoteAdmin"/>
+		</user>
+		
+		<!--  
+		   Sample user 
+		   Can consume and produce only on queue TEST or topic TEST
+		-->
+		<user name="test" password="test">
+			<privilege resource="queue/TEST*" actions="consume,produce,browse"/>
+			<privilege resource="topic/TEST*" actions="consume,produce,browse"/>
+		</user>
+	
+		<!--  Add new users here -->
+		
+	</users>
+</security>

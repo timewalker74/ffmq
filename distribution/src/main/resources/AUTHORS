@@ -1,0 +1,19 @@
+Author            Nick            Email
+-----------------------------------------------------
+Sylvain Pognant   <TimeWalker>    ffmq@timewalker.net
+
+
+
+External code
+-------------
+MTRandom : A Java implementation of the MT19937 (Mersenne Twister)
+           pseudo random number generator algorithm based upon the
+           original C code by Makoto Matsumoto and Takuji Nishimura.
+Author   : David Beaumont
+Email    : mersenne-at-www.goui.net
+
+ReentrantReadWriteLock : backport of java util concurrent implementation
+Author                 : Written by Doug Lea with assistance from members of JCP JSR-166
+                         Expert Group and released to the public domain, as explained at
+                         http://creativecommons.org/licenses/publicdomain
+

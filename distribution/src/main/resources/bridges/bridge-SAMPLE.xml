@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bridgeDefinition>
+  <name>TEST_BRIDGE</name>
+  <enabled>false</enabled> 
+  <retryInterval>5</retryInterval>
+  <commitSourceFirst>true</commitSourceFirst>
+  
+  <producerTransacted>true</producerTransacted>
+  <producerDeliveryMode>persistent</producerDeliveryMode>
+  
+  <consumerTransacted>true</consumerTransacted>
+  <consumerAcknowledgeMode>session_transacted</consumerAcknowledgeMode>
+
+  <source>
+  	<peer>
+  		<jdniInitialContextFactoryName>net.timewalker.ffmq3.jndi.FFMQInitialContextFactory</jdniInitialContextFactoryName>
+  		<jndiConnectionFactoryName>factory/ConnectionFactory</jndiConnectionFactoryName>
+  		<providerURL>tcp://localhost:10002</providerURL>
+  		<userName>test</userName>
+  		<password>test</password>
+  	</peer>
+  	<destination>
+  		<destinationType>queue</destinationType>
+  		<destinationName>TEST1</destinationName>
+  	</destination>
+  </source>
+  
+  <target>
+  	<peer>
+  		<jdniInitialContextFactoryName>net.timewalker.ffmq3.jndi.FFMQInitialContextFactory</jdniInitialContextFactoryName>
+  		<jndiConnectionFactoryName>factory/ConnectionFactory</jndiConnectionFactoryName>
+  		<providerURL>tcp://localhost:10002</providerURL>
+  		<userName>test</userName>
+  		<password>test</password>
+  	</peer>
+  	<destination>
+  		<destinationType>queue</destinationType>
+  		<destinationName>TEST2</destinationName>
+  	</destination>
+  </target>
+  
+</bridgeDefinition>

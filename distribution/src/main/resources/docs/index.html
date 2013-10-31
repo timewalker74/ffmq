@@ -1,0 +1,110 @@
+<html>
+	<head>
+	    <title>FFMQ - Full-Java, native JMS 1.1, lightweight and fast message queuer</title>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="shortcut icon" href="favicon.ico"/>
+	</head>
+	<body>
+		<table class="header">
+			<tr>
+				<td><img src="ffmq.gif"/></td>
+				<td><p class="navbar">
+				    <a href="http://sourceforge.net">
+                                      <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=236128&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" />
+                                    </a><br/>
+                                    Main | <a href="doc.html">Documentation</a> | <a href="faq.html">FAQ</a> | <a href="changelog.html">ChangeLog</a> | <a href="performance.html">Performance</a> | <a href="technical_overview.html">Technical Overview</a> | <a href="http://sourceforge.net/project/showfiles.php?group_id=236128">Downloads</a> | <a href="http://sourceforge.net/tracker/?group_id=236128&atid=1099055">Bugs</a></p>
+                                </td>
+			</tr>
+		</table>
+		
+		<h1>What is FFMQ ?</h1>
+		<p>
+			<i><b>FFMQ</b> is a full-java, light-weight, fast JMS 1.1 queuer implementation.</i><br/>
+			<br/>
+			Emphasis is made on raw performance and reliability.<br/>
+			As a consequence, it does not provide a lot of features but it's fast, easy to configure and has reduced dependencies.<br/>
+		</p>
+		
+		<h1>License</h1>
+		<p>
+			FFMQ is released under the GNU <a href="http://www.gnu.org/licenses/lgpl.txt">LGPL</a> license in order to be used both as a standalone
+			application and/or integrated in all kind of software.
+		</p>
+		
+		<h1>Features</h1>
+		<ul>
+			<li>JMS 1.1 compliant (almost, see limits below)</li>
+			<li>Lightweight (full server is below 600KB)</li>
+			<li>Reduced dependencies : JRE 1.4+, JMS API, commons-logging, [optional: log4j, mx4j]</li>
+			<li>JMX monitoring support</li>
+			<li>SSL support for remote connections</li>
+			<li>Fast TCP-based network protocol</li>
+			<li>State-of-the-art asynchronous journaling persistence storage</li>
+			<li>Template-based destination definitions for easy configuration</li>
+			<li>JMS bridging support to pipe messages between destinations and/or queuers</li>
+		</ul>
+		
+		<h1>Limits</h1>
+		<p>
+			The following <b>required</b> JMS operations are not yet implemented :
+		</p>
+		<ul>
+			<li>JMSXGroupID / JMSXGroupSeq message properties</li>
+		</ul>
+		<p>
+			The following <b>optional</b> JMS operations are not yet implemented :
+		</p>
+		<ul>
+			<li>ConnectionConsumers and DurableConnectionConsumers</li>
+			<li>Session MessageListener</li>
+			<li>XAConnections</li>
+		</ul>
+		<p>
+			Other limitations :
+		</p>
+		<ul>
+			<li>Durable subscriptions are lost on server restart</li>
+			<li>Because FFMQ is using a separate disk store for each queue, atomicity of transactions spanning multiple destinations 
+			cannot be fully guaranteed in case of server failure. Per-queue atomicity is guaranteed.</li>
+		</ul>
+
+		<h1>Performance</h1>
+		<p>
+			FFMQ is fast, real fast.<br/>
+			<br/>
+			If you want to see some comparisons with other queuers see the <a href="performance.html">Performance</a> page.<br/>
+			<br/>
+			<i>Anyway, you should never trust any written performance claim.<br/>
+			The best way to have an exact idea is to test it by yourself ! 
+			Please give it a try, if you have a JMS compliant application or benchmark this should be pretty easy (See 'Quick Start' below).</i>
+		</p>
+
+		<h1>Architecture</h1>
+		<p>
+			To get a technical insight on FFMQ 'dirty little secrets' you may want to have a look at the <a href="technical_overview.html">Technical Overview</a> page.
+		</p>
+		
+		<h1>Quick Start</h1>
+		<p>
+			Just unzip the server package somewhere and start the server using the <i>ffmq-server.bat</i> or <i>ffmq-server.sh</i> shell in the <i>bin/</i> directory.
+			<br/>
+			(If necessary you can change default listen ports and interfaces in the <i>conf/ffmq-server.properties</i> file)
+			<br/><br/>
+			On the client-side, you need the <i>ffmq-core.jar</i> in your classpath. (plus commons-logging and log4j if you don't already have them)<br/>
+			Here is the default JNDI configuration to use :
+		</p>
+		<ul>
+			<li><b>Naming Context Factory</b> : net.timewalker.ffmq3.jndi.FFMQInitialContextFactory</li>
+			<li><b>Connection Factory JNDI Name</b> : factory/ConnectionFactory</li>
+			<li><b>Provider URL</b> : tcp://&lt;hostname&gt;:10002</li>
+		</ul>
+
+		<h1>Bug reports / Contact</h1>
+		<p>
+			If you find any bug or problem, you can send me an email to : <a href="mailto:ffmq@timewalker.net?subject=FFMQ">ffmq@timewalker.net</a><br/>
+			<br/>
+			If you use FFMQ, successfully or not, I would be glad to hear from you. Tell me what you like or dislike about this piece of software.<br/>
+		</p>
+
+	</body>
+</html>

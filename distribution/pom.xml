@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.timewalker.ffmq</groupId>
+	<artifactId>ffmq3-distribution</artifactId>
+	<packaging>jar</packaging>
+	<version>3.0.5</version><!--FFMQ_VERSION-->
+	<name>FFMQ Distribution</name>
+  <description>FFMQ Distribution module</description>
+	
+  <parent>
+		<groupId>net.timewalker.ffmq</groupId>
+		<artifactId>ffmq3</artifactId>
+		<version>3.0.5</version><!--FFMQ_VERSION-->
+  </parent>
+  
+  <build>
+    <plugins>
+    	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.4</source>
+                <target>1.4</target>
+            </configuration>
+        </plugin>
+      	<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-surefire-plugin</artifactId>
+	        <configuration>
+	          <skip>true</skip>
+	        </configuration>
+      	</plugin>
+		<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-assembly-plugin</artifactId>
+			<version>2.1</version>
+	        <configuration>
+	          <descriptors>
+	            <descriptor>src/assembly/dist.xml</descriptor>
+				<descriptor>src/assembly/src-dist.xml</descriptor>
+	          </descriptors>
+	        </configuration>
+			<executions>
+	          <execution>
+	            <id>make-assembly</id>
+	            <phase>package</phase>
+	            <goals>
+	              <goal>attached</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+      	</plugin>
+    </plugins>
+  </build>
+	
+  <dependencies>
+      <dependency>
+		<groupId>net.timewalker.ffmq</groupId>
+		<artifactId>ffmq3-tools</artifactId>
+		<version>3.0.5</version><!--FFMQ_VERSION-->
+      </dependency>
+	  <dependency>
+		<groupId>net.timewalker.ffmq</groupId>
+		<artifactId>ffmq3-server</artifactId>
+		<version>3.0.5</version><!--FFMQ_VERSION-->
+      </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,20 @@
+<assembly>
+  <id>src-dist</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+			<directory>..</directory>
+      <outputDirectory></outputDirectory>
+      <excludes>
+        <exclude>**/target/**</exclude>
+		<exclude>**/temp/**</exclude>
+		<exclude>**/runtime/**</exclude>
+		<exclude>**/.*</exclude>
+		<exclude>**/.settings/**</exclude>
+      </excludes>
+    </fileSet>
+  </fileSets>
+</assembly>
