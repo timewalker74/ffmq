@@ -137,10 +137,18 @@ public class ActivityWatchdog extends Thread
 				{
 					for(int n=0;n<inactiveList.size();n++)
 					{
-						ActiveObject obj = inactiveList.get(n);
-						
-						log.trace("Removing inactive object from watch list : "+obj);
-						watchList.remove(obj);
+						ActiveObject targetObj = inactiveList.get(n);
+						for (int i = 0; i < watchList.size(); i++)
+						{
+							WeakReference<ActiveObject> weakRef = watchList.get(i);
+							ActiveObject obj = weakRef.get();
+							if (obj == targetObj)
+							{
+								log.trace("Removing inactive object from watch list : "+targetObj);
+								watchList.remove(i--);
+								break;
+							}
+						}
 					}
 				}
 		
