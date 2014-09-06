@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="FFMQ : FFMQ - full-java, light-weight, fast JMS 1.1 queuer implementation">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>FFMQ</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/timewalker74/ffmq">View on GitHub</a>
+
+          <h1 id="project_title">FFMQ</h1>
+          <h2 id="project_tagline">FFMQ - full-java, light-weight, fast JMS 1.1 queuer implementation</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/timewalker74/ffmq/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/timewalker74/ffmq/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
+<a name="what-is-ffmq-" class="anchor" href="#what-is-ffmq-"><span class="octicon octicon-link"></span></a>What is FFMQ ?</h3>
+
+<p>FFMQ is a full-java, light-weight, fast JMS 1.1 queuer implementation.</p>
+
+<p>Emphasis is made on raw performance and reliability.
+As a consequence, it does not provide a lot of features but it's small, fast, easy to configure and has reduced dependencies.</p>
+
+<h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>FFMQ is released under the GNU LGPL v3 license in order to be used both as a standalone application and/or integrated in all kind of software.</p>
+
+<h3>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h3>
+
+<ul>
+<li>JMS 1.1 compliant (almost, see limits below)</li>
+<li>Lightweight (full server is below 600KB)</li>
+<li>Reduced dependencies : 
+
+<ul>
+<li>[3.x branch] JRE 1.4+, JMS API, commons-logging, [optional: log4j, mx4j]</li>
+<li>[4.x branch] JRE 1.5+, JMS API, commons-logging, [optional: log4j]</li>
+</ul>
+</li>
+<li>JMX monitoring support</li>
+<li>SSL support for remote connections</li>
+<li>Fast TCP-based network protocol</li>
+<li>State-of-the-art asynchronous journaling persistence storage</li>
+<li>Template-based destination definitions for easy configuration</li>
+<li>JMS bridging support to pipe messages between destinations and/or queuers</li>
+</ul><h3>
+<a name="limits" class="anchor" href="#limits"><span class="octicon octicon-link"></span></a>Limits</h3>
+
+<p>The following required JMS operations are not yet implemented :</p>
+
+<pre><code>JMSXGroupID / JMSXGroupSeq message properties
+</code></pre>
+
+<p>The following optional JMS operations are not yet implemented :</p>
+
+<pre><code>ConnectionConsumers and DurableConnectionConsumers
+Session MessageListener
+XAConnections
+</code></pre>
+
+<p>Other limitations :</p>
+
+<pre><code>Durable subscriptions are lost on server restart
+Because FFMQ is using a separate disk store for each queue, 
+atomicity of transactions spanning multiple destinations cannot be 
+fully guaranteed in case of server failure. Per-queue atomicity is guaranteed.
+</code></pre>
+
+<h3>
+<a name="performance" class="anchor" href="#performance"><span class="octicon octicon-link"></span></a>Performance</h3>
+
+<p>FFMQ is fast, real fast.</p>
+
+<p>Anyway, you should never trust any written performance claim.
+The best way to have an exact idea is to test it by yourself ! Please give it a try, if you have a JMS compliant application or benchmark this should be pretty easy (See 'Quick Start' below).</p>
+
+<h3>
+<a name="architecture" class="anchor" href="#architecture"><span class="octicon octicon-link"></span></a>Architecture</h3>
+
+<p>To get a technical insight on FFMQ inner workings you may want to have a look at the Technical Overview page.</p>
+
+<h3>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h3>
+
+<p>Just unzip the server package somewhere and start the server using the ffmq-server.bat or ffmq-server.sh shell in the bin/ directory.
+(If necessary you can change default listen ports and interfaces in the conf/ffmq-server.properties file)</p>
+
+<p>On the client-side, you need the ffmq-core.jar in your classpath. (plus commons-logging and log4j if you don't already have them)
+Here is the default JNDI configuration to use :</p>
+
+<pre><code>Naming Context Factory : net.timewalker.ffmq3.jndi.FFMQInitialContextFactory
+Connection Factory JNDI Name : factory/ConnectionFactory
+Provider URL : tcp://&lt;hostname&gt;:10002
+</code></pre>
+
+<h3>
+<a name="bug-reports--contact" class="anchor" href="#bug-reports--contact"><span class="octicon octicon-link"></span></a>Bug reports / Contact</h3>
+
+<p>If you find any bug or problem, you can send me an email to : <a href="mailto:ffmq@timewalker.net">ffmq@timewalker.net</a></p>
+
+<p>If you use FFMQ, successfully or not, I would be glad to hear from you. Tell me what you like or dislike about this piece of software.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">FFMQ maintained by <a href="https://github.com/timewalker74">timewalker74</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
