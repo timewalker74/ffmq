@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="FFMQ : FFMQ - full-java, light-weight, fast JMS 1.1 queuer implementation">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>FFMQ</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+              <h1 id="project_title">FFMQ</h1>
+              <h2 id="project_tagline">Light-weight & fast JMS message queuer</h2>
+              <div style="position: absolute; top:40px; left: 330px"><img src="icon.gif"/></div>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+        <h1>Frequently Asked Questions</h1>
+		
+		<h3>Are destinations names case sensitive in FFMQ ?</h3>
+		<p>
+			Yes. The JMS specification does not specify this but it seems cleaner this way.<br/>
+			Queues and topics are internally registered and looked up by their exact names so you need to take care of this properly when using the JMS API.
+		</p>
+		<p>
+			<i>Note : On windows, although the logical names would be considered different, 
+			   you won't be able to create two queues or topics with only case differences due
+               to filesystem restrictions. Anyway it's not recommended to do so for the sake of clarity.</i>
+		</p>
+		
+		<h3>What are exactly the files appearing in the data/ and destinations/ folders ?</h3>
+		<p>
+			A queue has one descriptor file <b><i>queue-&lt;queueName&gt;.properties</i></b> in destinations/ and some files in data :<br/>
+			<b><i>&lt;queueName&gt;.index</i></b>, <b><i>&lt;queueName&gt;.store</i></b> and <b><i>&lt;queueName&gt;.journal.*</i></b> 
+			(if the server was not properly stopped)<br/>
+			The .store file contains the messages data splitted in blocks.<br/>
+			The .index file is a kind of allocation table storing the position of used blocks in the .store file.<br/>
+			The .journal.* files are transaction logs for the store.
+		</p>
+		<p>
+			A topic has only one descriptor file <b><i>topic-&lt;topicName&gt;.properties</i></b> in destinations/, but there may be existing 
+			back-end queues for this topic named TOPIC-&lt;topicName&gt;-&lt;someUUID&gt;
+		</p>
+		
+		<h3>Can I manually change things in the data/ and destinations/ folders ?</h3>
+		<p>
+			Yes, but only if the server is stopped and you follow some guidelines :<br/>
+			(See above question first for details of the folders content)
+		</p>
+		<h3>How do I manually delete a queue/topic ?</h3>
+		<p>
+			You need to delete all the associated files (listed above). 
+			Note that for a topic you should also delete all the back-end generated queues.
+		</p>
+		<h3>How do I manually rename a queue/topic ?</h3>
+		<p>
+			You need to rename all the associated files (listed above) accordingly, plus edit the .properties descriptor and change the &lt;name&gt; element.<br/> 
+			Note that for a topic you should also rename all the back-end generated queues.
+		</p>
+		<h3>How can I relocate data files of queues ?</h3>
+		<p>
+			Data files are searched in the &lt;dataFolder&gt; that is specified inside the queue .properties descriptor. By default this is the server data/ folder.
+			You can move the associated data files in another location if you update the associated .properties descriptor accordingly.
+		</p>
+		<h3>The server complains about missing or already existing storage files, why ?</h3>
+		<p>
+			If you have a descriptor in destinations/ but no files in data/ or the opposite, this will confuse the server. 
+			You need to delete or move away the conflicting files to solve the issue.
+		</p>
+
+        <a href="index.html#doc">&lt;&lt; Back to index</a>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">FFMQ maintained by <a href="https://github.com/timewalker74">timewalker74</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+  </body>
+</html>
