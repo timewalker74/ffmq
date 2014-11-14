@@ -65,6 +65,8 @@ public abstract class AbstractPacket
         endpointId = in.readInt();
     }
 
+    public abstract boolean isResponseExpected();
+    
     /*
      *  (non-Javadoc)
      * @see java.lang.Object#toString()

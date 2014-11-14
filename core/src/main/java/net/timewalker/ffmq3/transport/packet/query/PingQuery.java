@@ -40,4 +40,13 @@ public final class PingQuery extends AbstractQueryPacket
 	{
 		return PacketType.Q_PING;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see net.timewalker.ffmq3.transport.packet.AbstractQueryPacket#isResponseExpected()
+	 */
+	public boolean isResponseExpected() 
+	{
+		return true;
+	}
 }

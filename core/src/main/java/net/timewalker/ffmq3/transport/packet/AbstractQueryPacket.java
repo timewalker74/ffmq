@@ -22,5 +22,8 @@ package net.timewalker.ffmq3.transport.packet;
  */
 public abstract class AbstractQueryPacket extends AbstractPacket
 {
-    // Nothing
+    public boolean isResponseExpected()
+    {
+    	return getEndpointId() != -1;
+    }
 }

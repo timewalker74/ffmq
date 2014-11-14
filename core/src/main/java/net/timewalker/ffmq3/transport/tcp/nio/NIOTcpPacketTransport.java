@@ -378,7 +378,8 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 		if (closed)
 			throw new PacketTransportException("Transport is closed");
 		
-		lastSendActivity = System.currentTimeMillis();
+		if (packet.isResponseExpected())
+			lastSendActivity = System.currentTimeMillis();
 		
 		boolean wakeUpRequired;
 		synchronized (sendQueue)

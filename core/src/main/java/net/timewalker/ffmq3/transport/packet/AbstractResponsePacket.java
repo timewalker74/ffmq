@@ -22,5 +22,12 @@ package net.timewalker.ffmq3.transport.packet;
  */
 public abstract class AbstractResponsePacket extends AbstractPacket
 {
-    // Nothing
+	/*
+	 * (non-Javadoc)
+	 * @see net.timewalker.ffmq3.transport.packet.AbstractPacket#isResponseExpected()
+	 */
+    public final boolean isResponseExpected() 
+    {
+    	return false;
+    }
 }
