@@ -37,7 +37,7 @@ import org.apache.commons.logging.LogFactory;
  * The TcpPacketSender is also responsible for sending keep-alive pings
  * when the connection is idle.</p>
  */
-public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnable
+public final class TcpPacketSender extends AbstractTcpPacketHandler implements Runnable
 {
 	private static final Log log = LogFactory.getLog(TcpPacketSender.class);
 	
@@ -122,6 +122,7 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
 	    		if (pipeline.size() > 0)
 	    		{	    		    
     	    		// Write all pipelined packets to the socket buffered output stream
+	    			boolean updateLastTwoWayActivityTimestamp = false;
     	    		while (pipeline.size() > 0)
     	    		{
     	    		    AbstractPacket packet = pipeline.removeFirst();
@@ -136,13 +137,17 @@ public class TcpPacketSender extends AbstractTcpPacketHandler implements Runnabl
     	                OutputStream out = outChannel.socketOutputStream;
     	                SerializationTools.writeInt(buffer.size(),out); // Packet size
     	                buffer.writeTo(out); // Packet body
+    	                
+    	                if (pingInterval > 0 && packet.isResponseExpected())
+    	                	updateLastTwoWayActivityTimestamp = true;
     	    		}
     	    		
     	    		// Flush output stream
     	    		outChannel.flush();
     	    		
-    	    		// Update last activity timestamp
-    	    		lastActivity = System.currentTimeMillis();
+    	    		// Update last activity timestamp only if we expect a response
+    	    		if (updateLastTwoWayActivityTimestamp)
+    	    			lastActivity = System.currentTimeMillis();
 	    		}
     		}
     	}

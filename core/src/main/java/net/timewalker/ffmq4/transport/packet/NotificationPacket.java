@@ -132,6 +132,16 @@ public final class NotificationPacket extends AbstractPacket
 		this.donePrefetching = donePrefetching;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see net.timewalker.ffmq3.transport.packet.AbstractPacket#isResponseExpected()
+	 */
+	@Override
+	public final boolean isResponseExpected() 
+	{
+		return false;
+	}
+	
     /*
      *  (non-Javadoc)
      * @see java.lang.Object#toString()

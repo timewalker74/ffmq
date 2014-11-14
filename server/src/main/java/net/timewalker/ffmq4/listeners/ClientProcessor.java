@@ -303,7 +303,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         }
         
         // Send response
-        if (response != null && (query.getEndpointId() != -1 || response instanceof PingResponse))
+        if (response != null && query.isResponseExpected())
         {        	
             // Map endpoint id on response
             response.setEndpointId(query.getEndpointId());
