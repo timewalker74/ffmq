@@ -32,6 +32,16 @@
 	        </configuration>
       	</plugin>
 		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-eclipse-plugin</artifactId>
+			<configuration>
+				<projectNameTemplate>ffmq-distribution</projectNameTemplate>
+				<buildOutputDirectory>
+					temp/classes
+				</buildOutputDirectory>
+			</configuration>
+		</plugin>
+		<plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-assembly-plugin</artifactId>
 			<version>2.1</version>
