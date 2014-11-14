@@ -206,8 +206,6 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
             
             receiverThread = new Thread(receiver,"TcpPacketReceiver["+(client ? "client" : "server")+"]");
             receiverThread.start();
-            
-            System.out.println(Thread.activeCount());
         }
         catch (Exception e)
         {
