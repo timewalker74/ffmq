@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq4.test;
+package net.timewalker.ffmq3.test;
 
 import java.util.Hashtable;
 
@@ -24,35 +24,35 @@ import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import net.timewalker.ffmq4.FFMQConstants;
-import net.timewalker.ffmq4.transport.PacketTransportType;
+import net.timewalker.ffmq4.test.TestUtils;
 
 /**
  * TestConsumerClient
  */
-public class TestConsumerClient implements Runnable, ExceptionListener
+public class TestConsumerClientLongTransaction implements Runnable, ExceptionListener
 {
-	private static final boolean USE_QUEUE = false;
+	private static final String providerURL = TestUtils.TCP_TRANSPORT_URI;
+	//private static final String providerURL = "tcp://192.168.2.26:10101";
 	
-	private boolean stopRequired;
+	private static final boolean USE_QUEUE = true;
+
 	private Connection conn;
 	private int received = 0;
     private int commited = 0;
-    private int commitRate = 1;
+    private boolean stopRequired = false;
 
-    // Stats
-    private long lastMeasure;
-    private int previouslyReceived;
     
     /* (non-Javadoc)
 	 * @see javax.jms.ExceptionListener#onException(javax.jms.JMSException)
 	 */
-	@Override
+    @Override
 	public void onException(JMSException e)
 	{
 		e.printStackTrace();
@@ -70,17 +70,13 @@ public class TestConsumerClient implements Runnable, ExceptionListener
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	@Override
+    @Override
 	public void run()
 	{
 		try
 		{
 			Hashtable<String,Object> env = new Hashtable<>();
 	        env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
-	        
-	        //String providerURL = PacketTransportType.TCP+"://"+FFMQConstants.DEFAULT_SERVER_HOST+":"+TestUtils.TEST_SERVER_PORT;
-	        String providerURL = PacketTransportType.TCPNIO+"://"+FFMQConstants.DEFAULT_SERVER_HOST+":"+TestUtils.TEST_SERVER_PORT;
-	        
 	        env.put(Context.PROVIDER_URL, providerURL);
 	        Context context = new InitialContext(env);
 	        
@@ -99,48 +95,25 @@ public class TestConsumerClient implements Runnable, ExceptionListener
 	        
 	        System.out.println("Listening on "+(USE_QUEUE ? "queue":"topic")+" TEST");
 	        System.out.println("---------------------------------------------------------------------");
-//	        Message msg;
-//	        while (!stopRequired && (msg = consumer.receive()) != null)
-            while (!stopRequired && consumer.receive() != null)
-	        {
-            	long now = System.currentTimeMillis();
-            	if ((now - lastMeasure) > 1000)
-            	{
-            		int delta = received - previouslyReceived;
-            		double rate = (double)delta*1000/(now - lastMeasure);
-            		System.out.println("rate : "+rate+" msg/s");
-            		
-            		previouslyReceived = received;
-            		lastMeasure = now;
-            	}
-            	
-	        	received++;
-	            //System.out.println(msg);
-
-	        	if ((received%commitRate) == 0)
-	        	{
-    	        	session.commit();
-    	            commited += commitRate;
-    	            System.out.print(".");
-    	            System.out.flush();
-	        	}
-	        	
-	        	Thread.sleep(50);
-	        }
-            if (!stopRequired)
-            	System.out.println("Consumer was closed !");
 	        
-	        if ((received%commitRate) != 0)
-            {
-                session.commit();
-                commited = received;
-            }
+	        for(int n=0;n<20;n++) {
+	        	Message msg = consumer.receive(5000);
+	        	if (msg != null)
+	        	{
+	        		System.out.println("Received : "+msg);
+	        	}
+	        	else
+	        		System.out.println("Waiting ...");
+	        	
+	        	if (stopRequired)
+	        		break;
+	        }
+	        
+	        session.commit();
 	        
 	        consumer.close();
 	        session.close();
 	        conn.close();
-	        
-	        Thread.sleep(1000);
 		}
 		catch (Throwable e)
 		{
@@ -153,11 +126,10 @@ public class TestConsumerClient implements Runnable, ExceptionListener
 	        System.out.println("Received = "+received);
 	        System.out.println("Commited = "+commited);
 		}
-		
 	}
 	
 	public static void main(String[] args) throws Exception
     {
-		new TestConsumerClient().run();
+		new TestConsumerClientLongTransaction().run();
     }
 }

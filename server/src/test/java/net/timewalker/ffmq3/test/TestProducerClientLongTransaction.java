@@ -15,41 +15,44 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq4.test;
+package net.timewalker.ffmq3.test;
 
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
+import javax.jms.Message;
+import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import net.timewalker.ffmq4.FFMQConstants;
+import net.timewalker.ffmq4.storage.data.DataStoreFullException;
+import net.timewalker.ffmq4.test.TestUtils;
 import net.timewalker.ffmq4.transport.PacketTransportType;
 
 /**
- * TestConsumerClient
+ * TestProducerClient
  */
-public class TestConsumerClient implements Runnable, ExceptionListener
+public class TestProducerClientLongTransaction implements Runnable,ExceptionListener
 {
-	private static final boolean USE_QUEUE = false;
+	private static final boolean USE_QUEUE = true;
+	private static final int DELIVERY_MODE = DeliveryMode.NON_PERSISTENT;
+	private static final int AMOUNT = 20;
 	
 	private boolean stopRequired;
 	private Connection conn;
-	private int received = 0;
-    private int commited = 0;
-    private int commitRate = 1;
-
-    // Stats
-    private long lastMeasure;
-    private int previouslyReceived;
-    
-    /* (non-Javadoc)
+	private int sent = 0;
+	private long sendDelay = 5000;
+	private long msgTTL = 0; //5*1000;
+	
+	/* (non-Javadoc)
 	 * @see javax.jms.ExceptionListener#onException(javax.jms.JMSException)
 	 */
 	@Override
@@ -66,22 +69,22 @@ public class TestConsumerClient implements Runnable, ExceptionListener
 			e1.printStackTrace();
 		}
 	}
-    
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
-	public void run()
+	public synchronized void run()
 	{
 		try
 		{
 			Hashtable<String,Object> env = new Hashtable<>();
 	        env.put(Context.INITIAL_CONTEXT_FACTORY, FFMQConstants.JNDI_CONTEXT_FACTORY);
 	        
-	        //String providerURL = PacketTransportType.TCP+"://"+FFMQConstants.DEFAULT_SERVER_HOST+":"+TestUtils.TEST_SERVER_PORT;
-	        String providerURL = PacketTransportType.TCPNIO+"://"+FFMQConstants.DEFAULT_SERVER_HOST+":"+TestUtils.TEST_SERVER_PORT;
+	        String transportURI = PacketTransportType.TCP+"://"+FFMQConstants.DEFAULT_SERVER_HOST+":"+TestUtils.TEST_SERVER_PORT;
+	        //String transportURI = PacketTransportType.TCPNIO+"://"+FFMQConstants.DEFAULT_SERVER_HOST+":"+TestUtils.TEST_SERVER_PORT;
 	        
-	        env.put(Context.PROVIDER_URL, providerURL);
+	        env.put(Context.PROVIDER_URL, transportURI);
 	        Context context = new InitialContext(env);
 	        
 	        ConnectionFactory connFactory = (ConnectionFactory)context.lookup(FFMQConstants.JNDI_CONNECTION_FACTORY_NAME);
@@ -90,74 +93,73 @@ public class TestConsumerClient implements Runnable, ExceptionListener
 	        conn.setExceptionListener(this);
 	        conn.start();
 	        
-	        Session session = conn.createSession(true,Session.SESSION_TRANSACTED);
-	        
+	        final Session session = conn.createSession(true,Session.AUTO_ACKNOWLEDGE);
 	        
 	        Destination destination = USE_QUEUE ? (Destination)session.createQueue("TEST") : (Destination)session.createTopic("VOLATILE");
 	        
-	        MessageConsumer consumer = session.createConsumer(destination);
+	        MessageProducer producer = session.createProducer(destination);
+	        producer.setDeliveryMode(DELIVERY_MODE);
 	        
-	        System.out.println("Listening on "+(USE_QUEUE ? "queue":"topic")+" TEST");
+	        if (msgTTL > 0)
+	            producer.setTimeToLive(msgTTL);
+	        
+//	        new Thread(){
+//	        	public void run() {
+//	        		try
+//	        		{
+//	        			Thread.sleep(3000);
+//	        			session.close();
+//	        		}
+//	        		catch (Exception e)
+//	        		{
+//	        			e.printStackTrace();
+//	        		}
+//	        	}
+//	        }.start();
+	        
 	        System.out.println("---------------------------------------------------------------------");
-//	        Message msg;
-//	        while (!stopRequired && (msg = consumer.receive()) != null)
-            while (!stopRequired && consumer.receive() != null)
+	        int count = 0;
+	        try
 	        {
-            	long now = System.currentTimeMillis();
-            	if ((now - lastMeasure) > 1000)
-            	{
-            		int delta = received - previouslyReceived;
-            		double rate = (double)delta*1000/(now - lastMeasure);
-            		System.out.println("rate : "+rate+" msg/s");
-            		
-            		previouslyReceived = received;
-            		lastMeasure = now;
-            	}
-            	
-	        	received++;
-	            //System.out.println(msg);
-
-	        	if ((received%commitRate) == 0)
-	        	{
-    	        	session.commit();
-    	            commited += commitRate;
-    	            System.out.print(".");
-    	            System.out.flush();
-	        	}
-	        	
-	        	Thread.sleep(50);
+		        while (!stopRequired && count  < AMOUNT)
+		        {
+		        	Message msg = session.createTextMessage("MSG_"+count++);
+		        	
+		        	System.out.println(new Date()+" Sending : "+msg);
+		        	producer.send(msg);
+		        	sent++;
+		        	
+		        	if (sendDelay > 0)
+	        		    wait(sendDelay);
+		        }
+		        
+		        session.commit();
 	        }
-            if (!stopRequired)
-            	System.out.println("Consumer was closed !");
-	        
-	        if ((received%commitRate) != 0)
-            {
-                session.commit();
-                commited = received;
-            }
-	        
-	        consumer.close();
-	        session.close();
-	        conn.close();
-	        
-	        Thread.sleep(1000);
+	        finally
+	        {
+		        producer.close();
+		        session.close();
+		        conn.close();
+	        }
+		}
+		catch (DataStoreFullException e)
+		{
+			System.err.println("Producer client failed : "+e);
 		}
 		catch (Throwable e)
 		{
-			System.err.println("Consumer client failed");
+			System.err.println("Producer client failed");
 			e.printStackTrace();
 		}
 		finally
 		{
 			System.out.println("---------------------------------------------------------------------");
-	        System.out.println("Received = "+received);
-	        System.out.println("Commited = "+commited);
+	        System.out.println("Sent     = "+sent);
 		}
-		
 	}
 	
 	public static void main(String[] args) throws Exception
     {
-		new TestConsumerClient().run();
+		new TestProducerClientLongTransaction().run();
     }
 }
