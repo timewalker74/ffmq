@@ -311,6 +311,8 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     @Override
 	protected final void wakeUp()
     {
+    	// Note : Only called asynchronously by a wake up task after a notification packet has arrived
+    	
     	// Check that the consumer is not closed
 		if (closed)
 			return;

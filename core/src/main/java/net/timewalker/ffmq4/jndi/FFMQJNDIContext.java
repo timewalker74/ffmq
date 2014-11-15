@@ -51,7 +51,8 @@ public final class FFMQJNDIContext implements Context
     /**
      * Constructor
      */
-    public FFMQJNDIContext(Hashtable<?,?> environment)
+    @SuppressWarnings("unchecked")
+	public FFMQJNDIContext(Hashtable<?,?> environment)
     {
         // Copy environment
         if (environment != null)
@@ -63,6 +64,7 @@ public final class FFMQJNDIContext implements Context
     /**
      * Constructor
      */
+    @SuppressWarnings("unchecked")
     protected FFMQJNDIContext(Hashtable<String,Object> environment,Hashtable<String,Object> bindings)
     {
         this.env = (Hashtable<String,Object>)environment.clone();

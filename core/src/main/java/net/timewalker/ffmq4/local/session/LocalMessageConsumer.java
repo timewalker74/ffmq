@@ -458,7 +458,7 @@ public class LocalMessageConsumer extends AbstractMessageConsumer
     		synchronized (prefetchLock)
 			{
     			if (prefetchCapacity < prefetchSize)
-    				return; // Consumer is busy, we can give up immediately because it get back to us later anyway
+    				return; // Consumer is busy, we can give up immediately because it will get back to us later anyway
     			
     		    // Push up to 'prefetchCapacity' messages to the remote consumer
 	    		while (prefetchCapacity > 0)

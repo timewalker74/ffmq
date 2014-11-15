@@ -20,7 +20,6 @@ package net.timewalker.ffmq4.remote.session;
 import javax.jms.JMSException;
 import javax.jms.Topic;
 
-import net.timewalker.ffmq4.transport.PacketTransportEndpoint;
 import net.timewalker.ffmq4.transport.packet.query.CreateDurableSubscriberQuery;
 import net.timewalker.ffmq4.utils.id.IntegerID;
 
@@ -30,7 +29,6 @@ import net.timewalker.ffmq4.utils.id.IntegerID;
 public final class RemoteDurableTopicSubscriber extends RemoteTopicSubscriber
 {
     // Attributes
-    private PacketTransportEndpoint transportEndpoint;
     private String subscriptionName;
     
     /**
@@ -40,7 +38,6 @@ public final class RemoteDurableTopicSubscriber extends RemoteTopicSubscriber
     {
         super(consumerId,session, topic, messageSelector, noLocal);
         this.subscriptionName = subscriptionName;
-        this.transportEndpoint = session.getTransportEndpoint();
     }
 
     /*

@@ -303,7 +303,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
         }
     }
     
-    protected void singleQueueConnectionReceiverTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
+    protected void singleQueueConnectionReceiverTest( CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
     {
     	QueueConnection connection = null;
     	try
@@ -427,7 +427,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
     	    fail(lastConnectionFailure.toString());
     }
     
-    protected void singleQueueConnectionListenerTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory  ) throws Exception
+    protected void singleQueueConnectionListenerTest( CommTestParameters params , DummyMessageFactory msgFactory  ) throws Exception
     {
     	QueueConnection listenerConnection = null;
     	QueueConnection producerConnection = null;
@@ -558,7 +558,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
     	}
     }
     
-    protected void multiQueueConnectionReceiverTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
+    protected void multiQueueConnectionReceiverTest( CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
     {
     	QueueConnection[] receiverConnections = null;
     	QueueConnection[] sendersConnections = null;
@@ -703,7 +703,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
     	}
     }
     
-    protected void multiQueueConnectionListenerTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
+    protected void multiQueueConnectionListenerTest( CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
     {
     	QueueConnection[] receiverConnections = null;
     	QueueConnection[] sendersConnections = null;
@@ -853,7 +853,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
     	}
     }
     
-    private void singleTopicConnectionReceiverTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
+    private void singleTopicConnectionReceiverTest( CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
     {
     	TopicConnection connection = null;
     	try
@@ -993,7 +993,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
     	}
     }
     
-    protected void singleTopicConnectionListenerTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
+    protected void singleTopicConnectionListenerTest( CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
     {
         Topic topic = new TopicRef(params.destinationName);
         
@@ -1120,7 +1120,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
         }
     }
     
-    protected void multiTopicConnectionReceiverTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
+    protected void multiTopicConnectionReceiverTest( CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
     {
         Topic topic = new TopicRef(params.destinationName);
         
@@ -1256,7 +1256,7 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
         }
     }
     
-    protected void multiTopicConnectionListenerTest( String testName , CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
+    protected void multiTopicConnectionListenerTest( CommTestParameters params , DummyMessageFactory msgFactory ) throws Exception
     {
         Topic topic = new TopicRef(params.destinationName);
         
@@ -1406,16 +1406,16 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
                     if (isTopicTest())
                     {
                         if (isListenerTest())
-                            multiTopicConnectionListenerTest(testName,params,MSG_FACTORIES[n]);
+                            multiTopicConnectionListenerTest(params,MSG_FACTORIES[n]);
                         else
-                            multiTopicConnectionReceiverTest(testName,params,MSG_FACTORIES[n]);
+                            multiTopicConnectionReceiverTest(params,MSG_FACTORIES[n]);
                     }
                     else
                     {
                         if (isListenerTest())
-                            multiQueueConnectionListenerTest(testName,params,MSG_FACTORIES[n]);
+                            multiQueueConnectionListenerTest(params,MSG_FACTORIES[n]);
                         else
-                            multiQueueConnectionReceiverTest(testName,params,MSG_FACTORIES[n]);
+                            multiQueueConnectionReceiverTest(params,MSG_FACTORIES[n]);
                     }
                 }
                 else
@@ -1423,16 +1423,16 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
                     if (isTopicTest())
                     {
                         if (isListenerTest())
-                            singleTopicConnectionListenerTest(testName,params,MSG_FACTORIES[n]);
+                            singleTopicConnectionListenerTest(params,MSG_FACTORIES[n]);
                         else
-                            singleTopicConnectionReceiverTest(testName,params,MSG_FACTORIES[n]);
+                            singleTopicConnectionReceiverTest(params,MSG_FACTORIES[n]);
                     }
                     else
                     {
                         if (isListenerTest())
-                            singleQueueConnectionListenerTest(testName,params,MSG_FACTORIES[n]);
+                            singleQueueConnectionListenerTest(params,MSG_FACTORIES[n]);
                         else
-                            singleQueueConnectionReceiverTest(testName,params,MSG_FACTORIES[n]);
+                            singleQueueConnectionReceiverTest(params,MSG_FACTORIES[n]);
                     }
                 }
                 

@@ -250,10 +250,10 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         return commitRequired;
     }
     
-    private void processPutError( @SuppressWarnings("unused") String subscriberId , JMSException e , int policy ) throws JMSException
+    private void processPutError( String subscriberId , JMSException e , int policy ) throws JMSException
     {
     	if ((policy & FFMQSubscriberPolicy.SUBSCRIBER_POLICY_LOG) > 0)
-    		ErrorTools.log(e, log);
+    		ErrorTools.log("subscriber="+subscriberId, e, log);
     	
     	if ((policy & FFMQSubscriberPolicy.SUBSCRIBER_POLICY_REPORT_TO_PRODUCER) > 0)
     		throw e;

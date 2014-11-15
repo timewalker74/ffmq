@@ -1,7 +1,5 @@
 package net.timewalker.ffmq4.test.utils.queue;
 
-import java.util.Random;
-
 import javax.jms.Message;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
@@ -24,8 +22,6 @@ public class QueueSenderThread extends AbstractQueueHandlerThread
     private int deliveryMode;
     private int priority;
     private long timeToLive;
-    
-    private Random random = new Random();
     
     /**
      * Constructor

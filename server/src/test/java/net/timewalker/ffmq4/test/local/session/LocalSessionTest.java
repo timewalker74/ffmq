@@ -2281,7 +2281,7 @@ public class LocalSessionTest extends AbstractCommTest
 	private void purgeDestination(Destination destination) throws JMSException
 	{
 		Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-		MessageConsumer consumer = session.createConsumer(queue1);
+		MessageConsumer consumer = session.createConsumer(destination);
 		connection.start();
 		while (consumer.receive(RECV_TIMEOUT) != null)
 			continue;

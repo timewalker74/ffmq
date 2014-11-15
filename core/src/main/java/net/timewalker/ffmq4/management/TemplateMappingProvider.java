@@ -67,36 +67,40 @@ public final class TemplateMappingProvider
         try
         {
             BufferedReader input = new BufferedReader(new FileReader(mappingFile));
-            
-            String line;
-            while ((line = input.readLine()) != null)
+            try
             {
-                // Strip everything after the comment delimiter, if any
-                int commentSepIdx = line.indexOf('#');
-                if (commentSepIdx != -1)
-                    line = line.substring(0,commentSepIdx);
-                
-                // Trim the remaining line
-                line = line.trim();
-                
-                // Skip empty lines
-                if (line.length() == 0)
-                    continue;
-                
-                String[] tokens = StringTools.split(line, ':');
-                if (tokens.length != 3)
-                    throw new FFMQException("Invalid template mapping line : "+line,"INVALID_TEMPLATE_MAPPING");
-                boolean isQueueTemplate = tokens[0].equalsIgnoreCase("queue");
-                String destinationNamePattern = tokens[1];
-                String templateName = tokens[2];
-                
-                if (isQueueTemplate)
-                    addQueueTemplateMapping(new TemplateMapping(destinationNamePattern,templateName));
-                else
-                    addTopicTemplateMapping(new TemplateMapping(destinationNamePattern,templateName));
+	            String line;
+	            while ((line = input.readLine()) != null)
+	            {
+	                // Strip everything after the comment delimiter, if any
+	                int commentSepIdx = line.indexOf('#');
+	                if (commentSepIdx != -1)
+	                    line = line.substring(0,commentSepIdx);
+	                
+	                // Trim the remaining line
+	                line = line.trim();
+	                
+	                // Skip empty lines
+	                if (line.length() == 0)
+	                    continue;
+	                
+	                String[] tokens = StringTools.split(line, ':');
+	                if (tokens.length != 3)
+	                    throw new FFMQException("Invalid template mapping line : "+line,"INVALID_TEMPLATE_MAPPING");
+	                boolean isQueueTemplate = tokens[0].equalsIgnoreCase("queue");
+	                String destinationNamePattern = tokens[1];
+	                String templateName = tokens[2];
+	                
+	                if (isQueueTemplate)
+	                    addQueueTemplateMapping(new TemplateMapping(destinationNamePattern,templateName));
+	                else
+	                    addTopicTemplateMapping(new TemplateMapping(destinationNamePattern,templateName));
+	            }
             }
-            
-            input.close();
+            finally
+            {
+            	input.close();
+            }
         }
         catch (IOException e)
         {

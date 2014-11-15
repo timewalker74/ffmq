@@ -100,7 +100,7 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
         }
         catch (PacketTransportException e)
         {
-            throw new FFMQException("Could not establish transport","TRANSPORT_ERROR",e);
+            throw new FFMQException("Could not establish transport to "+transportURI,"TRANSPORT_ERROR",e);
         }
         
         this.transportHub = new PacketTransportHub(transport);

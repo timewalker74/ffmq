@@ -570,12 +570,14 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     /* (non-Javadoc)
      * @see net.timewalker.ffmq4.common.message.AbstractMessage#copy()
      */
-    @Override
+	@Override
 	public AbstractMessage copy()
     {
         StreamMessageImpl clone = new StreamMessageImpl();
         copyCommonFields(clone);
-        clone.body = (Vector<Object>)this.body.clone();
+        @SuppressWarnings("unchecked")
+        Vector<Object> bodyClone = (Vector<Object>)this.body.clone();
+        clone.body = bodyClone;
         
         return clone;
     }

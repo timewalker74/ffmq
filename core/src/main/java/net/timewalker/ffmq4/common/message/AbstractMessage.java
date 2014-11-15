@@ -104,8 +104,11 @@ public abstract class AbstractMessage implements Message
         clone.redelivered = this.redelivered;
         clone.replyTo = this.replyTo;
         clone.timestamp = this.timestamp;
-        clone.type = this.type;            
-        clone.propertyMap = this.propertyMap != null ? (Map<String,Object>)((HashMap<String,Object>)this.propertyMap).clone() : null;
+        clone.type = this.type;   
+        
+        @SuppressWarnings("unchecked")
+        Map<String,Object> propertyMapClone = this.propertyMap != null ? (Map<String,Object>)((HashMap<String,Object>)this.propertyMap).clone() : null;         
+        clone.propertyMap = propertyMapClone;
         
         // Copy raw message cache if any
         clone.unserializationLevel = this.unserializationLevel; 

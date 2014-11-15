@@ -55,6 +55,7 @@ public final class FFMQInitialContextFactory implements InitialContextFactory
     /**
      * Preload the context with factories
      */
+    @SuppressWarnings("unchecked")
     protected void preLoad(FFMQJNDIContext context) throws NamingException
     {
         context.bind(FFMQConstants.JNDI_CONNECTION_FACTORY_NAME, new FFMQConnectionFactory((Hashtable<String, Object>) context.getEnvironment()));
