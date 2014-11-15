@@ -33,10 +33,31 @@ public final class ErrorTools
 	 */
 	public static void log( JMSException e , Log log )
 	{
+		log(null,e,log);
+	}
+	
+	/**
+	 * Log a JMS exception with an error level
+	 * @param e
+	 * @param log
+	 */
+	public static void log( String context , JMSException e , Log log )
+	{
+		StringBuffer message = new StringBuffer();
+		if (context != null)
+		{
+			message.append("[");
+			message.append(context);
+			message.append("] ");
+		} 
 		if (e.getErrorCode() != null)
-			log.error("error={"+e.getErrorCode()+"} "+e.getMessage());
-		else
-			log.error(e.getMessage());
+		{
+			message.append("error={");
+			message.append(e.getErrorCode());
+			message.append("} ");
+		}
+		message.append(e.getMessage());
+		log.error(message.toString());
 		if (e.getLinkedException() != null)
 			log.error("Linked exception was :",e.getLinkedException());
 	}

@@ -17,7 +17,6 @@
  */
 package net.timewalker.ffmq3.transport;
 
-import net.timewalker.ffmq3.utils.Settings;
 
 /**
  * <p>Base class for a packet transport</p>
@@ -36,7 +35,7 @@ public abstract class AbstractPacketTransport implements PacketTransport
 	/**
 	 * Constructor
 	 */
-	public AbstractPacketTransport( String id , boolean client , Settings settings )
+	public AbstractPacketTransport( String id , boolean client )
 	{
 		this.id = id;
 		this.client = client;	

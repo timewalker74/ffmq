@@ -131,13 +131,10 @@ public class TopicListenerThread extends AbstractTopicHandlerThread implements M
      * (non-Javadoc)
      * @see net.timewalker.ffmq3.additional.utils.AbstractQueueHandlerThread#close()
      */
-    public void close() throws JMSException
+    public synchronized void close() throws JMSException
     {
-    	synchronized (this) 
-    	{
-    		stop = true;
-            notify();
-		}
+		stop = true;
+        notify();
         
         if (subscriber != null)
             subscriber.close();

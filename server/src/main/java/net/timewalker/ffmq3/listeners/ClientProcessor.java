@@ -68,7 +68,6 @@ import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryQueueQuery;
 import net.timewalker.ffmq3.transport.packet.query.DeleteTemporaryTopicQuery;
 import net.timewalker.ffmq3.transport.packet.query.GetQuery;
 import net.timewalker.ffmq3.transport.packet.query.OpenConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.query.PingQuery;
 import net.timewalker.ffmq3.transport.packet.query.PrefetchQuery;
 import net.timewalker.ffmq3.transport.packet.query.PutQuery;
 import net.timewalker.ffmq3.transport.packet.query.QueueBrowserFetchElementQuery;
@@ -77,8 +76,6 @@ import net.timewalker.ffmq3.transport.packet.query.RecoverQuery;
 import net.timewalker.ffmq3.transport.packet.query.RollbackMessageQuery;
 import net.timewalker.ffmq3.transport.packet.query.RollbackQuery;
 import net.timewalker.ffmq3.transport.packet.query.SetClientIDQuery;
-import net.timewalker.ffmq3.transport.packet.query.StartConnectionQuery;
-import net.timewalker.ffmq3.transport.packet.query.StopConnectionQuery;
 import net.timewalker.ffmq3.transport.packet.query.UnsubscribeQuery;
 import net.timewalker.ffmq3.transport.packet.response.AcknowledgeResponse;
 import net.timewalker.ffmq3.transport.packet.response.CloseBrowserEnumerationResponse;
@@ -374,12 +371,12 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
     		case PacketType.Q_DELETE_TEMP_QUEUE :   return processDeleteTemporaryQueue((DeleteTemporaryQueueQuery)query);
     		case PacketType.Q_DELETE_TEMP_TOPIC :   return processDeleteTemporaryTopic((DeleteTemporaryTopicQuery)query);
     		case PacketType.Q_OPEN_CONNECTION :     return processOpenConnection((OpenConnectionQuery)query);
-    		case PacketType.Q_START_CONNECTION :    return processStartConnection((StartConnectionQuery)query);
-    		case PacketType.Q_STOP_CONNECTION :     return processStopConnection((StopConnectionQuery)query);
+    		case PacketType.Q_START_CONNECTION :    return processStartConnection();
+    		case PacketType.Q_STOP_CONNECTION :     return processStopConnection();
     		case PacketType.Q_SET_CLIENT_ID :       return processSetClientID((SetClientIDQuery)query);
     		case PacketType.Q_UNSUBSCRIBE :         return processUnsubscribe((UnsubscribeQuery)query);
     		case PacketType.Q_PREFETCH :            return processPrefetch((PrefetchQuery)query);
-    		case PacketType.Q_PING :                return processPing((PingQuery)query);
+    		case PacketType.Q_PING :                return processPing();
     		case PacketType.Q_ROLLBACK_MESSAGE :    return processRollbackMessage((RollbackMessageQuery)query);
     		
     		default:
@@ -677,13 +674,13 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         return response;
     }
     
-    private StartConnectionResponse processStartConnection( StartConnectionQuery query ) throws JMSException
+    private StartConnectionResponse processStartConnection() throws JMSException
     {
         getLocalConnection().start();
         return new StartConnectionResponse();
     }
     
-    private StopConnectionResponse processStopConnection( StopConnectionQuery query ) throws JMSException
+    private StopConnectionResponse processStopConnection() throws JMSException
     {
         getLocalConnection().stop();
         return new StopConnectionResponse();
@@ -721,7 +718,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
         return new UnsubscribeResponse();
     }
     
-    private PingResponse processPing( PingQuery query ) throws JMSException
+    private PingResponse processPing() throws JMSException
     {
     	getLocalConnection(); // Make sure a connection was established
     	return new PingResponse();

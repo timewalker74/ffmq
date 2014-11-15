@@ -526,7 +526,7 @@ public class LocalSession extends AbstractSession
 	    		for (int i = 0; i < queuesWithGet.size(); i++)
 				{
 					LocalQueue localQueue = (LocalQueue)queuesWithGet.get(i);
-					if (localQueue.redeliverLocked(this,pendingGets,locks))
+					if (localQueue.redeliverLocked(pendingGets,locks))
 						committables.add(localQueue);
 				}
 	    		

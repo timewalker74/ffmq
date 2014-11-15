@@ -23,7 +23,7 @@ import javax.jms.JMSException;
 import net.timewalker.ffmq3.utils.pool.ObjectPool;
 
 /**
- * MessageListenerDispatcherThreadPool
+ * AsyncTaskProcessorThreadPool
  */
 public class AsyncTaskProcessorThreadPool extends ObjectPool
 {

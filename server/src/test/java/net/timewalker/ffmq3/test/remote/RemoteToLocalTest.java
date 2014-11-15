@@ -122,7 +122,7 @@ public class RemoteToLocalTest extends AbstractCommTest
     {
 		Connection connection = TestUtils.openLocalConnection();
         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-        MessageConsumer consumer = session.createConsumer(queue1);
+        MessageConsumer consumer = session.createConsumer(destination);
         connection.start();
         while (consumer.receive(100) != null)
         	continue;

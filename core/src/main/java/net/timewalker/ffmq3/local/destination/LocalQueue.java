@@ -303,7 +303,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      * Consumers are notified of rollbacked messages availability
      * @return true if a commit is required to ensure data safety
      */
-    public boolean redeliverLocked( LocalSession localSession , TransactionItem[] items , MessageLockSet locks ) throws JMSException
+    public boolean redeliverLocked( TransactionItem[] items , MessageLockSet locks ) throws JMSException
     {
     	checkNotClosed();
     	checkTransactionLock();

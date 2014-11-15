@@ -126,7 +126,7 @@ public class BlockBasedDataStoreTest extends TestCase
 		String msgBase = StringTools.rightPad("DATA-", msgSize, 'X');
 
 		BlockBasedDataStoreTools.create(storeId, new File("target/test"),
-		                                200, blockSize, true);
+		                                blockCount, blockSize, true);
 		LinkedDataStore store = createStore(storeId, new File("target/test"));
 
 		// -------------------------------------------------------------------

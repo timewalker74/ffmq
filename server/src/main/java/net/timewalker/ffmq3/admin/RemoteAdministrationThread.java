@@ -202,7 +202,7 @@ public final class RemoteAdministrationThread extends SynchronizableThread
                 return processPurgeQueue(msg);
             
             if (command.equals(FFMQAdminConstants.ADM_COMMAND_SHUTDOWN))
-                return processShutdown(msg);
+                return processShutdown();
 
             log.error("Invalid administration command : "+command);
             return "Invalid administration command : "+command;
@@ -303,7 +303,7 @@ public final class RemoteAdministrationThread extends SynchronizableThread
         return null;
     }
     
-    private String processShutdown( Message msg )
+    private String processShutdown()
     {
     	// Shutdown the server
     	if (server.isInRunnableMode())

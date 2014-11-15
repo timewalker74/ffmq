@@ -189,7 +189,7 @@ public final class NIOTcpMultiplexer
         }
     }
 	
-	protected boolean acceptClient( NIOServerSocketHandler serverHandler , SocketChannel socketChannel , Selector selector )
+	protected boolean acceptClient( NIOServerSocketHandler serverHandler , SocketChannel socketChannel )
     {
 		synchronized (clientHandlers)
 		{
@@ -471,7 +471,7 @@ public final class NIOTcpMultiplexer
 	            			                                socketRecvBufferSize);
 	                                
 	                                // Create a new client handler
-	                                if (!acceptClient(serverHandler,clientChannel,selector))
+	                                if (!acceptClient(serverHandler,clientChannel))
 	                                {
 	                                    log.error("Dropping incoming connection due to errors ...");
 	                                    clientChannel.close();
