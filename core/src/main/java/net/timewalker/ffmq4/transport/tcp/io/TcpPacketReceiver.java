@@ -129,8 +129,11 @@ public class TcpPacketReceiver extends AbstractTcpPacketHandler implements Runna
     @Override
 	public boolean onActivityTimeout() throws Exception
     {
-    	log.warn("#"+id+" ping timeout on client socket, closing connection.");
-    	transport.closeTransport(true);
+    	log.warn("#"+id+" ping timeout on client connection, closing socket.");
+    	// Do not close the transport from here because we don't want the watchdog thread 
+    	// to get stuck if an exception listener is registered.
+    	// We just close the socket and the receiver thread will handle the situation
+    	transport.closeSocket();
        	return true;
     }
     

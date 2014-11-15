@@ -339,7 +339,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
      * @see net.timewalker.ffmq4.remote.transport.PacketTransportListener#transportClosed(boolean)
      */
     @Override
-	public void transportClosed(boolean closedByRemotePeer)
+    public void transportClosed(boolean closedByRemotePeer, boolean mayBlock)
     {
     	parentListener.unregisterClient(this);
         try

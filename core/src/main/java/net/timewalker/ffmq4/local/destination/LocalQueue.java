@@ -746,7 +746,6 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
         catch (JMSException e)
     	{
     		ErrorTools.log(e, log);
-    		consumer.getSession().getConnection().exceptionOccured(e);
     	}
     }
     
@@ -780,8 +779,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
 	                catch (JMSException e)
 	                {
 	                	ErrorTools.log(e, log);
-	                    consumer.getSession().getConnection().exceptionOccured(e);
-	                    break;
+	                    continue;
 	                }
                 }
             }
@@ -794,7 +792,6 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
             catch (JMSException e)
         	{
         		ErrorTools.log(e, log);
-        		consumer.getSession().getConnection().exceptionOccured(e);
         	}
 	    }
     }

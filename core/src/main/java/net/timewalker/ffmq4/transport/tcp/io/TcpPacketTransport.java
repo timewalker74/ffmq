@@ -95,7 +95,8 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     @Override
 	public SocketAddress getRemotePeer()
     {
-    	return socket.getRemoteSocketAddress();
+    	Socket sock = socket;
+    	return sock != null ? sock.getRemoteSocketAddress() : null;
     }
     
     /**
@@ -235,6 +236,23 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     	return sender.needsThrottling();
     }
     
+    protected void closeSocket()
+    {
+    	try
+        {
+        	if (socket != null)
+        		socket.close();
+        }
+        catch (Exception e)
+        {
+            log.error("#"+id+" cannot close socket",e);
+        }
+        finally
+        {
+        	socket = null;
+        }
+    }
+    
     protected void closeTransport( boolean linkFailed )
     {
     	synchronized (closeLock)
@@ -251,23 +269,11 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
     		receiver.pleaseStop();
     	
     	// Close the socket
-        try
-        {
-        	if (socket != null)
-        		socket.close();
-        }
-        catch (Exception e)
-        {
-            log.error("#"+id+" cannot close socket",e);
-        }
-        finally
-        {
-        	socket = null;
-        }
+        closeSocket();
     	
     	// Notify listener
 		if (listener != null)
-			listener.transportClosed(linkFailed);
+			listener.transportClosed(linkFailed,true);
     }
     
     /*
