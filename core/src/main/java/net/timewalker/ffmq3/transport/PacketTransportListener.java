@@ -38,6 +38,6 @@ public interface PacketTransportListener
     /**
      * Called when the transport layer is closed
      */
-    public void transportClosed( boolean linkFailed );
+    public void transportClosed( boolean linkFailed , boolean mayBlock );
     
 }

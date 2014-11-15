@@ -344,8 +344,9 @@ public abstract class AbstractConnection implements Connection
 
     /**
      * Wake up all children consumers
+     * (Used by LocalConnection only)
      */
-    protected final void wakeUpConsumers()
+    protected final void wakeUpLocalConsumers()
     {
         try
         {
@@ -363,7 +364,6 @@ public abstract class AbstractConnection implements Connection
         catch (JMSException e)
         {
         	ErrorTools.log(e, log);
-            exceptionOccured(e);
         }
     }
     

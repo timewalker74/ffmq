@@ -347,12 +347,43 @@ public class RemoteConnection extends AbstractConnection implements PacketTransp
     /* (non-Javadoc)
      * @see net.timewalker.ffmq3.remote.transport.PacketTransportListener#transportClosed(boolean)
      */
-    public final void transportClosed(boolean linkFailed)
+    public final void transportClosed(boolean linkFailed,boolean mayBlock)
     {
         if (linkFailed)
         {
         	close();
-        	exceptionOccured(new FFMQException("Server connection lost","NETWORK_FAILURE"));
+        	
+        	if (mayBlock)
+        		exceptionOccured(new FFMQException("Server connection lost","NETWORK_FAILURE"));
+        	else
+        	{
+        		try
+        		{
+	        		ClientEnvironment.getAsyncTaskManager().execute(new AsyncTask() {
+	        			/*
+	        			 * (non-Javadoc)
+	        			 * @see net.timewalker.ffmq3.utils.async.AsyncTask#isMergeable()
+	        			 */
+						public boolean isMergeable() 
+						{
+							return false;
+						}
+						
+						/*
+						 * (non-Javadoc)
+						 * @see net.timewalker.ffmq3.utils.async.AsyncTask#execute()
+						 */
+						public void execute() 
+						{
+							exceptionOccured(new FFMQException("Server connection lost","NETWORK_FAILURE"));
+						}
+					});
+        		}
+        		catch (JMSException e)
+                {
+        			ErrorTools.log(e, log);
+                }
+        	}
         }
     }
 }

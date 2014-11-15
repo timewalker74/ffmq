@@ -119,7 +119,7 @@ public class LocalConnection extends AbstractConnection
 	        started = true;
 	        
 	        // Wake up waiting consumers
-	        wakeUpConsumers();
+	        wakeUpLocalConsumers();
 		}
     	finally
     	{

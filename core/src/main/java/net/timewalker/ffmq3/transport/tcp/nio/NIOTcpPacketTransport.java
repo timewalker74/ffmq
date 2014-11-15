@@ -434,7 +434,7 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 
 		// Notify listener
 		if (listener != null)
-			listener.transportClosed(linkFailed);
+			listener.transportClosed(linkFailed,false);
 	}
 	
 	/* (non-Javadoc)
