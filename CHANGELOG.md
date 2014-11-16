@@ -1,6 +1,6 @@
 ### FFMQ ChangeLog
 
-## 3.0.6 (not yet released)
+## 3.0.6
 
 - **[Fix]** Activity watchdog was not removing its entries properly
 - **[Fix]** Ping packets were not being sent on TCP connections during long transactions, causing premature timeouts
