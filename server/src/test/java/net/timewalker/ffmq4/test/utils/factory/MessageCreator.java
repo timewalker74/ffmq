@@ -48,7 +48,7 @@ public class MessageCreator
     
     private static String createDummyString( int size )
     {
-        StringBuffer sb = new StringBuffer(size);
+    	StringBuilder sb = new StringBuilder(size);
         while (sb.length() < size)
             sb.append("foobar");
         return sb.toString();

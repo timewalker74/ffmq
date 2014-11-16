@@ -557,7 +557,7 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append("[");
         sb.append(name);

@@ -854,7 +854,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
 	public String toString()
     {
-       StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
        
        sb.append("Queue{");
        sb.append(getName());

@@ -104,7 +104,7 @@ public final class PeerDescriptor implements Checkable
 	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
         
         sb.append("jdniInitialContextFactoryName=");
         sb.append(jdniInitialContextFactoryName);

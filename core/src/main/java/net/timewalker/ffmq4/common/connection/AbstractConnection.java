@@ -534,7 +534,7 @@ public abstract class AbstractConnection implements Connection
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         
         sb.append("Connection[#");
         sb.append(id);
@@ -548,7 +548,7 @@ public abstract class AbstractConnection implements Connection
     /**
 	 * Get a description of entities held by this object
 	 */
-	public void getEntitiesDescription( StringBuffer sb )
+	public void getEntitiesDescription( StringBuilder sb )
 	{
 		sb.append(toString());
 		sb.append("{");

@@ -91,7 +91,7 @@ public abstract class AbstractMessageHandler
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append(JavaTools.getShortClassName(getClass()));
         sb.append("[#");
@@ -110,7 +110,7 @@ public abstract class AbstractMessageHandler
     /**
 	 * Get a description of entities held by this object
 	 */
-	public final void getEntitiesDescription( StringBuffer sb )
+	public final void getEntitiesDescription( StringBuilder sb )
 	{
 		sb.append(toString());
 	}

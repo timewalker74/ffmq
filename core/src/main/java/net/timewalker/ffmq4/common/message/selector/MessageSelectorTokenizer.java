@@ -61,7 +61,7 @@ public final class MessageSelectorTokenizer
         int textLen = text.length();
         int pos = 0;
         String delimiter;
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         
         while (pos < textLen)
         {

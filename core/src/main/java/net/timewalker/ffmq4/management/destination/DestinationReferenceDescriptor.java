@@ -70,7 +70,7 @@ public final class DestinationReferenceDescriptor implements Checkable
 	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
         
         sb.append("destinationType=");
         sb.append(destinationType);

@@ -514,7 +514,7 @@ public final class FFMQJMXConsole implements Runnable
 
 	private String formatDelay( long delay )
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		
 		if (delay < 0)
 		{

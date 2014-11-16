@@ -308,7 +308,7 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append("Allocation Table (size="+size+")\n");
         sb.append("------------------------------------\n");

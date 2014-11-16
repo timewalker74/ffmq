@@ -38,7 +38,7 @@ public final class StringUtils
 		
 		int len = value.length();
 		int pos = 0;
-		StringBuffer sb = new StringBuffer(len);
+		StringBuilder sb = new StringBuilder(len);
 		while (idx != -1)
 		{
 			if (idx > pos)
@@ -69,7 +69,7 @@ public final class StringUtils
 		
 		int len = value.length();
 		int pos = 0;
-		StringBuffer sb = new StringBuffer(len);
+		StringBuilder sb = new StringBuilder(len);
 		while (idx != -1)
 		{
 			if (idx > pos)
@@ -174,7 +174,7 @@ public final class StringUtils
     
     public static String implode( Object array , String delimiter )
     {
-    	StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
     	int len = Array.getLength(array);
     	for (int i = 0; i < len; i++)
 		{
@@ -191,7 +191,7 @@ public final class StringUtils
     	if (text.length() >= len)
     		return text;
     	
-    	StringBuffer sb = new StringBuffer(len);
+    	StringBuilder sb = new StringBuilder(len);
     	sb.append(text);
     	for(int n=0;n<(len-text.length());n++)
     		sb.append(paddingChar);

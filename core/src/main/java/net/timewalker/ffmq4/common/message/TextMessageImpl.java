@@ -133,7 +133,7 @@ public final class TextMessageImpl extends AbstractMessage implements TextMessag
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer(super.toString());
+    	StringBuilder sb = new StringBuilder(super.toString());
         sb.append(" body=");
         sb.append(body);
         

@@ -186,7 +186,7 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append(JavaTools.getShortClassName(getClass()));
         sb.append("[#");

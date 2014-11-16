@@ -93,7 +93,7 @@ public final class TransactionItem
 	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append("[TransactionItem] handle=");
 		sb.append(handle);
 		sb.append(" messageID=");

@@ -43,7 +43,7 @@ public final class ErrorTools
 	 */
 	public static void log( String context , JMSException e , Log log )
 	{
-		StringBuffer message = new StringBuffer();
+		StringBuilder message = new StringBuilder();
 		if (context != null)
 		{
 			message.append("[");

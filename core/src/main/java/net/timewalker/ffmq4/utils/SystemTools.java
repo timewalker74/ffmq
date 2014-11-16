@@ -34,7 +34,7 @@ public class SystemTools
     	if (value == null || value.length() == 0)
     		return value;
     	
-		StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
 
 		int pos = 0;
 		int start;

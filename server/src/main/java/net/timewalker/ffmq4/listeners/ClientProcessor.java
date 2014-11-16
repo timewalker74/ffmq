@@ -210,7 +210,7 @@ public final class ClientProcessor implements PacketTransportListener, ActiveObj
 		if (localConnection == null)
 			return "Not authenticated";
 		
-		StringBuffer sb = new StringBuffer(100);
+		StringBuilder sb = new StringBuilder(100);
 		localConnection.getEntitiesDescription(sb);
 		return sb.toString();
 	}

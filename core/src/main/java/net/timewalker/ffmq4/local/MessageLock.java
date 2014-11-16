@@ -87,7 +87,7 @@ public final class MessageLock
 	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append("[MessageLock] handle=");
 		sb.append(handle);
 		sb.append(" destination=");

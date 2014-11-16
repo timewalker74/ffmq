@@ -91,7 +91,7 @@ public class TopicPublisherThread extends AbstractTopicHandlerThread
 //    {
 //        TextMessage msg = getSession().createTextMessage();
 //        
-//        StringBuffer text = new StringBuffer(messageSize+20);
+//        StringBuilder text = new StringBuilder(messageSize+20);
 //        text.append(getName());
 //        text.append("-");
 //        text.append(index);

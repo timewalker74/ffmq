@@ -37,7 +37,8 @@ import net.timewalker.ffmq4.transport.PacketTransportType;
  */
 public class TestConsumerClient implements Runnable, ExceptionListener
 {
-	private static final boolean USE_QUEUE = false;
+	private static final String DESTINATION_NAME = "TEST3";
+	private static final boolean USE_QUEUE = true;
 	
 	private boolean stopRequired;
 	private Connection conn;
@@ -93,11 +94,11 @@ public class TestConsumerClient implements Runnable, ExceptionListener
 	        Session session = conn.createSession(true,Session.SESSION_TRANSACTED);
 	        
 	        
-	        Destination destination = USE_QUEUE ? (Destination)session.createQueue("TEST") : (Destination)session.createTopic("VOLATILE");
+	        Destination destination = USE_QUEUE ? (Destination)session.createQueue(DESTINATION_NAME) : (Destination)session.createTopic(DESTINATION_NAME);
 	        
 	        MessageConsumer consumer = session.createConsumer(destination);
 	        
-	        System.out.println("Listening on "+(USE_QUEUE ? "queue":"topic")+" TEST");
+	        System.out.println("Listening on "+(USE_QUEUE ? "queue":"topic")+" "+DESTINATION_NAME);
 	        System.out.println("---------------------------------------------------------------------");
 //	        Message msg;
 //	        while (!stopRequired && (msg = consumer.receive()) != null)

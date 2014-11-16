@@ -32,7 +32,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public abstract class AbstractXMLDescriptorHandler extends DefaultHandler
 {
-    private StringBuffer valueBuffer = new StringBuffer();
+    private StringBuilder valueBuffer = new StringBuilder();
     private Stack<String> nameStack = new Stack<>();
     
     /**

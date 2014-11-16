@@ -72,7 +72,7 @@ public final class UUIDProvider
             	seed.nextBytes(ifBytes);
             }
             
-            StringBuffer base = new StringBuffer();
+            StringBuilder base = new StringBuilder();
             
             String s = hexFormat(getInt(ifBytes));
             String s1 = hexFormat(hashCode());
@@ -99,7 +99,7 @@ public final class UUIDProvider
      */
     public String getUUID()
     {
-        StringBuffer uuid = new StringBuffer(36);
+    	StringBuilder uuid = new StringBuilder(36);
         int i = (int)System.currentTimeMillis();
         int j = seed.nextInt();
         hexFormat(i,uuid);
@@ -110,7 +110,7 @@ public final class UUIDProvider
 
     public String getShortUUID()
     {
-    	StringBuffer uuid = new StringBuffer(16);
+    	StringBuilder uuid = new StringBuilder(16);
         int i = (int)System.currentTimeMillis();
         int j = seed.nextInt();
         hexFormat(i,uuid);
@@ -134,12 +134,12 @@ public final class UUIDProvider
 
     private static String hexFormat(int i)
     {
-        StringBuffer sb = new StringBuffer(8);
+    	StringBuilder sb = new StringBuilder(8);
         hexFormat(i,sb);
         return sb.toString();
     }
     
-    private static void hexFormat(int i, StringBuffer uuid)
+    private static void hexFormat(int i, StringBuilder uuid)
     {
         String s = Integer.toHexString(i);
         for (int n = 0 ; n < 8 - s.length() ; n++)

@@ -63,7 +63,7 @@ public final class StringLiteralList extends SelectorNode implements AtomicOpera
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         sb.append("(");
         for (int n = 0 ; n < items.length ; n++)
         {

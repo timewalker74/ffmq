@@ -53,7 +53,7 @@ public class StringTools
         if (value.length() >= size)
             return value;
         
-        StringBuffer result = new StringBuffer(size);
+        StringBuilder result = new StringBuilder(size);
         result.append(value);
         for (int n = 0 ; n < size-value.length() ; n++)
             result.append(padChar);        
@@ -243,7 +243,7 @@ public class StringTools
     
     public static String join( Collection<?> objects , String separator )
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         int count = 0;
         Iterator<?> allObjects = objects.iterator();
@@ -260,7 +260,7 @@ public class StringTools
     
     public static String join( Object[] objects , String separator )
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         for (int n = 0 ; n < objects.length ; n++)
         {
             if (n > 0)
@@ -312,7 +312,7 @@ public class StringTools
 		if (size == 0)
 			return "0";
 		
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		if (size < 0)
 		{
 			size = -size;

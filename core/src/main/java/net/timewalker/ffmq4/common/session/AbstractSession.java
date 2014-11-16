@@ -560,7 +560,7 @@ public abstract class AbstractSession implements Session
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append("Session[#");
         sb.append(id);
@@ -580,7 +580,7 @@ public abstract class AbstractSession implements Session
     /**
 	 * Get a description of entities held by this object
 	 */
-	public final void getEntitiesDescription( StringBuffer sb )
+	public final void getEntitiesDescription( StringBuilder sb )
 	{
 		sb.append(toString());
 		sb.append("{");

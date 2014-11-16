@@ -97,7 +97,7 @@ public abstract class AbstractQueueBrowserEnumeration implements Enumeration<Abs
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append(JavaTools.getShortClassName(getClass()));
         sb.append("[#");

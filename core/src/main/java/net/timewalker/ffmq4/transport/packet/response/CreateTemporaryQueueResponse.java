@@ -80,7 +80,7 @@ public final class CreateTemporaryQueueResponse extends AbstractResponsePacket
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append(super.toString());
         sb.append(" queueName=");

@@ -63,7 +63,7 @@ public class CommTestParameters
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append("Message count : ");
         sb.append(messageCount);

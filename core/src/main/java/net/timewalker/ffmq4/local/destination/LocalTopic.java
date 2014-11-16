@@ -317,7 +317,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     @Override
 	public String toString()
     {
-       StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
        
        sb.append("Topic{");
        sb.append(getName());
@@ -336,7 +336,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
 
     public String getConsumersSummary()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         synchronized (subscriptionMap)
         {

@@ -92,7 +92,7 @@ public abstract class AbstractTransactionDemarcationQuery extends AbstractSessio
     @Override
 	public String toString()
     {
-       StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
        
        sb.append(super.toString());
        sb.append(" ids=");

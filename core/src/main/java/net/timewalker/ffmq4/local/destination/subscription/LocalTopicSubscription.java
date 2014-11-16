@@ -116,7 +116,7 @@ public final class LocalTopicSubscription
     @Override
 	public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         
         sb.append("LocalTopicSubscription[subscriberID=");
         sb.append(subscriberId);
