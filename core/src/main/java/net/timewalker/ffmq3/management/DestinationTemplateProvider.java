@@ -83,33 +83,27 @@ public final class DestinationTemplateProvider extends AbstractDefinitionProvide
     public void addQueueTemplate( QueueTemplate queueTemplate ) throws JMSException
     {
         // Check template consistency
-        try
-        {
-            queueTemplate.check();
-        }
-        catch (InvalidDescriptorException e)
-        {
-            throw new FFMQException("Cannot register queue template : "+queueTemplate,"INVALID_QUEUE_TEMPLATE",e);
-        }
+        queueTemplate.check();
         
-        if (queueTemplates.put(queueTemplate.getName(), queueTemplate) != null)
-            throw new FFMQException("Queue template name already used : "+queueTemplate.getName(),"DUPLICATE_QUEUE_TEMPLATE");
+        synchronized (queueTemplates) 
+        {
+	        if (queueTemplates.containsKey(queueTemplate.getName()))
+	        	throw new FFMQException("Queue template name already used : "+queueTemplate.getName(),"DUPLICATE_QUEUE_TEMPLATE");
+	        queueTemplates.put(queueTemplate.getName(), queueTemplate) ;
+        }
     }
     
     public void addTopicTemplate( TopicTemplate topicTemplate ) throws JMSException
     {
         // Check template consistency
-        try
-        {
-            topicTemplate.check();
-        }
-        catch (InvalidDescriptorException e)
-        {
-            throw new FFMQException("Cannot register topic template : "+topicTemplate,"INVALID_TOPIC_TEMPLATE",e);
-        }
+        topicTemplate.check();
         
-        if (topicTemplates.put(topicTemplate.getName(), topicTemplate) != null)
-            throw new FFMQException("Topic template name already used : "+topicTemplate.getName(),"DUPLICATE_TOPIC_TEMPLATE");
+        synchronized (topicTemplates) 
+        {
+        	if (topicTemplates.containsKey(topicTemplate.getName()))
+        		throw new FFMQException("Topic template name already used : "+topicTemplate.getName(),"DUPLICATE_TOPIC_TEMPLATE");
+        	topicTemplates.put(topicTemplate.getName(), topicTemplate);
+        }
     }
     
     public QueueTemplate getQueueTemplate( String queueName ) throws JMSException
