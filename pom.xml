@@ -4,7 +4,7 @@
   <groupId>net.timewalker.ffmq</groupId>
   <artifactId>ffmq3</artifactId>
   <packaging>pom</packaging>
-  <version>3.0.5</version><!--FFMQ_VERSION-->
+  <version>3.0.6</version><!--FFMQ_VERSION-->
   <name>FFMQ</name>
   <url>http://www.timewalker.net/ffmq</url>
   

@@ -5,14 +5,14 @@
 	<groupId>net.timewalker.ffmq</groupId>
 	<artifactId>ffmq3-server</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.5</version><!--FFMQ_VERSION-->
+	<version>3.0.6</version><!--FFMQ_VERSION-->
 	<name>FFMQ Server</name>
 	<description>FFMQ Server module</description>
 
 	<parent>
 		<groupId>net.timewalker.ffmq</groupId>
 		<artifactId>ffmq3</artifactId>
-		<version>3.0.5</version><!--FFMQ_VERSION-->
+		<version>3.0.6</version><!--FFMQ_VERSION-->
 	</parent>
 
 	<build>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>net.timewalker.ffmq</groupId>
 			<artifactId>ffmq3-core</artifactId>
-			<version>3.0.5</version><!--FFMQ_VERSION-->
+			<version>3.0.6</version><!--FFMQ_VERSION-->
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
