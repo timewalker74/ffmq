@@ -9,7 +9,7 @@
 - **[Fix]** Activity watchdog was not removing its entries properly
 - **[Fix]** Ping packets were not being sent on TCP connections during long transactions, causing premature timeouts
 - **[Fix]** Make sure ExceptionListeners are not called by mission-critical threads that cannot afford to wait
-
+- **[Feature]** Add more consistency checks during templates and destinations definitions load
 
  `FFMQ 4.0.x branch was forked from FFMQ 3.0.5`
 

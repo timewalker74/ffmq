@@ -63,7 +63,7 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
                 {
                     QueueDefinition queueDef = loadQueueDefinition(queueDescriptors[i]);
                     if (queueDef != null)
-                    	queueDefinitions.put(queueDef.getName(), queueDef);
+                    	addLoadedQueueDefinition(queueDef);
                 }
             }
             log.debug("Loaded "+queueDefinitions.size()+" queue definitions");
@@ -74,11 +74,32 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
                 for (int i = 0 ; i < topicDescriptors.length ; i++)
                 {
                     TopicDefinition topicDef = loadTopicDefinition(topicDescriptors[i]);
-                    topicDefinitions.put(topicDef.getName(), topicDef);
+                    if (topicDef != null)
+                    	addLoadedTopicDefinition(topicDef);
                 }
             }
             log.debug("Loaded "+topicDefinitions.size()+" topic definitions");
         }
+    }
+    
+    private void addLoadedQueueDefinition( QueueDefinition queueDef ) throws JMSException 
+    {
+    	// Check definition consistency
+        queueDef.check();
+        
+        if (queueDefinitions.containsKey(queueDef.getName()))
+        	throw new FFMQException("Queue name already used : "+queueDef.getName(),"DUPLICATE_QUEUE_DEFINITION");
+        queueDefinitions.put(queueDef.getName(), queueDef);
+    }
+    
+    private void addLoadedTopicDefinition( TopicDefinition topicDef ) throws JMSException 
+    {
+    	// Check definition consistency
+    	topicDef.check();
+        
+        if (topicDefinitions.containsKey(topicDef.getName()))
+        	throw new FFMQException("Topic name already used : "+topicDef.getName(),"DUPLICATE_TOPIC_DEFINITION");
+        topicDefinitions.put(topicDef.getName(), topicDef);
     }
     
     public QueueDefinition getQueueDefinition( String queueName ) throws JMSException
@@ -124,6 +145,8 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
     
     public void addQueueDefinition( QueueDefinition queueDef ) throws JMSException
     {
+    	queueDef.check();
+    	
         if (queueDefinitions.containsKey(queueDef.getName()))
             throw new FFMQException("Queue definition already exists : "+queueDef.getName(),"QUEUE_DEFINITION_ALREADY_EXIST");
         
@@ -200,6 +223,8 @@ public final class DestinationDefinitionProvider extends AbstractDefinitionProvi
     
     public void addTopicDefinition( TopicDefinition topicDef ) throws JMSException
     {
+    	topicDef.check();
+    	
         if (topicDefinitions.containsKey(topicDef.getName()))
             throw new FFMQException("Topic definition already exists : "+topicDef.getName(),"TOPIC_DEFINITION_ALREADY_EXIST");
         

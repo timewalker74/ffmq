@@ -513,6 +513,8 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
                 throw new InvalidDescriptorException("Missing destination raw data folder");
             if (dataFolder == null || StringTools.isEmpty(dataFolder.getName()))
                 throw new InvalidDescriptorException("Missing destination data folder");
+            if (!dataFolder.isDirectory())
+            	throw new InvalidDescriptorException("Invalid data folder : "+dataFolder.getAbsolutePath());
             
             checkMinValue(blockSize,1024,"block size");
             if (initialBlockCount != maxBlockCount)
@@ -520,6 +522,9 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
 
             if (useJournal)
             {
+            	if (!journalFolder.isDirectory())
+                	throw new InvalidDescriptorException("Invalid journal folder : "+journalFolder.getAbsolutePath());
+            	
                 checkMinValue(maxJournalSize,1024,"maximum journal size");
                 checkMinValue(maxWriteBatchSize,1,"maximum write batch size");
                 checkMinValue(journalOutputBuffer,1024,"journal output buffer size");
