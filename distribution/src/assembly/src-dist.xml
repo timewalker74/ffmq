@@ -14,6 +14,7 @@
 		<exclude>**/runtime/**</exclude>
 		<exclude>**/.*</exclude>
 		<exclude>**/.settings/**</exclude>
+		<exclude>.git/</exclude>
       </excludes>
     </fileSet>
   </fileSets>
