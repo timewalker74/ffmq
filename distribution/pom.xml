@@ -6,8 +6,21 @@
 	<packaging>jar</packaging>
 	<version>4.0.0-pre1</version><!--FFMQ_VERSION-->
 	<name>FFMQ Distribution</name>
-  <description>FFMQ Distribution module</description>
-	
+    <description>FFMQ Distribution module</description>
+	<url>http://timewalker74.github.io/ffmq/</url>
+
+  <licenses>
+    <license>
+      <name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
+      <url>https://www.gnu.org/licenses/lgpl.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/timewalker74/ffmq</url>
+  </scm>
+
   <parent>
 		<groupId>net.timewalker.ffmq</groupId>
 		<artifactId>ffmq4</artifactId>
