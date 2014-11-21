@@ -255,7 +255,6 @@ public final class MD5
 	/**
 	 * Updates hash with the bytebuffer given (using at maximum length bytes from that buffer)
 	 * 
-	 * @param stat Which state is updated
 	 * @param buffer Array of bytes to be hashed
 	 * @param offset Offset to buffer array
 	 * @param length Use at maximum `length' bytes (absolute maximum is buffer.length)

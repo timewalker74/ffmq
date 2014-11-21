@@ -241,7 +241,7 @@ public final class RawDataBuffer implements DataOutput, DataInput
     /**
      * Write a int value at an arbitrary position in the stream
      * @param v the int value
-     * @param position the target position
+     * @param pos the target position
      */
     public void writeInt(int v,int pos)
     {

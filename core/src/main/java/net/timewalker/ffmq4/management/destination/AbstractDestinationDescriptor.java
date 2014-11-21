@@ -206,7 +206,7 @@ public abstract class AbstractDestinationDescriptor extends AbstractSettingsBase
     }
 
     /**
-     * @param blockCount the blockCount to set
+     * @param initialBlockCount the initial blockCount to set
      */
     public void setInitialBlockCount(int initialBlockCount)
     {

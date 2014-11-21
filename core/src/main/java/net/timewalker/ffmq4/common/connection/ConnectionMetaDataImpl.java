@@ -24,7 +24,7 @@ import net.timewalker.ffmq4.FFMQVersion;
 
 /**
  * <p>FFMQ implementation of the ConnectionMetaData interface</p>
- * @see ConnectionMetaData
+ * @see javax.jms.ConnectionMetaData
  */
 public class ConnectionMetaDataImpl implements javax.jms.ConnectionMetaData
 {
