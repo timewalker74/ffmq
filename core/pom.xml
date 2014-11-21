@@ -8,6 +8,19 @@
 	<version>3.0.6</version><!--FFMQ_VERSION-->
 	<name>FFMQ Core</name>
 	<description>FFMQ Core module</description>
+    <url>http://timewalker74.github.io/ffmq/</url>
+
+  <licenses>
+    <license>
+      <name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
+      <url>https://www.gnu.org/licenses/lgpl.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/timewalker74/ffmq</url>
+  </scm>
 
 	<parent>
 		<groupId>net.timewalker.ffmq</groupId>
@@ -64,6 +77,32 @@
 						</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+						<goal>jar</goal>
+					</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<executions>
+					<execution>
+					  <id>attach-javadocs</id>
+					  <goals>
+						<goal>jar</goal>
+					  </goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
