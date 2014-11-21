@@ -158,9 +158,6 @@ public abstract class AbstractQueueBrowser implements QueueBrowser
 		}
 	}
 
-	/**
-	 * @throws JMSException  
-	 */
 	protected void onQueueBrowserClose()
 	{
 		session.unregisterBrowser(this);

@@ -257,7 +257,6 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
     
     /**
      * Prefetch messages from destination
-     * @param timeout
      * @throws JMSException
      */
     private void prefetchFromDestination() throws JMSException

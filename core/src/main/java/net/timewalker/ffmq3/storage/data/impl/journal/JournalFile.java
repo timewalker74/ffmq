@@ -23,7 +23,6 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 
 import net.timewalker.ffmq3.storage.StorageSyncMethod;
-import net.timewalker.ffmq3.storage.data.DataStoreException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -135,7 +134,7 @@ public final class JournalFile
     
     /**
      * Force file content sync to disk
-     * @throws DataStoreException
+     * @throws JournalException
      */
     protected void sync() throws JournalException
     {      

@@ -335,7 +335,7 @@ public class CopyOnWriteList implements List
 	
 	/**
 	 * Get the number of lists sharing the same internal state as this one
-	 * @return 
+	 * @return the number of lists sharing the same internal state as this one
 	 */
 	public synchronized int getShareLevel()
 	{

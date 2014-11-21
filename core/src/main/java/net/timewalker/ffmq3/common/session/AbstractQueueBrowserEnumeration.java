@@ -69,7 +69,6 @@ public abstract class AbstractQueueBrowserEnumeration implements Enumeration
 	
 	/**
 	 * Close the enumeration
-	 * @throws JMSException on close failure
 	 */
 	public final void close()
 	{
@@ -82,9 +81,6 @@ public abstract class AbstractQueueBrowserEnumeration implements Enumeration
 		}
 	}
 	
-	/**
-	 * @throws JMSException  
-	 */
 	protected void onQueueBrowserEnumerationClose()
 	{
 		browser.unregisterEnumeration(this);

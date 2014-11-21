@@ -145,10 +145,7 @@ public abstract class AbstractSession implements Session
     	}
     	onSessionClosed();
     }
-    
-    /**
-	 * @throws JMSException  
-	 */
+
     protected void onSessionClose()
     {
     	connection.unregisterSession(this);

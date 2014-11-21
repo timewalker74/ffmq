@@ -64,7 +64,7 @@ public final class TransactionSet
     
     /**
      * Add an handle to the list
-     * @param handle
+     * @param item the transaction item
      */
     public synchronized void add( TransactionItem item )
     {

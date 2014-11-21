@@ -32,7 +32,6 @@ public class AsyncTaskProcessorThreadPool extends ObjectPool
 	
 	/**
 	 * Constructor
-	 * @param size the pool size 
 	 */
 	protected AsyncTaskProcessorThreadPool( String name , 
 			                                int minSize,

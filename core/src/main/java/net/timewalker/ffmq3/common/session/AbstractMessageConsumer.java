@@ -88,17 +88,11 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     	onConsumerClosed();
     }
     
-    /**
-	 * @throws JMSException  
-	 */
     protected void onConsumerClose()
     {
     	session.unregisterConsumer(this);
     }
     
-    /**
-	 * @throws JMSException  
-	 */
     protected void onConsumerClosed()
     {
     	// Nothing

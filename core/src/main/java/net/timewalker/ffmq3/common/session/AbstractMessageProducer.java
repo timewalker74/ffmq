@@ -69,10 +69,7 @@ public abstract class AbstractMessageProducer extends AbstractMessageHandler imp
     		externalAccessLock.readLock().unlock();
     	}
     }
-    
-    /**
-	 * @throws JMSException  
-	 */
+ 
     protected final void onProducerClose()
     {
     	session.unregisterProducer(this);
