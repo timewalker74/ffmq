@@ -1,7 +1,5 @@
 package net.timewalker.ffmq3.test.utils.topic;
 
-import java.util.Random;
-
 import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.Topic;
@@ -24,10 +22,6 @@ public class TopicPublisherThread extends AbstractTopicHandlerThread
     private int deliveryMode;
     private int priority;
     private long timeToLive;
-    
-    private Random random = new Random();
-
-    private SynchronizationPoint startSynchro;
     
     /**
      * Constructor
@@ -55,7 +49,6 @@ public class TopicPublisherThread extends AbstractTopicHandlerThread
         this.deliveryMode = deliveryMode;
         this.priority = priority;
         this.timeToLive = timeToLive;
-        this.startSynchro = startSynchro;
     }
 
     /* (non-Javadoc)

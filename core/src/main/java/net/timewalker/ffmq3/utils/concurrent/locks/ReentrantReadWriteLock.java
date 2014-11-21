@@ -321,10 +321,7 @@ public class ReentrantReadWriteLock implements ReadWriteLock  {
          * available, whether or not other threads are currently
          * waiting for the read lock.  This &quot;barging&quot; behavior
          * can be useful in certain circumstances, even though it
-         * breaks fairness. If you want to honor the fairness setting
-         * for this lock, then use {@link #tryLock(long, TimeUnit)
-         * tryLock(0, TimeUnit.SECONDS) } which is almost equivalent
-         * (it also detects interruption).
+         * breaks fairness.
          *
          * <p>If the write lock is held by another thread then
          * this method will return immediately with the value
@@ -344,9 +341,10 @@ public class ReentrantReadWriteLock implements ReadWriteLock  {
          */
         public void unlock() {
             switch (lock.sync.endRead()) {
-                case Sync.NONE: return;
                 case Sync.READER: lock.readerLock_.signalWaiters(); return;
                 case Sync.WRITER: lock.writerLock_.signalWaiters(); return;
+                default:
+                case Sync.NONE: return;
             }
         }
 
@@ -507,10 +505,7 @@ public class ReentrantReadWriteLock implements ReadWriteLock  {
          * lock if it is available, whether or not other threads are
          * currently waiting for the write lock.  This &quot;barging&quot;
          * behavior can be useful in certain circumstances, even
-         * though it breaks fairness. If you want to honor the
-         * fairness setting for this lock, then use {@link
-         * #tryLock(long, TimeUnit) tryLock(0, TimeUnit.SECONDS) }
-         * which is almost equivalent (it also detects interruption).
+         * though it breaks fairness. 
          *
          * <p> If the current thread already holds this lock then the
          * hold count is incremented by one and the method returns
@@ -541,9 +536,10 @@ public class ReentrantReadWriteLock implements ReadWriteLock  {
          */
         public void unlock() {
             switch (lock.sync.endWrite()) {
-                case Sync.NONE: return;
                 case Sync.READER: lock.readerLock_.signalWaiters(); return;
                 case Sync.WRITER: lock.writerLock_.signalWaiters(); return;
+                default:
+                case Sync.NONE: return;
             }
         }
 

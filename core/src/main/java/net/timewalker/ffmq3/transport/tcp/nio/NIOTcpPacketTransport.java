@@ -52,7 +52,6 @@ public final class NIOTcpPacketTransport extends AbstractTcpPacketTransport impl
 	private ByteBuffer outputBuffer;
 	private NIOTcpMultiplexer multiplexer;
 	private SocketChannel socketChannel;
-	private int sendQueueMaxSize;
 	private int maxPacketSize;
 	
 	// Runtime

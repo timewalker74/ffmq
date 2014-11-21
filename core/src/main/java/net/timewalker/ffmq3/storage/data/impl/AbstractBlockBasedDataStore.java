@@ -66,10 +66,7 @@ import org.apache.commons.logging.LogFactory;
 public abstract class AbstractBlockBasedDataStore extends AbstractDataStore
 {
     private static final Log log = LogFactory.getLog(AbstractBlockBasedDataStore.class);
-    
-    // Flag for debugging/testing purposes
-    private static final boolean SAFE_MODE = System.getProperty("ffmq.dataStore.safeMode", "false").equals("true");
-    
+
     // Constants
     public static final String DATA_FILE_SUFFIX        = ".store";
     public static final String ALLOCATION_TABLE_SUFFIX = ".index";
