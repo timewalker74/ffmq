@@ -1,5 +1,11 @@
 ### FFMQ ChangeLog
 
+## 3.0.7
+
+- **[Feature]** Some code and javadoc cleanups
+- **[Feature]** Enabled standard sources and javadoc generation
+- **[Feature]** Improved POM descriptors + support to upload to sonatype repository
+
 ## 3.0.6
 
 - **[Fix]** Activity watchdog was not removing its entries properly
