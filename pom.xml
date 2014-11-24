@@ -17,8 +17,19 @@
     </license>
   </licenses>
 
+  <developers>
+    <developer>
+      <name>Sylvain POGNANT</name>
+      <email>ffmq@timewalker.net</email>
+      <organization>timewalker.net</organization>
+      <organizationUrl>https://github.com/timewalker74</organizationUrl>
+    </developer>
+  </developers>
+
   <scm>
-    <url>https://github.com/timewalker74/ffmq</url>
+	<connection>scm:git:git@github.com:timewalker74/ffmq.git</connection>
+  	<developerConnection>scm:git:git@github.com:timewalker74/ffmq.git</developerConnection>
+    <url>git@github.com:timewalker74/ffmq.git</url>
   </scm>
 
   <modules>
@@ -28,6 +39,24 @@
 	<module>distribution</module>
   </modules>
   
+	<build> 
+      <plugins>
+		  <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-gpg-plugin</artifactId>
+		    <executions>
+		      <execution>
+		        <id>sign-artifacts</id>
+		        <phase>verify</phase>
+		        <goals>
+		          <goal>sign</goal>
+		        </goals>
+		      </execution>
+		    </executions>
+		  </plugin>
+		</plugins>
+	</build>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -62,5 +91,12 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<distributionManagement>
+	  <snapshotRepository>
+		<id>ossrh</id>
+		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	  </snapshotRepository>
+	</distributionManagement>
 
 </project>
