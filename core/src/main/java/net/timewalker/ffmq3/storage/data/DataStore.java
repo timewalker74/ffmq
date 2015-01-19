@@ -25,11 +25,6 @@ import net.timewalker.ffmq3.utils.concurrent.SynchronizationBarrier;
 public interface DataStore
 {
     /**
-     * Get the number of entries in the store
-     */
-    public int size();
-    
-    /**
      * Ensure everything's persisted (asynchronous)
      */
     public void commitChanges( SynchronizationBarrier barrier ) throws DataStoreException;
@@ -43,4 +38,21 @@ public interface DataStore
      * Close the store releasing associated system resources 
      */
     public void close();
+    
+    /**
+     * Get the number of entries in the store
+     */
+    public int size();
+ 
+	/**
+	 * Get the store usage amount (%)
+	 * (Ratio of used space over currently allocated space)
+	 */
+	public int getStoreUsage();
+	
+	/**
+	 * Get the absolute store usage amount (%)
+	 * (Ratio of used space over maximum allocatable space)
+	 */
+	public int getAbsoluteStoreUsage();
 }

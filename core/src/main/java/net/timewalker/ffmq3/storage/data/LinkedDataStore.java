@@ -24,11 +24,6 @@ package net.timewalker.ffmq3.storage.data;
 public interface LinkedDataStore extends DataStore
 {
 	/**
-	 * Get the store usage amount (%)
-	 */
-	public int getStoreUsage();
-	
-	/**
 	 * Initialize the data store
 	 * @throws DataStoreException
 	 */

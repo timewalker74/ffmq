@@ -1099,4 +1099,13 @@ public abstract class AbstractBlockBasedDataStore extends AbstractDataStore
     	long ratio = blockCount > 0 ? (long)blocksInUse*100/blockCount : 0;
     	return (int)ratio;
     }
+    
+    /* (non-Javadoc)
+     * @see net.timewalker.ffmq3.storage.data.DataStore#getAbsoluteStoreUsage()
+     */
+    public int getAbsoluteStoreUsage() 
+    {
+    	long ratio = maxBlockCount > 0 ? (long)blocksInUse*100/maxBlockCount : 0;
+    	return (int)ratio;
+    }
 }

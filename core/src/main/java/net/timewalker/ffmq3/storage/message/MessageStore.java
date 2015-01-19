@@ -29,8 +29,15 @@ public interface MessageStore
 {
 	/**
 	 * Get the store usage amount (%)
+	 * (Ratio of used space over currently allocated space)
 	 */
 	public int getStoreUsage();
+	
+	/**
+	 * Get the absolute store usage amount (%)
+	 * (Ratio of used space over maximum allocatable space)
+	 */
+	public int getAbsoluteStoreUsage();
 	
     /**
      * Get the first message handle stored

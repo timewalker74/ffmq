@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 3.0.8
+
+- **[Fix]** LocalQueueMBean getPersistentStoreUsage() should use absolute storage usage instead of current store usage if queue can auto-extend
+
 ## 3.0.7
 
 - **[Feature]** Some code and javadoc cleanups

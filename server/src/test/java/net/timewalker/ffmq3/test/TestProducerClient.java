@@ -39,15 +39,15 @@ import net.timewalker.ffmq3.storage.data.DataStoreFullException;
  */
 public class TestProducerClient implements Runnable,ExceptionListener
 {
-	private static final boolean USE_QUEUE = false;
-	private static final int DELIVERY_MODE = DeliveryMode.NON_PERSISTENT;
+	private static final boolean USE_QUEUE = true;
+	private static final int DELIVERY_MODE = DeliveryMode.PERSISTENT;
 	private static final int AMOUNT = 500000;
 	
 	private boolean stopRequired;
 	private Connection conn;
 	private int sent = 0;
 	private int commited = 0;
-	private int commitRate = 1;
+	private int commitRate = 10;
 	private long sendDelay = 0;
 	private long msgTTL = 0; //5*1000;
 	
