@@ -303,6 +303,15 @@ public final class InMemoryLinkedDataStore extends AbstractDataStore
     }
     
     /* (non-Javadoc)
+     * @see net.timewalker.ffmq3.storage.data.DataStore#getAbsoluteStoreUsage()
+     */
+    @Override
+    public int getAbsoluteStoreUsage() 
+    {
+    	return getStoreUsage();
+    }
+    
+    /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override

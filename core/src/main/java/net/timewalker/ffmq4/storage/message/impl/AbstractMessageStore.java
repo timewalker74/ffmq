@@ -124,9 +124,18 @@ public abstract class AbstractMessageStore implements MessageStore
      * @see net.timewalker.ffmq4.storage.message.MessageStore#getStoreUsage()
      */
     @Override
-	public int getStoreUsage()
+    public final int getStoreUsage()
     {
     	return dataStore.getStoreUsage();
+    }
+    
+    /* (non-Javadoc)
+     * @see net.timewalker.ffmq3.storage.message.MessageStore#getAbsoluteStoreUsage()
+     */
+    @Override
+    public final int getAbsoluteStoreUsage() 
+    {
+    	return dataStore.getAbsoluteStoreUsage();
     }
     
     /*

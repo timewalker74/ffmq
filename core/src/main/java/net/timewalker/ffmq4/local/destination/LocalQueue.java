@@ -820,7 +820,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
     public int getMemoryStoreUsage()
     {
-    	return volatileStore != null ? volatileStore.getStoreUsage() : -1;
+    	return volatileStore != null ? volatileStore.getAbsoluteStoreUsage() : -1;
     }
     
     /* (non-Javadoc)
@@ -829,7 +829,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     @Override
     public int getPersistentStoreUsage()
     {
-    	return persistentStore != null ? persistentStore.getStoreUsage() : -1;
+    	return persistentStore != null ? persistentStore.getAbsoluteStoreUsage() : -1;
     }
     
     /*
