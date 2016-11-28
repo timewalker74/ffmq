@@ -36,8 +36,8 @@
 
 <p>FFMQ is a full-java, light-weight, fast JMS 1.1 queuer implementation.</p>
 
-<p>Emphasis is made on raw performance and reliability.<br/>
-As a consequence, it does not provide a lot of features but is small, fast, easy to configure and has reduced dependencies.</p>
+<p>Emphasis is put on raw performance and reliability.<br/>
+As a consequence it does not provide a lot of features but it is small, fast, easy to configure and has reduced dependencies.</p>
 
 <h3>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
@@ -51,10 +51,9 @@ As a consequence, it does not provide a lot of features but is small, fast, easy
 <li>JMS 1.1 compliant (almost, see limits below)</li>
 <li>Lightweight (full server jar is below 600KB with debug symbols)</li>
 <li>Reduced dependencies : 
-
 <ul>
   <li>[3.x branch] JRE 1.4+, JMS API, commons-logging, [optional: log4j, mx4j]</li>
-  <li>[4.x branch] JRE 1.5+, JMS API, commons-logging, [optional: log4j]</li>
+  <li>[4.x branch] JRE 1.7+, JMS API, commons-logging, [optional: log4j]</li>
 </ul>
 </li>
 <li>JMX monitoring support</li>
@@ -63,7 +62,11 @@ As a consequence, it does not provide a lot of features but is small, fast, easy
 <li>State-of-the-art asynchronous journaling persistence storage</li>
 <li>Template-based destination definitions for easy configuration</li>
 <li>JMS bridging support to pipe messages between destinations and/or queuers</li>
-</ul><h3>
+</ul>
+
+<i>Note : both branches contain the same functionality but have different java runtime dependencies.</i>
+
+<h3>
 <a name="limits" class="anchor" href="#limits"><span class="octicon octicon-link"></span></a>Limits</h3>
 
 <p>The following required JMS operations are not implemented :</p>
@@ -98,6 +101,36 @@ The best way to have an exact idea is to test it by yourself ! Please give it a 
 <a name="architecture" class="anchor" href="#architecture"><span class="octicon octicon-link"></span></a>Architecture</h3>
 
 <p>To get a technical insight on FFMQ inner workings you may want to have a look at the <a href="technical_overview.html" target="tech_overview">Technical Overview</a> page.</p>
+
+
+<h3>
+<a name="maven-dist" class="anchor" href="#maven-dist"><span class="octicon octicon-link"></span></a>Maven distribution</h3>
+
+FFMQ is also available on Maven Central. You can install
+it in your application using the following Maven dependency:
+
+<b>Branch 4.x</b>
+```xml
+<dependency>
+  <groupId>net.timewalker.ffmq</groupId>
+  <artifactId>ffmq4-core</artifactId>
+  <version>4.0.0</version>
+</dependency>
+```
+
+<b>Branch 3.x</b>
+```xml
+<dependency>
+  <groupId>net.timewalker.ffmq</groupId>
+  <artifactId>ffmq3-core</artifactId>
+  <version>3.0.7</version>
+</dependency>
+```
+
+<p>
+The -core artifact contains all the necessary code to run a JMS client.
+If you want to run or embed the server in your own JVM you will need the -server artifact too.
+</p>
 
 <h3>
 <a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h3>
