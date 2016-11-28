@@ -105,37 +105,39 @@ The best way to have an exact idea is to test it by yourself ! Please give it a 
 
 <h3>
 <a name="maven-dist" class="anchor" href="#maven-dist"><span class="octicon octicon-link"></span></a>Maven distribution</h3>
-
+<p>
 FFMQ is also available on Maven Central. You can install
 it in your application using the following Maven dependency:
-
+</p>
 <b>Branch 4.x</b>
-```xml
-<dependency>
-  <groupId>net.timewalker.ffmq</groupId>
-  <artifactId>ffmq4-core</artifactId>
-  <version>4.0.0</version>
-</dependency>
-```
+<pre>
+&lt;dependency&gt;
+  &lt;groupId&gt;net.timewalker.ffmq&lt;/groupId&gt;
+  &lt;artifactId&gt;ffmq4-core&lt;/artifactId&gt;
+  &lt;version&gt;4.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
 
 <b>Branch 3.x</b>
-```xml
-<dependency>
-  <groupId>net.timewalker.ffmq</groupId>
-  <artifactId>ffmq3-core</artifactId>
-  <version>3.0.7</version>
-</dependency>
-```
+<pre>
+&lt;dependency&gt;
+  &lt;groupId&gt;net.timewalker.ffmq&lt;/groupId&gt;
+  &lt;artifactId&gt;ffmq3-core&lt;/artifactId&gt;
+  &lt;version&gt;3.0.7&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
 
 <p>
-The -core artifact contains all the necessary code to run a JMS client.
-If you want to run or embed the server in your own JVM you will need the -server artifact too.
+<ul>
+<li>The -core artifact contains all the necessary code to run a JMS client.
+<li>If you want to run or embed the server in your own JVM, you will need the -server artifact too.
+</ul>
 </p>
 
 <h3>
 <a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h3>
 
-<p>Just unzip the server package somewhere and start the server using the ffmq-server.bat or ffmq-server.sh shell in the bin/ directory.
+<p>Just unzip the server distribution package somewhere and start the server using the ffmq-server.bat or ffmq-server.sh shell in the bin/ directory.
 (If necessary you can change default listen ports and interfaces in the conf/ffmq-server.properties file)</p>
 
 <p>On the client-side, you need the ffmq-core.jar in your classpath. (plus commons-logging and log4j if you don't already have them).

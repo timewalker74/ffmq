@@ -31,12 +31,12 @@
 		
 		<h3>Foreword</h3>
 		<p>
-			After spending quite some time writing (and rewriting) this JMS queuer, I have to conclude that any
-			correctly written queuer implementation will be I/O bound at the end of the day.<br/>
+			After spending quite some time writing (and rewriting) this JMS queuer, optimizing objects allocation, objects copy and lock contention,
+            I managed to create a queuer implementation that is almost purely I/O bound like other good implementations.<br/>
 			<br/>
-			There are a few other aspects that can be optimized to achieve maximum performance and horizontal
+			There are a few aspects that can be optimized to achieve maximum performance and horizontal
 			scalability (like fine-grained synchronization), but the bottom line is that speed differences between
-			queuers will be directly linked to the way they handle disk and network I/O operations. 
+			queuers is directly linked to the way they handle disk and network I/O operations. 
 		</p>
 		
 		<h3>Message Serialization</h3>
@@ -44,7 +44,7 @@
 			Sending a message instance over a network or writing it to a persistent storage requires the instance to be 'serialized'
 			to binary form.</p>
         <p>
-			Java serialization comes to mind immediately but, though it is versatile and automated (reflection based), 
+			Java serialization comes to mind immediately, but though it is versatile and automated (reflection based), 
             it is far from optimal performance wise.<br/>
 			Thus, using explicit serialization is a first step toward better performance : 
 			java.io.DataInputStream/DataOutputStream implementations would be nice candidates <br/>
