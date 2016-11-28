@@ -3,7 +3,7 @@
 ## 4.0.0 (not yet released)
 
 - **[Feature]** Upgrade project descriptors to Maven 3
-- **[Feature]** Upgraded source level to java 7
+- **[Feature]** Upgraded source/binary level to java 7
 - **[Feature]** Use JDK concurrent structures instead of custom ones 
 - **[Feature]** Use JDK JMX support and removed mx4j lib usage
 - **[Fix]** Activity watchdog was not removing its entries properly
@@ -14,7 +14,22 @@
 
  `FFMQ 4.0.x branch was forked from FFMQ 3.0.5`
 
+## 3.0.8
 
+- **[Fix]** LocalQueueMBean getPersistentStoreUsage() should use absolute storage usage instead of current store usage if queue can auto-extend
+
+## 3.0.7
+
+- **[Feature]** Some code and javadoc cleanups
+- **[Feature]** Enabled standard sources and javadoc generation
+- **[Feature]** Improved POM descriptors + support to upload to sonatype repository
+
+## 3.0.6
+
+- **[Fix]** Activity watchdog was not removing its entries properly
+- **[Fix]** Ping packets were not being sent on TCP connections during long transactions, causing premature timeouts
+- **[Fix]** Make sure ExceptionListeners are not called by mission-critical threads that cannot afford to wait
+- **[Feature]** Add more consistency checks during templates and destinations definitions load
 
 ## 3.0.5
 
