@@ -1,6 +1,6 @@
 ### FFMQ ChangeLog
 
-## 4.0.0 (not yet released)
+## 4.0.0
 
 - **[Feature]** Upgrade project descriptors to Maven 3
 - **[Feature]** Upgraded source/binary level to java 7
