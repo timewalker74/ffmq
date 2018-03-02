@@ -17,7 +17,6 @@
  */
 package net.timewalker.ffmq4.jmx.rmi;
 
-import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -28,33 +27,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.jms.JMSException;
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
 import javax.management.remote.JMXConnectorServer;
 import javax.management.remote.JMXConnectorServerFactory;
 import javax.management.remote.JMXServiceURL;
 import javax.management.remote.rmi.RMIConnectorServer;
 
 import net.timewalker.ffmq4.FFMQException;
-import net.timewalker.ffmq4.jmx.JMXAgent;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import net.timewalker.ffmq4.jmx.AbstractJMXAgent;
 
 /**
  * JMXAgent
  */
-public final class JMXOverRMIAgent implements JMXAgent
+public final class JMXOverRMIAgent extends AbstractJMXAgent
 {
-    private static final Log log = LogFactory.getLog(JMXOverRMIAgent.class);
-    
     // Attributes
     private String agentName;
     private int jndiRmiPort;
     private String rmiListenAddr;
     
     // Runtime
-    private MBeanServer mBeanServer;
     private JMXConnectorServer connectorServer;
     private JMXOverRMIServerSocketFactory mBeanServerSocketFactory;
     private Registry registry;
@@ -74,8 +65,6 @@ public final class JMXOverRMIAgent implements JMXAgent
     {
         try
         {
-            log.info("Starting JMX agent");
-
             // Get or create an RMI registry
             if (rmiListenAddr == null || rmiListenAddr.equals("auto"))
                 rmiListenAddr = InetAddress.getLocalHost().getHostName();
@@ -104,10 +93,7 @@ public final class JMXOverRMIAgent implements JMXAgent
                 RMIServerSocketFactory ssf = new JMXOverRMIServerSocketFactory(10,rmiListenAddr,false);
                 registry = LocateRegistry.createRegistry(jndiRmiPort,null,ssf);
             }
-            
-            // Get the JVM MBean server
-            mBeanServer = ManagementFactory.getPlatformMBeanServer();
-            
+
             // Service URL
             JMXServiceURL url = new JMXServiceURL("service:jmx:rmi://"+rmiListenAddr+"/jndi/rmi://"+rmiListenAddr+":" + jndiRmiPort + "/"+ jndiName);
             log.info("JMX Service URL : "+url);
@@ -127,6 +113,15 @@ public final class JMXOverRMIAgent implements JMXAgent
         }
     }
     
+    /* (non-Javadoc)
+     * @see net.timewalker.ffmq4.jmx.AbstractJMXAgent#getType()
+     */
+    @Override
+    protected String getType()
+    {
+    	return "RMI";
+    }
+    
     /*
      * (non-Javadoc)
      * @see net.timewalker.ffmq4.jmx.JMXAgent#stop()
@@ -134,7 +129,7 @@ public final class JMXOverRMIAgent implements JMXAgent
     @Override
 	public void stop()
     {
-        log.info("Stopping JMX agent");
+        super.stop();
         if (connectorServer != null)
         {
             try
@@ -181,42 +176,5 @@ public final class JMXOverRMIAgent implements JMXAgent
         		mBeanServerSocketFactory = null;
             }
         }
-        mBeanServer = null;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see net.timewalker.ffmq4.jmx.JMXAgent#register(javax.management.ObjectName, java.lang.Object)
-     */
-	@Override
-	public void register( ObjectName name , Object mBean ) throws JMSException
-	{
-		log.debug("Registering object " + name);
-		try
-		{
-			this.mBeanServer.registerMBean(mBean, name);
-		}
-		catch (Exception e)
-		{
-			throw new FFMQException("Cannot register MBean", "JMX_ERROR", e);
-		}
-	}
-  
-  	/*
-  	 * (non-Javadoc)
-  	 * @see net.timewalker.ffmq4.jmx.JMXAgent#unregister(javax.management.ObjectName)
-  	 */
-	@Override
-	public void unregister( ObjectName name ) throws JMSException
-	{
-	    log.debug("Unregistering object "+name);
-	    try
-	    {
-	        this.mBeanServer.unregisterMBean(name);
-	    }
-	    catch (Exception e)
-	    {
-	        throw new FFMQException("Cannot unregister MBean","JMX_ERROR",e);
-	    }
-	}
 }

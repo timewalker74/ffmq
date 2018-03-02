@@ -24,9 +24,13 @@ import java.util.Vector;
 import javax.jms.JMSException;
 import javax.management.ObjectName;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.timewalker.ffmq4.admin.RemoteAdministrationThread;
 import net.timewalker.ffmq4.cluster.bridge.JMSBridge;
 import net.timewalker.ffmq4.jmx.JMXAgent;
+import net.timewalker.ffmq4.jmx.platform.PlatformJMXAgent;
 import net.timewalker.ffmq4.jmx.rmi.JMXOverRMIAgent;
 import net.timewalker.ffmq4.listeners.ClientListener;
 import net.timewalker.ffmq4.listeners.tcp.io.TcpListener;
@@ -39,9 +43,6 @@ import net.timewalker.ffmq4.management.BridgeDefinitionProvider;
 import net.timewalker.ffmq4.management.bridge.BridgeDefinition;
 import net.timewalker.ffmq4.utils.InetUtils;
 import net.timewalker.ffmq4.utils.Settings;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * <p>Implementation of an FFMQ Server instance.</p>
@@ -130,6 +131,15 @@ public final class FFMQServer implements FFMQServerMBean, FFMQEngineListener, Ru
 	        if (jmxAgentEnabled)
 	        {
 	        	jmxAgent = new JMXOverRMIAgent("FFMQ-server",jmxJndiRmiPort,jmxRmiListenAddr);
+	        }
+	        else
+	        if (settings.getStringProperty(FFMQCoreSettings.JMX_AGENT_ENABLED,"false").equals("local"))
+	        {
+	        	jmxAgent = new PlatformJMXAgent(); // Use a local-only agent
+	        }
+	        
+	        if (jmxAgent != null)
+	        {
 	        	try
 	        	{
 	        		jmxAgent.register(new ObjectName(JMXAgent.JMX_DOMAIN+":type=Server"), this);

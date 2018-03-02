@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.1
+
+- **[Feature]** Allow to start a JMX agent without the RMI layer that may only be accessed locally
+
 ## 4.0.0
 
 - **[Feature]** Upgrade project descriptors to Maven 3
