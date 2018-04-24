@@ -5,7 +5,7 @@
 	<groupId>net.timewalker.ffmq</groupId>
 	<artifactId>ffmq4-tools</artifactId>
 	<packaging>jar</packaging>
-	<version>4.0.1</version><!--FFMQ_VERSION-->
+	<version>4.0.2</version><!--FFMQ_VERSION-->
 	<name>FFMQ Tools</name>
 	<description>FFMQ Tools</description>
 	<url>http://timewalker74.github.io/ffmq/</url>
@@ -25,7 +25,7 @@
 	<parent>
 		<groupId>net.timewalker.ffmq</groupId>
 		<artifactId>ffmq4</artifactId>
-		<version>4.0.1</version><!--FFMQ_VERSION-->
+		<version>4.0.2</version><!--FFMQ_VERSION-->
 	</parent>
 
 	<build>
@@ -101,7 +101,7 @@
 		<dependency>
 			<groupId>net.timewalker.ffmq</groupId>
 			<artifactId>ffmq4-core</artifactId>
-			<version>4.0.1</version><!--FFMQ_VERSION-->
+			<version>4.0.2</version><!--FFMQ_VERSION-->
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
