@@ -15,7 +15,7 @@
  * along with FFMQ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package net.timewalker.ffmq3.test;
+package net.timewalker.ffmq4.test;
 
 import java.util.Hashtable;
 
@@ -31,7 +31,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import net.timewalker.ffmq4.FFMQConstants;
-import net.timewalker.ffmq4.test.TestUtils;
 
 /**
  * TestConsumerClient
