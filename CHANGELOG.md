@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.2
+
+- **[Fix]** Default client properties file was not properly named and was not used
+
 ## 4.0.1
 
 - **[Feature]** Allow to start a JMX agent without the RMI layer that may only be accessed locally
