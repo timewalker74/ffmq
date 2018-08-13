@@ -29,6 +29,7 @@
 ## 3.0.8
 
 - **[Fix]** LocalQueueMBean getPersistentStoreUsage() should use absolute storage usage instead of current store usage if queue can auto-extend
+- **[Feature]** Improve lock contention on subscribers list for topics
 
 ## 3.0.7
 
