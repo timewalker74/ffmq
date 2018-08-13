@@ -33,7 +33,7 @@ public class TestUtils
     //public static final int CONSUMER_ROLLBACK_RATE = 0;
     public static final int CONSUMER_ROLLBACK_RATE = 19;
     
-    public static final int TEST_ITERATIONS = 1;
+    public static final int TEST_ITERATIONS = 5;
     public static final boolean INTERACTIVE_MODE = false;
     
     public static final boolean USE_EXTERNAL_SERVER = false;
