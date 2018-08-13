@@ -17,7 +17,10 @@
  */
 package net.timewalker.ffmq4.local.destination;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -30,7 +33,6 @@ import net.timewalker.ffmq4.local.session.LocalSession;
 import net.timewalker.ffmq4.management.destination.definition.AbstractDestinationDefinition;
 import net.timewalker.ffmq4.storage.data.DataStoreException;
 import net.timewalker.ffmq4.utils.Committable;
-import net.timewalker.ffmq4.utils.concurrent.CopyOnWriteList;
 import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 
 /**
@@ -42,7 +44,8 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     protected AbstractDestinationDefinition destinationDef;
     
     // Registered consumers
-    protected CopyOnWriteList<LocalMessageConsumer> localConsumers = new CopyOnWriteList<>();
+    protected List<LocalMessageConsumer> localConsumers = new ArrayList<>();
+    protected ReentrantReadWriteLock consumersLock = new ReentrantReadWriteLock(); // Protects localConsumers
     
     // Transaction handling
     protected ReentrantLock transactionLock = new ReentrantLock();
@@ -78,7 +81,15 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
      */
     public void registerConsumer( LocalMessageConsumer consumer )
     {
-        localConsumers.add(consumer);
+    	consumersLock.writeLock().lock();
+    	try
+    	{
+    		localConsumers.add(consumer);
+    	}
+    	finally
+    	{
+    		consumersLock.writeLock().unlock();
+    	}
     }
     
     /**
@@ -86,7 +97,15 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
      */
     public void unregisterConsumer( LocalMessageConsumer consumer )
     {
-        localConsumers.remove(consumer);
+    	consumersLock.writeLock().lock();
+    	try
+    	{
+    		localConsumers.remove(consumer);
+    	}
+    	finally
+    	{
+    		consumersLock.writeLock().unlock();
+    	}
     }
     
     /**
@@ -115,6 +134,7 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     @Override
 	public final int getRegisteredConsumersCount()
     {
+    	// No lock : only used for instrumentration
         return localConsumers.size();
     }
 
@@ -247,16 +267,21 @@ public abstract class AbstractLocalDestination implements Destination, LocalDest
     
     protected final LocalMessageConsumer lookupConsumer( String consumerID )
     {
-    	synchronized (localConsumers)
-		{
-	    	for (int i = 0; i < localConsumers.size(); i++)
-			{
-				LocalMessageConsumer consumer = localConsumers.get(i);
-				if (consumer.getSubscriberId().equals(consumerID))
-					return consumer;
-			}
-	    	return null;
-		}
+    	consumersLock.readLock().lock();
+    	try
+    	{
+        	for (int i = 0; i < localConsumers.size(); i++)
+    		{
+    			LocalMessageConsumer consumer = localConsumers.get(i);
+    			if (consumer.getSubscriberId().equals(consumerID))
+    				return consumer;
+    		}
+        	return null;
+    	}
+    	finally
+    	{
+    		consumersLock.readLock().unlock();
+    	}
     }
     
     protected final boolean isConsumerRegistered( String consumerID )

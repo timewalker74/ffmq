@@ -27,6 +27,9 @@ import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.Queue;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.timewalker.ffmq4.FFMQException;
 import net.timewalker.ffmq4.common.message.AbstractMessage;
 import net.timewalker.ffmq4.common.message.MessageSelector;
@@ -47,14 +50,10 @@ import net.timewalker.ffmq4.storage.message.impl.InMemoryMessageStore;
 import net.timewalker.ffmq4.utils.ErrorTools;
 import net.timewalker.ffmq4.utils.async.AsyncTask;
 import net.timewalker.ffmq4.utils.concurrent.BlockingBoundedFIFO;
-import net.timewalker.ffmq4.utils.concurrent.CopyOnWriteList;
 import net.timewalker.ffmq4.utils.concurrent.SynchronizationBarrier;
 import net.timewalker.ffmq4.utils.concurrent.WaitTimeoutException;
 import net.timewalker.ffmq4.utils.watchdog.ActiveObject;
 import net.timewalker.ffmq4.utils.watchdog.ActivityWatchdog;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * <p>Implementation for a local JMS {@link Queue}</p>
@@ -706,23 +705,24 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
      */
     private void notifyConsumer( AbstractMessage message )
     {
-    	LocalMessageConsumer singleConsumer = null;
-    	CopyOnWriteList<LocalMessageConsumer> consumersSnapshot = null;
-    	synchronized (localConsumers)
-		{
+    	consumersLock.readLock().lock();
+    	try
+    	{
     		switch (localConsumers.size())
     		{
     			case 0 : return; // Nobody's listening
-    			case 1 : singleConsumer = localConsumers.get(0); break; // Single consumer
+    			case 1 : 
+    				notifySingleConsumer(localConsumers.get(0),message);
+    				break;
     			default : // Multiple consumers
-    				consumersSnapshot = localConsumers.fastCopy();		
+    				notifyNextConsumer(localConsumers,message);
+    				break;
     		}
-		}
-
-    	if (singleConsumer != null)
-    		notifySingleConsumer(singleConsumer,message);
-    	else
-    		notifyNextConsumer(consumersSnapshot,message);
+    	}
+    	finally
+    	{
+    		consumersLock.readLock().unlock();
+    	}
     }
     
     private void notifySingleConsumer( LocalMessageConsumer consumer , AbstractMessage message )
@@ -749,15 +749,15 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	}
     }
     
-    private void notifyNextConsumer( CopyOnWriteList<LocalMessageConsumer> consumersSnapshot , AbstractMessage message )
+    private void notifyNextConsumer( List<LocalMessageConsumer> allConsumers , AbstractMessage message )
     {
     	// Find a consumer to notify
-    	int localConsumersCount = consumersSnapshot.size();
+    	int localConsumersCount = allConsumers.size();
     	int currentOffset = consumerOffset++; // Copy current offset (value is volatile and should not change during the following loop)
     	for (int n = 0 ; n < localConsumersCount ; n++)
 	    {
             int offset = ((n+currentOffset) % localConsumersCount);
-            LocalMessageConsumer consumer = consumersSnapshot.get(offset);
+            LocalMessageConsumer consumer = allConsumers.get(offset);
             
             // Check that the consumer connection is started
             if (!consumer.getSession().getConnection().isStarted())
@@ -913,21 +913,34 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
 	        }
 		}
     	
-    	if (!localConsumers.isEmpty()){
-    	    CopyOnWriteList<LocalMessageConsumer> consumers = localConsumers.fastCopy();
-    	    for (int n=0;n<consumers.size();n++)
-            {
-    	        LocalMessageConsumer consumer = consumers.get(n);
-    	        try
-    	        {
-    	            consumer.close();
-    	        }
-    	        catch (JMSException e)
-    	        {
-    	            ErrorTools.log(e, log);
-    	        }
-            }
+    	// Create a snapshot to avoid concurrent modification
+    	List<LocalMessageConsumer> consumers;
+    	consumersLock.readLock().lock();
+    	try
+    	{
+    		if (localConsumers.isEmpty())
+    			return;
+    		
+    		consumers = new ArrayList<>(localConsumers);
     	}
+    	finally
+    	{
+    		consumersLock.readLock().unlock();
+    	}	
+    		
+    	// Close all consumers
+    	for (int n=0;n<consumers.size();n++)
+        {
+	        LocalMessageConsumer consumer = consumers.get(n);
+	        try
+	        {
+	            consumer.close();
+	        }
+	        catch (JMSException e)
+	        {
+	            ErrorTools.log(e, log);
+	        }
+        }
     }
 
     /*
@@ -1031,7 +1044,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     
     private void sendAvailabilityNotification( AbstractMessage message ) throws JMSException
     {
-    	if (localConsumers.isEmpty())
+    	if (localConsumers.isEmpty()) // No lock here, race conditions managed by inactivity watchdog
 			return;
 		
 		try

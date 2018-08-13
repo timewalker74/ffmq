@@ -17,7 +17,6 @@ import net.timewalker.ffmq4.test.local.destination.store.impl.JournalingBlockFil
 import net.timewalker.ffmq4.test.storage.data.impl.BlockBasedDataStoreTest;
 import net.timewalker.ffmq4.test.storage.data.impl.InMemoryLinkedObjectStoreTest;
 import net.timewalker.ffmq4.test.storage.data.impl.JournalingBlockBasedDataStoreTest;
-import net.timewalker.ffmq4.test.utils.concurrent.CopyOnWriteListTest;
 
 /**
  * AllTests
@@ -36,7 +35,6 @@ public class AllCoreTests extends TestCase
         suite.addTestSuite(StringUtilsTest.class);
         suite.addTestSuite(MessageSelectorParserTest.class);
         suite.addTestSuite(JndiTest.class);
-        suite.addTestSuite(CopyOnWriteListTest.class);
         suite.addTestSuite(BlockFileMessageStoreTest.class);
         suite.addTestSuite(JournalingBlockFileMessageStoreTest.class);
         suite.addTestSuite(InMemoryMessageStoreTest.class);

@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.3
+
+- **[Feature]** Improve lock contention on subscribers list for topics
+
 ## 4.0.2
 
 - **[Fix]** Default client properties file was not properly named and was not used
