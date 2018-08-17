@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -38,6 +39,7 @@ import net.timewalker.ffmq4.FFMQException;
 import net.timewalker.ffmq4.FFMQSubscriberPolicy;
 import net.timewalker.ffmq4.common.message.AbstractMessage;
 import net.timewalker.ffmq4.common.message.MessageSelector;
+import net.timewalker.ffmq4.common.message.selector.SelectorIndexKey;
 import net.timewalker.ffmq4.local.MessageLockSet;
 import net.timewalker.ffmq4.local.destination.subscription.LocalTopicSubscription;
 import net.timewalker.ffmq4.local.session.LocalMessageConsumer;
@@ -60,9 +62,10 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     private TopicDefinition topicDef;
     
     // Subscribers map
-    private List<LocalTopicSubscription> subscriptions = new ArrayList<>();
     private Map<String,LocalTopicSubscription> subscriptionMap = new HashMap<>();
-    private ReentrantReadWriteLock subscriptionsLock = new ReentrantReadWriteLock(); // Protects both subscriptions & subscriptionMap
+    private List<LocalTopicSubscription> flatSubscriptions = new ArrayList<>();
+    private Map<String,Map<Object,List<LocalTopicSubscription>>> indexedSubscriptionMap = new HashMap<>();
+    private ReentrantReadWriteLock subscriptionsLock = new ReentrantReadWriteLock(); // Protects subscriptions, subscriptionMap & indexedSubscriptionMap
     
     // Stats
     private AtomicLong sentToTopicCount = new AtomicLong();
@@ -114,24 +117,96 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         	if (subscription == null)
         	{
         		// New subscription
-	        	subscription = new LocalTopicSubscription(consumer);
-	        	subscriptions.add(subscription);
-	        	subscriptionMap.put(consumer.getSubscriberId(),subscription);
+        		storeNewSubscription(consumer);
         	}
         	else
         	{
         		// Remove old subscription
-        		subscriptions.remove(subscription);
+        		removeSubscription(subscription);
         		// Replace by new subscription
-        		subscription = new LocalTopicSubscription(consumer);
-	        	subscriptions.add(subscription);
-	        	subscriptionMap.put(consumer.getSubscriberId(),subscription);
+        		storeNewSubscription(consumer);
         	}
 		}
         finally
         {
         	subscriptionsLock.writeLock().unlock();
         }
+    }
+    
+    private void storeNewSubscription(LocalMessageConsumer consumer)
+    {
+    	LocalTopicSubscription subscription = new LocalTopicSubscription(consumer);
+    	
+    	String[] partitionKeys = topicDef.getPartitionsKeysToIndex();
+    	if (partitionKeys != null && subscription.getMessageSelector() != null)
+    	{
+        	List<SelectorIndexKey> indexableKeys = subscription.getMessageSelector().getIndexableKeys();
+        	SelectorIndexKey key = findBestMatch(partitionKeys, indexableKeys);
+        	if (key != null)
+        	{
+        		subscription.setIndexKey(key);
+        		addToIndexMap(subscription);
+        	}
+    	}
+    	
+    	if (!subscription.isIndexed())
+    		flatSubscriptions.add(subscription);
+    	subscriptionMap.put(consumer.getSubscriberId(),subscription);
+    }
+    
+    private void addToIndexMap( LocalTopicSubscription subscription )
+    {
+    	SelectorIndexKey key = subscription.getIndexKey();
+    	Map<Object,List<LocalTopicSubscription>> subscriptionsByValueMap = indexedSubscriptionMap.get(key.getHeaderName());
+    	if (subscriptionsByValueMap == null)
+    	{
+    		subscriptionsByValueMap = new HashMap<>();
+    		indexedSubscriptionMap.put(key.getHeaderName(),subscriptionsByValueMap);
+    	}
+    	List<LocalTopicSubscription> subscriptions = subscriptionsByValueMap.get(key.getValue());
+    	if (subscriptions == null)
+    	{
+    		subscriptions = new ArrayList<>(4);
+    		subscriptionsByValueMap.put(key.getValue(),subscriptions);
+    	}
+    	subscriptions.add(subscription);
+    }
+    
+    private boolean removeFromIndexMap( LocalTopicSubscription subscription )
+    {
+    	SelectorIndexKey key = subscription.getIndexKey();
+    	if (key == null)
+    		return true;
+    	
+    	Map<Object,List<LocalTopicSubscription>> subscriptionsByValueMap = indexedSubscriptionMap.get(key.getHeaderName());
+    	if (subscriptionsByValueMap == null)
+    		return false;
+    	List<LocalTopicSubscription> subscriptions = subscriptionsByValueMap.get(key.getValue());
+    	if (subscriptions == null)
+    		return false;
+    	
+    	if (!subscriptions.remove(subscription))
+    		return false;
+    	
+    	// Auto-cleanup
+    	if (subscriptions.isEmpty())
+    	{
+    		subscriptionsByValueMap.remove(key.getValue());
+    		if (subscriptionsByValueMap.isEmpty())
+    			indexedSubscriptionMap.remove(key.getHeaderName());
+    	}
+    	
+    	return true;
+    }
+    
+    private SelectorIndexKey findBestMatch( String[] partitionKeys , List<SelectorIndexKey> indexableKeys )
+    {
+    	for(String partitionKey : partitionKeys)
+    		for(SelectorIndexKey indexableKey : indexableKeys)
+    			if (indexableKey.getHeaderName().equals(partitionKey))
+    				return indexableKey;
+    	
+    	return null; // No match ...
     }
 
     /* (non-Javadoc)
@@ -149,7 +224,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     		{
             	LocalTopicSubscription subscription = subscriptionMap.remove(consumer.getSubscriberId());
             	if (subscription != null)
-            		subscriptions.remove(subscription);
+            		removeSubscription(subscription);
     		}
             finally
             {
@@ -161,7 +236,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     /**
      * Unsubscribe all durable consumers for a given client ID and subscription name
      */ 
-    public void unsubscribe( String clientID , String subscriptionName  ) throws JMSException
+    public void unsubscribe( String clientID , String subscriptionName ) throws JMSException
     {
     	String subscriberID = clientID+"-"+subscriptionName;
     	
@@ -176,7 +251,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         		throw new FFMQException("Subscription "+subscriptionName+" is still in use","SUBSCRIPTION_STILL_IN_USE");
     		
         	subscriptionMap.remove(subscriberID);
-       		subscriptions.remove(subscription);
+        	removeSubscription(subscription);
 		}
     	finally
     	{
@@ -184,6 +259,20 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     	}
     }
         
+    private void removeSubscription( LocalTopicSubscription subscription )
+    {
+    	if (subscription.isIndexed())
+    	{
+    		if (!removeFromIndexMap(subscription))
+    			throw new IllegalStateException("Cannot find subscription in index map : "+subscription);
+    	}
+    	else
+    	{
+    		if (!flatSubscriptions.remove(subscription))
+    			throw new IllegalStateException("Cannot find subscription in non-indexed list : "+subscription);
+    	}
+    }
+    
     /*
      * (non-Javadoc)
      * @see net.timewalker.ffmq4.local.destination.AbstractLocalDestination#putLocked(net.timewalker.ffmq4.common.message.AbstractMessage, net.timewalker.ffmq4.local.session.LocalSession, net.timewalker.ffmq4.local.MessageLockSet)
@@ -203,66 +292,41 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     	
     	sentToTopicCount.incrementAndGet();
     	
-        String connectionID = session.getConnection().getId();
         boolean commitRequired = false;
         
         subscriptionsLock.readLock().lock();
         try
         {
-            if (subscriptions.isEmpty())
-            	return false;
-            
-            for (int i = 0; i < subscriptions.size(); i++)
-    		{
-        		LocalTopicSubscription subscription = subscriptions.get(i);
-                
-                // No-local filtering
-                if (subscription.getNoLocal() && subscription.getConnectionID().equals(connectionID))
-                    continue;
-    
-                try
-                {
-                    // Message selector filtering
-                    MessageSelector selector = subscription.getMessageSelector();
-                    if (selector != null)
-                    {
-                    	srcMessage.ensureDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
-                    	if (!selector.matches(srcMessage))
-                    		continue;
-                    }
-                    
-                    LocalQueue subscriberQueue = subscription.getLocalQueue();
-                    
-                    // Only use transactional mode for fail-safe durable subscriptions
-                    if (subscriberQueue.requiresTransactionalUpdate() && subscription.isDurable())
-                    {
-                    	if (committables.add(subscriberQueue))
-                    		subscriberQueue.openTransaction();
-                    		
-                    	if (!subscriberQueue.putLocked(srcMessage, session, locks))
-                    		if (srcMessage.getJMSDeliveryMode() == DeliveryMode.PERSISTENT)
-                    			throw new IllegalStateException("Should require a commit");
-                    	
-                    	pendingChanges = true;
-                    	commitRequired = true;
-                    }
-                    else
-                    {
-                    	if (subscriberQueue.putLocked(srcMessage, session, locks))
-                    		throw new IllegalStateException("Should not require a commit");
-                    }
-                	
-                	dispatchedFromTopicCount.incrementAndGet();
-                }
-                catch (DataStoreFullException e)
-                {
-                	processPutError(subscription.getSubscriberId(), e, getDefinition().getSubscriberOverflowPolicy());
-                }
-                catch (JMSException e)
-                {
-                	processPutError(subscription.getSubscriberId(), e, getDefinition().getSubscriberFailurePolicy());
-                }
-            }
+        	// Pass 1 - Indexed subscriptions
+        	if (!indexedSubscriptionMap.isEmpty())
+        	{
+        		srcMessage.ensureDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
+        		for(Entry<String,Map<Object,List<LocalTopicSubscription>>> entry : indexedSubscriptionMap.entrySet())
+        		{
+        			String headerName = entry.getKey();
+        			Object value;
+        			if (headerName.equals("JMSCorrelationID")) // Intercept special headers
+        				value = srcMessage.getJMSCorrelationID();
+        			else
+        				value = srcMessage.getObjectProperty(entry.getKey());
+        			
+        			if (value != null)
+        			{
+        				value = normalizeLiteralValue(value);
+        				List<LocalTopicSubscription> subscriptions = entry.getValue().get(value);
+        				if (subscriptions != null)
+        				{
+        					if (pushToSubscriptions(srcMessage, session, locks, subscriptions))
+        						commitRequired = true;
+        				}
+        			}
+        		}
+        	}
+        	
+        	// Pass 2 - Non indexed subscriptions
+            if (!flatSubscriptions.isEmpty())
+            	if (pushToSubscriptions(srcMessage, session, locks, flatSubscriptions))
+            		commitRequired = true;
         }
         finally
         {
@@ -270,6 +334,82 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         }
         
         return commitRequired;
+    }
+    
+    private Object normalizeLiteralValue( Object value )
+    {
+    	if (value instanceof Number)
+    	{
+    		if (value instanceof Long) return value; // No change
+    		if (value instanceof Double) return value; // No change
+    		
+    		if (value instanceof Byte ||
+				value instanceof Short ||			
+				value instanceof Integer)
+    			return Long.valueOf(((Number)value).longValue());
+    			
+    		if (value instanceof Float) return Double.valueOf(((Number)value).doubleValue());
+    	}
+    	
+    	return value; // No change
+    }
+    
+    private boolean pushToSubscriptions( AbstractMessage srcMessage , LocalSession session , MessageLockSet locks , List<LocalTopicSubscription> subscriptions ) throws JMSException
+    {
+    	String connectionID = session.getConnection().getId();
+    	boolean commitRequired = false;
+    	for (int i = 0; i < subscriptions.size(); i++)
+		{
+    		LocalTopicSubscription subscription = subscriptions.get(i);
+            
+            // No-local filtering
+            if (subscription.getNoLocal() && subscription.getConnectionID().equals(connectionID))
+                continue;
+
+            try
+            {
+                // Message selector filtering
+                MessageSelector selector = subscription.getMessageSelector();
+                if (selector != null)
+                {
+                	srcMessage.ensureDeserializationLevel(MessageSerializationLevel.ALL_HEADERS);
+                	if (!selector.matches(srcMessage))
+                		continue;
+                }
+                
+                LocalQueue subscriberQueue = subscription.getLocalQueue();
+                
+                // Only use transactional mode for fail-safe durable subscriptions
+                if (subscriberQueue.requiresTransactionalUpdate() && subscription.isDurable())
+                {
+                	if (committables.add(subscriberQueue))
+                		subscriberQueue.openTransaction();
+                		
+                	if (!subscriberQueue.putLocked(srcMessage, session, locks))
+                		if (srcMessage.getJMSDeliveryMode() == DeliveryMode.PERSISTENT)
+                			throw new IllegalStateException("Should require a commit");
+                	
+                	pendingChanges = true;
+                	commitRequired = true;
+                }
+                else
+                {
+                	if (subscriberQueue.putLocked(srcMessage, session, locks))
+                		throw new IllegalStateException("Should not require a commit");
+                }
+            	
+            	dispatchedFromTopicCount.incrementAndGet();
+            }
+            catch (DataStoreFullException e)
+            {
+            	processPutError(subscription.getSubscriberId(), e, getDefinition().getSubscriberOverflowPolicy());
+            }
+            catch (JMSException e)
+            {
+            	processPutError(subscription.getSubscriberId(), e, getDefinition().getSubscriberFailurePolicy());
+            }
+        }
+    	return commitRequired;
     }
     
     private void processPutError( String subscriberId , JMSException e , int policy ) throws JMSException
@@ -292,9 +432,8 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     	subscriptionsLock.readLock().lock();
     	try
         {
-    		for (int i = 0; i < subscriptions.size(); i++)
-    		{
-        		LocalTopicSubscription subscription = subscriptions.get(i);
+    		for(LocalTopicSubscription subscription : subscriptionMap.values())
+        	{
                 size += subscription.getLocalQueue().getSize();
             }
         }
@@ -369,11 +508,10 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     	subscriptionsLock.readLock().lock();
         try
         {
-            for (int i = 0; i < subscriptions.size(); i++)
-            {
-                LocalTopicSubscription subscription = subscriptions.get(i);
-                
-                if (i>0)
+        	int pos = 0;
+        	for(LocalTopicSubscription subscription : subscriptionMap.values())
+        	{
+                if (pos++>0)
                     sb.append("\n");
                 sb.append(subscription);
             }

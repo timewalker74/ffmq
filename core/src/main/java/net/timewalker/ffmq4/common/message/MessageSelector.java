@@ -17,11 +17,19 @@
  */
 package net.timewalker.ffmq4.common.message;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 
 import net.timewalker.ffmq4.common.message.selector.MessageSelectorParser;
+import net.timewalker.ffmq4.common.message.selector.SelectorIndexKey;
+import net.timewalker.ffmq4.common.message.selector.expression.Identifier;
 import net.timewalker.ffmq4.common.message.selector.expression.SelectorNode;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.Literal;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.AndOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.EqualsOperator;
 
 /**
  * <p>Object implementation of a JMS message selector</p>
@@ -47,6 +55,49 @@ public final class MessageSelector
         Boolean result = selectorTree != null ? selectorTree.evaluateBoolean(message) : null;
         return result != null && result.booleanValue();
     }
+    
+    public List<SelectorIndexKey> getIndexableKeys()
+	{
+    	if (selectorTree == null)
+    		return null;
+    	
+    	return findIndexableKeys(selectorTree, null);
+	}
+    
+    private List<SelectorIndexKey> findIndexableKeys( SelectorNode node , List<SelectorIndexKey> keys )
+	{
+    	if (node instanceof EqualsOperator)
+    	{
+    		EqualsOperator eq = (EqualsOperator)node;
+    		if (eq.leftOperand() instanceof Identifier && eq.rightOperand() instanceof Literal)
+    		{
+    			Identifier id = (Identifier)eq.leftOperand();
+    			Literal value = (Literal)eq.rightOperand();
+    			if (keys == null)
+    				keys = new ArrayList<>();
+    			keys.add(new SelectorIndexKey(id.getName(), value.getValue()));
+    		}
+    		else
+			if (eq.leftOperand() instanceof Literal && eq.rightOperand() instanceof Identifier)
+    		{
+    			Identifier id = (Identifier)eq.rightOperand();
+    			Literal value = (Literal)eq.leftOperand();
+    			if (keys == null)
+    				keys = new ArrayList<>();
+    			keys.add(new SelectorIndexKey(id.getName(), value.getValue()));
+    		}
+    	}
+    	else
+    	if (node instanceof AndOperator)
+    	{
+    		AndOperator and = (AndOperator)node;
+    		// Recursion
+    		keys = findIndexableKeys(and.leftOperand(),keys);
+    		keys = findIndexableKeys(and.rightOperand(),keys);
+    	}
+    	
+    	return keys;
+	}
     
     /* (non-Javadoc)
      * @see java.lang.Object#toString()

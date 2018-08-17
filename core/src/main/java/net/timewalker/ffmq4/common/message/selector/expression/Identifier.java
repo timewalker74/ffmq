@@ -39,6 +39,14 @@ public final class Identifier extends SelectorNode implements AtomicOperand, Con
         this.name = name;
     }
     
+    /**
+	 * @return the name
+	 */
+	public String getName()
+	{
+		return name;
+	}
+    
     /*
      * (non-Javadoc)
      * @see net.timewalker.ffmq4.common.message.selector.expression.SelectorNode#evaluate(javax.jms.Message)
