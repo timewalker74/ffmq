@@ -69,6 +69,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     // Stats
     private volatile long sentToTopicCount = 0;
     private volatile long dispatchedFromTopicCount = 0;
+    private Object countersLock = new Object();
     
     // Runtime
     private Set committables = new HashSet();
@@ -291,6 +292,11 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
                     "DeliveryMode.NON_PERSISTENT" : "DeliveryMode.PERSISTENT"),
                     "INVALID_DELIVERY_MODE");
     	
+    	synchronized (countersLock)
+		{
+        	sentToTopicCount++;
+		}
+
         boolean commitRequired = false;
         
         subscriptionsLock.readLock().lock();
@@ -400,7 +406,10 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
                 		throw new IllegalStateException("Should not require a commit");
                 }
             	
-            	dispatchedFromTopicCount++;
+                synchronized (countersLock)
+        		{
+                	dispatchedFromTopicCount++;
+        		}
             }
             catch (DataStoreFullException e)
             {
