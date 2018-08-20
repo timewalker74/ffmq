@@ -12,6 +12,7 @@ import net.timewalker.ffmq4.test.local.LocalTopicMultiConnListenerTest;
 import net.timewalker.ffmq4.test.local.LocalTopicMultiConnReceiverTest;
 import net.timewalker.ffmq4.test.local.LocalTopicSingleConnListenerTest;
 import net.timewalker.ffmq4.test.local.LocalTopicSingleConnReceiverTest;
+import net.timewalker.ffmq4.test.local.selector.MessageSelectionTest;
 import net.timewalker.ffmq4.test.local.session.LocalQueueSessionTest;
 import net.timewalker.ffmq4.test.local.session.LocalSessionTest;
 import net.timewalker.ffmq4.test.remote.RemoteQueueMultiConnListenerTest;
@@ -41,6 +42,7 @@ public class AllServerTests extends TestCase
         suite.addTestSuite(LocalQueueSessionTest.class);
         suite.addTestSuite(RemoteSessionTest.class);
         suite.addTestSuite(RemoteQueueSessionTest.class);
+        suite.addTestSuite(MessageSelectionTest.class);
         
         suite.addTestSuite(RemoteToLocalTest.class);
         
