@@ -1,5 +1,15 @@
 ### FFMQ ChangeLog
 
+## 4.0.4-rc1
+
+- **[Feature]** Allow to specify message headers on which to index topic subscribers that use a message selector. This can improve performance when using a partitioned topic pattern with a large number of subscribers (reducing dispatch complexity from O(n) to O(1)).
+  _Typical use-case_ : most topic subscribers have a message selector like :
+  > (Consumer1) someHeader='key1'
+  > (Consumer2) someHeader='key2'
+  > ...
+
+  Indexing the subscribers on 'someHeader' will improve dispatch performance 
+
 ## 4.0.3
 
 - **[Feature]** Improve lock contention on subscribers list for topics
