@@ -1,7 +1,8 @@
 ### FFMQ ChangeLog
 
-## 4.0.4-rc1
+## 4.0.4
 
+- **[Fix]** Topic properties were not properly persisted in destination descriptor (subscriberFailurePolicy/subscriberOverflowPolicy)
 - **[Feature]** Allow to specify message headers on which to index topic subscribers that use a message selector. This can improve performance when using a partitioned topic pattern with a large number of subscribers (reducing dispatch complexity from O(n) to O(1)).
   _Typical use-case_ : most topic subscribers have a message selector like :
   > (Consumer1) someHeader='key1'
@@ -35,6 +36,18 @@
 - **[Fix]** LocalQueueMBean getPersistentStoreUsage() should use absolute storage usage instead of current store usage if queue can auto-extend
 
  `FFMQ 4.0.x branch was forked from FFMQ 3.0.5`
+
+## 3.0.9
+
+- **[Fix]** Fix topic activity counters broken in 3.0.8
+- **[Fix]** Topic properties were not properly persisted in destination descriptor (subscriberFailurePolicy/subscriberOverflowPolicy)
+- **[Feature]** Allow to specify message headers on which to index topic subscribers that use a message selector. This can improve performance when using a partitioned topic pattern with a large number of subscribers (reducing dispatch complexity from O(n) to O(1)).
+  _Typical use-case_ : most topic subscribers have a message selector like :
+  > (Consumer1) someHeader='key1'
+  > (Consumer2) someHeader='key2'
+  > ...
+
+  Indexing the subscribers on 'someHeader' will improve dispatch performance 
 
 ## 3.0.8
 

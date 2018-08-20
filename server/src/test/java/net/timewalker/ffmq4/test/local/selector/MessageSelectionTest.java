@@ -35,7 +35,7 @@ public class MessageSelectionTest extends AbstractQueuerTest
 {
 	private static long WAIT_TIMEOUT = 100;
 	
-	private static int TEST_AMOUNT = 20000;
+	private static int TEST_AMOUNT = 200000;
 	
 	public void testIndexingScalability() throws Exception
 	{
@@ -66,21 +66,22 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		}
 		
 		Random rand = new Random();
-		
-		long startTime = System.currentTimeMillis();
-		MessageProducer producer = session.createProducer(vtopic1);
-		for(int n=0;n<TEST_AMOUNT;n++)
+		for(int k=0;k<10;k++)
 		{
-			TextMessage msg = session.createTextMessage("test"+n);
-			msg.setStringProperty(key, "foo"+rand.nextInt(5000));
-			
-			producer.send(msg,DeliveryMode.NON_PERSISTENT,Message.DEFAULT_PRIORITY,Message.DEFAULT_TIME_TO_LIVE);
+    		long startTime = System.currentTimeMillis();
+    		MessageProducer producer = session.createProducer(vtopic1);
+    		for(int n=0;n<TEST_AMOUNT;n++)
+    		{
+    			TextMessage msg = session.createTextMessage("test"+n);
+    			msg.setStringProperty(key, "foo"+rand.nextInt(5000));
+    			
+    			producer.send(msg,DeliveryMode.NON_PERSISTENT,Message.DEFAULT_PRIORITY,Message.DEFAULT_TIME_TO_LIVE);
+    		}
+		
+    		sem.acquire(TEST_AMOUNT);
+    		long endTime = System.currentTimeMillis();
+    		System.out.println(endTime-startTime);
 		}
-		
-		sem.acquire(TEST_AMOUNT);
-		long endTime = System.currentTimeMillis();
-		
-		System.out.println(endTime-startTime);
 		
 		session.close();
 		connection.close();

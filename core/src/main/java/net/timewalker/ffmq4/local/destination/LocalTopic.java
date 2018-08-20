@@ -308,7 +308,7 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
         			if (headerName.equals("JMSCorrelationID")) // Intercept special headers
         				value = srcMessage.getJMSCorrelationID();
         			else
-        				value = srcMessage.getObjectProperty(entry.getKey());
+        				value = srcMessage.getObjectProperty(headerName);
         			
         			if (value != null)
         			{
