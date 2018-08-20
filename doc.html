@@ -325,6 +325,31 @@ memoryStore.maxMessages           = 1000</pre>
 				</ul>
 				</td>
 			</tr>
+			<tr>
+			    <td>partitionsKeysToIndex</td>
+				<td><i>Not set</i></td>
+				<td>
+					<p>
+					<b>FFMQ 4.x only</b><br/>
+					Allow to specify message headers on which to index topic subscribers that use a message selector. 
+					</p>
+					<p>
+		                This can improve performance when using a partitioned topic pattern with a large number of subscribers 
+		                (reducing dispatch complexity from O(n) to O(1)).
+					</p>
+					<p>
+						Typical use-case : most topic subscribers have a message selector like :<br/>
+					</p>
+					<ul>
+		                <li>(Consumer1) someHeader='key1'</li>
+						<li>(Consumer2) someHeader='key2'</li>
+						<li>...</li>
+					</ul>
+					<p>
+						Indexing the subscribers on <i>'someHeader'</i> will improve dispatch performance.
+					</p>
+				</td>
+			</tr>
 		</table>
 		<p>
 			Notes :
