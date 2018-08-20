@@ -37,4 +37,14 @@ public abstract class AbstractBinaryOperator extends SelectorNode
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
     }
+    
+    public final SelectorNode leftOperand()
+    {
+    	return leftOperand;
+    }
+    
+    public final SelectorNode rightOperand()
+    {
+    	return rightOperand;
+    }
 }

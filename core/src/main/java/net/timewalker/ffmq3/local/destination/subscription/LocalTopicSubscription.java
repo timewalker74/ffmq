@@ -20,6 +20,7 @@ package net.timewalker.ffmq3.local.destination.subscription;
 import javax.jms.Topic;
 
 import net.timewalker.ffmq3.common.message.MessageSelector;
+import net.timewalker.ffmq3.common.message.selector.SelectorIndexKey;
 import net.timewalker.ffmq3.local.destination.LocalQueue;
 import net.timewalker.ffmq3.local.destination.LocalTopic;
 import net.timewalker.ffmq3.local.session.LocalMessageConsumer;
@@ -37,6 +38,7 @@ public final class LocalTopicSubscription
     private boolean noLocal;
     
     // Runtime
+    private SelectorIndexKey indexKey;
     private LocalQueue localQueue;
     
     /**
@@ -109,6 +111,27 @@ public final class LocalTopicSubscription
         return noLocal;
     }
     
+    /**
+	 * @param indexKey the indexKey to set
+	 */
+	public void setIndexKey(SelectorIndexKey indexKey)
+	{
+		this.indexKey = indexKey;
+	}
+	
+	/**
+	 * @return the indexKey
+	 */
+	public SelectorIndexKey getIndexKey()
+	{
+		return indexKey;
+	}
+	
+	public boolean isIndexed()
+	{
+		return indexKey != null;
+	}
+    
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -123,6 +146,11 @@ public final class LocalTopicSubscription
         sb.append(connectionID);
         sb.append(",selector=");
         sb.append(messageSelector);
+        if (indexKey != null)
+        {
+        	sb.append(",indexKey=");
+            sb.append(indexKey);
+        }
         sb.append(",durable=");
         sb.append(durable);
         sb.append(",noLocal=");

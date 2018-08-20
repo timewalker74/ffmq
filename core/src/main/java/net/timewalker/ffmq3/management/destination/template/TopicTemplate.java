@@ -17,10 +17,13 @@
  */
 package net.timewalker.ffmq3.management.destination.template;
 
+import java.util.StringTokenizer;
+
 import javax.jms.JMSException;
 import javax.jms.Topic;
 
 import net.timewalker.ffmq3.FFMQSubscriberPolicy;
+import net.timewalker.ffmq3.common.message.selector.expression.utils.StringUtils;
 import net.timewalker.ffmq3.management.InvalidDescriptorException;
 import net.timewalker.ffmq3.management.destination.definition.TopicDefinition;
 import net.timewalker.ffmq3.utils.Settings;
@@ -33,6 +36,7 @@ public final class TopicTemplate extends AbstractDestinationTemplate
 	// Attributes
 	private int subscriberFailurePolicy;
 	private int subscriberOverflowPolicy;
+	private String[] partitionsKeysToIndex;
 	
     /**
      * Constructor
@@ -82,6 +86,22 @@ public final class TopicTemplate extends AbstractDestinationTemplate
 		return subscriberOverflowPolicy;
 	}
 	
+	/**
+	 * @return the partitionsKeysToIndex
+	 */
+	public String[] getPartitionsKeysToIndex()
+	{
+		return partitionsKeysToIndex;
+	}
+	
+	/**
+	 * @param partitionsKeysToIndex the partitionsKeysToIndex to set
+	 */
+	public void setPartitionsKeysToIndex(String[] partitionsKeysToIndex)
+	{
+		this.partitionsKeysToIndex = partitionsKeysToIndex;
+	}
+	
 	/* (non-Javadoc)
 	 * @see net.timewalker.ffmq3.management.destination.AbstractDestinationDescriptor#initFromSettings(net.timewalker.ffmq3.utils.Settings)
 	 */
@@ -91,6 +111,29 @@ public final class TopicTemplate extends AbstractDestinationTemplate
 		
 		this.subscriberFailurePolicy  = settings.getIntProperty("subscriberFailurePolicy",FFMQSubscriberPolicy.SUBSCRIBER_POLICY_LOG);
 		this.subscriberOverflowPolicy = settings.getIntProperty("subscriberOverflowPolicy",FFMQSubscriberPolicy.SUBSCRIBER_POLICY_LOG);
+		
+		String rawPartitionsKeysToIndex = settings.getStringProperty("partitionsKeysToIndex");
+		if (rawPartitionsKeysToIndex != null)
+		{
+			StringTokenizer st = new StringTokenizer(rawPartitionsKeysToIndex, ", ");
+			this.partitionsKeysToIndex = new String[st.countTokens()];
+			int pos = 0;
+			while (st.hasMoreTokens())
+				this.partitionsKeysToIndex[pos++] = st.nextToken();
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see net.timewalker.ffmq4.management.destination.AbstractDestinationDescriptor#fillSettings(net.timewalker.ffmq4.utils.Settings)
+	 */
+	protected void fillSettings(Settings settings)
+	{
+		super.fillSettings(settings);
+		
+		settings.setIntProperty("subscriberFailurePolicy", subscriberFailurePolicy);
+		settings.setIntProperty("subscriberOverflowPolicy", subscriberOverflowPolicy);
+		if (partitionsKeysToIndex != null)
+			settings.setStringProperty("partitionsKeysToIndex", StringUtils.implode(partitionsKeysToIndex, ","));
 	}
 	
     /**
@@ -104,6 +147,7 @@ public final class TopicTemplate extends AbstractDestinationTemplate
         copyAttributesTo(def);
         def.setSubscriberFailurePolicy(subscriberFailurePolicy);
         def.setSubscriberOverflowPolicy(subscriberOverflowPolicy);
+        def.setPartitionsKeysToIndex(partitionsKeysToIndex);
         
         return def;
     }
@@ -120,5 +164,19 @@ public final class TopicTemplate extends AbstractDestinationTemplate
     		throw new InvalidDescriptorException("Invalid subscriber failure policy mask : "+subscriberFailurePolicy);
     	if (!FFMQSubscriberPolicy.isValid(subscriberOverflowPolicy))
     		throw new InvalidDescriptorException("Invalid subscriber overflow policy mask : "+subscriberOverflowPolicy);
+    	
+    	// Partition keys
+    	if (partitionsKeysToIndex != null)
+    	{
+    		if (partitionsKeysToIndex.length == 0)
+    			throw new InvalidDescriptorException("Empty partitionsKeysToIndex definition");
+    		
+    		for(int n=0;n<partitionsKeysToIndex.length;n++)
+    		{
+    			String key = partitionsKeysToIndex[n];
+    			if (key.startsWith("JMS") && !key.equals("JMSCorrelationID"))
+    				throw new InvalidDescriptorException("JMSCorrelationID is the only JMS standard header that may be indexed, cannot use "+key);
+    		}
+    	}
     }
 }
