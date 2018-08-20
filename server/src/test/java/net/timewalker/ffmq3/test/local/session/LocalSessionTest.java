@@ -46,19 +46,6 @@ public class LocalSessionTest extends AbstractCommTest
 	
 	private static final long RECV_TIMEOUT = 150;
 
-	protected Connection createConnection() throws Exception
-	{
-		Connection connection;
-		if (isRemote())
-			connection = TestUtils.openRemoteConnection();
-		else
-			connection = TestUtils.openLocalConnection();
-
-		connection.setExceptionListener(this);
-
-		return connection;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -68,7 +55,7 @@ public class LocalSessionTest extends AbstractCommTest
 	{
 		super.setUp();
 		lastConnectionFailure = null;
-		connection = createConnection();
+		connection = isTopicTest() ? (Connection)createTopicConnection() : (Connection)createQueueConnection();
 		purgeDestination(queue1);
 	}
 

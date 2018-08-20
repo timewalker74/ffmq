@@ -1,30 +1,17 @@
 package net.timewalker.ffmq3.test;
 
-import java.io.FileInputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Properties;
 
-import javax.jms.Connection;
-import javax.jms.ExceptionListener;
-import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
-import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
 
-import junit.framework.TestCase;
-import net.timewalker.ffmq3.FFMQConstants;
 import net.timewalker.ffmq3.common.destination.QueueRef;
 import net.timewalker.ffmq3.common.destination.TopicRef;
-import net.timewalker.ffmq3.listeners.AbstractClientListener;
-import net.timewalker.ffmq3.listeners.tcp.io.TcpListener;
-import net.timewalker.ffmq3.listeners.tcp.nio.NIOTcpListener;
-import net.timewalker.ffmq3.local.FFMQEngine;
 import net.timewalker.ffmq3.local.destination.LocalQueue;
 import net.timewalker.ffmq3.local.destination.LocalTopic;
 import net.timewalker.ffmq3.test.utils.CommTestParameters;
@@ -37,30 +24,15 @@ import net.timewalker.ffmq3.test.utils.topic.TopicListenerThread;
 import net.timewalker.ffmq3.test.utils.topic.TopicPublisherThread;
 import net.timewalker.ffmq3.test.utils.topic.TopicSubscriberThread;
 import net.timewalker.ffmq3.utils.JavaTools;
-import net.timewalker.ffmq3.utils.Settings;
 import net.timewalker.ffmq3.utils.StringTools;
 import net.timewalker.ffmq3.utils.concurrent.SynchronizationPoint;
-
-import org.apache.log4j.PropertyConfigurator;
 
 /**
  * AbstractCommTest
  */
-public abstract class AbstractCommTest extends TestCase implements ExceptionListener
-{
-    private static boolean log4jConfigured;
-    
-    protected FFMQEngine engine;
-    protected AbstractClientListener listener;
-    protected Queue queue1;
-    protected Queue queue2;
-    protected Topic topic1;
-    protected Topic topic2;
-    
-    public Throwable lastConnectionFailure;
-    
+public abstract class AbstractCommTest extends AbstractQueuerTest
+{   
     //---------------------------------------------------------------------------
-    protected abstract boolean isRemote();
     protected abstract boolean useMultipleConnections();
     protected abstract boolean isTopicTest();
     protected abstract boolean isListenerTest();
@@ -76,198 +48,6 @@ public abstract class AbstractCommTest extends TestCase implements ExceptionList
 //      new StreamMessageFactory(),
       new TextMessageFactory()
     };
-    
-    /*
-     * (non-Javadoc)
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception
-    {
-        super.setUp();
-        
-        lastConnectionFailure = null;
-        
-        // Force safe mode
-        if (TestUtils.USE_SAFE_MODE)
-            System.setProperty("ffmq.dataStore.safeMode", "true");
-        
-        if (TestUtils.USE_EXTERNAL_SERVER)
-        {
-        	queue1 = new QueueRef("TEST1");
-            queue2 = new QueueRef("TEST2");
-            topic1 = new TopicRef("TEST1");
-            topic2 = new TopicRef("TEST2");
-            
-            // Purge queues first
-            Connection connection = createQueueConnection();
-            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-            MessageConsumer consumer = session.createConsumer(queue1);
-            while (consumer.receiveNoWait() != null)
-            	continue;
-            consumer.close();
-            consumer = session.createConsumer(queue2);
-            while (consumer.receiveNoWait() != null)
-            	continue;
-            consumer.close();
-            session.commit();
-            session.close();
-        }
-        else
-        {
-        	// Application home
-        	String ffmqHome = System.getProperty("FFMQ_HOME");
-        	if (ffmqHome == null)
-        	{
-        		ffmqHome = "..";
-        		System.setProperty("FFMQ_HOME",ffmqHome);
-        	}
-        	
-        	// Application base
-        	String ffmqBase = System.getProperty("FFMQ_BASE");
-        	if (ffmqBase == null)
-        	{
-        		ffmqBase = ffmqHome;
-        		System.setProperty("FFMQ_BASE",ffmqBase);
-        	}
-        	
-	        Properties testSettings = new Properties();
-	        FileInputStream in = new FileInputStream(ffmqBase+"/conf/ffmq-server.properties");
-	        testSettings.load(in);
-	        in.close();
-	        
-	        if (!log4jConfigured)
-	        {
-	        	PropertyConfigurator.configure(testSettings);
-	        	log4jConfigured = true;
-	        }
-	
-	        Settings settings = new Settings(testSettings);
-	        
-	        if (listener != null)
-	        {
-	            listener.stop();
-	            listener = null;
-	        }
-       
-	        try
-	        {
-	            FFMQEngine.getDeployedInstance(TestUtils.LOCAL_ENGINE_NAME).undeploy();
-	        }
-	        catch (JMSException e)
-	        {
-	            // Ignore
-	        }
-	        
-	        engine = new FFMQEngine(TestUtils.LOCAL_ENGINE_NAME,settings,null);
-	        engine.deploy();
-	        
-//	        engine.deleteQueue("TEST1");
-//	        engine.deleteQueue("TEST2");
-//	        engine.deleteTopic("TEST1");
-//	        engine.deleteTopic("TEST2");
-	        
-	        queue1 = engine.getLocalQueue("TEST1");
-	        queue2 = engine.getLocalQueue("TEST2");
-	        topic1 = engine.getLocalTopic("TEST1");
-	        topic2 = engine.getLocalTopic("TEST2");
-	        
-	        ((LocalQueue)queue1).purge(null);
-	        ((LocalQueue)queue2).purge(null);
-	        ((LocalTopic)topic1).resetStats();
-	        //topic2.resetStats();
-	        
-	        if (isRemote())
-	        {
-	        	boolean useNIO = settings.getBooleanProperty("listener.tcp.useNIO",false);
-	        	if (useNIO)
-	        	{
-		        	listener = new NIOTcpListener(engine,
-                        	                      FFMQConstants.DEFAULT_SERVER_HOST,
-                        	                      TestUtils.TEST_SERVER_PORT,
-                        	                      settings);
-	        	}
-	        	else
-	        	{
-		            listener = new TcpListener(engine,
-		                                       FFMQConstants.DEFAULT_SERVER_HOST,
-		                                       TestUtils.TEST_SERVER_PORT,
-		                                       settings);
-	        	}
-	        	
-	            // Start the server thread
-	        	try
-	        	{
-	        		listener.start();
-	        	}
-	        	catch (JMSException e)
-	        	{
-	        		if (e.getLinkedException() != null)
-	        			throw e.getLinkedException();
-	        		else
-	        			throw e;
-	        	}
-	        }
-        }
-    }
-
-    public void onException(JMSException exception)
-    {
-        this.lastConnectionFailure = exception;
-    }
-    
-    /* (non-Javadoc)
-     * @see junit.framework.TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception
-    {
-    	if (TestUtils.USE_EXTERNAL_SERVER)
-        {
-    		// Nothing
-        }
-    	else
-    	{
-	        if (isRemote())
-	        {
-	            listener.stop();
-	        }
-
-	        engine.undeploy();     
-    	}
-    	// HELP the GC release mmapped memory
-    	engine = null;
-    	listener = null;
-    	queue1 = null;
-    	queue2 = null;
-    	topic1 = null;
-    	topic2 = null;
-        super.tearDown();
-    }
-    
-    private QueueConnection createQueueConnection() throws Exception
-    {
-        QueueConnection connection;
-        if (isRemote())
-            connection = TestUtils.openRemoteQueueConnection();
-        else
-            connection = TestUtils.openLocalQueueConnection();
-        
-        connection.setExceptionListener(this);
-        
-        return connection;
-    }
-    
-    private TopicConnection createTopicConnection() throws Exception
-    {
-        TopicConnection connection;
-        if (isRemote())
-            connection = TestUtils.openRemoteTopicConnection();
-        else
-            connection = TestUtils.openLocalTopicConnection();
-        
-        connection.setExceptionListener(this);
-        
-        return connection;
-    }
     
     /**
      * Best effort to terminate a misbehaving thread
