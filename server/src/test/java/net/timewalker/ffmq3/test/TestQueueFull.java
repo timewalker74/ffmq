@@ -68,6 +68,8 @@ public class TestQueueFull
 //        engine.undeploy(); 
     }
 	
+	private static final boolean TRANSACTED = true;
+	
 	private static void testQueueFull( String providerURL )
     {
 		Random rand = new Random();
@@ -84,7 +86,7 @@ public class TestQueueFull
 	        Connection conn1 = connFactory1.createConnection();
 	        conn1.start();
 	        
-	        Session session1 = conn1.createSession(false,Session.AUTO_ACKNOWLEDGE);
+	        Session session1 = conn1.createSession(TRANSACTED,TRANSACTED ? Session.SESSION_TRANSACTED : Session.AUTO_ACKNOWLEDGE);
 	
 	        Queue queue1 = session1.createQueue("TEST1");
 	
@@ -99,7 +101,8 @@ public class TestQueueFull
 			        Message message = MessageCreator.createTextMessage(2050);
 			        
 			        producer.send(message,DeliveryMode.NON_PERSISTENT,rand.nextInt(10),0);
-			        //session1.commit();
+			        if (TRANSACTED)
+			        	session1.commit();
 			        
 			        count++;
 			        if ((count % 1000) == 0)
@@ -111,7 +114,8 @@ public class TestQueueFull
 	        }
 	        catch (JMSException e)
 	        {
-	        	//session1.rollback();
+	        	if (TRANSACTED)
+	        		session1.rollback();
 	        	e.printStackTrace();
 	        }
 	        System.out.println("Added "+count+" messages");
@@ -141,6 +145,9 @@ public class TestQueueFull
 	        	msg.getJMSMessageID();
 //	        	if (count > 5)
 //	        		break;
+	        	
+	        	if (TRANSACTED)
+	        		session1.commit();
 	        }
 	        System.out.println("Removed "+count+" messages");
 	        consumer.close();
