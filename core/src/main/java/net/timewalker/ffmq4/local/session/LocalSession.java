@@ -387,7 +387,10 @@ public class LocalSession extends AbstractSession
 		        				putFailure = e;
 	        				}
 	        				else
+	        				{
+	        					pendingPuts.clear(); // Make sure we discard the messages on failure, otherwise they will pile-up, which is unexpected in non-transacted mode
 	        					ErrorTools.log(e, log);
+	        				}
 	        			}	        			
 	        			
 	        			producedCount += pendingSize;

@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.5
+
+- **[Fix]** discard message on non-transacted put exception (would cause messages to pile up unexpectedly on store full exception)
+
 ## 4.0.4
 
 - **[Fix]** Topic properties were not properly persisted in destination descriptor (subscriberFailurePolicy/subscriberOverflowPolicy)
