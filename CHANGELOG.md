@@ -41,6 +41,10 @@
 
  `FFMQ 4.0.x branch was forked from FFMQ 3.0.5`
 
+## 3.0.10
+
+- **[Fix]** discard message on non-transacted put exception (would cause messages to pile up unexpectedly on store full exception)
+
 ## 3.0.9
 
 - **[Fix]** Fix topic activity counters broken in 3.0.8
