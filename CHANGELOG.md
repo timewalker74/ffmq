@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.6
+
+- **[Feature]** Upgrade to jms-api-1.1-rev-1
+
 ## 4.0.5
 
 - **[Fix]** discard message on non-transacted put exception (would cause messages to pile up unexpectedly on store full exception)

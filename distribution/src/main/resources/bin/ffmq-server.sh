@@ -33,7 +33,7 @@ fi
 CONFIG=$FFMQ_BASE/conf/ffmq-server.properties
 
 # Create classpath
-CLASSPATH=$FFMQ_HOME/lib/commons-logging-1.1.jar:$FFMQ_HOME/lib/log4j-1.2.15.jar:$FFMQ_HOME/lib/jms-1.1.jar
+CLASSPATH=$FFMQ_HOME/lib/commons-logging-1.1.jar:$FFMQ_HOME/lib/log4j-1.2.15.jar:$FFMQ_HOME/lib/jms-api-1.1-rev-1.jar
 CLASSPATH=$CLASSPATH:$FFMQ_HOME/lib/ffmq4-core.jar:$FFMQ_HOME/lib/ffmq4-server.jar
 
 # Run the queuer
