@@ -1,12 +1,16 @@
 ### FFMQ ChangeLog
 
+## 4.0.7
+
+- **[Fix]** When a message listener is set after the connection is started and messages are already available, the listener should not be called using the same thread to avoid deadlock/stale situations
+
 ## 4.0.6
 
 - **[Feature]** Upgrade to jms-api-1.1-rev-1
 
 ## 4.0.5
 
-- **[Fix]** discard message on non-transacted put exception (would cause messages to pile up unexpectedly on store full exception)
+- **[Fix]** Discard message on non-transacted put exception (would cause messages to pile up unexpectedly on store full exception)
 
 ## 4.0.4
 
@@ -44,6 +48,10 @@
 - **[Fix]** LocalQueueMBean getPersistentStoreUsage() should use absolute storage usage instead of current store usage if queue can auto-extend
 
  `FFMQ 4.0.x branch was forked from FFMQ 3.0.5`
+
+## 3.0.11
+
+- **[Fix]** When a message listener is set after the connection is started and messages are already available, the listener should not be called using the same thread to avoid deadlock/stale situations
 
 ## 3.0.10
 

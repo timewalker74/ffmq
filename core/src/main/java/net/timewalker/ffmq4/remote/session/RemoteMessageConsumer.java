@@ -120,7 +120,7 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
         // If the connection was already started, wake up the new listener in case there were messages
         // waiting in the destination
         if (messageListener != null && session.getConnection().isStarted())
-        	wakeUpMessageListener();
+        	wakeUpMessageListenerAsync();
     }
     
     /* (non-Javadoc)
@@ -182,17 +182,22 @@ public class RemoteMessageConsumer extends AbstractMessageConsumer
         prefetchSemaphore.release();
         
         // Wake up listener asynchronously
-		try
+		if (messageListener != null)
+			wakeUpMessageListenerAsync();
+		
+		return true;
+    }
+    
+    private void wakeUpMessageListenerAsync()
+    {
+    	try
 		{
-			if (messageListener != null)
-				asyncTaskManager.execute(wakeUpTask);
+			asyncTaskManager.execute(wakeUpTask);
 		}
 		catch (JMSException e)
 		{
 			ErrorTools.log(e, log);
 		}
-		
-		return true;
     }
     
     private AbstractMessage getFromPrefetchQueue( long timeout )
