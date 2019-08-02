@@ -5,7 +5,7 @@
 	<groupId>net.timewalker.ffmq</groupId>
 	<artifactId>ffmq4-core</artifactId>
 	<packaging>jar</packaging>
-	<version>4.0.7</version><!--FFMQ_VERSION-->
+	<version>4.0.8</version><!--FFMQ_VERSION-->
 	<name>FFMQ Core</name>
 	<description>FFMQ Core module</description>
     <url>http://timewalker74.github.io/ffmq/</url>
@@ -25,7 +25,7 @@
 	<parent>
 		<groupId>net.timewalker.ffmq</groupId>
 		<artifactId>ffmq4</artifactId>
-		<version>4.0.7</version><!--FFMQ_VERSION-->
+		<version>4.0.8</version><!--FFMQ_VERSION-->
 	</parent>
 
 	<build>
