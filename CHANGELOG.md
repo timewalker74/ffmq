@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.8
+
+- **[Fix]** Pre-fetching could stop randomly on consumers listening to multiple destinations (thanks to mmlab.de engineers)
+
 ## 4.0.7
 
 - **[Fix]** When a message listener is set after the connection is started and messages are already available, the listener should not be called using the same thread to avoid deadlock/stale situations
@@ -48,6 +52,10 @@
 - **[Fix]** LocalQueueMBean getPersistentStoreUsage() should use absolute storage usage instead of current store usage if queue can auto-extend
 
  `FFMQ 4.0.x branch was forked from FFMQ 3.0.5`
+
+## 3.0.12
+
+- **[Fix]** Pre-fetching could stop randomly on consumers listening to multiple destinations (thanks to mmlab.de engineers)
 
 ## 3.0.11
 

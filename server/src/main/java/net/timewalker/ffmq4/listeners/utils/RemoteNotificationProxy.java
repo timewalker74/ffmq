@@ -63,6 +63,19 @@ public final class RemoteNotificationProxy implements NotificationProxy
         notifPacket.setConsumerId(consumerId);
         notifPacket.setMessage(prefetchedMessage);
         
+        // Last packet for this consumer should be flagged as 'done'
+        notifPacket.setDonePrefetching(true);
+        // Clear 'donePrefetching' of previous packet of same consumer
+    	for(int i=notificationBuffer.size()-1;i>=0;i--)
+    	{
+    		NotificationPacket previousNotifPacket = notificationBuffer.get(i);
+    		if (previousNotifPacket.getConsumerId().equals(consumerId))
+    		{
+    			previousNotifPacket.setDonePrefetching(false);
+    			break; // Older packets were already cleared
+    		}
+    	}
+        
         notificationBuffer.add(notifPacket);
     }
     
@@ -81,7 +94,6 @@ public final class RemoteNotificationProxy implements NotificationProxy
                 for (int i = 0 ; i < len ; i++)
                 {
                 	NotificationPacket notifPacket = notificationBuffer.get(i);
-                	notifPacket.setDonePrefetching(i == len-1);
                     transport.send(notifPacket);
                 }
             }
