@@ -20,14 +20,14 @@ package net.timewalker.ffmq3.listeners.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.timewalker.ffmq3.common.message.AbstractMessage;
 import net.timewalker.ffmq3.local.destination.notification.NotificationProxy;
 import net.timewalker.ffmq3.transport.PacketTransport;
 import net.timewalker.ffmq3.transport.packet.NotificationPacket;
 import net.timewalker.ffmq3.utils.id.IntegerID;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * NotificationProxy
@@ -62,6 +62,19 @@ public final class RemoteNotificationProxy implements NotificationProxy
         notifPacket.setConsumerId(consumerId);
         notifPacket.setMessage(prefetchedMessage);
         
+        // Last packet for this consumer should be flagged as 'done'
+        notifPacket.setDonePrefetching(true);
+        // Clear 'donePrefetching' of previous packet of same consumer
+    	for(int i=notificationBuffer.size()-1;i>=0;i--)
+    	{
+    		NotificationPacket previousNotifPacket = (NotificationPacket)notificationBuffer.get(i);
+    		if (previousNotifPacket.getConsumerId().equals(consumerId))
+    		{
+    			previousNotifPacket.setDonePrefetching(false);
+    			break; // Older packets were already cleared
+    		}
+    	}
+        
         notificationBuffer.add(notifPacket);
     }
     
@@ -79,7 +92,6 @@ public final class RemoteNotificationProxy implements NotificationProxy
                 for (int i = 0 ; i < len ; i++)
                 {
                 	NotificationPacket notifPacket = (NotificationPacket)notificationBuffer.get(i);
-                	notifPacket.setDonePrefetching(i == len-1);
                     transport.send(notifPacket);
                 }
             }
