@@ -27,6 +27,7 @@ public final class FFMQClientSettings
     public static final String TRANSPORT_TCP_CONNECT_TIMEOUT = "transport.tcp.connectTimeout";
     public static final String TRANSPORT_TCP_SSL_PROTOCOL = "transport.tcp.ssl.protocol";
     public static final String TRANSPORT_TCP_SSL_IGNORE_CERTS = "transport.tcp.ssl.ignoreCertificates";
+    public static final String TRANSPORT_TCP_SSL_TRUST_MANAGER = "transport.tcp.ssl.trustManager";
     
     // Consumer related
     public static final String CONSUMER_SEND_ACKS_ASYNC = "consumer.sendAcksAsync";

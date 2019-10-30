@@ -155,6 +155,7 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
         {
             String sslProtocol = settings.getStringProperty(FFMQClientSettings.TRANSPORT_TCP_SSL_PROTOCOL, "SSLv3");
             boolean ignoreCertificates = settings.getBooleanProperty(FFMQClientSettings.TRANSPORT_TCP_SSL_IGNORE_CERTS, false);
+            String trustManagerClass = settings.getStringProperty(FFMQClientSettings.TRANSPORT_TCP_SSL_TRUST_MANAGER);
             
             SSLContext sslContext = SSLContext.getInstance(sslProtocol);
             log.debug("#"+id+" created an SSL context : protocol=["+sslContext.getProtocol()+"] provider=["+sslContext.getProvider()+"]");
@@ -165,6 +166,8 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
 
             if (ignoreCertificates)
                 trustManagers = new TrustManager[] { new PermissiveTrustManager() };
+            else if (trustManagerClass != null)
+                trustManagers = new TrustManager[] { (TrustManager) Class.forName(trustManagerClass, true, Thread.currentThread().getContextClassLoader()).newInstance() };
             
             sslContext.init(keyManagers,trustManagers, null);
             
