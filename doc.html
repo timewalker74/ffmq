@@ -468,6 +468,8 @@ transport.tcp.connectTimeout=30
 # SSL options
 transport.tcp.ssl.protocol=SSLv3
 transport.tcp.ssl.ignoreCertificates=false
+# If you need to use a custom TrustManager, you can specify a TrustManager class name to use instead of the default JDK/JRE one here
+#transport.tcp.ssl.trustManager=&lt;custom trust manager class name&gt;
 
 # Indicate if a consumer should send message acknowledgements synchronously or not
 consumer.sendAcksAsync=true
