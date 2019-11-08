@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.9
+
+- **[Feature]** Add support for 'transport.tcp.ssl.trustManager' in client-side properties to specify a custom SSL Trustmanager implementation.
+
 ## 4.0.8
 
 - **[Fix]** Pre-fetching could stop randomly on consumers listening to multiple destinations (thanks to mmlab.de engineers)
@@ -20,7 +24,7 @@
 
 - **[Fix]** Topic properties were not properly persisted in destination descriptor (subscriberFailurePolicy/subscriberOverflowPolicy)
 - **[Feature]** Allow to specify message headers on which to index topic subscribers that use a message selector. This can improve performance when using a partitioned topic pattern with a large number of subscribers (reducing dispatch complexity from O(n) to O(1)).
-  _Typical use-case_ : most topic subscribers have a message selector like :
+  _Typical use-case_ : if most topic subscribers have a message selector like :
   > (Consumer1) someHeader='key1'
   > (Consumer2) someHeader='key2'
   > ...
