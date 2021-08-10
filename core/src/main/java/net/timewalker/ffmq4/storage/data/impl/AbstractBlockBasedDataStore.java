@@ -588,7 +588,7 @@ public abstract class AbstractBlockBasedDataStore extends AbstractDataStore
         
         // Check that we have enough space before changing anything
         int requiredFreeBlocks = fullBlocks + (remaining > 0 ? 1 : 0);
-        if ((blocksInUse + requiredFreeBlocks) > blockCount)
+        while ((blocksInUse + requiredFreeBlocks) > blockCount)
         {
             if ((blocksInUse + requiredFreeBlocks) > maxBlockCount)
             {

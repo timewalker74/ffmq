@@ -273,4 +273,17 @@ public class BlockBasedDataStoreTest extends TestCase
 
 		store.close();
 	}
+	
+	public void testHugeMessages_singleAutoExtend() throws Exception
+    {
+        System.out.println("--------- testHugeMessages_singleAutoExtend ---------");
+        doTest(4096, 20, 2_000_000);
+    }
+
+    public void testHugeMessages_multipleAutoExtend() throws Exception
+    {
+        System.out.println("--------- testHugeMessages_multipleAutoExtend ---------");
+        doTest(4096, 1, 3_000_000);
+    }
+
 }
