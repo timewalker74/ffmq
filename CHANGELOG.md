@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.10
+
+- **[Fix]** Notify exception listener on auto-acknowledge failure
+
 ## 4.0.9
 
 - **[Feature]** Add support for 'transport.tcp.ssl.trustManager' in client-side properties to specify a custom SSL Trustmanager implementation.
