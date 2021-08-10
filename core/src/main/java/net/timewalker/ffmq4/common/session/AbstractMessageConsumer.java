@@ -24,14 +24,14 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.timewalker.ffmq4.FFMQException;
 import net.timewalker.ffmq4.common.message.AbstractMessage;
 import net.timewalker.ffmq4.storage.message.MessageSerializationLevel;
 import net.timewalker.ffmq4.utils.ErrorTools;
 import net.timewalker.ffmq4.utils.id.IntegerID;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * <p>Base implementation for a {@link MessageConsumer}</p>
@@ -230,6 +230,7 @@ public abstract class AbstractMessageConsumer extends AbstractMessageHandler imp
     	catch (JMSException e)
     	{
     		ErrorTools.log(e, log);
+    		connection.exceptionOccured(e);
     	}
     }
     

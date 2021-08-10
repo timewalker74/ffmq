@@ -271,7 +271,7 @@ public abstract class AbstractCommTest extends AbstractQueuerTest
 	        
 	        // Wait for expected messages
 	        long waitStart = System.currentTimeMillis();
-	        while (System.currentTimeMillis()-waitStart < TestUtils.TEST_TIMEOUT*1000)
+	        while (System.currentTimeMillis()-waitStart < TestUtils.TEST_TIMEOUT*1000 && lastConnectionFailure == null)
 	        {
 	            int totalReceived = 0;
 	            for (int n = 0 ; n < receivers.length ; n++)
@@ -285,7 +285,7 @@ public abstract class AbstractCommTest extends AbstractQueuerTest
 	        LocalQueue localQueue = engine.getLocalQueue(params.destinationName);
 	        if (!params.receiverTransacted)
 	        {
-	        	while (localQueue.getSize() > 0)
+	        	while (localQueue.getSize() > 0 && lastConnectionFailure == null)
 	        		Thread.sleep(10);
 	        }
 	        
