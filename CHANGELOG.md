@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.11
+
+- **[Fix]** storage: fix bug when new message requires more than one auto-extend (thanks jowerner)
+
 ## 4.0.10
 
 - **[Fix]** Notify exception listener on auto-acknowledge failure
