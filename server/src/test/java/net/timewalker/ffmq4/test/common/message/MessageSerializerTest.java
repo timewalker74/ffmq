@@ -26,12 +26,12 @@ public class MessageSerializerTest extends TestCase
         return MessageSerializer.unserializeFrom(buffer, false);
     }
     
-//    private void assertEquals( byte[] data1 , byte[] data2 )
-//    {
-//        assertEquals(data1.length,data2.length);
-//        for (int n = 0 ; n < data1.length ; n++)
-//            assertEquals(data1[n], data2[n]);
-//    }
+    private void assertEquals( byte[] data1 , byte[] data2 )
+    {
+        assertEquals(data1.length,data2.length);
+        for (int n = 0 ; n < data1.length ; n++)
+            assertEquals(data1[n], data2[n]);
+    }
     
 //    private void dump( byte[] data )
 //    {
@@ -49,7 +49,7 @@ public class MessageSerializerTest extends TestCase
         return sum;
     }
     
-    private void consistencyTest( AbstractMessage msg ) throws Exception
+    private void consistencyTest( AbstractMessage msg , boolean orderDependent ) throws Exception
     {
         byte[] data1 = serialize(msg);
         AbstractMessage msg2 = unserialize(data1);
@@ -58,36 +58,39 @@ public class MessageSerializerTest extends TestCase
 //        System.out.println(msg2);
 //        dump(data1);
 //        dump(data2);
-        assertEquals(sum(data1),sum(data2));
+        if (orderDependent)
+        	assertEquals(data1,data2);
+        else
+        	assertEquals(sum(data1),sum(data2));
     }
     
     public void testEmptyMessageSerialization() throws Exception
     {
-        consistencyTest(MessageCreator.createEmptyMessage());
+        consistencyTest(MessageCreator.createEmptyMessage(),true);
     }
     
     public void testBytesMessageSerialization() throws Exception
     {
-        consistencyTest(MessageCreator.createBytesMessage(MSG_SIZE));
+        consistencyTest(MessageCreator.createBytesMessage(MSG_SIZE),true);
     }
     
     public void testMapMessageSerialization() throws Exception
     {
-        consistencyTest(MessageCreator.createMapMessage(MSG_SIZE));
+        consistencyTest(MessageCreator.createMapMessage(MSG_SIZE),false);
     }
     
     public void testObjectMessageSerialization() throws Exception
     {
-        consistencyTest(MessageCreator.createObjectMessage(MSG_SIZE));
+        consistencyTest(MessageCreator.createObjectMessage(MSG_SIZE),true);
     }
     
     public void testStreamMessageSerialization() throws Exception
     {
-        consistencyTest(MessageCreator.createStreamMessage(MSG_SIZE));
+        consistencyTest(MessageCreator.createStreamMessage(MSG_SIZE),true);
     }
     
     public void testTextMessageSerialization() throws Exception
     {
-        consistencyTest(MessageCreator.createTextMessage(MSG_SIZE));
+        consistencyTest(MessageCreator.createTextMessage(MSG_SIZE),true);
     }
 }

@@ -15,6 +15,7 @@ import net.timewalker.ffmq4.test.local.LocalTopicSingleConnReceiverTest;
 import net.timewalker.ffmq4.test.local.selector.MessageSelectionTest;
 import net.timewalker.ffmq4.test.local.session.LocalQueueSessionTest;
 import net.timewalker.ffmq4.test.local.session.LocalSessionTest;
+import net.timewalker.ffmq4.test.remote.ClientSettingsTest;
 import net.timewalker.ffmq4.test.remote.RemoteQueueMultiConnListenerTest;
 import net.timewalker.ffmq4.test.remote.RemoteQueueMultiConnReceiverTest;
 import net.timewalker.ffmq4.test.remote.RemoteQueueSingleConnListenerTest;
@@ -38,6 +39,7 @@ public class AllServerTests extends TestCase
         //$JUnit-BEGIN$
         suite.addTestSuite(MessageSerializerTest.class);
         
+        suite.addTestSuite(ClientSettingsTest.class);
         suite.addTestSuite(LocalSessionTest.class);
         suite.addTestSuite(LocalQueueSessionTest.class);
         suite.addTestSuite(RemoteSessionTest.class);

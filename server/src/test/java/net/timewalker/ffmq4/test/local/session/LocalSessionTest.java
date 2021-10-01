@@ -31,6 +31,7 @@ import javax.jms.TemporaryTopic;
 import javax.jms.TextMessage;
 
 import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.storage.data.DataStoreFullException;
 import net.timewalker.ffmq4.test.AbstractCommTest;
 import net.timewalker.ffmq4.test.TestUtils;
 import net.timewalker.ffmq4.utils.id.UUIDProvider;
@@ -2290,4 +2291,130 @@ public class LocalSessionTest extends AbstractCommTest
 			// Ok
 		}
 	}
+	
+	public void testQueueFullTransacted() throws Exception
+	{
+		Session session;
+		TextMessage msg;
+		MessageProducer producer;
+		MessageConsumer consumer;
+
+		System.setProperty("ffmq4.producer.retryOnQueueFull", "false");
+		
+		session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+
+		producer = session.createProducer(extrasmallqueue1);
+		msg = session.createTextMessage("text1");
+		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+		
+		try
+		{
+			session.commit();
+			fail("Should have failed");
+		}
+		catch (DataStoreFullException e)
+		{
+			// Ok
+		}
+		
+		try
+		{
+			session.commit();
+			fail("Should have failed");
+		}
+		catch (DataStoreFullException e)
+		{
+			// Ok
+		}
+		
+		session.rollback();
+		// Should no longer failed after rollback
+		
+		session.commit();
+		session.close();
+		
+		System.clearProperty("ffmq4.producer.retryOnQueueFull");
+	}
+	
+	public void testQueueFullNonTransactedAsync() throws Exception
+	{
+		if (!isRemote())
+			return; // Use-case only supported on RemoteSession
+		
+		Session session;
+		TextMessage msg;
+		MessageProducer producer;
+
+		System.setProperty("ffmq4.producer.retryOnQueueFull", "false");
+		System.setProperty("ffmq4.producer.allowSendAsync", "true");
+		
+		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+		producer = session.createProducer(extrasmallqueue1);
+		msg = session.createTextMessage("text1");
+		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+	    producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);  // Should not faild because of async send 
+		session.close();
+		
+		System.clearProperty("ffmq4.producer.retryOnQueueFull");
+    	System.clearProperty("ffmq4.producer.allowSendAsync");
+	}
+
+    public void testQueueFullNonTransactedSync() throws Exception
+    {
+    	Session session;
+    	TextMessage msg;
+    	MessageProducer producer;
+    
+    	System.setProperty("ffmq4.producer.retryOnQueueFull", "false");
+    	System.setProperty("ffmq4.producer.allowSendAsync", "false");
+    	
+    	session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    
+    	producer = session.createProducer(extrasmallqueue1);
+    	msg = session.createTextMessage("text1");
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	try
+    	{
+    		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);  // Should fail in synchronous mode
+    		fail("Should have failed");
+    	}
+    	catch (DataStoreFullException e)
+    	{
+    		// Ok
+    	}
+    	
+    	session.recover(); // Should not have any effect on puts
+    	
+    	try
+    	{
+    		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    		fail("Should have failed");
+    	}
+    	catch (DataStoreFullException e)
+    	{
+    		// Ok
+    	}
+    	
+    	MessageConsumer consumer = session.createConsumer(extrasmallqueue1);
+    	connection.start();
+    	while (consumer.receive(RECV_TIMEOUT) != null)
+    		continue;
+    	
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	
+    	while (consumer.receive(RECV_TIMEOUT) != null)
+    		continue;
+    	
+    	session.close();
+    	
+    	System.clearProperty("ffmq4.producer.retryOnQueueFull");
+    	System.clearProperty("ffmq4.producer.allowSendAsync");
+    }
+
 }

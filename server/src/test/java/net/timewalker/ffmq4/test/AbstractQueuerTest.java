@@ -47,6 +47,7 @@ public abstract class AbstractQueuerTest extends TestCase implements ExceptionLi
     protected AbstractClientListener listener;
     protected Queue queue1;
     protected Queue queue2;
+    protected Queue extrasmallqueue1;
     protected Topic topic1;
     protected Topic topic2;
     protected Topic topic3;
@@ -77,6 +78,7 @@ public abstract class AbstractQueuerTest extends TestCase implements ExceptionLi
         {
         	queue1 = new QueueRef("TEST1");
             queue2 = new QueueRef("TEST2");
+            extrasmallqueue1 = new QueueRef("EXTRASMALL1");
             topic1 = new TopicRef("TEST1");
             topic2 = new TopicRef("TEST2");
             topic3 = new TopicRef("TEST3");
@@ -152,6 +154,7 @@ public abstract class AbstractQueuerTest extends TestCase implements ExceptionLi
 	        
 	        queue1 = engine.getLocalQueue("TEST1");
 	        queue2 = engine.getLocalQueue("TEST2");
+	        extrasmallqueue1 = engine.getLocalQueue("EXTRASMALL1");
 	        topic1 = engine.getLocalTopic("TEST1");
 	        topic2 = engine.getLocalTopic("TEST2");
 	        topic3 = engine.getLocalTopic("TEST3");
@@ -159,6 +162,7 @@ public abstract class AbstractQueuerTest extends TestCase implements ExceptionLi
 	        
 	        ((LocalQueue)queue1).purge(null);
 	        ((LocalQueue)queue2).purge(null);
+	        ((LocalQueue)extrasmallqueue1).purge(null);
 	        ((LocalTopic)topic1).resetStats();
 	        //topic2.resetStats();
 	        
@@ -220,6 +224,7 @@ public abstract class AbstractQueuerTest extends TestCase implements ExceptionLi
     	listener = null;
     	queue1 = null;
     	queue2 = null;
+    	extrasmallqueue1 = null;
     	topic1 = null;
     	topic2 = null;
         super.tearDown();
