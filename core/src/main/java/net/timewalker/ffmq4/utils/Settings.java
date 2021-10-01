@@ -129,7 +129,11 @@ public final class Settings
      */
     public String getStringProperty( String key , String defaultValue , boolean replaceSystemProperties )
     {
-        String value = settings.getProperty(key,defaultValue);
+    	String value = System.getProperty("ffmq4."+key);
+    	if (value == null)
+    		value = settings.getProperty(key);
+        if (value == null)
+        	value = defaultValue;
         if (replaceSystemProperties)
             value = SystemTools.replaceSystemProperties(value);
         return value != null ? value.trim() : null;
@@ -141,7 +145,7 @@ public final class Settings
      */
     public int getIntProperty( String key , int defaultValue )
     {
-        String value = SystemTools.replaceSystemProperties(settings.getProperty(key));
+        String value = getStringProperty(key);
         if (value == null)
             return defaultValue;
         try
@@ -160,7 +164,7 @@ public final class Settings
      */
     public long getLongProperty( String key , long defaultValue )
     {
-        String value = SystemTools.replaceSystemProperties(settings.getProperty(key));
+        String value = getStringProperty(key);
         if (value == null)
             return defaultValue;
         try
@@ -179,7 +183,7 @@ public final class Settings
      */
     public boolean getBooleanProperty( String key , boolean defaultValue )
     {
-        String value = SystemTools.replaceSystemProperties(settings.getProperty(key));
+        String value = getStringProperty(key);
         if (value == null)
             return defaultValue;
         return Boolean.valueOf(value.trim()).booleanValue();
