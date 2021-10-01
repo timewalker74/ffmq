@@ -359,14 +359,16 @@ public class LocalSession extends AbstractSession
 	                		log.debug(this+" - COMMIT [PUT] "+pendingPuts.size()+" message(s)");
 	            		
 	    				// Put messages in locked state. They will be unlocked after proper commit.
+	        			int produced = 0;
 	        			try
 	        			{
-		    		    	for (int i = 0; i < pendingPuts.size(); i++) 
+		    		    	for (int i = 0; i < pendingSize; i++) 
 		    		    	{
 		    		    		AbstractMessage message = pendingPuts.get(i);
 		    		    		AbstractLocalDestination targetDestination = getLocalDestination(message);
 		    		    		if (targetDestination.putLocked(message, this, locks))
 		    		    			committables.add(targetDestination);
+		    		    		produced++;
 		    				}
 		    		    	
 		    		    	// All messages successfully pushed
@@ -382,6 +384,7 @@ public class LocalSession extends AbstractSession
 									MessageLock item = locks.get(i);
 									item.getDestination().removeLocked(item);
 								}
+		        				produced = 0;
 		        				
 		        				// Store failure (will be re-thrown later after transaction commit, see below)
 		        				putFailure = e;
@@ -390,10 +393,13 @@ public class LocalSession extends AbstractSession
 	        				{
 	        					pendingPuts.clear(); // Make sure we discard the messages on failure, otherwise they will pile-up, which is unexpected in non-transacted mode
 	        					ErrorTools.log(e, log);
+	        					
+	        					// Store failure (will be re-thrown later after transaction commit, see below)
+		        				putFailure = e;
 	        				}
 	        			}	        			
 	        			
-	        			producedCount += pendingSize;
+	        			producedCount += produced;
 	    		    }
 	    		}
 	    	}
