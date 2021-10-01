@@ -33,6 +33,7 @@ public final class FFMQClientSettings
     public static final String CONSUMER_SEND_ACKS_ASYNC = "consumer.sendAcksAsync";
     
     // Producer related
+    public static final String PRODUCER_ALLOW_SEND_ASYNC = "producer.allowSendAsync";
     public static final String PRODUCER_RETRY_ON_QUEUE_FULL = "producer.retryOnQueueFull";
     public static final String PRODUCER_RETRY_TIMEOUT = "producer.retryTimeout";
 }

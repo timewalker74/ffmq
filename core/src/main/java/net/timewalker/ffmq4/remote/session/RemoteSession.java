@@ -36,6 +36,9 @@ import javax.jms.TemporaryTopic;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.timewalker.ffmq4.FFMQClientSettings;
 import net.timewalker.ffmq4.FFMQException;
 import net.timewalker.ffmq4.client.ClientEnvironment;
@@ -65,9 +68,6 @@ import net.timewalker.ffmq4.utils.ErrorTools;
 import net.timewalker.ffmq4.utils.StringTools;
 import net.timewalker.ffmq4.utils.id.IntegerID;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * RemoteSession
  */
@@ -80,6 +80,7 @@ public class RemoteSession extends AbstractSession
     
     // Settings
     private boolean sendAcksAsync;
+    private boolean allowSendAsync;
     private boolean retryOnQueueFull;
     private long retryTimeout;
     
@@ -99,6 +100,7 @@ public class RemoteSession extends AbstractSession
         
         // Load settings
         this.sendAcksAsync = ClientEnvironment.getSettings().getBooleanProperty(FFMQClientSettings.CONSUMER_SEND_ACKS_ASYNC, true);
+        this.allowSendAsync = ClientEnvironment.getSettings().getBooleanProperty(FFMQClientSettings.PRODUCER_ALLOW_SEND_ASYNC, true);
         this.retryOnQueueFull = ClientEnvironment.getSettings().getBooleanProperty(FFMQClientSettings.PRODUCER_RETRY_ON_QUEUE_FULL, true);
         this.retryTimeout = ClientEnvironment.getSettings().getLongProperty(FFMQClientSettings.PRODUCER_RETRY_TIMEOUT, 30*1000);        
         log.debug("New remote session ID is "+sessionId);
@@ -126,7 +128,7 @@ public class RemoteSession extends AbstractSession
     	if (debugEnabled)
     		log.debug("#"+id+" Sending message "+message.getJMSMessageID());
     	
-    	boolean asyncDispatch = transacted || message.getJMSDeliveryMode() == DeliveryMode.NON_PERSISTENT; 
+    	boolean asyncDispatch = transacted || (allowSendAsync && message.getJMSDeliveryMode() == DeliveryMode.NON_PERSISTENT); 
     			    	
         PutQuery query = new PutQuery();
         query.setSessionId(id);
