@@ -22,7 +22,6 @@ import net.timewalker.ffmq4.FFMQException;
 
 /**
  * AbstractJMXAgent
- * @author spognant
  */
 public abstract class AbstractJMXAgent implements JMXAgent
 {

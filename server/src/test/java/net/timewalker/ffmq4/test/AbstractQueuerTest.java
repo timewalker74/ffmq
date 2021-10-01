@@ -38,7 +38,6 @@ import net.timewalker.ffmq4.utils.Settings;
 
 /**
  * AbstractQueuerTest
- * @author spognant
  */
 public abstract class AbstractQueuerTest extends TestCase implements ExceptionListener
 {

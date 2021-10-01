@@ -11,7 +11,6 @@ package net.timewalker.ffmq4.common.message.selector;
 
 /**
  * SelectorIndexKey
- * @author spognant
  */
 public final class SelectorIndexKey
 {

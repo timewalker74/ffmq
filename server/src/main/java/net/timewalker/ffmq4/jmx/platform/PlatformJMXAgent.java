@@ -13,7 +13,6 @@ import net.timewalker.ffmq4.jmx.AbstractJMXAgent;
 
 /**
  * PlatformJMXAgent
- * @author spognant
  */
 public final class PlatformJMXAgent extends AbstractJMXAgent
 {

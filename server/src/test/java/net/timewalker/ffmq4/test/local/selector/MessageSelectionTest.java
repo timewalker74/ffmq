@@ -29,7 +29,6 @@ import net.timewalker.ffmq4.test.AbstractQueuerTest;
 
 /**
  * MessageSelectionTest
- * @author spognant
  */
 public class MessageSelectionTest extends AbstractQueuerTest
 {
