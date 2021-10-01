@@ -80,6 +80,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     private AtomicLong acknowledgedGetCount = new AtomicLong();
     private AtomicLong rollbackedGetCount = new AtomicLong();
     private AtomicLong expiredCount = new AtomicLong();
+    private AtomicLong storeFullEventsCount = new AtomicLong();
     
     // Settings
     private long inactivityTimeout;
@@ -190,7 +191,10 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
  
             	// Cannot store the message anywhere
             	if (newHandle == -1)
+            	{
+            		storeFullEventsCount.incrementAndGet();
             		throw new DataStoreFullException("Cannot store message : queue is full : "+getName());
+            	}
             }
             
             targetStore.lock(newHandle);
@@ -845,6 +849,7 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
     	acknowledgedGetCount.set(0);
     	rollbackedGetCount.set(0);
     	expiredCount.set(0);
+    	storeFullEventsCount.set(0);
     }
     
     /*
@@ -872,6 +877,8 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
        sb.append(rollbackedGetCount);
        sb.append(",expired=");
        sb.append(expiredCount);
+       sb.append(",storeFullEvents=");
+       sb.append(storeFullEventsCount);
        sb.append("]");
        
        return sb.toString();
@@ -992,6 +999,15 @@ public final class LocalQueue extends AbstractLocalDestination implements Queue,
 	{
 		return expiredCount.get();
 	}
+    
+    /* (non-Javadoc)
+     * @see net.timewalker.ffmq4.local.destination.LocalQueueMBean#getStoreFullEventsCount()
+     */
+    @Override
+    public long getStoreFullEventsCount()
+    {
+    	return storeFullEventsCount.get();
+    }
     
     /* (non-Javadoc)
      * @see net.timewalker.ffmq4.utils.watchdog.ActiveObject#getLastActivity()

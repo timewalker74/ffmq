@@ -50,6 +50,11 @@ public interface LocalQueueMBean extends LocalDestinationMBean
 	public long getExpiredCount();
 	
 	/**
+	 * Get the number of times a message could not be stored because the queue store was full
+	 */
+	public long getStoreFullEventsCount();
+	
+	/**
 	 * Get the usage amount (%) for the memory store
 	 */
 	public int getMemoryStoreUsage();
