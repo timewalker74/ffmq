@@ -3,8 +3,7 @@
 ## 4.0.12
 
 - **[Feature]** improve indexing introduced in 4.0.4 to support the IN operator
-- **[Feature]** producer: add setting allowing to disable async behavior on non-transacted put
-  Useful if you want client to be aware of store full errors
+- **[Feature]** add new client-side setting to disable async behavior on non-transacted put. (Useful if you want clients to be aware of store full errors)
 - **[Feature]** settings: support settings override through system properties (with 'ffmq4.' prefix)
 - **[Feature]** add storage full events counter
 - **[Fix]** propagate store full errors to client in non-transacted mode
