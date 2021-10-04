@@ -28,8 +28,11 @@ import net.timewalker.ffmq4.common.message.selector.SelectorIndexKey;
 import net.timewalker.ffmq4.common.message.selector.expression.Identifier;
 import net.timewalker.ffmq4.common.message.selector.expression.SelectorNode;
 import net.timewalker.ffmq4.common.message.selector.expression.literal.Literal;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.StringLiteral;
+import net.timewalker.ffmq4.common.message.selector.expression.literal.StringLiteralList;
 import net.timewalker.ffmq4.common.message.selector.expression.operator.AndOperator;
 import net.timewalker.ffmq4.common.message.selector.expression.operator.EqualsOperator;
+import net.timewalker.ffmq4.common.message.selector.expression.operator.InOperator;
 
 /**
  * <p>Object implementation of a JMS message selector</p>
@@ -88,6 +91,29 @@ public final class MessageSelector
     		}
     	}
     	else
+		if (node instanceof InOperator)
+    	{
+			InOperator inOperator = (InOperator)node;
+			if (inOperator.leftOperand() instanceof Identifier && inOperator.rightOperand() instanceof StringLiteralList)
+    		{
+    			Identifier id = (Identifier)inOperator.leftOperand();
+    			StringLiteralList valueList = (StringLiteralList)inOperator.rightOperand();
+    			if (keys == null)
+    				keys = new ArrayList<>();
+    			
+    			// Only keep distinct values, otherwise the subscriber may receive several times the same message
+    			List<String> distinctValues = new ArrayList<>();
+    			SelectorNode[] items = valueList.getItems();
+    	        for (int n = 0 ; n < items.length ; n++)
+    	        {
+    	        	String value = ((StringLiteral)items[n]).getValue().toString();
+    	        	if (!distinctValues.contains(value))
+    	        		distinctValues.add(value);
+    	        }
+    	        Object[] values = distinctValues.toArray(new Object[distinctValues.size()]) ;
+    			keys.add(new SelectorIndexKey(id.getName(), values));
+    		}
+    	}
     	if (node instanceof AndOperator)
     	{
     		AndOperator and = (AndOperator)node;

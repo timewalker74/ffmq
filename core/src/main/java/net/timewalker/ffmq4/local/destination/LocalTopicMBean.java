@@ -33,4 +33,14 @@ public interface LocalTopicMBean extends LocalDestinationMBean
      * Get the number of messages dispatched from this topic (since startup or last reset)
      */
     public long getDispatchedFromTopicCount();
+    
+    /**
+     * Get the number of active subscriptions on this topic
+     */
+    public int getSubscriptionsCount();
+    
+    /**
+     * Get the number of indexed subscriptions on this topic
+     */
+    public int getIndexedSubscriptionsCount();
 }

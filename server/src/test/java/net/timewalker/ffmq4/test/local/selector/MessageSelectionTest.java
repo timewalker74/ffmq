@@ -112,6 +112,7 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		MessageConsumer consumer2 = session.createConsumer(topic1, key1+"='bar'");
 		MessageConsumer consumer3 = session.createConsumer(topic1, key2+"='aa'");
 		MessageConsumer consumer4 = session.createConsumer(topic1, key1+"='foo' and "+key2+"='x'");
+		MessageConsumer consumer5 = session.createConsumer(topic1, key1+" in ('foo','bar')");
 		MessageConsumer consumerAll = session.createConsumer(topic1);
 		
 		MessageProducer producer = session.createProducer(topic1);
@@ -130,6 +131,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer4.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer5.receive(WAIT_TIMEOUT);
+		assertNotNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		msg.setStringProperty(key1, "bar");
@@ -145,6 +148,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer4.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer5.receive(WAIT_TIMEOUT);
+		assertNotNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		msg.setStringProperty(key2, "aa");
@@ -160,6 +165,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNotNull(recvMessage);
 		recvMessage = consumer4.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer5.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		msg.setStringProperty(key2, "bbb");
@@ -174,6 +181,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		recvMessage = consumer3.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
 		recvMessage = consumer4.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
+		recvMessage = consumer5.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
@@ -191,6 +200,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer4.receive(WAIT_TIMEOUT);
 		assertNotNull(recvMessage);
+		recvMessage = consumer5.receive(WAIT_TIMEOUT);
+		assertNotNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		msg.setStringProperty("a", "sss");
@@ -206,6 +217,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer4.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer5.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		producer.send(msg);
@@ -220,11 +233,14 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer4.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer5.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
 		
 		consumer1.close();
 		consumer2.close();
 		consumer3.close();
 		consumer4.close();
+		consumer5.close();
 		consumerAll.close();
 		
 		session.close();
@@ -255,6 +271,7 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		MessageConsumer consumer1 = session.createConsumer(topic, "JMSCorrelationID='foo'");
 		MessageConsumer consumer2 = session.createConsumer(topic, "JMSCorrelationID='bar'");
 		MessageConsumer consumer3 = session.createConsumer(topic, "JMSCorrelationID='foo' and t='x'");
+		MessageConsumer consumer4 = session.createConsumer(topic, "JMSCorrelationID in ('foo','xyz')");
 		MessageConsumer consumerAll = session.createConsumer(topic);
 		
 		MessageProducer producer = session.createProducer(topic);
@@ -271,6 +288,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer3.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer4.receive(WAIT_TIMEOUT);
+		assertNotNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		msg.setJMSCorrelationID("bar");
@@ -284,6 +303,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNotNull(recvMessage);
 		recvMessage = consumer3.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer4.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
 	
 		msg = session.createTextMessage("test");
 		msg.setJMSCorrelationID("bbb");
@@ -296,6 +317,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		recvMessage = consumer2.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
 		recvMessage = consumer3.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
+		recvMessage = consumer4.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
@@ -311,6 +334,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer3.receive(WAIT_TIMEOUT);
 		assertNotNull(recvMessage);
+		recvMessage = consumer4.receive(WAIT_TIMEOUT);
+		assertNotNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		msg.setStringProperty("a", "sss");
@@ -324,6 +349,8 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer3.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer4.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
 		
 		msg = session.createTextMessage("test");
 		producer.send(msg);
@@ -336,11 +363,70 @@ public class MessageSelectionTest extends AbstractQueuerTest
 		assertNull(recvMessage);
 		recvMessage = consumer3.receive(WAIT_TIMEOUT);
 		assertNull(recvMessage);
+		recvMessage = consumer4.receive(WAIT_TIMEOUT);
+		assertNull(recvMessage);
 		
 		consumer1.close();
 		consumer2.close();
 		consumer3.close();
 		consumerAll.close();
+		
+		session.close();
+		connection.close();
+		
+		assertNull(lastConnectionFailure);
+	}
+	
+	public void testIndexCleanup() throws Exception
+	{
+		Connection connection = createConnection();
+		connection.start();
+		
+		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		
+		Topic topic =  topic3;
+		
+		
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+		
+		MessageConsumer consumer1 = session.createConsumer(topic, "JMSCorrelationID='foo'");
+		
+		assertEquals(1, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(1, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+		
+		consumer1.close();
+		
+		// ----
+		
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+		
+		consumer1 = session.createConsumer(topic, "JMSCorrelationID in ('foo','bar')");
+		
+		assertEquals(1, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(1, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+		
+		consumer1.close();
+		
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+		
+		// ----
+		
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+		
+		consumer1 = session.createConsumer(topic, "JMSCorrelationID in ('foo','foo')");
+		
+		assertEquals(1, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(1, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+		
+		consumer1.close();
+		
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getSubscriptionsCount());
+		assertEquals(0, engine.getLocalTopic(topic.getTopicName()).getIndexedSubscriptionsCount());
+				
 		
 		session.close();
 		connection.close();

@@ -42,6 +42,14 @@ public final class StringLiteralList extends SelectorNode implements AtomicOpera
         	if (!(items[i] instanceof StringLiteral))
             	throw new InvalidSelectorException("Only string literals are allowed after IN operator");
     }
+    
+    /**
+	 * @return the items
+	 */
+	public final SelectorNode[] getItems()
+	{
+		return items;
+	}
 
     /*
      * (non-Javadoc)

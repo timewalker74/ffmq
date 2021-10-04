@@ -9,13 +9,15 @@
  */
 package net.timewalker.ffmq4.common.message.selector;
 
+import java.util.Arrays;
+
 /**
  * SelectorIndexKey
  */
 public final class SelectorIndexKey
 {
 	private String headerName;
-	private Object value;
+	private Object[] values;
 	
 	/**
 	 * Constructor
@@ -26,7 +28,19 @@ public final class SelectorIndexKey
 	{
 		super();
 		this.headerName = headerName;
-		this.value = value;
+		this.values = new Object[] { value };
+	}
+	
+	/**
+	 * Constructor
+	 * @param headerName
+	 * @param values
+	 */
+	public SelectorIndexKey(String headerName, Object[] values)
+	{
+		super();
+		this.headerName = headerName;
+		this.values = values;
 	}
 
 	/**
@@ -40,9 +54,9 @@ public final class SelectorIndexKey
 	/**
 	 * @return the value
 	 */
-	public Object getValue()
+	public Object[] getValues()
 	{
-		return value;
+		return values;
 	}
 	
 	/* (non-Javadoc)
@@ -51,6 +65,6 @@ public final class SelectorIndexKey
 	@Override
 	public String toString()
 	{
-		return "SelectorIndexKey [headerName=" + headerName + ", value=" + value + "]";
+		return "SelectorIndexKey [headerName=" + headerName + ", values=" + Arrays.toString(values) + "]";
 	}
 }

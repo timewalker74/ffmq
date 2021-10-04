@@ -163,13 +163,17 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     		subscriptionsByValueMap = new HashMap<>();
     		indexedSubscriptionMap.put(key.getHeaderName(),subscriptionsByValueMap);
     	}
-    	List<LocalTopicSubscription> subscriptions = subscriptionsByValueMap.get(key.getValue());
-    	if (subscriptions == null)
+    	Object[] values = key.getValues();
+    	for(Object value : values)
     	{
-    		subscriptions = new ArrayList<>(4);
-    		subscriptionsByValueMap.put(key.getValue(),subscriptions);
+        	List<LocalTopicSubscription> subscriptions = subscriptionsByValueMap.get(value);
+        	if (subscriptions == null)
+        	{
+        		subscriptions = new ArrayList<>(4);
+        		subscriptionsByValueMap.put(value,subscriptions);
+        	}
+        	subscriptions.add(subscription);
     	}
-    	subscriptions.add(subscription);
     }
     
     private boolean removeFromIndexMap( LocalTopicSubscription subscription )
@@ -181,22 +185,30 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
     	Map<Object,List<LocalTopicSubscription>> subscriptionsByValueMap = indexedSubscriptionMap.get(key.getHeaderName());
     	if (subscriptionsByValueMap == null)
     		return false;
-    	List<LocalTopicSubscription> subscriptions = subscriptionsByValueMap.get(key.getValue());
-    	if (subscriptions == null)
-    		return false;
     	
-    	if (!subscriptions.remove(subscription))
-    		return false;
-    	
-    	// Auto-cleanup
-    	if (subscriptions.isEmpty())
+    	Object[] values = key.getValues();
+    	int found = 0;
+    	for(Object value : values)
     	{
-    		subscriptionsByValueMap.remove(key.getValue());
-    		if (subscriptionsByValueMap.isEmpty())
-    			indexedSubscriptionMap.remove(key.getHeaderName());
+    		List<LocalTopicSubscription> subscriptions = subscriptionsByValueMap.get(value);
+        	if (subscriptions == null)
+        		continue;
+        	
+        	if (!subscriptions.remove(subscription))
+        		continue;
+        	
+        	found++;
+        	
+        	// Auto-cleanup
+        	if (subscriptions.isEmpty())
+        	{
+        		subscriptionsByValueMap.remove(value);
+        		if (subscriptionsByValueMap.isEmpty())
+        			indexedSubscriptionMap.remove(key.getHeaderName());
+        	}
     	}
     	
-    	return true;
+    	return found == values.length;
     }
     
     private SelectorIndexKey findBestMatch( String[] partitionKeys , List<SelectorIndexKey> indexableKeys )
@@ -475,6 +487,25 @@ public final class LocalTopic extends AbstractLocalDestination implements Topic,
 	public long getDispatchedFromTopicCount()
     {
         return dispatchedFromTopicCount.get();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see net.timewalker.ffmq4.local.destination.LocalTopicMBean#getSubscriptionsCount()
+     */
+    @Override
+    public int getSubscriptionsCount()
+    {
+    	return subscriptionMap.size();
+    }
+    
+    /* (non-Javadoc)
+     * @see net.timewalker.ffmq4.local.destination.LocalTopicMBean#getIndexedSubscriptionsCount()
+     */
+    @Override
+    public int getIndexedSubscriptionsCount()
+    {
+    	return indexedSubscriptionMap.size();
     }
 
     /*

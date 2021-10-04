@@ -56,6 +56,11 @@ public class MessageSelectorTest extends TestCase
 		check("t=1 and x=2","t","x");
 		check("t>2 and a=b and t=1 and x=2","t","x");
 		check("t=1 and (x=2 or b=3)","t");
+		
+		check("t in ('foo')","t");
+		check("t in ('1','2','3')","t");
+		check("t in ('1','2','3') and x=2","t","x");
+		check("x=1 and t in ('1','2','3')","t","x");
 	}
 	
 	private void check( String expr , String ... keys ) throws Exception
