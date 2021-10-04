@@ -347,6 +347,10 @@ memoryStore.maxMessages           = 1000</pre>
 					<p>
 						Indexing the subscribers on <i>'someHeader'</i> will improve dispatch performance.
 					</p>
+					<p>
+						<i>Note: Indexing only works with operators '=' (equals) and 'in'.</i>
+					</p>
+
 				</td>
 			</tr>
 		</table>
@@ -474,6 +478,11 @@ transport.tcp.ssl.ignoreCertificates=false
 # Indicate if a consumer should send message acknowledgements synchronously or not
 consumer.sendAcksAsync=true
 
+# Indicate if a producer should wait for an acknowledgment when sending a NON_PERSISTENT message on a non-transacted session
+#   Default is true for maximum performance at the expense of delivery acknowledgment.
+#   In particular, "destination full" errors are not returned to the client in asynchronous mode and are only visible on the server-side 
+producer.allowSendAsync=true
+
 # Indicate if a producer should retry if a target queue is full
 producer.retryOnQueueFull=true
 
@@ -482,6 +491,19 @@ producer.retryOnQueueFull=true
 producer.retryTimeout=30000</pre>
 		<p>
 			Note that in most cases you won't have to change any of these default settings.<br/>
+		</p>
+		<p>
+			<b>Overriding settings using system properties</b>
+		</p>
+		<p>
+			In FFMQ4, it is also possible to override client-side settings via system properties.<br/>
+			Use the same property name as in ffmq4.properties, but with an extra 'ffmq4.' prefix.<br/>
+		</p>
+		<p>
+			<i>Example : to override 'producer.retryOnQueueFull' you must set the system property 'ffmq4.producer.retryOnQueueFull'</i>
+		</p>
+		<p>
+			System properties take precedence over values in the properties files.
 		</p>
 <a name="II_2_2"></a>		
 		<h3>Spring integration</h3>
