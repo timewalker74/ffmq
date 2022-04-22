@@ -17,12 +17,11 @@
  */
 package net.timewalker.ffmq4.security;
 
-import net.timewalker.ffmq4.security.Privilege;
-import net.timewalker.ffmq4.utils.descriptor.AbstractDescriptor;
-import net.timewalker.ffmq4.utils.xml.AbstractXMLDescriptorHandler;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import net.timewalker.ffmq4.utils.descriptor.AbstractDescriptor;
+import net.timewalker.ffmq4.utils.xml.AbstractXMLDescriptorHandler;
 
 /**
  * XMLSecurityDescriptorHandler

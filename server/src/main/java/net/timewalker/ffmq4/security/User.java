@@ -24,8 +24,6 @@ import javax.jms.JMSException;
 
 import net.timewalker.ffmq4.FFMQException;
 import net.timewalker.ffmq4.management.InvalidDescriptorException;
-import net.timewalker.ffmq4.security.Privilege;
-import net.timewalker.ffmq4.security.SecurityContext;
 import net.timewalker.ffmq4.utils.Checkable;
 import net.timewalker.ffmq4.utils.StringTools;
 
