@@ -1,5 +1,10 @@
 ### FFMQ ChangeLog
 
+## 4.0.13
+
+- **[Fix]** properly discard messages targeting an invalid destination from session (thanks andilem)
+- **[Fix]** upgrade to log4j 1.2.17
+
 ## 4.0.12
 
 - **[Feature]** improve indexing introduced in 4.0.4 to support the IN operator
