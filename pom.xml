@@ -4,7 +4,7 @@
   <groupId>net.timewalker.ffmq</groupId>
   <artifactId>ffmq4</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.12</version><!--FFMQ_VERSION-->
+  <version>4.0.13</version><!--FFMQ_VERSION-->
   <name>FFMQ</name>
   <description>FFMQ - Light-weight &amp; Fast JMS queuer</description>
   <url>http://timewalker74.github.io/ffmq/</url>
