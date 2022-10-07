@@ -31,6 +31,7 @@ import javax.jms.TemporaryTopic;
 import javax.jms.TextMessage;
 
 import net.timewalker.ffmq4.FFMQException;
+import net.timewalker.ffmq4.common.destination.QueueRef;
 import net.timewalker.ffmq4.storage.data.DataStoreFullException;
 import net.timewalker.ffmq4.test.AbstractCommTest;
 import net.timewalker.ffmq4.test.TestUtils;
@@ -2417,4 +2418,122 @@ public class LocalSessionTest extends AbstractCommTest
     	System.clearProperty("ffmq4.producer.allowSendAsync");
     }
 
+    public void testSendToInvalidDestinationNonTransactedAsync() throws Exception
+    {
+    	if (!isRemote())
+			return; // Use-case only supported on RemoteSession
+    	
+    	Session session;
+    	TextMessage msg;
+    	MessageProducer producer;
+    
+    	session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    	msg = session.createTextMessage("text1");
+    	
+    	// Send to invalid queue : should only fail server-side
+    	producer = session.createProducer(new QueueRef("INVALID_QUEUE"));
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	
+    	System.out.println(lastConnectionFailure);
+    	
+    	// Send to valid queue in same session (should not fail)
+    	producer = session.createProducer(queue1);
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	
+    	session.close();
+    }
+    
+    public void testSendToInvalidDestinationNonTransactedSync() throws Exception
+    {
+    	Session session;
+    	TextMessage msg;
+    	MessageProducer producer;
+    
+    	System.setProperty("ffmq4.producer.allowSendAsync", "false"); // Use synchronous send() in order to receive the exception in remote mode
+    	
+    	session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    	msg = session.createTextMessage("text1");
+    	
+    	// Send to invalid queue
+    	producer = session.createProducer(new QueueRef("INVALID_QUEUE"));
+    	try
+    	{
+    		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    		fail("Should have failed");
+    	}
+    	catch (FFMQException e)
+    	{
+    		assertEquals("QUEUE_DOES_NOT_EXIST", e.getErrorCode());
+    	}
+    	
+    	// Send to valid queue in same session (should not fail)
+    	producer = session.createProducer(queue1);
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	
+    	session.close();
+    	
+    	System.clearProperty("ffmq4.producer.allowSendAsync");
+    }
+    
+    public void testSendToInvalidDestinationTransacted() throws Exception
+    {
+    	Session session;
+    	TextMessage msg;
+    	MessageProducer producer;
+    
+    	session = connection.createSession(true, Session.SESSION_TRANSACTED);
+    	msg = session.createTextMessage("text1");
+    	
+    	// Send to invalid queue
+    	producer = session.createProducer(new QueueRef("INVALID_QUEUE"));
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	try
+    	{
+    		session.commit();
+    		fail("Should have failed");
+    	}
+    	catch (FFMQException e)
+    	{
+    		assertEquals("QUEUE_DOES_NOT_EXIST", e.getErrorCode());
+    	}
+    	try
+    	{
+    		session.commit();
+    		fail("Should have failed");  // Try again without rollback -> invalid message still in session
+    	}
+    	catch (FFMQException e)
+    	{
+    		assertEquals("QUEUE_DOES_NOT_EXIST", e.getErrorCode());
+    		session.rollback();
+    	}
+    	
+    	// Send to valid queue in same session (should not fail)
+    	producer = session.createProducer(queue1);
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	session.commit();
+    	
+    	session.close();
+    }
+    
+    public void testSendToInvalidDestinationThenRollbackTransacted() throws Exception
+    {
+    	Session session;
+    	TextMessage msg;
+    	MessageProducer producer;
+    
+    	session = connection.createSession(true, Session.SESSION_TRANSACTED);
+    	msg = session.createTextMessage("text1");
+    	
+    	// Send to invalid queue
+    	producer = session.createProducer(new QueueRef("INVALID_QUEUE"));
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	session.rollback();
+    	
+    	// Send to valid queue in same session (should not fail)
+    	producer = session.createProducer(queue1);
+    	producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
+    	session.commit();
+    	
+    	session.close();
+    }
 }

@@ -333,9 +333,23 @@ public class LocalSession extends AbstractSession
     		else
 				queuesWithGet = transactionSet.updatedQueues();
     	}
-    	
+
     	// 2 - Build a list of all target destinations
-    	List<Committable> targetDestinations = computeLocalTargetDestinations(commitPuts ? pendingPuts : null,queuesWithGet);
+    	List<Committable> targetDestinations;
+    	try
+    	{
+    		targetDestinations = computeLocalTargetDestinations(commitPuts ? pendingPuts : null,queuesWithGet);
+    	}
+    	catch (FFMQException e)
+    	{
+    		// May happen if the destination of a pending put is invalid (disappeared or could not be auto-created for whatever reason)
+			if (commitPuts && !transacted)
+			{
+				pendingPuts.clear(); // Make sure we discard the messages on failure, otherwise they will pile-up, which is unexpected in non-transacted mode
+				ErrorTools.log(e, log);
+			}
+			throw e; // Abort immediately
+    	}
     	
     	// 3 - Lock target destinations
     	for (int i = 0; i < targetDestinations.size(); i++)

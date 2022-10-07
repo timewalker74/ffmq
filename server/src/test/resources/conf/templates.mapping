@@ -30,5 +30,5 @@ topic:VTEST*:TOPIC_TEMPLATE_TEST_VOLATILE_SMALL
 #  Note : This is active by default because it is mostly useful to quick test the server in
 #         existing environments, but you may want to comment out these lines so the server 
 #         does not auto-create whatever destinations clients are asking for without control
-queue:*:DEFAULT_QUEUE_TEMPLATE
-topic:*:DEFAULT_TOPIC_TEMPLATE
+#queue:*:DEFAULT_QUEUE_TEMPLATE
+#topic:*:DEFAULT_TOPIC_TEMPLATE
