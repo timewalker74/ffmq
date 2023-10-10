@@ -1073,9 +1073,10 @@ public class LocalSessionTest extends AbstractCommTest
 
 		session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
 		msg = session.createMessage();
-		Queue tempQueue = session.createTemporaryQueue();
-		producer = session.createProducer(tempQueue);
-		consumer = session.createConsumer(tempQueue);
+		Queue tempQueue1 = session.createTemporaryQueue();
+		Queue tempQueue2 = session.createTemporaryQueue();
+		producer = session.createProducer(tempQueue1);
+		consumer = session.createConsumer(tempQueue1);
 		producer.send(msg, TestUtils.DELIVERY_MODE, 3, 0);
 		session.commit();
 		assertNotNull(consumer.receive(RECV_TIMEOUT));
