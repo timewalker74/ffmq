@@ -1,5 +1,9 @@
 ### FFMQ ChangeLog
 
+## 4.0.14
+
+- **[Fix]** prevent ConcurrentModificationException in dropTemporaryQueues when closing a session that created multiple temporary queues (thanks andilem)
+
 ## 4.0.13
 
 - **[Fix]** properly discard messages targeting an invalid destination from session (thanks andilem)

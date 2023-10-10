@@ -257,22 +257,25 @@ public abstract class AbstractConnection implements Connection
      */
     private void dropTemporaryQueues()
     {
+    	Set<String> temporaryQueuesSnapshot;
         synchronized (temporaryQueues)
 		{
-	        Iterator<String> remainingQueues = temporaryQueues.iterator();
-	        while (remainingQueues.hasNext())
-	        {
-	            String queueName = remainingQueues.next();
-	            try
-	            {
-	                deleteTemporaryQueue(queueName);
-	            }
-	            catch (JMSException e)
-	            {
-	            	ErrorTools.log(e, log);
-	            }
-	        }
+        	temporaryQueuesSnapshot = new HashSet<>(temporaryQueues);
 		}
+        	
+        Iterator<String> remainingQueues = temporaryQueuesSnapshot.iterator();
+        while (remainingQueues.hasNext())
+        {
+            String queueName = remainingQueues.next();
+            try
+            {
+                deleteTemporaryQueue(queueName);
+            }
+            catch (JMSException e)
+            {
+            	ErrorTools.log(e, log);
+            }
+        }
     }
     
     /**
