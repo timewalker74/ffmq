@@ -209,10 +209,10 @@ public final class FFMQAdminClient implements Runnable
 	        if (StringTools.isNotEmpty(errorMsg))
 	            throw new FFMQException("Command failed : "+errorMsg,"NETWORK_ERROR");
 	        
-	        out.println("Command sucessfully completed.");
+	        out.println("Command successfully completed.");
         }
         else
-        	out.println("Command sucessfully sent.");
+        	out.println("Command successfully sent.");
     }
     
     private Message createCommandMessage( String commandName ) throws JMSException
