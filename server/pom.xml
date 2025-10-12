@@ -93,6 +93,11 @@
             <version>4.0.14</version><!--FFMQ_VERSION-->
         </dependency>
         <dependency>
+            <groupId>ch.qos.reload4j</groupId>
+            <artifactId>reload4j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
