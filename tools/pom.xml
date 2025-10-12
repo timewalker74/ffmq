@@ -23,7 +23,7 @@
     <parent>
         <groupId>net.timewalker.ffmq</groupId>
         <artifactId>ffmq4</artifactId>
-        <version>4.0.14</version><!--FFMQ_VERSION-->
+        <version>4.0.15</version><!--FFMQ_VERSION-->
     </parent>
 
     <build>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>net.timewalker.ffmq</groupId>
             <artifactId>ffmq4-core</artifactId>
-            <version>4.0.14</version><!--FFMQ_VERSION-->
+            <version>4.0.15</version><!--FFMQ_VERSION-->
         </dependency>
         <dependency>
             <groupId>junit</groupId>
