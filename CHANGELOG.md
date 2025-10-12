@@ -1,5 +1,10 @@
 ### FFMQ ChangeLog
 
+## 4.0.15
+
+- **[Fix]** replace log4j 1.x dependency (EOL) with reload4j to fix security issues
+- **[Fix]** remove unmaintained windows scripts
+
 ## 4.0.14
 
 - **[Fix]** prevent ConcurrentModificationException in dropTemporaryQueues when closing a session that created multiple temporary queues (thanks andilem)
