@@ -101,7 +101,7 @@ public final class StringUtils
                 numberAsString.indexOf('e') != -1 ||
                 numberAsString.indexOf('E') != -1)
             {
-                return new Double(numberAsString);
+                return Double.valueOf(numberAsString);
             }
             else
                 return Long.valueOf(numberAsString);

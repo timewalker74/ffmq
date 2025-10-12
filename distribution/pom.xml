@@ -1,13 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.timewalker.ffmq</groupId>
-	<artifactId>ffmq4-distribution</artifactId>
-	<packaging>jar</packaging>
-	<version>4.0.14</version><!--FFMQ_VERSION-->
-	<name>FFMQ Distribution</name>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ffmq4-distribution</artifactId>
+    <packaging>jar</packaging>
+    <name>FFMQ Distribution</name>
     <description>FFMQ Distribution module</description>
-	<url>http://timewalker74.github.io/ffmq/</url>
+    <url>http://timewalker74.github.io/ffmq/</url>
 
   <licenses>
     <license>
@@ -22,14 +20,14 @@
   </scm>
 
   <parent>
-		<groupId>net.timewalker.ffmq</groupId>
-		<artifactId>ffmq4</artifactId>
-		<version>4.0.14</version><!--FFMQ_VERSION-->
+        <groupId>net.timewalker.ffmq</groupId>
+        <artifactId>ffmq4</artifactId>
+        <version>4.0.14</version><!--FFMQ_VERSION-->
   </parent>
   
   <build>
     <plugins>
-    	<plugin>
+        <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
@@ -37,56 +35,55 @@
                 <target>1.7</target>
             </configuration>
         </plugin>
-      	<plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-surefire-plugin</artifactId>
-	        <configuration>
-	          <skip>true</skip>
-	        </configuration>
-      	</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-eclipse-plugin</artifactId>
-			<configuration>
-				<projectNameTemplate>ffmq-distribution</projectNameTemplate>
-				<buildOutputDirectory>
-					temp/classes
-				</buildOutputDirectory>
-			</configuration>
-		</plugin>
-		<plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-assembly-plugin</artifactId>
-			<version>2.1</version>
-	        <configuration>
-	          <descriptors>
-	            <descriptor>src/assembly/dist.xml</descriptor>
-				<descriptor>src/assembly/src-dist.xml</descriptor>
-	          </descriptors>
-	        </configuration>
-			<executions>
-	          <execution>
-	            <id>make-assembly</id>
-	            <phase>package</phase>
-	            <goals>
-	              <goal>attached</goal>
-	            </goals>
-	          </execution>
-	        </executions>
-      	</plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-eclipse-plugin</artifactId>
+            <configuration>
+                <projectNameTemplate>ffmq-distribution</projectNameTemplate>
+                <buildOutputDirectory>
+                    temp/classes
+                </buildOutputDirectory>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+              <descriptors>
+                <descriptor>src/assembly/dist.xml</descriptor>
+                <descriptor>src/assembly/src-dist.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <executions>
+              <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>attached</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
     </plugins>
   </build>
-	
+    
   <dependencies>
       <dependency>
-		<groupId>net.timewalker.ffmq</groupId>
-		<artifactId>ffmq4-tools</artifactId>
-		<version>4.0.14</version><!--FFMQ_VERSION-->
+        <groupId>net.timewalker.ffmq</groupId>
+        <artifactId>ffmq4-tools</artifactId>
+        <version>4.0.14</version><!--FFMQ_VERSION-->
       </dependency>
-	  <dependency>
-		<groupId>net.timewalker.ffmq</groupId>
-		<artifactId>ffmq4-server</artifactId>
-		<version>4.0.14</version><!--FFMQ_VERSION-->
+      <dependency>
+        <groupId>net.timewalker.ffmq</groupId>
+        <artifactId>ffmq4-server</artifactId>
+        <version>4.0.14</version><!--FFMQ_VERSION-->
       </dependency>
   </dependencies>
 </project>

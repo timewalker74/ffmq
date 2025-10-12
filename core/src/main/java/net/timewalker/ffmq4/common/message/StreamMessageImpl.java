@@ -464,7 +464,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     @Override
 	public void writeChar(char value) throws JMSException
     {
-        write(new Character(value));
+        write(Character.valueOf(value));
     }
 
     /*
@@ -474,7 +474,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     @Override
 	public void writeDouble(double value) throws JMSException
     {
-        write(new Double(value));
+        write(Double.valueOf(value));
     }
 
     /*
@@ -484,7 +484,7 @@ public final class StreamMessageImpl extends AbstractMessage implements StreamMe
     @Override
 	public void writeFloat(float value) throws JMSException
     {
-        write(new Float(value));
+        write(Float.valueOf(value));
     }
 
     /*

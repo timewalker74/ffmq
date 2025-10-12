@@ -59,7 +59,7 @@ public class XMLDescriptorReader
         try
         {
             // Create an handler instance
-            handler = handlerClass.newInstance();
+            handler = handlerClass.getDeclaredConstructor().newInstance();
             
             // Parse the descriptor file
             SAXParserFactory factory = SAXParserFactory.newInstance();

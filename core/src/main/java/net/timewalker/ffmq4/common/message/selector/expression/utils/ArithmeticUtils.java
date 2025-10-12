@@ -34,7 +34,7 @@ public final class ArithmeticUtils
         if (type == Long.class)
             return Long.valueOf(val1.longValue()+val2.longValue());
         
-        return new Double(val1.doubleValue()+val2.doubleValue());
+        return Double.valueOf(val1.doubleValue()+val2.doubleValue());
     }
     
     /**
@@ -49,7 +49,7 @@ public final class ArithmeticUtils
         if (type == Long.class)
             return Long.valueOf(val1.longValue()-val2.longValue());
         
-        return new Double(val1.doubleValue()-val2.doubleValue());
+        return Double.valueOf(val1.doubleValue()-val2.doubleValue());
     }
     
     /**
@@ -64,7 +64,7 @@ public final class ArithmeticUtils
         if (type == Long.class)
             return Long.valueOf(val1.longValue()*val2.longValue());
         
-        return new Double(val1.doubleValue()*val2.doubleValue());
+        return Double.valueOf(val1.doubleValue()*val2.doubleValue());
     }
     
     /**
@@ -85,7 +85,7 @@ public final class ArithmeticUtils
         
         if (val2.doubleValue() == 0)
             return null;
-        return new Double(val1.doubleValue()/val2.doubleValue());
+        return Double.valueOf(val1.doubleValue()/val2.doubleValue());
     }
     
     /**
@@ -99,7 +99,7 @@ public final class ArithmeticUtils
         if (type == Long.class)
             return Long.valueOf(-n.longValue());
         
-        return new Double(-n.doubleValue());
+        return Double.valueOf(-n.doubleValue());
     }
     
     /**
@@ -180,7 +180,7 @@ public final class ArithmeticUtils
 
         if (type == Long.class)
             return Long.valueOf(n.longValue());
-        return new Double(n.doubleValue());
+        return Double.valueOf(n.doubleValue());
     }
     
     public static Number normalize( Number value )
@@ -192,7 +192,7 @@ public final class ArithmeticUtils
         if (isIntegerType(type))
             return Long.valueOf(value.longValue());
         else
-            return new Double(value.doubleValue());
+            return Double.valueOf(value.doubleValue());
     }
     
     private static boolean isIntegerType( Class<?> type )

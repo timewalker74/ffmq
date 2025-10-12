@@ -777,10 +777,10 @@ public final class RawDataBuffer implements DataOutput, DataInput
             case TYPE_SHORT     : return Short.valueOf(readShort());
             case TYPE_INT       : return Integer.valueOf(readInt());
             case TYPE_LONG      : return Long.valueOf(readLong());
-            case TYPE_FLOAT     : return new Float(readFloat());
-            case TYPE_DOUBLE    : return new Double(readDouble());
+            case TYPE_FLOAT     : return Float.valueOf(readFloat());
+            case TYPE_DOUBLE    : return Double.valueOf(readDouble());
             case TYPE_BYTEARRAY : return readByteArray();
-            case TYPE_CHARACTER : return new Character(readChar());
+            case TYPE_CHARACTER : return Character.valueOf(readChar());
             default:
                 throw new IllegalArgumentException("Unsupported type : "+type);
         }                

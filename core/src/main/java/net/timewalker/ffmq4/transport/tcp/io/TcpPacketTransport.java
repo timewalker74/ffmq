@@ -167,7 +167,7 @@ public final class TcpPacketTransport extends AbstractTcpPacketTransport
             if (ignoreCertificates)
                 trustManagers = new TrustManager[] { new PermissiveTrustManager() };
             else if (trustManagerClass != null)
-                trustManagers = new TrustManager[] { (TrustManager) Class.forName(trustManagerClass, true, Thread.currentThread().getContextClassLoader()).newInstance() };
+                trustManagers = new TrustManager[] { (TrustManager) Class.forName(trustManagerClass, true, Thread.currentThread().getContextClassLoader()).getDeclaredConstructor().newInstance() };
             
             sslContext.init(keyManagers,trustManagers, null);
             

@@ -283,7 +283,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     @Override
 	public void setChar(String name, char value) throws JMSException
     {
-        put(name,new Character(value));
+        put(name,Character.valueOf(value));
     }
 
     /*
@@ -293,7 +293,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     @Override
 	public void setDouble(String name, double value) throws JMSException
     {
-        put(name,new Double(value));
+        put(name,Double.valueOf(value));
     }
 
     /*
@@ -303,7 +303,7 @@ public final class MapMessageImpl extends AbstractMessage implements MapMessage
     @Override
 	public void setFloat(String name, float value) throws JMSException
     {
-        put(name,new Float(value));
+        put(name,Float.valueOf(value));
     }
 
     /*

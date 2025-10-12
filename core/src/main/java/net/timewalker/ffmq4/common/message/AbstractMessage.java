@@ -394,7 +394,7 @@ public abstract class AbstractMessage implements Message
     @Override
 	public final void setDoubleProperty(String name, double value) throws JMSException
     {
-        setProperty(name,new Double(value));
+        setProperty(name,Double.valueOf(value));
     }
 
     /* (non-Javadoc)
@@ -403,7 +403,7 @@ public abstract class AbstractMessage implements Message
     @Override
 	public final void setFloatProperty(String name, float value) throws JMSException
     {
-        setProperty(name,new Float(value));
+        setProperty(name,Float.valueOf(value));
     }
 
     /* (non-Javadoc)
