@@ -6,23 +6,20 @@
   <includeBaseDirectory>true</includeBaseDirectory>
   <dependencySets>
     <dependencySet>
-		  <includes>
+      <includes>
         <include>log4j:log4j</include>
-				<include>commons-logging:commons-logging</include>
-				<include>commons-digester:commons-digester</include>
-				<include>commons-beanutils:commons-beanutils</include>
-				<include>javax.jms:jms-api</include>
+        <include>commons-logging:commons-logging</include>
+        <include>javax.jms:jms-api</include>
       </includes>
       <outputDirectory>lib</outputDirectory>
     </dependencySet>
-		<dependencySet>
-		  <includes>
-				<include>net.timewalker.ffmq:ffmq4-core</include>
-                <include>net.timewalker.ffmq:ffmq4-tools</include>
-				<include>net.timewalker.ffmq:ffmq4-server</include>
+    <dependencySet>
+      <includes>
+        <include>net.timewalker.ffmq:ffmq4-core</include>
+        <include>net.timewalker.ffmq:ffmq4-tools</include>
+        <include>net.timewalker.ffmq:ffmq4-server</include>
       </includes>
       <outputDirectory>lib</outputDirectory>
-			<outputFileNameMapping>${artifactId}.${extension}</outputFileNameMapping>
     </dependencySet>
   </dependencySets>
   <fileSets>

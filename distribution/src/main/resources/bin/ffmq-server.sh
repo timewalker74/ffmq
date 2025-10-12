@@ -1,23 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-# resolve links - $0 may be a softlink
-PRG="$0"
-
-while [ -h "$PRG" ]; do
-  ls=`ls -ld "$PRG"`
-  link=`expr "$ls" : '.*-> \(.*\)$'`
-  if expr "$link" : '/.*' > /dev/null; then
-    PRG="$link"
-  else
-    PRG=`dirname "$PRG"`/"$link"
-  fi
-done
-
-# Get standard environment variables
-PRGDIR=`dirname "$PRG"`
+cd "$(dirname "$0")"
 
 # Get application home
-[ -z "$FFMQ_HOME" ] && FFMQ_HOME=`cd "$PRGDIR/.." ; pwd`
+[ -z "$FFMQ_HOME" ] && FFMQ_HOME=$(cd .. ; pwd)
 
 # Get application base
 [ -z "$FFMQ_BASE" ] && FFMQ_BASE=$FFMQ_HOME
@@ -32,12 +18,14 @@ fi
 # Config file path
 CONFIG=$FFMQ_BASE/conf/ffmq-server.properties
 
-# Create classpath
-CLASSPATH=$FFMQ_HOME/lib/commons-logging-1.1.jar:$FFMQ_HOME/lib/log4j-1.2.15.jar:$FFMQ_HOME/lib/jms-api-1.1-rev-1.jar
-CLASSPATH=$CLASSPATH:$FFMQ_HOME/lib/ffmq4-core.jar:$FFMQ_HOME/lib/ffmq4-server.jar
+# Auto-create classpath
+CLASSPATH=""
+for lib in $FFMQ_HOME/lib/*.jar;
+do
+  CLASSPATH="${CLASSPATH}:$lib"
+done
 
 # Run the queuer
-cd $PRGDIR || exit 1
 nohup java $JAVA_OPTS -DFFMQ_HOME="$FFMQ_HOME" -DFFMQ_BASE="$FFMQ_BASE" -cp "$CLASSPATH" net.timewalker.ffmq4.FFMQServerLauncher -conf "$CONFIG" 1> stdout.log 2> stderr.log &
 SERVER_PID=$!
 echo $SERVER_PID > $FFMQ_BASE/bin/ffmq-server.pid

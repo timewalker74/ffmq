@@ -1,23 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-# resolve links - $0 may be a softlink
-PRG="$0"
-
-while [ -h "$PRG" ]; do
-  ls=`ls -ld "$PRG"`
-  link=`expr "$ls" : '.*-> \(.*\)$'`
-  if expr "$link" : '/.*' > /dev/null; then
-    PRG="$link"
-  else
-    PRG=`dirname "$PRG"`/"$link"
-  fi
-done
-
-# Get standard environment variables
-PRGDIR=`dirname "$PRG"`
+cd "$(dirname "$0")"
 
 # Get application home
-[ -z "$FFMQ_HOME" ] && FFMQ_HOME=`cd "$PRGDIR/.." ; pwd`
+[ -z "$FFMQ_HOME" ] && FFMQ_HOME=$(cd .. ; pwd)
 
 # Get application base
 [ -z "$FFMQ_BASE" ] && FFMQ_BASE=$FFMQ_HOME
@@ -32,7 +18,7 @@ fi
 PID_FILE=$FFMQ_BASE/bin/ffmq-server.pid
 
 if [ -r "$PID_FILE" ]; then
-	echo "Stopping server using PID file ..."
+    echo "Stopping server using PID file ..."
     PID=`cat "$PID_FILE"`
     if `ps -p $PID > /dev/null`; then
       kill $PID || exit 1
@@ -41,13 +27,13 @@ if [ -r "$PID_FILE" ]; then
       i=1;
       while [ $i -lt 30 ]; do
           sleep 1
-          if ! `ps -p $PID > /dev/null`; then
+          if ! $(ps -p $PID > /dev/null); then
               # Remove pidfile
               rm "$PID_FILE" || exit 1
               echo "Server stopped."  
               exit 0
           fi
-          i=`expr $i + 1`
+          i=$(( $i + 1 ))
       done
 
       # Let's get brutal
@@ -57,6 +43,6 @@ if [ -r "$PID_FILE" ]; then
       # Remove pidfile
       rm "$PID_FILE" || exit 1
     fi
- else
- 	echo "PID file not found : $PID_FILE"
+else
+    echo "PID file not found : $PID_FILE"
 fi
