@@ -9,6 +9,7 @@
  */
 package net.timewalker.ffmq4.test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
@@ -22,8 +23,6 @@ import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import junit.framework.TestCase;
 import net.timewalker.ffmq4.FFMQConstants;
 import net.timewalker.ffmq4.common.destination.QueueRef;
@@ -35,6 +34,9 @@ import net.timewalker.ffmq4.local.FFMQEngine;
 import net.timewalker.ffmq4.local.destination.LocalQueue;
 import net.timewalker.ffmq4.local.destination.LocalTopic;
 import net.timewalker.ffmq4.utils.Settings;
+import org.apache.logging.log4j.core.LoggerContext;
+
+import static org.apache.logging.log4j.core.config.Configurator.initialize;
 
 /**
  * AbstractQueuerTest
@@ -120,12 +122,18 @@ public abstract class AbstractQueuerTest extends TestCase implements ExceptionLi
 	        FileInputStream in = new FileInputStream(ffmqBase+"/conf/ffmq-server.properties");
 	        testSettings.load(in);
 	        in.close();
-	        
-	        if (!log4jConfigured)
-	        {
-	        	PropertyConfigurator.configure(testSettings);
-	        	log4jConfigured = true;
-	        }
+
+            if (!log4jConfigured) {
+
+                File log4jConfigurationFile = new File(ffmqBase+"/conf/ffmqLog4j.xml");
+                String log4jConfigurationFileAbsolutePath = log4jConfigurationFile.getAbsolutePath();
+
+                if (log4jConfigurationFile.exists()) {
+                    LoggerContext initialize = initialize(null, log4jConfigurationFileAbsolutePath);
+                    log4jConfigured = initialize != null;
+                }
+
+            }
 	
 	        Settings settings = new Settings(testSettings);
 	        

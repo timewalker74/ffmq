@@ -32,10 +32,8 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-
-import org.apache.log4j.spi.LoggingEvent;
-
 import net.timewalker.ffmq4.FFMQConstants;
+import org.apache.logging.log4j.core.LogEvent;
 
 /**
  * TestListenerClient
@@ -85,8 +83,8 @@ public class TestListenerClient implements Runnable, ExceptionListener, MessageL
 	        	if (msg instanceof ObjectMessage)
 	        	{
 	        		Object body = ((ObjectMessage) msg).getObject();
-	        		if (body instanceof LoggingEvent)
-	        			System.out.println(((LoggingEvent) body).getMessage());
+	        		if (body instanceof LogEvent)
+	        			System.out.println(((LogEvent) body).getMessage());
 	        	}
 		}
 		catch (Exception e)

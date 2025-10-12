@@ -5,7 +5,7 @@
 	<groupId>net.timewalker.ffmq</groupId>
 	<artifactId>ffmq4-core</artifactId>
 	<packaging>jar</packaging>
-	<version>4.0.14</version><!--FFMQ_VERSION-->
+	<version>4.0.15</version><!--FFMQ_VERSION-->
 	<name>FFMQ Core</name>
 	<description>FFMQ Core module</description>
     <url>http://timewalker74.github.io/ffmq/</url>
@@ -25,7 +25,7 @@
 	<parent>
 		<groupId>net.timewalker.ffmq</groupId>
 		<artifactId>ffmq4</artifactId>
-		<version>4.0.14</version><!--FFMQ_VERSION-->
+		<version>4.0.15</version><!--FFMQ_VERSION-->
 	</parent>
 
 	<build>
@@ -95,6 +95,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.1</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
 				<executions>
 					<execution>
 					  <id>attach-javadocs</id>
@@ -139,8 +142,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+            <version>2.25.2</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

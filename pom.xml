@@ -4,7 +4,7 @@
   <groupId>net.timewalker.ffmq</groupId>
   <artifactId>ffmq4</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.14</version><!--FFMQ_VERSION-->
+  <version>4.0.15</version><!--FFMQ_VERSION-->
   <name>FFMQ</name>
   <description>FFMQ - Light-weight &amp; Fast JMS queuer</description>
   <url>http://timewalker74.github.io/ffmq/</url>
@@ -100,8 +100,16 @@
 		        </goals>
 		      </execution>
 		    </executions>
-		  </plugin>
-		</plugins>
+          </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <version>2.10.1</version>
+              <configuration>
+                  <failOnError>false</failOnError>
+              </configuration>
+          </plugin>
+      </plugins>
 	</build>
 
 	<dependencyManagement>
@@ -109,12 +117,12 @@
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
-				<version>1.1</version>
+				<version>1.3.5</version>
 			</dependency>
 			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.17</version>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.25.2</version>
 				<exclusions>
 					<exclusion>
 						<groupId>com.sun.jdmk</groupId>
@@ -137,6 +145,7 @@
 						<artifactId>jms</artifactId>
 					</exclusion>
 				</exclusions>
+                <scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>javax.jms</groupId>
@@ -146,7 +155,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.13.1</version>
+				<version>4.13.2</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
